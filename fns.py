@@ -6,11 +6,11 @@ import hmac
 import datetime
 
 def valid_name(name):
-	USER_RE = re.compile(r"^[a-zA-Z| ]{3,20}$")
+	USER_RE = re.compile(r"^.{3,20}$")
 	return name and USER_RE.match(name)
 
 def valid_lname(lname):
-	LNAME_RE = re.compile(r"^[a-zA-Z| ]{3,20}$")
+	LNAME_RE = re.compile(r"^.{3,20}$")
 	return lname and LNAME_RE.match(lname)
 
 def valid_pw(pw):
