@@ -123,7 +123,7 @@ class login(Handler):
 			self.login(u, t)
 			self.redirect("/")
 		else:
-			msg = "El correo o la contrasena son invalidos"
+			msg = format("El correo o la contraseña son inválidos")
 			self.render("login.html", error = msg)
 
 class logout(Handler):
