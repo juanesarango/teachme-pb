@@ -1,0 +1,144 @@
+{% extends "base_main.html" %}
+{% block title %}
+	Comparte tus conocimientos
+{% endblock %}
+{% block body %}
+
+<div class="form-background">
+<br>
+<br>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1 bckg-w-80">
+				<div class="row">
+					<div class="col-md-10 col-md-offset-1 text-justify">
+						<h2>Comparte tu conocimiento convirtiendote en Asesor</h2>
+						<p class="lead">
+							Teachme es una nueva manera de compartir tus conocimientos de la academia por medio de una videollamada y herramientas virtuales para una mejor mentoria.
+						</p>
+						<p class="lead">
+							Con Teachme podras dictar mentorias de matemáticas, física, química, ciencias sociales, musica y muchas otras areas en las que tengas dominio. Solo necesitas un computador de escritorio con webcam, o una laptop y con solo unos clicks podras empezar a compartir tus conocimientos.
+						</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-10 col-md-offset-1 text-justify">
+						<h2>Por que deberias compartir tu conocimiento en <strong>Teachme</strong>?</h2>
+					</div>
+				</div>
+				<div class="row text-center">
+					<div class="col-md-3 col-md-offset-2">
+						<h1><span class="glyphicon glyphicon-globe"></span></h1>
+						<h3>Alcance global</h3>
+						<p class="text-justify">
+							Puedes alcanzar estudiantes en donde llegue una conexion a internet.
+						</p>
+					</div>
+					<div class="col-md-2">
+						<h1><span class="glyphicon glyphicon-phone"></span></h1>
+						<h3>Fácil y flexible</h3>
+						<p class="text-justify">
+							Arma tu horario disponible, en tus horas libres, sin moverte de tu casa u oficina. En tu laptop y proximamente en tus duspositivos moviles.
+						</p>
+					</div>
+					<div class="col-md-3">
+						<h1><span class="glyphicon glyphicon-usd"></span></h1>
+						<h3>Recibe tu dinero en tu Paypal</h3>
+						<p class="text-justify">
+							Escoge tu tarifa por hora. Recibe tu pago facilmente en tu billetera de Paypal.
+						</p>
+					</div>
+				</div>
+				<hr>
+				{% if user %}
+					<form role="form" method="post">
+						<div class="row">
+							<div class="col-md-10 col-md-offset-1">
+								<h3>Llena el siguiente formulario para que apliques para mentor en Teachme!</h3>
+							</div>
+						</div>	
+						<br>
+						<br>
+						<div class="row">
+							<div class="col-md-3 col-md-offset-1">
+								<div class="form-group">
+									<label for="t-ciudad">Ciudad</label>
+									<input class="form-control" type="text" name="ciudad" value="{{ciudad}}"  id="t-ciudad" placeholder="Ingrese su ciudad actual">
+								</div>
+								<div class="form-group">
+									<label for="t-pais">Pais</label>
+									<input type="text" name="pais" value="{{pais}}" class="form-control" id="t-pais" placeholder="Ingrese el pais actual" >
+								</div>
+								<div class="form-group">
+									<label for="t-linkedin">Linkedin</label>
+									<input type="url" name="linkedin" value="{{linkedin}}" class="form-control" id="t-linkedin" placeholder="Ingrese la url de su linkedin">
+								</div>
+							</div>
+							<div class="col-md-3 col-md-offset-1">
+								<h3>Areas que dominas</h3>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" name="area_mat" value="Matemáticas">
+										Mátematicas
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" name="area_fis" value="Física">
+										Física
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" name="area_qui" value="Química">
+										Química
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" name="area_bi" value="Biología">
+										Biología
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" name="area_mu" value="Música">
+										Música
+									</label>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="t-about">Acerca de ti</label>
+									<textarea name="about" class="form-control" rows="6" placeholder="Cuentanos un poco acerca de ti"></textarea>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-2 col-md-offset-5">
+								<button type="submit" class="btn btn-success">Comparte ya!</button>
+							</div>
+						</div>
+					</form>
+				{% else %}
+					<div class="row">
+						<div class="col-md-10 col-md-offset-1">
+							<h3>Inicia sesión o registrate para poder aplicar a ser mentor en Teachme</h3>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4 col-md-offset-4 text-center">
+							<a href="/login"><button class="btn btn-success">Ingresa</button></a>
+							<span>  </span>
+							<a href="/signup"><button class="btn btn-success">Registrate</button></a>
+						</div>
+					</div>
+				{% endif %}
+				<br>
+				<br>
+			</div>	
+		</div>
+	</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,4 @@
+cron:
+- description: teachouts status
+  url: /tasks/teachoutsta
+  schedule: every 1 hours

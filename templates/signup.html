@@ -1,0 +1,59 @@
+{% extends "base_main.html" %}
+{% block title %}
+	Teachme | Comparte tus conocmientos
+{% endblock %}
+{% block body %}
+
+<div class="backgnd" style="background-image: url('/static/signup.jpg')">
+	<div class="container">
+		<br>
+		<br>
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3 bckg-b-80">
+				<h3>Registrate desde ya en Teachme y llenate de conocimiento</h3>
+				<form role="form" method="post">
+					<div class="form-group">
+						<label>
+							Nombre
+							<input type="text" name="name" value="{{name}}" class="form-control" placeholder="Ingresa tu nombre">
+							<p class="help-block">{{error_name}}</p>
+						</label>
+					</div>
+					<div class="form-group">
+						<label>
+							Apellidos
+							<input type="text" name="lname" value="{{lname}}" class="form-control" placeholder="Ingresa tus apellidos">
+							<p class="help-block">{{error_lame}}</p>
+						</label>
+					</div>
+					<div class="form-group">
+						<label>
+							E-Mail
+							<input type="email" name="mail" value="{{mail}}" class="form-control" placeholder="email@domain.com">
+							<p class="help-block">{{error_mail}}</p>
+						</label>
+					</div>
+					<div class="form-group">
+						<label>
+							Contraseña
+							<input type="password" name="pw" class="form-control">
+						</label>
+						<p class="help-block">{{error_pw}}</p>
+					</div>
+					<div class="form-group">
+						<label>
+							Confirmar contraseña
+							<input type="password" name="pwcon" class="form-control">
+							<p class="help-block">{{error_pwcon}}</p>
+						</label>
+					</div>
+					<button type="submit" class="btn btn-success">Registrate</button>
+					<br>
+					<br>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

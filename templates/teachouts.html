@@ -1,0 +1,67 @@
+{% extends "base_main.html" %}
+{% block title %}
+	Tus teachouts | Teachme
+{% endblock %}
+{% block body %}
+
+	<div class="backgnd" style="background-image: url('/static/teachouts.jpg')">
+		<br>
+		<br>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-5 col-md-offset-1">
+					<h2 class="font-w">Próximos teachouts</h2>
+				</div>
+			</div>
+			{% for t in user.teachouts %}
+				<div class="row">
+					<div class="col-md-6 col-md-offset-3 bckg-b-80" title="Faltan {{faltan[t]}} para que empieze la mentoria">	
+						<div class="row">
+							<div class="col-md-3">
+								<img src="/serve/{{mentor[t].profile_pic}}" class="img-circle img-100">
+							</div>
+							<div class="col-md-9">
+								<div class="row">
+									<div class="col-md-7">
+										<h4>Sin costo</h4>
+									</div>
+									<div class="col-md-5">
+										<script type="text/javascript">
+											$(document).ready(function(){
+												date = new Date("{{touts[t].date.strftime("%Y-%m-%d %H:%M UTC")}}");
+												console.log(date);
+												$('#{{touts[t].key.id()}}').text(date.toDateString()+' at '+ date.toLocaleTimeString());
+											})
+										</script>
+										<p id="{{touts[t].key.id()}}"></p>
+									</div>
+								</div>
+								<hr class="hr">
+								<div class="row">
+									<div class="col-md-8">
+										<h4><strong>{{mentor[t].name}}</strong> {{mentor[t].lname}}</h4>
+									</div>
+									<div class="col-md-4">
+										<div class="row">
+											<a href="//teachout.teachmeapp.com/{{touts[t].key.urlsafe()}}">
+												<button class="btn btn-success" {% if disable[t] == True %} disabled="disabled"{% endif %}>Unete ahora</button>
+											</a>
+										</div>
+										<div class="row">
+											<a href="/teachout/cancel/{{touts[t].key.urlsafe()}}">
+												<button class="btn btn-danger" disabled="disabled">Cancelar</button>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<br>
+				<br>
+			{% endfor %}
+		</div>
+	</div>
+
+{% endblock %}

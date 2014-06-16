@@ -1,0 +1,162 @@
+{% extends "base_main.html" %}
+{% block title %}
+	{{teach.name}} {{teach.lname}} | Teachme
+{% endblock %}
+{% block body %}
+
+	<div class="backgnd" style="background-image: url('/static/profile.jpg')">
+		<br>
+		<br>
+		<div class="container">
+			<div class="row">
+				<br>
+				<br>
+				<div class="col-md-10 col-md-offset-1 bckg-w-80">
+					<div class="row">
+						<div class="col-md-3 col-md-offset-1">
+							<img class="img-circle img-100" src="/serve/{{teach.profile_pic}}">
+							<h2>{{teach.name}}</h2>
+							<h3>{{teach.lname}}</h3>
+						</div>
+						<div class="col-md-7">
+							<h2>Acerca de ti</h2>
+							<p>{{teach.about}}</p>
+						</div>
+					</div>
+					<hr>
+					<div class="row">
+						<div class="col-md-5 col-md-offset-1">
+							<h3>Ciudad</h3>
+							<p>{{teach.ciudad}}</p>
+							<h3>Pais</h3>
+							<p>{{teach.pais}}</p>
+							<h3>Perfil de linkedin</h3>
+							<p><a href="{{teach.linkedin}}">{{teach.linkedin}}</a></p>
+						</div>
+						<div class="col-md-5">
+							<h3>Areas del conocimiento</h3>
+							{% for a in teach.areas %}
+								<p>{{a}}</p>
+							{% endfor %}
+						</div>
+					</div>
+					<hr>
+					<div class="row">
+						<div class="col-md-5 col-md-offset-1">
+							<h3>Agenda libre</h3>
+							<div class="calendario">
+								
+							</div>
+						</div>
+						<div class="col-md-3">
+							<h3>Horas disponibles</h3>
+							<form role="form" method="post">
+								<div id="horas">
+								</div>
+								<button class="btn btn-success" type="submit">Agendar</button>
+							</form>
+							
+						</div>
+					</div>
+					<br>
+					<br>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$.datepicker.regional['es'] = {
+		        closeText: 'Cerrar',
+		        prevText: '<Ant',
+		        nextText: 'Sig>',
+		        currentText: 'Hoy',
+		        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+		        monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+		        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+		        dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+		        dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+		        weekHeader: 'Sm',
+		        dateFormat: 'yy-m-d',
+		        firstDay: 1,
+		        isRTL: false,
+		        showMonthAfterYear: false,
+		        yearSuffix: ''
+		    };
+		    var fechas = {{fechas|safe}};
+		    var dates_local = [];
+		    var hours_local = {};
+		    for (var f = 0; f < fechas.length; f++){
+
+		    	var dt = new Date(fechas[f]);
+		    	
+		    	var str_dt = dt.getFullYear().toString()+'-'+(dt.getMonth()+1).toString()+'-'+dt.getDate().toString();
+		    	
+		    	if (dates_local.indexOf(str_dt)>=0){}
+		    	else{
+		    		dates_local.push(str_dt);
+		    	}
+		    	
+		    	
+		    	if (hours_local.hasOwnProperty(str_dt)){
+		    		hours_local[str_dt].push(dt.toLocaleTimeString());
+		    	} else {
+		    		hours_local[str_dt] = [dt.toLocaleTimeString()];
+		    	}
+		    };
+
+		    var dates = dates_local; 
+		    var hours = hours_local; 
+		    var today = new Date();
+		    var cd = today.getFullYear().toString()+'-'+(today.getMonth()+1).toString()+'-'+today.getDate().toString(); 
+
+		    $("#horas").replaceWith( function(){
+		    	strfecha = today.toDateString()
+		    	var s = "<div id='horas'> <h3>"+ strfecha +"</h3>";
+		    	if(cd in hours){
+		    		for (var h = 0; h < hours[cd].length; h++) {
+		    			var lDate = new Date(cd+" "+hours[cd][h]);
+		    			var UTCdate = lDate.getUTCFullYear()+"-"+(parseInt(lDate.getUTCMonth())+1).toString()+"-"+lDate.getUTCDate()+" "+lDate.getUTCHours()+":"+lDate.getUTCMinutes();
+		    			s = s+"<div class='radio'><label><input type='radio' name='date-meet' value='"+UTCdate+"'>"+hours[cd][h]+"</label></div>";
+		    		};
+		   		};
+		    	
+		    	s = s+"</div";
+		    	return s;
+		    });
+
+			$.datepicker.setDefaults( $.datepicker.regional[ "es" ] );
+			$('.calendario').datepicker({
+				beforeShowDay : function(date){
+					var y = date.getFullYear().toString(); // get full year
+					var m = (date.getMonth() + 1).toString(); // get month.
+					var d = date.getDate().toString(); // get Day
+					var currDate = y+'-'+m+'-'+d;
+					if(dates.indexOf(currDate) >= 0){
+						return [true,"ui-highlight", ""];	
+					}else{
+						return [false];
+					}					
+				},
+				onSelect : function(date){
+					$("#horas").replaceWith( function(){
+						fecha = new Date(date);
+						strfecha = fecha.toDateString()
+		    			var s = "<div id='horas'> <h3>"+strfecha+"</h3>";
+		    			for (var h = 0; h < hours[date].length; h++) {
+		    				var lDate = new Date(date+" "+hours[date][h]);
+		    				var UTCdate = lDate.getUTCFullYear()+"-"+(parseInt(lDate.getUTCMonth())+1).toString()+"-"+lDate.getUTCDate()+" "+lDate.getUTCHours()+":"+lDate.getUTCMinutes();
+		    				s = s+"<div class='radio'><label><input type='radio' name='date-meet' value='"+UTCdate+"'>"+hours[date][h]+"</label></div>";
+		    			};
+		    			s = s+"</div";
+		    			return s;
+					});
+				},
+
+			});
+		});
+	</script>
+
+{% endblock %}
+

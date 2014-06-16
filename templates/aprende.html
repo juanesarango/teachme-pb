@@ -1,0 +1,49 @@
+{% extends "base_main.html" %}
+{% block title %}
+	{{area}} | Teachme
+{% endblock %}
+{% block body %}
+
+	<div class="backgnd" style="background-image: url('/static/teachouts.jpg')">
+		<br>
+		<br>
+		<div class="container">
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2">
+						<h3 class="font-w">{{area}}</h3>
+					</div>
+				</div>
+			
+				{% for t in mentors %}
+				<div class="row">
+					<div class="col-md-6 col-md-offset-3 bckg-b-80">
+						<div class="row">
+							<div class="col-md-4">
+								<a href="/teacher/{{t.key.urlsafe()}}">
+									<img class="img-circle img-100" src="/serve/{{t.profile_pic}}">
+								</a>
+							</div>
+							<div class="col-md-8">
+								<a href="/teacher/{{t.key.urlsafe()}}"><h3>{{t.name}} {{t.lname}}</h3></a>
+								<p class="pf-70">{{t.about|truncate(170, True)}}</p>
+								<p>Tarifa: $15 USD por hora</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<br>
+				<br>
+				{% else %}
+				<div class="row">
+					<div class="col-md-6 col-md-offset-3 bckg-b-80">
+						<h3><span class="glyphicon glyphicon-info-sign"></span> Lo sentimos. Estamos trabajando para traerte a los mejores mentores en esta área.</h3>
+					</div>
+				</div>
+				{% endfor %}
+			
+		</div>
+	</div>
+
+
+
+{% endblock %}
