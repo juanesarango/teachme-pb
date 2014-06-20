@@ -8,9 +8,64 @@
 		<br>
 		<br>
 		<div class="container">
+			{% if teacher.teachouts %}
+				<div class="row">
+					<div class="col-md-5 col-md-offset-1">
+						<h2 class="font-w">Próximas sesiones a dar</h2>
+					</div>
+				</div>
+			{% endif %}
+			{% for t in teacher.teachouts %}
+				<div class="row">
+					<div class="col-md-6 col-md-offset-3 bckg-b-80" title="Faltan {{m_faltan[t]}} para que empieze la mentoria">	
+						<div class="row">
+							<div class="col-md-3">
+								<img src="http://www.knoxunitedchurch.ca/images/avatar-profile.png" class="img-circle img-100">
+							</div>
+							<div class="col-md-9">
+								<div class="row">
+									<div class="col-md-7">
+										<h4>Sin costo</h4>
+									</div>
+									<div class="col-md-5">
+										<script type="text/javascript">
+											$(document).ready(function(){
+												date = new Date("{{m_touts[t].date.strftime("%Y-%m-%d %H:%M UTC")}}");
+												console.log(date);
+												$('#{{m_touts[t].key.id()}}').text(date.toDateString()+' at '+ date.toLocaleTimeString());
+											})
+										</script>
+										<p id="{{m_touts[t].key.id()}}"></p>
+									</div>
+								</div>
+								<hr class="hr">
+								<div class="row">
+									<div class="col-md-8">
+										<h4><strong>{{learner[t].name}}</strong> {{learner[t].lname}}</h4>
+									</div>
+									<div class="col-md-4">
+										<div class="row">
+											<a href="/session/?r={{m_touts[t].key.id()}}" target="_blank"> 
+												<button class="btn btn-success" {% if m_disable[t] == True %} disabled="disabled"{% endif %}>Unete ahora</button>
+											</a>
+										</div>
+										<div class="row">
+											<a target="_blank" href="/teachout/cancel/{{m_touts[t].key.urlsafe()}}">
+												<button class="btn btn-danger" disabled="disabled">Cancelar</button>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<br>
+				<br>
+			{% endfor %}
 			<div class="row">
 				<div class="col-md-5 col-md-offset-1">
-					<h2 class="font-w">Próximos teachouts</h2>
+					<h2 class="font-w">Próximas sesiones a recibir</h2>
 				</div>
 			</div>
 			{% for t in user.teachouts %}
@@ -43,7 +98,7 @@
 									</div>
 									<div class="col-md-4">
 										<div class="row">
-											<a href="//teachout.teachmeapp.com/{{touts[t].key.urlsafe()}}">
+											<a href="/session/?r={{touts[t].key.id()}}" target="_blank">
 												<button class="btn btn-success" {% if disable[t] == True %} disabled="disabled"{% endif %}>Unete ahora</button>
 											</a>
 										</div>
@@ -60,6 +115,12 @@
 				</div>
 				<br>
 				<br>
+			{% else %}
+				<div class="row">
+					<div class="col-md-6 col-md-offset-3 bckg-b-80">
+						<h3><span class="glyphicon glyphicon-info-sign"></span> No has agendado ninguna sesión.</h3>
+					</div>
+				</div>
 			{% endfor %}
 		</div>
 	</div>
