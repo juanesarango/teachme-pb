@@ -1,9 +1,8 @@
-application: teachme-dev
-module: default
-version: 1
+application: teachme-pruebas
+version: v1
 runtime: python27
 api_version: 1
-threadsafe: yes
+threadsafe: true
 
 handlers:
 - url: /static
@@ -13,11 +12,36 @@ handlers:
   static_files: favicon.ico
   upload: favicon\.ico
 
-- url: .*
+- url: /html
+  static_dir: wrtccrap/html
+
+- url: /images
+  static_dir: wrtccrap/images
+
+- url: /js
+  static_dir: wrtccrap/js
+
+- url: /session/css
+  static_dir: wrtccrap/css
+
+- url: /session.*
+  script: wrtc.app
+  secure: always
+
+- url: /_ah.*
+  script: wrtc.app
+  secure: always
+
+- url: /.*
   script: main.app
+
+inbound_services:
+- channel_presence
 
 libraries:
 - name: webapp2
   version: "2.5.2"
 - name: jinja2
   version: latest
+
+

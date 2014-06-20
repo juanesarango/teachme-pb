@@ -1,72 +1,32 @@
 # -*- coding: utf-8 -*-
 import os
-import webapp2
-import jinja2
-import math
-import re
-import urllib
-import datetime
-import json
+#!/usr/bin/python2.4
+#
+# Copyright 2011 Google Inc. All Rights Reserved.
+
+"""WebRTC Demo
+
+This module demonstrates the WebRTC API by implementing a simple video chat app.
+"""
+
 import cgi
+import logging
+import os
+import random
+import re
+import json
+import jinja2
+import webapp2
 import threading
 from google.appengine.api import channel
 from google.appengine.ext import db
-import teachme_db
-import fns
-import booking
-import logging
 
-########################################################################
-#Definiciones de Jinja2 para los templates
-template_dir = os.path.join(os.path.dirname(__file__), 'templates')
-jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape = True)
+jinja_environment = jinja2.Environment(
+    loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
-def render_str(template, **params):
-	t = jinja_env.get_template(template)
-	return t.render(params)
-
-
-#########################################################################
-# Handler Principal
-class Handler(webapp2.RequestHandler):
-
-	def write(self, *a, **kw):
-		self.response.out.write(*a, **kw)
-
-	def render_str(self, template, **params):
-		params['user'] = self.user
-		params['teacher'] = self.teacher
-		return render_str(template, **params)
-
-	def render(self, template, **kw):
-		self.write(self.render_str(template, **kw))
-
-	def set_secure_cookie(self, name, val):
-		cookie_val = fns.make_secure_val(val)
-		self.response.headers.add_header(
-			'Set-Cookie',
-			'%s=%s; Path=/' % (name, cookie_val))
-
-	def read_secure_cookie(self, name):
-		cookie_val = self.request.cookies.get(name)
-		return cookie_val and fns.check_secure_val(cookie_val)
-
-	def login(self, user, teacher):
-		self.set_secure_cookie('usi', str(user.key.urlsafe()))
-		if teacher:
-			self.set_secure_cookie('tei', str(teacher.key.urlsafe()))
-
-	def logout(self):
-		self.response.headers.add_header("Set-Cookie", "usi=; Path=/")
-		self.response.headers.add_header("Set-Cookie", "tei=; Path=/")
-
-	def initialize(self, *a, **kw):
-		webapp2.RequestHandler.initialize(self, *a, **kw)
-		ukey = self.read_secure_cookie("usi")
-		tkey = self.read_secure_cookie("tei")
-		self.user = ukey and ndb.Key(urlsafe=ukey).get()
-		self.teacher = tkey and ndb.Key(urlsafe=tkey).get()
-
+# Lock for syncing DB operation in concurrent requests handling.
+# TODO(brave): keeping working on improving performance with thread syncing.
+# One possible method for near future is to reduce the message caching.
 LOCK = threading.RLock()
 
 def generate_random(length):
@@ -448,7 +408,7 @@ class MainPage(webapp2.RequestHandler):
 
     if not room_key:
       room_key = generate_random(8)
-      redirect = '/?r=' + room_key
+      redirect = '/session/?r=' + room_key
       redirect = append_url_arguments(self.request, redirect)
       self.redirect(redirect)
       logging.info('Redirecting visitor to base URL to ' + redirect)
@@ -505,7 +465,7 @@ class MainPage(webapp2.RequestHandler):
                        'audio_receive_codec': audio_receive_codec
                       }
     if unittest:
-      target_page = 'test/test_' + unittest + '.html'
+      target_page = 'wrtccrap/test/test_' + unittest + '.html'
     else:
       target_page = 'index.html'
 
@@ -516,8 +476,8 @@ class MainPage(webapp2.RequestHandler):
 
 
 app = webapp2.WSGIApplication([
-    ('/', MainPage),
-    ('/message', MessagePage),
+    ('/session/', MainPage),
+    ('/session/message', MessagePage),
     ('/_ah/channel/connected/', ConnectPage),
     ('/_ah/channel/disconnected/', DisconnectPage)
   ], debug=True)

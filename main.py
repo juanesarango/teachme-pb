@@ -195,7 +195,7 @@ class comparte(Handler):
 			areas.remove("")
 
 
-		t = teachme_db.teacher(name = name, lname=lname, ciudad = ciudad, pais = pais, linkedin = linkedin, areas = areas, about = about, parent = self.user.key)
+		t = teachme_db.teacher(name = name, lname=lname, ciudad = ciudad, pais = pais, linkedin = linkedin, areas = areas, about = about, aceptado = False, parent = self.user.key)
 		t.put()
 		self.login(self.user, t)
 		self.redirect("/profile/teacher/%s" % str(t.key.id()))
@@ -206,6 +206,21 @@ class teachouts(Handler):
 			self.abort(403)
 			return
 		now = datetime.datetime.now()
+		past5 = datetime.datetime.now()-datetime.timedelta(minutes = 30)
+		m_touts = {}
+		learner = {}
+		m_disable = {}
+		m_faltan = {}
+		if self.teacher:
+			for mt in self.teacher.teachouts:
+				m_touts[mt] = mt.get()
+				learner[mt] = m_touts[mt].learner.get()
+				if past5 >= m_touts[mt].date:
+					m_disable[mt] = False
+				else:
+					m_disable[mt] = False
+					m_faltan[mt] = str(m_touts[mt].date-now)
+
 		touts = {}
 		mentor = {}
 		disable = {}
@@ -213,13 +228,13 @@ class teachouts(Handler):
 		for t in self.user.teachouts:
 			touts[t] =  t.get()
 			mentor[t] = touts[t].teacher.get()
-			if now >= touts[t].date:
-				disable[t] = False
+			if past5 >= touts[t].date:
+				disable[t] = False 
 			else:
-				disable[t] = True
+				disable[t] = False
 				faltan[t] = str(touts[t].date - now)
 
-		self.render("/teachouts.html", touts = touts, mentor = mentor, disable = disable, faltan = faltan)
+		self.render("/teachouts.html", touts = touts, mentor = mentor, disable = disable, faltan = faltan, m_touts = m_touts, learner = learner, m_disable = m_disable, m_faltan = m_faltan)
 
 class aprende(Handler):
 	def get(self, ar):
