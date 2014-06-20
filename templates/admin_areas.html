@@ -1,0 +1,69 @@
+{% extends "base_main.html" %}
+{% block title%} Administrador Teachme {% endblock %}
+{% block body %}
+
+<div class="backgnd" style="background-image: url('/static/signup.jpg')">
+	<br>
+	<br>
+	<div class="container bckg-b-80">
+		<div class="row">
+			<div class="col-md-12"><h2>Áreas</h2></div>
+		</div>
+		<div class="row">
+			<div class="col-md-2 col-md-offset-2 ">
+				<ul class="nav nav-pills nav-stacked">
+					{% for a in areas %}
+					<li {% if loop.first %}class="active"{% endif %}><a href="#{{a.name}}" data-toggle="pill">{{a.name}}</a></li>
+					{% endfor %}
+					<br>
+					<br>
+					<form role="form" method="post">
+						<div class="form-group">
+							<label>
+								<input type="text" name="area" value="{{area}}" class="form-control" placeholder="Ingresar Área">
+								<p class="help-block">{{error_area}}</p>
+							</label>
+						</div>
+						<button type="submit" class="btn btn-success">Agregar</button>
+					</form>
+				</ul>
+				<br>
+				<br>
+			</div>
+
+			<div class="col-md-6">
+				<div class="tab-content">
+					{% for a in areas%}
+					<div class="tab-pane fade {% if loop.first %}in active{% endif %}" id="{{a.name}}">
+						<div class="row">
+							<div class="col-md-12">
+								<h3>{{a.name}}</h3>
+							</div>
+						</div>
+						<br>
+						{% for s in a.subarea %}
+							<div class="row">
+								<div class="col-md-12">
+									<p>{{s}}</p>
+								</div>
+							</div>
+						{% endfor %}
+						<form role="form" method="post">
+							<div class="form-group">
+								<label>
+									<input type="text" name="subarea" value="{{subarea}}" class="form-control" placeholder="Ingresar Subárea">
+									<input type="hidden" name="sid" value="{{a.key.id()}}">
+									<p class="help-block">{{error_subarea}}</p>
+								</label>
+							</div>
+							<button type="submit" class="btn btn-success">Agregar</button>
+						</form>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

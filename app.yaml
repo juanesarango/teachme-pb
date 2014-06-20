@@ -24,11 +24,14 @@ handlers:
 - url: /session/css
   static_dir: wrtccrap/css
 
+- url: /admin.*
+  script: admin.app
+
 - url: /session.*
   script: wrtc.app
   secure: always
 
-- url: /_ah.*
+- url: /_ah/channel.*
   script: wrtc.app
   secure: always
 

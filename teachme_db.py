@@ -75,7 +75,7 @@ class teachout(ndb.Model):
 
 	log = ndb.StringProperty(repeated = True)
 
-class knowAreas(ndb.Model):
-	area = ndb.StringProperty(required = True)
+class areas(ndb.Model):
+	name = ndb.StringProperty(required = True)
 	subarea = ndb.StringProperty(repeated = True)
-	description = ndb.TextProperty(required = True)
+	
