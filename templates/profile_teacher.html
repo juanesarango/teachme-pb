@@ -24,9 +24,9 @@
 											<input type="hidden" name="te_id" value="{{teacher.key.id()}}">
 											<label for="t-profile_pic">Foto de perfil</label>
 											<input type="file" name="profile_pic" accept="image/*" id="t-profile_pic">
-											<p class="help-block">Te recomendamos una foto de 140x140 pixeles</p>
+											<p class="help-block">Te recomendamos una foto de 140x140 píxeles</p>
 										</div>
-										<button type="submit" class="btn btn-success">Actualiza foto</button>
+										<button type="submit" class="btn btn-success">Actualizar foto</button>
 									</form>
 								</div>
 							</div>
@@ -41,13 +41,13 @@
 						<div class="col-md-5 col-md-offset-1">
 							<h3>Ciudad</h3>
 							<p>{{teacher.ciudad}}</p>
-							<h3>Pais</h3>
+							<h3>País</h3>
 							<p>{{teacher.pais}}</p>
 							<h3>Perfil de linkedin</h3>
-							<p><a href="{{teacher.linkedin}}">{{teacher.linkedin}}</a></p>
+							<p><a href="{{teacher.linkedin}}" target="_blank">{{teacher.linkedin}}</a></p>
 						</div>
 						<div class="col-md-5">
-							<h3>Areas del conocimiento</h3>
+							<h3>Áreas del conocimiento</h3>
 							{% for a in t_areas %}
 								<p>{{a}}</p>
 							{% endfor %}

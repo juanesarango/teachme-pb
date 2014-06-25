@@ -23,19 +23,19 @@ def valid_mail(mail):
 
 def valid_register(name, lname, pw, pwcon, mail, params, have_error):
 	if not valid_name(name):
-		params['error_name'] = "El nombre debe de contener entre 3 y 20 caracteres sin caracteres especiales"
+		params['error_name'] = u"El nombre debe contener entre 3 y 20 caracteres sin caracteres especiales"
 		have_error = True
 	if not valid_lname(lname):
-		params['error_lname'] = "El apellido debe de contener entre 3 y 20 caracteres sin caracteres especiales"
+		params['error_lname'] = u"El apellido debe contener entre 3 y 20 caracteres sin caracteres especiales"
 		have_error = True
 	if not valid_pw(pw):
-		params['error_pw'] = "La contrasena debe debe de contener entre 6 y 20 caracteres"
+		params['error_pw'] = u"La contraseña debe contener entre 6 y 20 caracteres"
 		have_error = True
 	elif pw != pwcon:
-		params['error_pwcon'] = "La contrasena debe de coincidir"
+		params['error_pwcon'] = u"La contraseña debe de coincidir"
 
 	if not valid_mail(mail):
-		params['error_mail'] = "El e-mail esta erroneo. Eje: email@domain.com"
+		params['error_mail'] = u"El e-mail está erróneo. Ejemplo: email@domain.com"
 		have_error = True
 
 	return params, have_error
