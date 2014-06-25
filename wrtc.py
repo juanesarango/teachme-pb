@@ -18,8 +18,12 @@ import json
 import jinja2
 import webapp2
 import threading
+import teachme_db
+import datetime
+import fns
 from google.appengine.api import channel
 from google.appengine.ext import db
+from google.appengine.ext import ndb
 
 jinja_environment = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
@@ -313,6 +317,44 @@ class MessagePage(webapp2.RequestHandler):
         logging.warning('Unknown room ' + room_key)
 
 class MainPage(webapp2.RequestHandler):
+  def validation(self, room_key):
+    tout = teachme_db.teachout.get_by_id(int(room_key))
+    if not tout:
+      return False, u"La sesión no existe"
+    learner = tout.learner.get()
+    mentor = tout.teacher.get()
+    ts = tout.date - datetime.timedelta(minutes = 15)
+    tf = ts + datetime.timedelta(hours = 2)
+    now = datetime.datetime.now()
+    if not (ts <= now and now < tf):
+      return False, u"No ha llegado la hora, o ya pasó"
+    aprendiz = False
+    profesor = False
+
+    if learner.key.id() == self.user.key.id():
+      aprendiz = True
+      logging.info("El aprendiz " + str(learner.name) + " se ha autenticado")
+    elif self.teacher:
+      if mentor.key.id() == self.teacher.key.id():
+        profesor = True
+        logging.info("El mentor "+str(mentor.name)+ " se ha autenticado")
+    else:
+      return False, u"La persona no esta autorizada para ingresar a esta sesión"
+
+    return True, "Se valido correctamente la sesion"
+
+  def read_secure_cookie(self, name):
+    cookie_val = self.request.cookies.get(name)
+    return cookie_val and fns.check_secure_val(cookie_val)
+
+  def initialize(self, *a, **kw):
+    webapp2.RequestHandler.initialize(self, *a, **kw)
+    ukey = self.read_secure_cookie("usi")
+    tkey = self.read_secure_cookie("tei")
+    self.user = ukey and ndb.Key(urlsafe=ukey).get()
+    self.teacher = tkey and ndb.Key(urlsafe=tkey).get()
+    logging.error(self.user.name)
+
   """The main UI page, renders the 'index.html' template."""
   def get(self):
     """Renders the main page. When this page is shown, we create a new
@@ -325,6 +367,11 @@ class MainPage(webapp2.RequestHandler):
     base_url = self.request.path_url
     user_agent = self.request.headers['User-Agent']
     room_key = sanitize(self.request.get('r'))
+    # We will call the teachouts database to bring the participants and the date and time of the session
+    val, merror = self.validation(room_key)
+    logging.info(merror)
+    if not val:
+      self.abort(403)
     stun_server = self.request.get('ss')
     if not stun_server:
       stun_server = get_default_stun_server(user_agent)

@@ -108,7 +108,9 @@ class signup(Handler):
 			else:
 				u = teachme_db.user.register(self.name, self.lname, self.mail, self.pw)
 				u.put()
-
+				subject = u.name + u", Bienvenido a Teachme"
+				html = render_str("mail_template.html", sujeto = u.name)
+				mail.send_mail("info@teachmeapp.com", u.mail, subject, "", html = html)
 				self.login(u, None)
 				self.redirect("/")
 
@@ -206,7 +208,7 @@ class teachouts(Handler):
 			self.abort(403)
 			return
 		now = datetime.datetime.now()
-		past5 = datetime.datetime.now()-datetime.timedelta(minutes = 30)
+		ready = datetime.timedelta(minutes = 15)
 		m_touts = {}
 		learner = {}
 		m_disable = {}
@@ -215,10 +217,10 @@ class teachouts(Handler):
 			for mt in self.teacher.teachouts:
 				m_touts[mt] = mt.get()
 				learner[mt] = m_touts[mt].learner.get()
-				if past5 >= m_touts[mt].date:
+				if now >= (m_touts[mt].date-ready):
 					m_disable[mt] = False
 				else:
-					m_disable[mt] = False
+					m_disable[mt] = True
 					m_faltan[mt] = str(m_touts[mt].date-now)
 
 		touts = {}
@@ -228,10 +230,10 @@ class teachouts(Handler):
 		for t in self.user.teachouts:
 			touts[t] =  t.get()
 			mentor[t] = touts[t].teacher.get()
-			if past5 >= touts[t].date:
+			if now >= (touts[t].date-ready):
 				disable[t] = False 
 			else:
-				disable[t] = False
+				disable[t] = True
 				faltan[t] = str(touts[t].date - now)
 
 		self.render("/teachouts.html", touts = touts, mentor = mentor, disable = disable, faltan = faltan, m_touts = m_touts, learner = learner, m_disable = m_disable, m_faltan = m_faltan)
