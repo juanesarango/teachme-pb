@@ -75,8 +75,17 @@
 								</div>
 							</div>
 							<div class="col-md-3 col-md-offset-1">
-								<h3>Areas que dominas</h3>
-								<div class="checkbox">
+								<h3>Áreas que dominas</h3>
+								{% for a in areas%}
+									<div class="checkbox">
+										<label>
+											<input type="checkbox" name="{{a.key.id()}}" value="{{a.key.id()}}">
+											{{a.name}}
+										</label>
+										
+									</div>
+								{% endfor %}
+								<!-- <div class="checkbox">
 									<label>
 										<input type="checkbox" name="area_mat" value="Matemáticas">
 										Mátematicas
@@ -105,7 +114,7 @@
 										<input type="checkbox" name="area_mu" value="Música">
 										Música
 									</label>
-								</div>
+								</div> -->
 							</div>
 							<div class="col-md-3">
 								<div class="form-group">

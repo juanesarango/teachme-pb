@@ -1,6 +1,6 @@
 {% extends "base_main.html" %}
 {% block title %}
-	{{teach.name}} {{teach.lname}} | Teachme
+	{{mentor.name}} {{mentor.lname}} | Teachme
 {% endblock %}
 {% block body %}
 
@@ -14,28 +14,28 @@
 				<div class="col-md-10 col-md-offset-1 bckg-w-80">
 					<div class="row">
 						<div class="col-md-3 col-md-offset-1">
-							<img class="img-circle img-100" src="/serve/{{teach.profile_pic}}">
-							<h2>{{teach.name}}</h2>
-							<h3>{{teach.lname}}</h3>
+							<img class="img-circle img-100" {% if mentor.profile_pic %}src="/serve/{{mentor.profile_pic}}"{% else %} src="/static/avatar.png"{% endif %}>
+							<h2>{{mentor.name}}</h2>
+							<h3>{{mentor.lname}}</h3>
 						</div>
 						<div class="col-md-7">
 							<h2>Acerca de ti</h2>
-							<p>{{teach.about}}</p>
+							<p>{{mentor.about}}</p>
 						</div>
 					</div>
 					<hr>
 					<div class="row">
 						<div class="col-md-5 col-md-offset-1">
 							<h3>Ciudad</h3>
-							<p>{{teach.ciudad}}</p>
+							<p>{{mentor.ciudad}}</p>
 							<h3>Pais</h3>
-							<p>{{teach.pais}}</p>
+							<p>{{mentor.pais}}</p>
 							<h3>Perfil de linkedin</h3>
-							<p><a href="{{teach.linkedin}}">{{teach.linkedin}}</a></p>
+							<p><a href="{{mentor.linkedin}}" target="_blank">{{mentor.linkedin}}</a></p>
 						</div>
 						<div class="col-md-5">
 							<h3>Areas del conocimiento</h3>
-							{% for a in teach.areas %}
+							{% for a in t_areas %}
 								<p>{{a}}</p>
 							{% endfor %}
 						</div>

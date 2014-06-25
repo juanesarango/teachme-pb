@@ -49,7 +49,7 @@ class teacher(ndb.Model):
 	pais = ndb.StringProperty()
 	idiomas = ndb.StringProperty(repeated = True)
 	linkedin = ndb.StringProperty()
-	areas = ndb.StringProperty(repeated = True)
+	areas = ndb.IntegerProperty(repeated = True)
 	subareas = ndb.StringProperty(repeated = True)
 	date_created = ndb.DateTimeProperty(auto_now_add = True)
 

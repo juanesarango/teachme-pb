@@ -34,8 +34,10 @@ class Handler(webapp2.RequestHandler):
 		self.response.out.write(*a, **kw)
 
 	def render_str(self, template, **params):
+		self.areas = teachme_db.areas.query().order(teachme_db.areas.name)
 		params['user'] = self.user
 		params['teacher'] = self.teacher
+		params['areas'] = self.areas
 		return render_str(template, **params)
 
 	def render(self, template, **kw):
@@ -72,12 +74,13 @@ class Handler(webapp2.RequestHandler):
 #Pagina principal
 class MainPage(Handler):
 	def get(self):
-		areas = ["Matemáticas", "Física", "Química", "Biología", "Música"]
+		#areas = ["Matemáticas", "Física", "Química", "Biología", "Música"]
+		areas = teachme_db.areas.query().order(teachme_db.areas.name)
 		mentors={}
 		for a in areas:
-			mentors[a] = teachme_db.teacher.query(ndb.AND(teachme_db.teacher.areas == a, teachme_db.teacher.aceptado==True)).fetch(3)
+			mentors[a.key.id()] = teachme_db.teacher.query(ndb.AND(teachme_db.teacher.areas == a.key.id(), teachme_db.teacher.aceptado==True)).fetch(3)
 		
-		self.render("main_page.html", mentors = mentors, areas = areas)
+		self.render("main_page.html", mentors = mentors)
 
 class signup(Handler):
 	def get(self):
@@ -123,7 +126,7 @@ class login(Handler):
 			self.login(u, t)
 			self.redirect("/")
 		else:
-			msg = format("El correo o la contraseña son inválidos")
+			msg = u"El correo o la contraseña son inválidos"
 			self.render("login.html", error = msg)
 
 class logout(Handler):
@@ -133,11 +136,14 @@ class logout(Handler):
 
 class teacher(Handler):
 	def get(self, id):
-		teach = ndb.Key(urlsafe = str(id)).get()
-		fechas = json.dumps(booking.UTCfechas(teach.date_available))
-		dates = json.dumps(fns.solo_dates(teach.date_available))
-		hours = json.dumps(fns.solo_hours(teach.date_available))
-		self.render("teacher.html", teach = teach, hours = hours, dates = dates, fechas = fechas)
+		mentor = ndb.Key(urlsafe = str(id)).get()
+		t_areas = []
+		for a in mentor.areas:
+			t_areas.append(teachme_db.areas.get_by_id(int(a)).name)
+		fechas = json.dumps(booking.UTCfechas(mentor.date_available))
+		dates = json.dumps(fns.solo_dates(mentor.date_available))
+		hours = json.dumps(fns.solo_hours(mentor.date_available))
+		self.render("teacher.html", mentor = mentor, hours = hours, dates = dates, fechas = fechas, t_areas = t_areas)
 
 	def post(self, id):
 		if not self.user:
@@ -168,7 +174,8 @@ class teacher(Handler):
 
 class comparte(Handler):
 	def get(self):
-		self.render("comparte.html")
+		areas = teachme_db.areas.query().order(teachme_db.areas.name)
+		self.render("comparte.html", areas = areas)
 
 	def post(self):
 		if not self.user:
@@ -179,23 +186,16 @@ class comparte(Handler):
 		ciudad = self.request.get("ciudad")
 		pais = self.request.get("pais")
 		linkedin = self.request.get("linkedin")
-		# hay que hacer un for cuando se tenga la db de areas
-		mat = self.request.get("area_mat")
-		fis = self.request.get("area_fis")
-		qui = self.request.get("area_qui")
-		bi = self.request.get("area_bi")
-		mu = self.request.get("area_mu")
+		areas = teachme_db.areas.query()
+		areas_in = []
+		for a in areas:
+			ar = self.request.get(str(a.key.id()))
+			if ar:
+				areas_in.append(int(ar))
 
 		about = self.request.get("about")
 
-		
-		areas = [mat, fis, qui, bi, mu]
-
-		while "" in areas:
-			areas.remove("")
-
-
-		t = teachme_db.teacher(name = name, lname=lname, ciudad = ciudad, pais = pais, linkedin = linkedin, areas = areas, about = about, aceptado = False, parent = self.user.key)
+		t = teachme_db.teacher(name = name, lname=lname, ciudad = ciudad, pais = pais, linkedin = linkedin, areas = areas_in, about = about, aceptado = False, parent = self.user.key)
 		t.put()
 		self.login(self.user, t)
 		self.redirect("/profile/teacher/%s" % str(t.key.id()))
@@ -238,10 +238,9 @@ class teachouts(Handler):
 
 class aprende(Handler):
 	def get(self, ar):
-		area = fns.parse_areas(str(ar))
+		area = teachme_db.areas.get_by_id(int(ar))
 		if area:
-			mentors = teachme_db.teacher.query(ndb.AND(teachme_db.teacher.areas == area, teachme_db.teacher.aceptado==True))
-
+			mentors = teachme_db.teacher.query(ndb.AND(teachme_db.teacher.areas == area.key.id(), teachme_db.teacher.aceptado==True))
 			self.render("aprende.html", mentors = mentors, area = area)
 
 class profile_teacher(Handler, blobstore_handlers.BlobstoreUploadHandler):
@@ -251,14 +250,20 @@ class profile_teacher(Handler, blobstore_handlers.BlobstoreUploadHandler):
 			self.abort(403)
 			return
 		teacher = ndb.Key(teachme_db.teacher, int(te_id), parent = self.user.key).get()
+		
 		if not teacher:
 			self.abort(403)
 			return
+
+		t_areas = []
+		for a in teacher.areas:
+			t_areas.append(teachme_db.areas.get_by_id(int(a)).name)
+
 		fechas = json.dumps(booking.UTCfechas(teacher.date_available))
 		dates = json.dumps(fns.solo_dates(teacher.date_available))
 		hours = json.dumps(fns.solo_hours(teacher.date_available))
 		upload_url = blobstore.create_upload_url('/upload')
-		self.render("profile_teacher.html", teacher = teacher, upload_url = upload_url, dates = dates, hours = hours, fechas = fechas)
+		self.render("profile_teacher.html", teacher = teacher, t_areas = t_areas, upload_url = upload_url, dates = dates, hours = hours, fechas = fechas)
 
 	def post(self):
 		
@@ -340,7 +345,7 @@ app = webapp2.WSGIApplication([('/', MainPage),
 								('/teacher/([^/]+)?', teacher),
 								('/comparte', comparte),
 								('/teachouts', teachouts),
-								('/aprende/([a-z]+)?', aprende),
+								('/aprende/([0-9]+)?', aprende),
 								('/profile/teacher/([0-9]+)?', profile_teacher),
 								('/calendar/teacher/add', calendar_teacher_add),
 								('/contacto', contacto),

@@ -14,7 +14,7 @@
 					<br>
 					<div class="row">
 						<div class="col-md-3 col-md-offset-1">
-							<img class="img-circle img-100" src="/serve/{{teacher.profile_pic}}">
+							<img class="img-circle img-100" {% if teacher.profile_pic %}src="/serve/{{teacher.profile_pic}}"{% else %} src="/static/avatar.png"{% endif %}>
 							<h2>{{teacher.name}}</h2>
 							<h3>{{teacher.lname}}</h3>
 							<div class="row">
@@ -48,7 +48,7 @@
 						</div>
 						<div class="col-md-5">
 							<h3>Areas del conocimiento</h3>
-							{% for a in teacher.areas %}
+							{% for a in t_areas %}
 								<p>{{a}}</p>
 							{% endfor %}
 						</div>

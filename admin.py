@@ -71,14 +71,14 @@ class Areas(Handler):
 	def get(self):
 		if self.user:
 			if self.user.mail in admins:
-				areas = teachme_db.areas.query()
+				areas = teachme_db.areas.query().order(teachme_db.areas.name)
 				self.render("admin_areas.html", areas = areas)
 				return
 		self.abort(403)
 		return
 		
 	def post(self):
-		if not self.user.mail == "julian.kmazo@gmail.com":
+		if not self.user.mail in admins:
 			self.abort(403)
 			return
 		area = self.request.get("area")
