@@ -69,7 +69,7 @@ def teachouts_status(touts):
 	for t in touts:
 		if t.status_mentor=="ok" and t.status_user =="ok":
 			t.status = "ok"
-			t.log.append(now + " El teachout a finalizado con exito.")
+			t.log.append(now + " El teachout ha finalizado con exito.")
 			t.put()
 			tout_mentor_ok(t.teacher, t.key, t.date)
 			tout_user_ok(t.learner, t.key, t.date)

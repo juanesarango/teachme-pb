@@ -229,7 +229,7 @@ class Room(db.Model):
     elif not self.user2:
       self.user2 = user
     else:
-      raise RuntimeError('room is full')
+      raise RuntimeError('La sala está llena')
     self.put()
 
   def remove_user(self, user):
