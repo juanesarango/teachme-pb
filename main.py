@@ -11,6 +11,7 @@ from google.appengine.ext import ndb
 from google.appengine.ext import blobstore
 from google.appengine.ext.webapp import blobstore_handlers
 from google.appengine.api import mail
+from google.appengine.api import images
 import teachme_db
 import fns
 import booking
@@ -269,13 +270,12 @@ class profile_teacher(Handler, blobstore_handlers.BlobstoreUploadHandler):
 		
 		te_id = self.request.get("te_id")
 		teacher = ndb.Key(teachme_db.teacher, int(te_id), parent = self.user.key).get()
+
 		profile_pic = self.get_uploads("profile_pic")
 		if profile_pic:
 			blob_info = profile_pic[0]
-
 		teacher.profile_pic = blob_info.key()
 		teacher.put()
-
 		self.redirect("/profile/teacher/%s" % str(teacher.key.id()))
 
 class calendar_teacher_add(Handler):
