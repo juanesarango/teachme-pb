@@ -210,6 +210,7 @@ class teachouts(Handler):
 			return
 		now = datetime.datetime.now()
 		ready = datetime.timedelta(minutes = 15)
+		
 		m_touts = {}
 		learner = {}
 		m_disable = {}
@@ -224,6 +225,13 @@ class teachouts(Handler):
 					m_disable[mt] = True
 					m_faltan[mt] = str(m_touts[mt].date-now)
 
+		m_etouts = {}
+		elearner = {}
+		if self.teacher:
+			for mt in self.teacher.teachouts_expired:
+				m_etouts[mt] = mt.get()
+				elearner[mt] = m_etouts[mt].learner.get()
+
 		touts = {}
 		mentor = {}
 		disable = {}
@@ -237,7 +245,14 @@ class teachouts(Handler):
 				disable[t] = True
 				faltan[t] = str(touts[t].date - now)
 
-		self.render("/teachouts.html", touts = touts, mentor = mentor, disable = disable, faltan = faltan, m_touts = m_touts, learner = learner, m_disable = m_disable, m_faltan = m_faltan)
+		etouts = {}
+		ementor = {}
+		for t in self.user.teachouts_expired:
+			etouts[t]= t.get()
+			ementor[t] = etouts[t].teacher.get()
+
+
+		self.render("/teachouts.html", touts = touts, mentor = mentor, disable = disable, faltan = faltan, m_touts = m_touts, learner = learner, m_disable = m_disable, m_faltan = m_faltan, etouts = etouts, ementor=ementor, m_etouts= m_etouts, elearner=elearner)
 
 class aprende(Handler):
 	def get(self, ar):

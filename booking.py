@@ -70,48 +70,53 @@ def teachouts_status(touts):
 		if t.status_mentor=="ok" and t.status_user =="ok":
 			t.status = "ok"
 			t.log.append(now + " El teachout ha finalizado con exito.")
-			t.put()
-			tout_mentor_ok(t.teacher, t.key, t.date)
-			tout_user_ok(t.learner, t.key, t.date)
-			
 
 		if t.status_mentor == None and t.status_user ==None:
 			t.status="fail"
 			t.log.append(now + " Los participantes no han atendido el teachout.")
-			t.put()
-			tout_mentor_fail(t.teacher, t.key, t.date)
-			tout_user_fail(t.learner, t.key, t.date)
 
-def tout_mentor_ok(mentor, tout, date):
-	m = mentor.get()
-	m.teachouts.remove(tout)
-	m.teachout_given.append(tout)
-	if date in m.date_reserved:
-		m.date_reserved.remove(date)
-	m.put()
+		if t.status_mentor=="ok" and t.status_user ==None:
+			t.status = "only_mentor"
+			t.log.append(now + " El aprendiz no asistio al teachout.")
 
-def tout_user_ok(user, tout, date):
-	u = user.get()
-	u.teachouts.remove(tout)
-	u.teachout_attended(tout)
-	if date in u.date_reserved:
-		u.date_reserved.remove(date)
-	u.put()
+		if t.status_mentor == None and t.status_user =="ok":
+			t.status="only_user"
+			t.log.append(now + " El mentor no asistio al teachout.")
+		
+		t.put()
+		tout_mentor_update(t.teacher, t.key, t.date)
+		tout_user_update(t.learner, t.key, t.date)
 
-def tout_mentor_fail(mentor, tout, date):
+# def tout_mentor_ok(mentor, tout, date):
+# 	m = mentor.get()
+# 	m.teachouts.remove(tout)
+# 	m.teachouts_expired.append(tout)
+# 	if date in m.date_reserved:
+# 		m.date_reserved.remove(date)
+# 	m.put()
+
+# def tout_user_ok(user, tout, date):
+# 	u = user.get()
+# 	u.teachouts.remove(tout)
+# 	u.teachouts_expired.append(tout)
+# 	if date in u.date_reserved:
+# 		u.date_reserved.remove(date)
+# 	u.put()
+
+def tout_mentor_update(mentor, tout, date):
 	m = mentor.get()
 	if tout in m.teachouts:
 		m.teachouts.remove(tout)
-	m.teachout_notgiven.append(tout)
+	m.teachouts_expired.append(tout)
 	if date in m.date_reserved:
 		m.date_reserved.remove(date)
 	m.put()
 
-def tout_user_fail(user, tout, date):
+def tout_user_update(user, tout, date):
 	u = user.get()
 	if tout in u.teachouts:
 		u.teachouts.remove(tout)
-	u.teachout_notattended.append(tout)
+	u.teachouts_expired.append(tout)
 	if date in u.date_reserved:
 		u.date_reserved.remove(date)
 	u.put()
