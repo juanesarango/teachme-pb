@@ -3,7 +3,6 @@ version: v1
 runtime: python27
 api_version: 1
 threadsafe: true
-
 handlers:
 - url: /static
   static_dir: templates/static
@@ -26,17 +25,19 @@ handlers:
 
 - url: /admin.*
   script: admin.app
+#  secure: always
 
 - url: /session.*
   script: wrtc.app
-  secure: always
+#  secure: always
 
 - url: /_ah/channel.*
   script: wrtc.app
-  secure: always
+#  secure: always
 
 - url: /.*
   script: main.app
+#  secure: always
 
 inbound_services:
 - channel_presence

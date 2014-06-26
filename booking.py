@@ -62,7 +62,7 @@ def check_availability_user(user, dt):
 
 def teachouts_past():
 	dif = datetime.datetime.now() - datetime.timedelta(hours = 1)
-	return teachme_db.teachout.query(teachme_db.teachout.date<= dif)
+	return teachme_db.teachout.query(ndb.AND(teachme_db.teachout.date<= dif, teachme_db.teachout.status == None))
 
 def teachouts_status(touts):
 	now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M UTC")

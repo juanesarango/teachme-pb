@@ -76,7 +76,7 @@ function maybeRequestTurn() {
 
   var currentDomain = document.domain;
   if (currentDomain.search('localhost') === -1 &&
-      currentDomain.search('apprtc') === -1) {
+      currentDomain.search('teachme') === -1) {
     // Not authorized domain. Try with default STUN instead.
     turnDone = true;
     return;
