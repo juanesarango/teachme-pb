@@ -164,6 +164,13 @@ class teacher(Handler):
 			if booking.check_availability_mentor(teacher_key, meet) and booking.check_availability_user(self.user, meet):
 				m = teachme_db.teachout(date = meet, learner = self.user.key, teacher = teacher_key.key)
 				m.put()
+
+				html_user = render_str("mail_booking.html", sujeto = self.user.name, mentor = teacher_key, t = m)
+				html_mentor = render_str("mail_booking_mentor.html", sujeto = teacher_key.name, u = self.user, t = m)
+				subject = "Confirmación de sesión agendada"
+				mail.send_mail("info@teachmeapp.com", self.user.mail, subject, "", html = html_user)
+				mail.send_mail("info@teachmeapp.com", teacher_key.mail, subject, "", html = html_mentor)
+
 				self.user.teachouts.append(m.key)
 				self.user.date_reserved.append(m.date)
 				self.user.put()
@@ -191,6 +198,7 @@ class comparte(Handler):
 			return
 		name = self.user.name
 		lname = self.user.lname
+		mail = self.user.mail
 		ciudad = self.request.get("ciudad")
 		pais = self.request.get("pais")
 		linkedin = self.request.get("linkedin")
@@ -203,7 +211,7 @@ class comparte(Handler):
 
 		about = self.request.get("about")
 
-		t = teachme_db.teacher(name = name, lname=lname, ciudad = ciudad, pais = pais, linkedin = linkedin, areas = areas_in, about = about, aceptado = False, parent = self.user.key)
+		t = teachme_db.teacher(name = name, lname=lname, mail = mail, ciudad = ciudad, pais = pais, linkedin = linkedin, areas = areas_in, about = about, aceptado = False, parent = self.user.key)
 		t.put()
 		self.login(self.user, t)
 		self.redirect("/profile/teacher/%s" % str(t.key.id()))
@@ -297,7 +305,9 @@ class profile_teacher(Handler, blobstore_handlers.BlobstoreUploadHandler):
 		if profile_pic:
 			blob_info = profile_pic[0]
 		teacher.profile_pic = blob_info.key()
+		self.user.profile_pic = blob_info.key()
 		teacher.put()
+		self.user.put()
 		self.redirect("/profile/teacher/%s" % str(teacher.key.id()))
 
 class calendar_teacher_add(Handler):
@@ -319,7 +329,10 @@ class calendar_teacher_add(Handler):
 				booking.erase_past_dates(teacher)
 				teacher.date_available.append(date)
 				sorted(teacher.date_available)
+				teacher.mail = self.user.mail #Borrar esto
+				self.user.profile_pic = teacher.profile_pic
 				teacher.put()
+				self.user.put()
 
 		
 		self.redirect("/profile/teacher/" + str(teacher.key.id()))

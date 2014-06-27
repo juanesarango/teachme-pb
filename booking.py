@@ -1,6 +1,7 @@
 import datetime
 from google.appengine.ext import ndb
 import teachme_db
+import logging
 
 def parse_24_12(hora, minuto):
 	if int(hora)<=12:
@@ -63,7 +64,7 @@ def check_availability_user(user, dt):
 def teachouts_past():
 	dif = datetime.datetime.now() - datetime.timedelta(hours = 1)
 	return teachme_db.teachout.query(ndb.AND(teachme_db.teachout.date<= dif, teachme_db.teachout.status == None))
-
+	#return teachme_db.teachout.query(teachme_db.teachout.date<= dif)
 def teachouts_status(touts):
 	now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M UTC")
 	for t in touts:
@@ -82,10 +83,10 @@ def teachouts_status(touts):
 		if t.status_mentor == None and t.status_user =="ok":
 			t.status="only_user"
 			t.log.append(now + " El mentor no asistio al teachout.")
-		
-		t.put()
+		logging.info(t.teacher)
 		tout_mentor_update(t.teacher, t.key, t.date)
 		tout_user_update(t.learner, t.key, t.date)
+		t.put()
 
 # def tout_mentor_ok(mentor, tout, date):
 # 	m = mentor.get()
@@ -105,9 +106,15 @@ def teachouts_status(touts):
 
 def tout_mentor_update(mentor, tout, date):
 	m = mentor.get()
+	logging.info(m)
 	if tout in m.teachouts:
 		m.teachouts.remove(tout)
 	m.teachouts_expired.append(tout)
+	# lista = []
+	# for i in m.teachouts_expired:
+	# 	if i not in lista:
+	# 		lista.append(i)
+	# m.teachouts_expired = lista
 	if date in m.date_reserved:
 		m.date_reserved.remove(date)
 	m.put()
@@ -117,6 +124,11 @@ def tout_user_update(user, tout, date):
 	if tout in u.teachouts:
 		u.teachouts.remove(tout)
 	u.teachouts_expired.append(tout)
+	# lista = []
+	# for i in u.teachouts_expired:
+	# 	if i not in lista:
+	# 		lista.append(i)
+	# u.teachouts_expired = lista
 	if date in u.date_reserved:
 		u.date_reserved.remove(date)
 	u.put()

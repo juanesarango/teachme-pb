@@ -22,10 +22,10 @@ class user(ndb.Model):
 	mail = ndb.StringProperty(required = True)
 	pw_hash = ndb.StringProperty(required = True, indexed = False)
 	date_created = ndb.DateTimeProperty(auto_now_add = True)
+	profile_pic = ndb.BlobKeyProperty()
 
 	teachouts = ndb.KeyProperty(repeated = True, kind = "teachout")
-	teachout_attended = ndb.KeyProperty(repeated = True, kind = "teachout")
-	teachout_notattended = ndb.KeyProperty(repeated = True, kind = "teachout")
+	teachouts_expired = ndb.KeyProperty(repeated = True, kind = "teachout")
 	
 	date_reserved = ndb.DateTimeProperty(repeated = True)
 
@@ -43,6 +43,7 @@ class user(ndb.Model):
 class teacher(ndb.Model):
 	name = ndb.StringProperty()
 	lname = ndb.StringProperty()
+	mail = ndb.StringProperty()
 	about = ndb.TextProperty()
 	profile_pic = ndb.BlobKeyProperty()
 	ciudad = ndb.StringProperty()
@@ -57,16 +58,20 @@ class teacher(ndb.Model):
 	date_reserved = ndb.DateTimeProperty(repeated = True)
 
 	teachouts = ndb.KeyProperty(repeated = True, kind = "teachout")
-	teachout_given = ndb.KeyProperty(repeated = True, kind = "teachout")
-	teachout_notgiven = ndb.KeyProperty(repeated = True, kind = "teachout")
+	teachouts_expired = ndb.KeyProperty(repeated = True, kind = "teachout")
 
 	aceptado = ndb.BooleanProperty()
+
+class areas(ndb.Model):
+	name = ndb.StringProperty(required = True)
+	subarea = ndb.StringProperty(repeated = True)
 
 class teachout(ndb.Model):
 	date = ndb.DateTimeProperty()
 	learner = ndb.KeyProperty(kind = user)
 	teacher = ndb.KeyProperty(kind = teacher)
 	cost = ndb.IntegerProperty()
+	area = ndb.KeyProperty(kind = areas)
 	date_created = ndb.DateTimeProperty(auto_now_add = True)
 
 	status = ndb.StringProperty()
@@ -75,7 +80,5 @@ class teachout(ndb.Model):
 
 	log = ndb.StringProperty(repeated = True)
 
-class areas(ndb.Model):
-	name = ndb.StringProperty(required = True)
-	subarea = ndb.StringProperty(repeated = True)
+
 	

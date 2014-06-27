@@ -353,7 +353,7 @@ class MainPage(webapp2.RequestHandler):
     tkey = self.read_secure_cookie("tei")
     self.user = ukey and ndb.Key(urlsafe=ukey).get()
     self.teacher = tkey and ndb.Key(urlsafe=tkey).get()
-    logging.error(self.user.name)
+    #logging.error(self.user.name)
 
   """The main UI page, renders the 'index.html' template."""
   def get(self):
@@ -376,7 +376,7 @@ class MainPage(webapp2.RequestHandler):
     if not stun_server:
       stun_server = get_default_stun_server(user_agent)
     turn_server = self.request.get('ts')
-
+    logging.info("El servidor stunt: "+ stun_server)
     ts_pwd = self.request.get('tp')
 
     # Use "audio" and "video" to set the media stream constraints. Defined here:

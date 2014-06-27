@@ -20,7 +20,7 @@
 					<div class="col-md-6 col-md-offset-3 bckg-b-80" title="Faltan {{m_faltan[t]}} para que empieze la mentoria">	
 						<div class="row">
 							<div class="col-md-3">
-								<img src="/static/avatar.png" class="img-circle img-100">
+								<img {% if learner[t].profile_pic %} src="/serve/{{learner[t].profile_pic}}" {% else %} src="/static/avatar.png"{% endif %} class="img-circle img-100">
 							</div>
 							<div class="col-md-9">
 								<div class="row">
@@ -123,57 +123,59 @@
 				</div>
 			{% endfor %}
 <!-- Modificación Juanes -->
-			{% if teacher.teachouts_expired %}
-				<div class="row">
-					<div class="col-md-5 col-md-offset-1">
-						<h2 class="font-w">Sesiones dadas pasadas</h2>
+			{% if teacher %}
+				{% if teacher.teachouts_expired %}
+					<div class="row">
+						<div class="col-md-5 col-md-offset-1">
+							<h2 class="font-w">Sesiones dadas</h2>
+						</div>
 					</div>
-				</div>
-			{% endif %}
-			{% for t in teacher.teachouts_expired[:5] %}
-				<div class="row">
-					<div class="col-md-6 col-md-offset-3 bckg-b-80">	
-						<div class="row">
-							<div class="col-md-3">
-								<img src="/static/avatar.png" class="img-circle img-100">
-							</div>
-							<div class="col-md-9">
-								<div class="row">
-									<div class="col-md-7">
-										<h4>Sin costo</h4>
-									</div>
-									<div class="col-md-5">
-										<script type="text/javascript">
-											$(document).ready(function(){
-												date = new Date("{{m_etouts[t].date.strftime("%Y-%m-%d %H:%M UTC")}}");
-												console.log(date);
-												$('#{{m_etouts[t].key.id()}}').text(date.toDateString()+' at '+ date.toLocaleTimeString());
-											})
-										</script>
-										<p id="{{m_etouts[t].key.id()}}"></p>
-									</div>
+				{% endif %}
+				{% for t in teacher.teachouts_expired[:5] %}
+					<div class="row">
+						<div class="col-md-6 col-md-offset-3 bckg-b-80">	
+							<div class="row">
+								<div class="col-md-3">
+									<img {% if elearner[t].profile_pic %} src="/serve/{{elearner[t].profile_pic}}" {% else %} src="/static/avatar.png"{% endif %} class="img-circle img-100">
 								</div>
-								<hr class="hr">
-								<div class="row">
-									<div class="col-md-8">
-										<h4><strong>{{elearner[t].name}}</strong> {{elearner[t].lname}}</h4>
+								<div class="col-md-9">
+									<div class="row">
+										<div class="col-md-7">
+											<h4>Sin costo</h4>
+										</div>
+										<div class="col-md-5">
+											<script type="text/javascript">
+												$(document).ready(function(){
+													date = new Date("{{m_etouts[t].date.strftime("%Y-%m-%d %H:%M UTC")}}");
+													console.log(date);
+													$('#{{m_etouts[t].key.id()}}').text(date.toDateString()+' at '+ date.toLocaleTimeString());
+												})
+											</script>
+											<p id="{{m_etouts[t].key.id()}}"></p>
+										</div>
 									</div>
-									<div class="col-md-4">
-										<div class="row">
-											<button {% if m_etouts[t].status=="ok" %} class="btn btn-success" {% else %} class="btn btn-danger" {%endif %} disabled="disabled">{% if m_etouts[t].status=="ok" %} Realizada {% else %} No realizada {%endif %}</button> 
+									<hr class="hr">
+									<div class="row">
+										<div class="col-md-8">
+											<h4><strong>{{elearner[t].name}}</strong> {{elearner[t].lname}}</h4>
+										</div>
+										<div class="col-md-4">
+											<div class="row">
+												<button {% if m_etouts[t].status=="ok" %} class="btn btn-success" {% else %} class="btn btn-danger" {%endif %} disabled="disabled">{% if m_etouts[t].status=="ok" %} Realizada {% else %} No realizada {%endif %}</button> 
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<br>
-				<br>
-			{% endfor %}
+					<br>
+					<br>
+				{% endfor %}
+			{% endif %}
 			<div class="row">
 				<div class="col-md-5 col-md-offset-1">
-					<h2 class="font-w">Pasadas sesiones recibidas</h2>
+					<h2 class="font-w">Sesiones recibidas</h2>
 				</div>
 			</div>
 			{% for t in user.teachouts_expired[:5] %}
