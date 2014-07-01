@@ -314,17 +314,26 @@ class profile_teacher(Handler, blobstore_handlers.BlobstoreUploadHandler):
 		profile_pic = self.get_uploads("profile_pic")
 		if profile_pic:
 			blob_info = profile_pic[0]
-		if teacher.profile_pic:
-			if teacher.profile_pic_r:
-				images.delete_serving_url(teacher.profile_pic)
-			blobstore.delete(teacher.profile_pic)
+			if teacher.profile_pic:
+				if teacher.profile_pic_r:
+					images.delete_serving_url(teacher.profile_pic)
+				blobstore.delete(teacher.profile_pic)
+			teacher.profile_pic = blob_info.key()
+			teacher.profile_pic_r = images.get_serving_url(teacher.profile_pic, size = 140)
+			self.user.profile_pic = blob_info.key()
+			self.user.profile_pic_r = teacher.profile_pic_r
+			teacher.put()
+			self.user.put()
+		self.redirect("/profile/teacher/%s" % str(teacher.key.id()))
 
-		teacher.profile_pic = blob_info.key()
-		teacher.profile_pic_r = images.get_serving_url(teacher.profile_pic, size = 140)
-		self.user.profile_pic = blob_info.key()
-		self.user.profile_pic_r = teacher.profile_pic_r
-		teacher.put()
-		self.user.put()
+class editabout(Handler):
+	def post(self):
+		te_id = self.request.get("te_id")
+		teacher = ndb.Key(teachme_db.teacher, int(te_id), parent = self.user.key).get()
+		about = self.request.get("editabout")
+		if about:
+			teacher.about = about
+			teacher.put()
 		self.redirect("/profile/teacher/%s" % str(teacher.key.id()))
 
 class calendar_teacher_add(Handler):
@@ -399,6 +408,7 @@ app = webapp2.WSGIApplication([('/', MainPage),
 								('/teachouts', teachouts),
 								('/aprende/([0-9]+)?', aprende),
 								('/profile/teacher/([0-9]+)?', profile_teacher),
+								('/editabout',editabout)
 								('/calendar/teacher/add', calendar_teacher_add),
 								('/contacto', contacto),
 								('/upload', profile_teacher),
