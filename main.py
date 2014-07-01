@@ -90,7 +90,10 @@ class MainPage(Handler):
 
 class signup(Handler):
 	def get(self):
-		self.render("signup.html")
+		redirect = self.request.get('redirect')
+		if not redirect:
+			redirect = '/'
+		self.render("signup.html", redirect = redirect)
 
 	def post(self):
 		have_error = False
@@ -99,8 +102,9 @@ class signup(Handler):
 		self.mail = self.request.get('mail')
 		self.pw = self.request.get('pw')
 		self.pwcon = self.request.get('pwcon')
+		self.redirect = self.request.get('redirect')
 
-		params = dict(name = self.name, email = self.mail, lname = self.lname)
+		params = dict(name = self.name, email = self.mail, lname = self.lname, redirect= self.redirect)
 
 		params, have_error =fns.valid_register(self.name, self.lname, self.pw, self.pwcon, self.mail, params, have_error)
 
@@ -118,24 +122,28 @@ class signup(Handler):
 				html = render_str("mail_template.html", sujeto = u.name)
 				mail.send_mail("info@teachmeapp.com", u.mail, subject, "", html = html)
 				self.login(u, None)
-				self.redirect("/")
+				self.redirect(self.redirect)
 
 class login(Handler):
 	def get(self):
-		self.render("login.html")
+		redirect = self.request.get('redirect')
+		if not redirect:
+			redirect = '/'
+		self.render("login.html", redirect= redirect)
 
 	def post(self):
 		mail = self.request.get("mail")
 		pw = self.request.get("pw")
+		redirect = self.request.get("redirect")
 
 		u = teachme_db.user.login(mail, pw)
 		if u:
 			t = teachme_db.teacher.query(ancestor = u.key).get()
 			self.login(u, t)
-			self.redirect("/")
+			self.redirect(redirect)
 		else:
 			msg = u"El correo o la contraseña son inválidos"
-			self.render("login.html", error = msg)
+			self.render("login.html", error = msg, redirect = redirect)
 
 class logout(Handler):
 	def get(self):
