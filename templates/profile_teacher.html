@@ -14,7 +14,7 @@
 					<br>
 					<div class="row">
 						<div class="col-md-3 col-md-offset-1">
-							<img class="img-circle img-100" {% if teacher.profile_pic %}src="/serve/{{teacher.profile_pic}}"{% else %} src="/static/avatar.png"{% endif %}>
+							<img class="img-circle img-100" {% if teacher.profile_pic_r %}src="{{teacher.profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}>
 							<h2>{{teacher.name}}</h2>
 							<h3>{{teacher.lname}}</h3>
 							<div class="row">

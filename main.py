@@ -47,12 +47,12 @@ class Handler(webapp2.RequestHandler):
 	def set_secure_cookie(self, name, val):
 		cookie_val = fns.make_secure_val(val)
 		
-		if self.request.get("remember"=="yes"):
-			next_month = datetime.datetime.now() + datetime.timedelta(months=1)).strftime('%a, %d %b %Y %H:%M:%S GMT')
+		if self.request.get("remember")=="yes":
+			next_month = (datetime.datetime.now() + datetime.timedelta(days=30)).strftime('%a, %d %b %Y %H:%M:%S GMT')
 			self.response.headers.add_header('Set-Cookie','%s=%s; Path=/; expires= %s' % (name, cookie_val, next_month))
 			#self.response.headers.add_header('Set-Cookie','%s=%s; Path=/' % (name, cookie_val))
 		else:
-			tomorrow = datetime.datetime.now() + datetime.timedelta(days=1)).strftime('%a, %d %b %Y %H:%M:%S GMT')
+			tomorrow = (datetime.datetime.now() + datetime.timedelta(days=1)).strftime('%a, %d %b %Y %H:%M:%S GMT')
 			self.response.headers.add_header('Set-Cookie','%s=%s; Path=/; expires= %s' % (name, cookie_val, tomorrow))
 		 
 	def read_secure_cookie(self, name):
@@ -147,7 +147,7 @@ class teacher(Handler):
 		mentor = ndb.Key(urlsafe = str(id)).get()
 		t_areas = []
 		for a in mentor.areas:
-			t_areas.append(teachme_db.areas.get_by_id(int(a)).name)
+			t_areas.append(teachme_db.areas.get_by_id(int(a)))
 		fechas = json.dumps(booking.UTCfechas(mentor.date_available))
 		dates = json.dumps(fns.solo_dates(mentor.date_available))
 		hours = json.dumps(fns.solo_hours(mentor.date_available))
@@ -304,8 +304,15 @@ class profile_teacher(Handler, blobstore_handlers.BlobstoreUploadHandler):
 		profile_pic = self.get_uploads("profile_pic")
 		if profile_pic:
 			blob_info = profile_pic[0]
+		if teacher.profile_pic:
+			if teacher.profile_pic_r:
+				images.delete_serving_url(teacher.profile_pic)
+			blobstore.delete(teacher.profile_pic)
+
 		teacher.profile_pic = blob_info.key()
+		teacher.profile_pic_r = images.get_serving_url(teacher.profile_pic, size = 140)
 		self.user.profile_pic = blob_info.key()
+		self.user.profile_pic_r = teacher.profile_pic_r
 		teacher.put()
 		self.user.put()
 		self.redirect("/profile/teacher/%s" % str(teacher.key.id()))

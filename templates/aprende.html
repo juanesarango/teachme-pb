@@ -20,7 +20,7 @@
 						<div class="row">
 							<div class="col-md-4">
 								<a href="/teacher/{{t.key.urlsafe()}}">
-									<img class="img-circle img-100" {% if t.profile_pic %}src="/serve/{{t.profile_pic}}"{% else %} src="/static/avatar.png"{% endif %}>
+									<img class="img-circle img-100" {% if t.profile_pic_r %}src="{{t.profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}>
 								</a>
 							</div>
 							<div class="col-md-8">

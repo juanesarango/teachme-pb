@@ -69,12 +69,12 @@
 						<div class="row">
 							<div class="col-md-4">
 								<a href="/teacher/{{t.key.urlsafe()}}">
-									<img class="img-circle img-100" {% if t.profile_pic %}src="/serve/{{t.profile_pic}}"{% else %} src="/static/avatar.png"{% endif %}>
+									<img class="img-circle img-100" {% if t.profile_pic_r %}src="{{t.profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}>
 								</a>
 							</div>
 							<div class="col-md-8">
 								<a href="/teacher/{{t.key.urlsafe()}}"><h3>{{t.name}} {{t.lname}}</h3></a>
-								<p class="pf-70">{{t.about|truncate(170, True)}}</p>
+								<p class="pf-70">{{t.about|truncate(120, True)}}</p>
 								<p>Tarifa: $15 USD por hora</p>
 							</div>
 						</div>

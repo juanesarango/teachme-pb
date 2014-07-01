@@ -23,6 +23,7 @@ class user(ndb.Model):
 	pw_hash = ndb.StringProperty(required = True, indexed = False)
 	date_created = ndb.DateTimeProperty(auto_now_add = True)
 	profile_pic = ndb.BlobKeyProperty()
+	profile_pic_r = ndb.StringProperty()
 
 	teachouts = ndb.KeyProperty(repeated = True, kind = "teachout")
 	teachouts_expired = ndb.KeyProperty(repeated = True, kind = "teachout")
@@ -46,6 +47,7 @@ class teacher(ndb.Model):
 	mail = ndb.StringProperty()
 	about = ndb.TextProperty()
 	profile_pic = ndb.BlobKeyProperty()
+	profile_pic_r = ndb.StringProperty()
 	ciudad = ndb.StringProperty()
 	pais = ndb.StringProperty()
 	idiomas = ndb.StringProperty(repeated = True)
