@@ -9,11 +9,12 @@
 		<br>
 		<div class="container">
 			<div class="row">
+				<br>
+				<br>
 				<div class="col-md-10 col-md-offset-1 bckg-w-80">
-					<br>
-					<br>
 					<div class="row">
 						<div class="col-md-3 col-md-offset-1">
+							<br>
 							<img class="img-circle img-100" {% if teacher.profile_pic_r %}src="{{teacher.profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}>
 							<h2>{{teacher.name}}</h2>
 							<h3>{{teacher.lname}}</h3>
@@ -33,6 +34,22 @@
 						</div>
 						<div class="col-md-7">
 							<h2>Acerca de ti</h2>
+							<!--  -->
+							<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Editar<b class="caret"></b></a>
+								<ul class="dropdown-menu min-width-300">
+									<li>
+										<a>
+											<form method="post" action="/editabout" role="form">
+												<label for="t-editabout">Acerca de ti:</label>
+												<textarea name="editabout" class="form-control" id="t-editabout" rows="6" placeholder="Edita la información sobre tu perfil, intereses y motivaciones" required></textarea>
+												<input type="hidden" name="te_id" value="{{teacher.key.id()}}">	
+												<button type="submit" class="btn btn-success">Editar</button>
+											</form>
+										</a>
+									</li>
+								</ul>
+							</li>
+							<!--  -->
 							<p>{{teacher.about}}</p>
 						</div>
 					</div>
@@ -78,6 +95,7 @@
 							</div>
 						</div>
 					</div>
+					<br>
 				</div>
 			</div>
 		</div>	
