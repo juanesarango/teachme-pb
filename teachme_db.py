@@ -73,8 +73,9 @@ class teachout(ndb.Model):
 	learner = ndb.KeyProperty(kind = user)
 	teacher = ndb.KeyProperty(kind = teacher)
 	cost = ndb.IntegerProperty()
-	area = ndb.KeyProperty(kind = areas)
+	area = ndb.IntegerProperty()
 	date_created = ndb.DateTimeProperty(auto_now_add = True)
+	temas = ndb.TextProperty()
 
 	status = ndb.StringProperty()
 	status_mentor = ndb.StringProperty()

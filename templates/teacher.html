@@ -34,18 +34,17 @@
 							<p><a href="{{mentor.linkedin}}" target="_blank">{{mentor.linkedin}}</a></p>
 						</div>
 						<div class="col-md-5">
-							<h3>Areas del conocimiento</h3>
+							<h3>Áreas del conocimiento</h3>
 							{% for a in t_areas %}
-								<p>{{a}}</p>
+								<p>{{a.name}}</p>
 							{% endfor %}
 						</div>
 					</div>
 					<hr>
 					<div class="row">
-						<div class="col-md-5 col-md-offset-1">
+						<div class="col-md-4 col-md-offset-1">
 							<h3>Agenda libre</h3>
 							<div class="calendario">
-								
 							</div>
 						</div>
 						<div class="col-md-3">
@@ -55,7 +54,24 @@
 								</div>
 								<button class="btn btn-success" type="submit">Agendar</button>
 							</form>
-							
+						</div>
+						<div class="col-md-4">
+							<div class="row">
+								<div class="form-group">
+									<label for="t-select-area">Área</label>
+									<select name ="select-area" class="form-control" id="t-selec-area" required>
+										{% for a in t_areas %}
+											<option value= "{{a.name}}">{{a.name}}</option>
+										{% endfor %}
+									</select>
+								</div>
+							</div>
+							<div class="row">
+								<div class="form-group">
+									<label for="t-temas">Temas de la sesión</label>
+									<textarea name="temas" class="form-control" id="t-temas" rows="6" placeholder="Aprovecha este espacio para comunicarle al mentor los temas que quisieras abordar durante la sesión." required></textarea>
+								</div>
+							</div>
 						</div>
 					</div>
 					<br>

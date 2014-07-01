@@ -166,11 +166,13 @@ class teacher(Handler):
 			self.abort(403)
 			return
 		teacher_key = ndb.Key(urlsafe=str(id)).get()
+		area = self.request.get("select-area") 
+		temas = self.request.get("temas")
 		meet = datetime.datetime.strptime(self.request.get("date-meet"), "%Y-%m-%d %H:%M")
 
 		if meet and teacher_key:
 			if booking.check_availability_mentor(teacher_key, meet) and booking.check_availability_user(self.user, meet):
-				m = teachme_db.teachout(date = meet, learner = self.user.key, teacher = teacher_key.key)
+				m = teachme_db.teachout(date = meet, learner = self.user.key, teacher = teacher_key.key, area = area, tema = tema)
 				m.put()
 
 				html_user = render_str("mail_booking.html", sujeto = self.user.name, mentor = teacher_key, t = m)
