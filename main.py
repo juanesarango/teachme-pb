@@ -102,9 +102,9 @@ class signup(Handler):
 		self.mail = self.request.get('mail')
 		self.pw = self.request.get('pw')
 		self.pwcon = self.request.get('pwcon')
-		self.redirect = self.request.get('redirect')
+		redirect = self.request.get('redirect')
 
-		params = dict(name = self.name, email = self.mail, lname = self.lname, redirect= self.redirect)
+		params = dict(name = self.name, email = self.mail, lname = self.lname, redirect= redirect)
 
 		params, have_error =fns.valid_register(self.name, self.lname, self.pw, self.pwcon, self.mail, params, have_error)
 
@@ -122,7 +122,7 @@ class signup(Handler):
 				html = render_str("mail_template.html", sujeto = u.name)
 				mail.send_mail("info@teachmeapp.com", u.mail, subject, "", html = html)
 				self.login(u, None)
-				self.redirect(self.redirect)
+				self.redirect(redirect)
 
 class login(Handler):
 	def get(self):
@@ -140,7 +140,10 @@ class login(Handler):
 		if u:
 			t = teachme_db.teacher.query(ancestor = u.key).get()
 			self.login(u, t)
-			self.redirect(redirect)
+			if redirect:
+				self.redirect(redirect)
+			else:
+				self.redirect("/")
 		else:
 			msg = u"El correo o la contraseña son inválidos"
 			self.render("login.html", error = msg, redirect = redirect)
@@ -167,7 +170,7 @@ class teacher(Handler):
 			return
 		teacher_key = ndb.Key(urlsafe=str(id)).get()
 		area = self.request.get("select-area") 
-		temas = self.request.get("temas")
+		tema = self.request.get("tema")
 		meet = datetime.datetime.strptime(self.request.get("date-meet"), "%Y-%m-%d %H:%M")
 
 		if meet and teacher_key:
@@ -393,6 +396,16 @@ class teachouts_sta(Handler):
 		t = booking.teachouts_past()
 		booking.teachouts_status(t)
 
+class reminder_mailing_24(Handler):
+	def get(self):
+		t24 = booking.teachouts_24()
+		booking.reminder_mail(t24, 24)
+
+class reminder_mailing_15(Handler):
+	def get(self):
+		t15 = booking.teachouts_15()
+		booking.reminder_mail(t15, 15)
+
 class servehandler(blobstore_handlers.BlobstoreDownloadHandler):
     def get(self, resource):
         resource = str(urllib.unquote(resource))
@@ -413,6 +426,8 @@ app = webapp2.WSGIApplication([('/', MainPage),
 								('/contacto', contacto),
 								('/upload', profile_teacher),
 								('/tasks/teachoutsta', teachouts_sta), 
+								('/tasks/remindermailing24', reminder_mailing_24),
+								('/tasks/remindermailing15', reminder_mailing_15),
 								('/serve/([^/]+)?', servehandler)
 								],
 								debug=True)

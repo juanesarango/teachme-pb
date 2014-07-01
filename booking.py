@@ -1,7 +1,10 @@
+# -*- coding: utf-8 -*-
 import datetime
 from google.appengine.ext import ndb
+from google.appengine.api import mail
 import teachme_db
 import logging
+import main
 
 def parse_24_12(hora, minuto):
 	if int(hora)<=12:
@@ -88,21 +91,6 @@ def teachouts_status(touts):
 		tout_user_update(t.learner, t.key, t.date)
 		t.put()
 
-# def tout_mentor_ok(mentor, tout, date):
-# 	m = mentor.get()
-# 	m.teachouts.remove(tout)
-# 	m.teachouts_expired.append(tout)
-# 	if date in m.date_reserved:
-# 		m.date_reserved.remove(date)
-# 	m.put()
-
-# def tout_user_ok(user, tout, date):
-# 	u = user.get()
-# 	u.teachouts.remove(tout)
-# 	u.teachouts_expired.append(tout)
-# 	if date in u.date_reserved:
-# 		u.date_reserved.remove(date)
-# 	u.put()
 
 def tout_mentor_update(mentor, tout, date):
 	m = mentor.get()
@@ -132,3 +120,28 @@ def tout_user_update(user, tout, date):
 	if date in u.date_reserved:
 		u.date_reserved.remove(date)
 	u.put()
+
+def teachouts_24():
+	dif26 = datetime.datetime.now() + datetime.timedelta(hours = 26)
+	dif24 = datetime.datetime.now() + datetime.timedelta(hours = 22)
+	return teachme_db.teachout.query(ndb.AND(teachme_db.teachout.date<= dif26, teachme_db.teachout.date >dif24, teachme_db.teachout.status == None))
+
+def teachouts_15():
+	dif40 = datetime.datetime.now() + datetime.timedelta(minutes = 40)
+	dif20 = datetime.datetime.now() + datetime.timedelta(minutes = 20)
+	return teachme_db.teachout.query(ndb.AND(teachme_db.teachout.date<= dif40, teachme_db.teachout.date >dif20, teachme_db.teachout.status == None))
+
+def reminder_mail(touts, rem):
+	for t in touts:
+		learner = t.learner.get()
+		mentor = t.teacher.get()
+		if rem == 24:
+			falta = "24 horas"
+			subject = u'Recuerda tu sesión en 24 horas'
+		else:
+			falta = "minutos"
+			subject = u'Recuerda que tu sesión empezará pronto'
+		html_user = main.render_str("mail_reminder.html", para = learner, de = mentor, t = t, falta = falta)
+		html_mentor = main.render_str("mail_reminder.html", para = mentor, de = learner, t = t, falta = falta)
+		mail.send_mail("info@teachmeapp.com", self.user.mail, subject, "", html = html_user)
+		mail.send_mail("info@teachmeapp.com", teacher_key.mail, subject, "", html = html_mentor)
