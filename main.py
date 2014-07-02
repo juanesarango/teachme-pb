@@ -421,7 +421,7 @@ app = webapp2.WSGIApplication([('/', MainPage),
 								('/teachouts', teachouts),
 								('/aprende/([0-9]+)?', aprende),
 								('/profile/teacher/([0-9]+)?', profile_teacher),
-								('/editabout',editabout)
+								('/editabout', editabout),
 								('/calendar/teacher/add', calendar_teacher_add),
 								('/contacto', contacto),
 								('/upload', profile_teacher),

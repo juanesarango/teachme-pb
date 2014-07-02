@@ -143,5 +143,5 @@ def reminder_mail(touts, rem):
 			subject = u'Recuerda que tu sesión empezará pronto'
 		html_user = main.render_str("mail_reminder.html", para = learner, de = mentor, t = t, falta = falta)
 		html_mentor = main.render_str("mail_reminder.html", para = mentor, de = learner, t = t, falta = falta)
-		mail.send_mail("info@teachmeapp.com", self.user.mail, subject, "", html = html_user)
-		mail.send_mail("info@teachmeapp.com", teacher_key.mail, subject, "", html = html_mentor)
+		mail.send_mail("info@teachmeapp.com", learner.mail, subject, "", html = html_user)
+		mail.send_mail("info@teachmeapp.com", mentor.mail, subject, "", html = html_mentor)
