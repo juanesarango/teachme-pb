@@ -151,6 +151,75 @@ function createPeerConnection() {
   pc.onremovestream = onRemoteStreamRemoved;
   pc.onsignalingstatechange = onSignalingStateChanged;
   pc.oniceconnectionstatechange = onIceConnectionStateChanged;
+
+  if(initiator){
+    try{
+      //crear el canal de datos
+      sendChannel = pc.createDataChannel("sendDataChannel", {reliable: true});
+      trace('Created send data channel');
+    }catch(e){
+      alert('Failed to create data Channel');
+      trace('createDataChannel failed with exception: ' + e.message);
+    }
+    sendChannel.onopen = handleSendChannelStateChange;
+    sendChannel.onmessage = handleMessage;
+    sendChannel.onclose = handleSendChannelStateChange;
+  } else { //joiner
+    pc.ondatachannel = gotReceiveChannel;
+  }
+}
+
+function gotReceiveChannel(event){
+  trace('Receive Channel Callback');
+  receiveChannel = event.channel;
+  receiveChannel.onmessage = handleMessage;
+  receiveChannel.onopen = handleReceiveChannelStateChange;
+  receiveChannel.onclose = handleReceiveChannelStateChange;
+}
+
+function handleReceiveChannelStateChange() {
+  var readyState = receiveChannel.readyState;
+  console.log('Receive channel state is: ' + readyState);
+}
+
+function handleSendChannelStateChange(){
+  var readyState = sendChannel.readyState;
+  trace('Send channel state is: ' + readyState);
+  if (readyState == "open"){
+    console.log("el canal esta abierto")
+  } else{
+    console.log("el no esta abierto")
+  }
+}
+
+function sendData(d){
+  var data = d;
+  if(initiator) sendChannel.send(data);
+  else receiveChannel.send(data);
+  trace('send data: ' + data);
+}
+var rec;
+function handleMessage(event){
+  //trace('receive message: ' + event.data);
+  rec = JSON.parse(event.data);
+  console.log("el mensaje recibido: " + event.data);
+
+  switch (rec.fn){
+    case "onTablero":
+      if (rec.onTablero){
+      onTablero(rec.onTablero);
+      console.log("El remoto inicio el tablero.");
+      };
+      break;
+    case "engage":
+      if (rec.engage) engage(rec.e);
+      break;
+    case "disengage":
+      if (rec.disengage) disengage("", rec.disengage);
+      break;
+    case "putPoint":
+      if (rec.putPoint) putPoint(rec.e);
+  }
 }
 
 function maybeStart() {
@@ -400,7 +469,8 @@ function transitionToActive() {
   // Reset window display according to the asperio of remote video.
   window.onresize();
   setStatus('<input type=\'button\' id=\'hangup\' value=\'Terminar sesión\' \
-            onclick=\'onHangup()\' />');
+            onclick=\'onHangup()\' /> <input type=\'button\' id=\'tablero\' value=\'Iniciar tablero\' \
+            onclick=\'onTablero()\' /> ');
 }
 
 function transitionToWaiting() {
@@ -700,3 +770,31 @@ window.onresize = function(){
   containerDiv.style.left = (innerWidth - videoWidth) / 2 + 'px';
   containerDiv.style.top = (innerHeight - videoHeight) / 2 + 'px';
 };
+
+function onTablero(s){
+  drawLocalVideo = document.getElementById('drawLocalVideo');
+  drawRemoteVideo = document.getElementById('drawRemoteVideo');
+  drawingApp = document.getElementById('drawingapp');
+  containerDiv.style.display = "none";
+  reattachMediaStream(drawRemoteVideo, remoteVideo);
+  reattachMediaStream(drawLocalVideo, miniVideo);
+  //attachMediaStream(drawLocalVideo, localStream);
+  drawLocalVideo.videoHeight = drawRemoteVideo.videoHeight;
+  drawLocalVideo.videoWidth = drawRemoteVideo.videoWidth;
+  remoteVideo.src = '';
+  miniVideo.src = '';
+  drawingApp.style.display = "block";
+  drawLocalVideo.style.opacity = '1';
+  drawRemoteVideo.style.opacity = '1';
+  //remoteVideo.style.opacity = '0'
+  //miniVideoRemote.style.opacity = '1';
+
+  drawingApp.style.height = window.innerHeight*0.9;
+  drawConfi();
+  if (!s){
+    var sender = '{"fn":"onTablero", "onTablero":true}';
+    sendData(sender);
+  }
+  
+
+}
