@@ -263,6 +263,15 @@ function onChannelMessage(message) {
   // Since the turn response is async and also GAE might disorder the
   // Message delivery due to possible datastore query at server side,
   // So callee needs to cache messages before peerConnection is created.
+  if (msg.type === 'chat') { 
+    //message_chat_new= msg.userid + ': ' + msg.message;
+    //message_chat = [document.getElementById("logchat").value];
+    //message_chat.push(message_chat_new);
+    if (document.getElementById("logchat").value==''){line = '';} else {line = '\n'}
+    message_chat = document.getElementById("logchat").value + line + msg.userid + ': ' + msg.message;
+    document.getElementById("logchat").value = message_chat;
+    document.getElementById("chat").value = "";
+  }
   if (!initiator && !started) {
     if (msg.type === 'offer') {
       // Add offer to the beginning of msgQueue, since we can't handle
@@ -675,6 +684,12 @@ function removeCN(sdpLines, mLineIndex) {
 // to ensure the room is cleaned for next session.
 window.onbeforeunload = function() {
   sendMessage({type: 'bye'});
+}
+
+//Juanes
+function onChat(){
+  message_user = document.getElementById("chat").value;
+  sendMessage({type: 'chat',message: message_user});  
 }
 
 // Set the video diplaying in the center of window.

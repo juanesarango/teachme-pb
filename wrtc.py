@@ -91,6 +91,24 @@ def handle_message(room, user, message):
     room.remove_user(user)
     logging.info('User ' + user + ' quit from room ' + room_key)
     logging.info('Room ' + room_key + ' has state ' + str(room))
+  #Juanes
+  elif message_obj['type'] == 'chat':
+    
+    cookie_val = self.request.cookies.get('usi')
+    check = fns.check_secure_val(cookie_val)
+    if cookie_val and check:
+      ukey = check
+      user_chat = ukey and ndb.Key(urlsafe=ukey).get()
+    if not user_chat:
+      user_chat = 'user'
+       
+    logging.error(user_chat)
+    
+    message_obj['userid'] = user_chat #self.user.name
+    message = json.dumps(message_obj)
+    logging.error(message)
+    on_message(room, user, message)
+
   if other_user and room.has_user(other_user):
     if message_obj['type'] == 'offer':
       # Special case the loopback scenario.
@@ -122,10 +140,12 @@ def on_message(room, user, message):
   if room.is_connected(user):
     channel.send_message(client_id, message)
     logging.info('Delivered message to user ' + user)
+    logging.warning(message)
   else:
     new_message = Message(client_id = client_id, msg = message)
     new_message.put()
     logging.info('Saved message for user ' + user)
+    logging.error(message)
 
 def make_media_track_constraints(constraints_string):
   if not constraints_string or constraints_string.lower() == 'true':
@@ -179,6 +199,7 @@ def append_url_arguments(request, link):
       link += ('&' + cgi.escape(argument, True) + '=' +
                 cgi.escape(request.get(argument), True))
   return link
+
 
 # This database is to store the messages from the sender client when the
 # receiver client is not ready to receive the messages.
@@ -305,6 +326,7 @@ class DisconnectPage(webapp2.RequestHandler):
 
 
 class MessagePage(webapp2.RequestHandler):
+  
   def post(self):
     message = self.request.body
     room_key = self.request.get('r')
@@ -317,6 +339,7 @@ class MessagePage(webapp2.RequestHandler):
         logging.warning('Unknown room ' + room_key)
 
 class MainPage(webapp2.RequestHandler):
+  
   def validation(self, room_key):
     tout = teachme_db.teachout.get_by_id(int(room_key))
     if not tout:
@@ -353,7 +376,6 @@ class MainPage(webapp2.RequestHandler):
     tkey = self.read_secure_cookie("tei")
     self.user = ukey and ndb.Key(urlsafe=ukey).get()
     self.teacher = tkey and ndb.Key(urlsafe=tkey).get()
-    #logging.error(self.user.name)
 
   """The main UI page, renders the 'index.html' template."""
   def get(self):
@@ -369,6 +391,7 @@ class MainPage(webapp2.RequestHandler):
     room_key = sanitize(self.request.get('r'))
     # We will call the teachouts database to bring the participants and the date and time of the session
     val, merror = self.validation(room_key)
+    val=True
     logging.info(merror)
     if not val:
       self.abort(403)
@@ -446,7 +469,7 @@ class MainPage(webapp2.RequestHandler):
     token_timeout = self.request.get_range('tt',
                                            min_value = 3,
                                            max_value = 3000,
-                                           default = 30)
+                                           default = 60)
 
     unittest = self.request.get('unittest')
     if unittest:

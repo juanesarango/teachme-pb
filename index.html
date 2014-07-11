@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="chrome=1"/>
 
 <link rel="canonical" href="{{ room_link }}"/>
-<link rel="stylesheet" href="css/main.css" />
+<link rel="stylesheet" href="/css/main.css"/>
 
 <script type="text/javascript" src="/_ah/channel/jsapi"></script>
 <script src="/js/main.js"></script>
@@ -44,6 +44,11 @@
         <video id="miniVideo" autoplay="autoplay" muted="true"/>
       </div>
     </div>
+  </div>
+  <div id= "chatbox">
+    <p><textarea rows="8" cols="40" id="logchat" readonly="" style="color:blue;resize:none"></textarea></p>
+    <p><textarea rows="1" cols="20" id="chat" style="resize:none"></textarea>
+    <button type="button" onclick="onChat()">Enviar</button></p>
   </div>
 </div>
 </body>
