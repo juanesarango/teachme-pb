@@ -11,6 +11,7 @@ var started = false;
 var turnDone = false;
 var channelReady = false;
 var signalingReady = false;
+var tablero = false;
 var msgQueue = [];
 // Set up audio and video regardless of what devices are present.
 var sdpConstraints = {'mandatory': {
@@ -211,6 +212,12 @@ function handleMessage(event){
       console.log("El remoto inicio el tablero.");
       };
       break;
+    case "offTablero":
+      if (rec.offTablero) {
+        offTablero(rec.offTablero);
+        console.log("El remoto detuvo el tablero")
+      };
+      break;
     case "engage":
       if (rec.engage) engage(rec.e);
       break;
@@ -219,6 +226,7 @@ function handleMessage(event){
       break;
     case "putPoint":
       if (rec.putPoint) putPoint(rec.e);
+      break;
   }
 }
 
@@ -749,29 +757,32 @@ window.onbeforeunload = function() {
 
 // Set the video diplaying in the center of window.
 window.onresize = function(){
-  var aspectRatio;
-  if (remoteVideo.style.opacity === '1') {
-    aspectRatio = remoteVideo.videoWidth/remoteVideo.videoHeight;
-  } else if (localVideo.style.opacity === '1') {
-    aspectRatio = localVideo.videoWidth/localVideo.videoHeight;
-  } else {
-    return;
-  }
+  if (!tablero){
+      var aspectRatio;
+      if (remoteVideo.style.opacity === '1') {
+        aspectRatio = remoteVideo.videoWidth/remoteVideo.videoHeight;
+      } else if (localVideo.style.opacity === '1') {
+        aspectRatio = localVideo.videoWidth/localVideo.videoHeight;
+      } else {
+        return;
+      }
 
-  var innerHeight = this.innerHeight;
-  var innerWidth = this.innerWidth;
-  var videoWidth = innerWidth < aspectRatio * window.innerHeight ?
-                   innerWidth : aspectRatio * window.innerHeight;
-  var videoHeight = innerHeight < window.innerWidth / aspectRatio ?
-                    innerHeight : window.innerWidth / aspectRatio;
-  containerDiv = document.getElementById('container');
-  containerDiv.style.width = videoWidth + 'px';
-  containerDiv.style.height = videoHeight + 'px';
-  containerDiv.style.left = (innerWidth - videoWidth) / 2 + 'px';
-  containerDiv.style.top = (innerHeight - videoHeight) / 2 + 'px';
+      var innerHeight = this.innerHeight;
+      var innerWidth = this.innerWidth;
+      var videoWidth = innerWidth < aspectRatio * window.innerHeight ?
+                       innerWidth : aspectRatio * window.innerHeight;
+      var videoHeight = innerHeight < window.innerWidth / aspectRatio ?
+                        innerHeight : window.innerWidth / aspectRatio;
+      containerDiv = document.getElementById('container');
+      containerDiv.style.width = videoWidth + 'px';
+      containerDiv.style.height = videoHeight + 'px';
+      containerDiv.style.left = (innerWidth - videoWidth) / 2 + 'px';
+      containerDiv.style.top = (innerHeight - videoHeight) / 2 + 'px';
+  }
 };
 
 function onTablero(s){
+  tablero = true
   drawLocalVideo = document.getElementById('drawLocalVideo');
   drawRemoteVideo = document.getElementById('drawRemoteVideo');
   drawingApp = document.getElementById('drawingapp');
@@ -779,8 +790,6 @@ function onTablero(s){
   reattachMediaStream(drawRemoteVideo, remoteVideo);
   reattachMediaStream(drawLocalVideo, miniVideo);
   //attachMediaStream(drawLocalVideo, localStream);
-  drawLocalVideo.videoHeight = drawRemoteVideo.videoHeight;
-  drawLocalVideo.videoWidth = drawRemoteVideo.videoWidth;
   remoteVideo.src = '';
   miniVideo.src = '';
   drawingApp.style.display = "block";
@@ -791,10 +800,31 @@ function onTablero(s){
 
   drawingApp.style.height = window.innerHeight*0.9;
   drawConfi();
+  setStatus('<input type=\'button\' id=\'hangup\' value=\'Terminar sesión\' \
+            onclick=\'onHangup()\' /> <input type=\'button\' id=\'detenerTablero\' value=\'Detener tablero\' \
+            onclick=\'offTablero()\' /> ');
   if (!s){
     var sender = '{"fn":"onTablero", "onTablero":true}';
     sendData(sender);
   }
   
 
+}
+
+function offTablero(s){
+  tablero = false
+  drawingApp.style.display = "none";
+  reattachMediaStream(remoteVideo, drawRemoteVideo);
+  reattachMediaStream(miniVideo, drawLocalVideo);
+  drawRemoteVideo.src = '';
+  drawLocalVideo.src = '';
+  containerDiv.style.display = "block";
+  window.onresize();
+  setStatus('<input type=\'button\' id=\'hangup\' value=\'Terminar sesión\' \
+            onclick=\'onHangup()\' /> <input type=\'button\' id=\'tablero\' value=\'Iniciar tablero\' \
+            onclick=\'onTablero()\' /> ');
+  if (!s){
+    var sender = '{"fn": "offTablero", "offTablero":true}';
+    sendData(sender);
+  }
 }

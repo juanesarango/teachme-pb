@@ -37,7 +37,8 @@ def UTCfechas(dates):
 	fechas = []
 	for d in sorted(dates):
 		if d>today:
-			fechas.append(str(d.year)+'-'+str(d.month)+'-'+str(d.day)+' '+str(d.hour)+':'+str(d.minute)+' UTC')
+			#fechas.append(str(d.year)+'-'+str(d.month)+'-'+str(d.day)+' '+str(d.hour)+':'+str(d.minute)+' UTC')
+			fechas.append(d.strftime("%Y-%m-%dT%H:%MZ"))
 
 	return fechas
 

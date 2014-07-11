@@ -119,8 +119,10 @@
 		    	
 		    	if (hours_local.hasOwnProperty(str_dt)){
 		    		hours_local[str_dt].push(dt.toLocaleTimeString());
+		    		//hours_local[str_dt].push(dt.getHours().toString()+':'+dt.getMinutes().toString());
 		    	} else {
 		    		hours_local[str_dt] = [dt.toLocaleTimeString()];
+		    		//hours_local[str_dt] = [dt.getHours().toString()+':'+dt.getMinutes().toString()];
 		    	}
 		    };
 
@@ -163,7 +165,8 @@
 						strfecha = fecha.toDateString()
 		    			var s = "<div id='horas'> <h3>"+strfecha+"</h3>";
 		    			for (var h = 0; h < hours[date].length; h++) {
-		    				var lDate = new Date(date+" "+hours[date][h]);
+		    				var lDate = new Date();//(date+"T"+hours[date][h]);
+		    				lDate.setTime(Date.parse(date+"T"+hours[date][h]))
 		    				var UTCdate = lDate.getUTCFullYear()+"-"+(parseInt(lDate.getUTCMonth())+1).toString()+"-"+lDate.getUTCDate()+" "+lDate.getUTCHours()+":"+lDate.getUTCMinutes();
 		    				s = s+"<div class='radio'><label><input type='radio' name='date-meet' value='"+UTCdate+"'>"+hours[date][h]+"</label></div>";
 		    			};

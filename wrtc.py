@@ -324,20 +324,22 @@ class MainPage(webapp2.RequestHandler):
     learner = tout.learner.get()
     mentor = tout.teacher.get()
     ts = tout.date - datetime.timedelta(minutes = 15)
-    tf = ts + datetime.timedelta(hours = 2)
+    tf = ts + datetime.timedelta(minutes = 75)
     now = datetime.datetime.now()
     if not (ts <= now and now < tf):
       return False, u"No ha llegado la hora, o ya pasó"
-    aprendiz = False
-    profesor = False
 
     if learner.key.id() == self.user.key.id():
-      aprendiz = True
       logging.info("El aprendiz " + str(learner.name) + " se ha autenticado")
+      tout.status_user = "ok"
+      tout.log.append(now.strftime("%Y-%m-%d %H:%M UTC")+" El aprendiz " + str(learner.name) + " se ha autenticado")
+      tout.put()
     elif self.teacher:
       if mentor.key.id() == self.teacher.key.id():
-        profesor = True
         logging.info("El mentor "+str(mentor.name)+ " se ha autenticado")
+        tout.status_mentor = "ok"
+        tout.log.append(now.strftime("%Y-%m-%d %H:%M UTC")+" El mentor " + str(mentor.name) + " se ha autenticado")
+        tout.put()
     else:
       return False, u"La persona no esta autorizada para ingresar a esta sesión"
 
