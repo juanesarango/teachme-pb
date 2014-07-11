@@ -12,6 +12,7 @@
 <script src="/js/main.js"></script>
 <!-- Load the polyfill to switch-hit between Chrome and Firefox -->
 <script src="/js/adapter.js"></script>
+<script src="/js/drawing.js"></script>
 
 </head>
 <body>
@@ -33,6 +34,9 @@
   setTimeout(initialize, 1);
 </script>
 <div id="container" ondblclick="enterFullScreen()">
+  <div id="logo_large" style="position: absolute; top: 10px; left: 10px; z-index: 1000; opacity: 0.8;">
+      <img src="/static/logoVideo.png">
+  </div>
   <div id="card">
     <div id="local">
       <video id="localVideo" autoplay="autoplay" muted="true"/>
@@ -40,15 +44,50 @@
     <div id="remote">
       <video id="remoteVideo" autoplay="autoplay">
       </video>
-      <div id="mini">
-        <video id="miniVideo" autoplay="autoplay" muted="true"/>
-      </div>
     </div>
   </div>
+<<<<<<< HEAD
   <div id= "chatbox">
     <p><textarea rows="8" cols="40" id="logchat" readonly="" style="color:blue;resize:none"></textarea></p>
     <p><textarea rows="1" cols="20" id="chat" style="resize:none"></textarea>
     <button type="button" onclick="onChat()">Enviar</button></p>
+=======
+  <div id="mini">
+    <video id="miniVideo" autoplay="autoplay" muted="true"/>
+  </div>
+</div>
+<div id="drawingapp">
+  <div id="toolbar">
+    <div id="rad">
+      Pincel: <span id="radval">10</span>
+      <div id="decrad" class="radcontrol">-</div>
+      <div id="incrad" class="radcontrol">+</div>
+    </div>
+    <div id="colors">
+      <div class="swatch active" style="background-color: white"></div>
+      <div class="swatch" style="background-color: grey"></div>
+      <div class="swatch" style="background-color: black"></div>
+      <div class="swatch" style="background-color: red"></div>
+      <div class="swatch" style="background-color: orange"></div>
+      <div class="swatch" style="background-color: yellow"></div>
+      <div class="swatch" style="background-color: green"></div>
+      <div class="swatch" style="background-color: blue"></div>
+      <div class="swatch" style="background-color: indigo"></div>
+      <div class="swatch" style="background-color: violet"></div>
+    </div>
+  </div>
+  <canvas id="canvas">
+    Tu navegador esta desactualizado
+  </canvas>
+  <div id="logo_large" style="position: absolute; left: 4px; opacity: 0.8; bottom: 34px;">
+      <img src="/static/logoVideo.png">
+  </div>
+  <div id="drawLocal">
+    <video id="drawLocalVideo" autoplay="autoplay" muted="true"/>
+  </div>
+  <div id="drawRemote">
+    <video id="drawRemoteVideo" autoplay="autoplay" muted="true"/>
+>>>>>>> origin/master
   </div>
 </div>
 </body>
