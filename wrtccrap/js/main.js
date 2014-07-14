@@ -767,7 +767,7 @@ window.onbeforeunload = function() {
 //Juanes
 function onChat(){
   message_user = document.getElementById("chat").value;
-  sendMessage({type: 'chat',message: message_user});  
+  sendMessage({type: 'chat', message: message_user, userid: usuarioChat});  
 }
 
 // Set the video diplaying in the center of window.
@@ -825,8 +825,6 @@ function onTablero(s){
   
 
 }
-<<<<<<< HEAD
-=======
 
 function offTablero(s){
   tablero = false
@@ -845,4 +843,4 @@ function offTablero(s){
     sendData(sender);
   }
 }
->>>>>>> 16d4fbab2694e6b28e5ab38a8bf967c524af3f24
+

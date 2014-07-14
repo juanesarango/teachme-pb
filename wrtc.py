@@ -93,20 +93,6 @@ def handle_message(room, user, message):
     logging.info('Room ' + room_key + ' has state ' + str(room))
   #Juanes
   elif message_obj['type'] == 'chat':
-    
-    cookie_val = self.request.cookies.get('usi')
-    check = fns.check_secure_val(cookie_val)
-    if cookie_val and check:
-      ukey = check
-      user_chat = ukey and ndb.Key(urlsafe=ukey).get()
-    if not user_chat:
-      user_chat = 'user'
-       
-    logging.error(user_chat)
-    
-    message_obj['userid'] = user_chat #self.user.name
-    message = json.dumps(message_obj)
-    logging.error(message)
     on_message(room, user, message)
 
   if other_user and room.has_user(other_user):
@@ -393,7 +379,7 @@ class MainPage(webapp2.RequestHandler):
     room_key = sanitize(self.request.get('r'))
     # We will call the teachouts database to bring the participants and the date and time of the session
     val, merror = self.validation(room_key)
-    val=True
+    #val=True
     logging.info(merror)
     if not val:
       self.abort(403)
@@ -534,7 +520,8 @@ class MainPage(webapp2.RequestHandler):
                        'turn_url': turn_url,
                        'stereo': stereo,
                        'audio_send_codec': audio_send_codec,
-                       'audio_receive_codec': audio_receive_codec
+                       'audio_receive_codec': audio_receive_codec,
+                       'usuarioChat' : self.user.name
                       }
     if unittest:
       target_page = 'wrtccrap/test/test_' + unittest + '.html'

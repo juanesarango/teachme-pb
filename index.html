@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="chrome=1"/>
 
 <link rel="canonical" href="{{ room_link }}"/>
-<link rel="stylesheet" href="/css/main.css"/>
+<link rel="stylesheet" href="css/main.css"/>
 
 <script type="text/javascript" src="/_ah/channel/jsapi"></script>
 <script src="/js/main.js"></script>
@@ -31,6 +31,7 @@
   var stereo = {{ stereo }};
   var audio_send_codec = '{{ audio_send_codec }}';
   var audio_receive_codec = '{{ audio_receive_codec }}';
+  var usuarioChat = '{{usuarioChat}}'
   setTimeout(initialize, 1);
 </script>
 <div id="container" ondblclick="enterFullScreen()">
@@ -46,14 +47,13 @@
       </video>
     </div>
   </div>
-<<<<<<< HEAD
+  <div id="mini">
+    <video id="miniVideo" autoplay="autoplay" muted="true"/>
+  </div>
   <div id= "chatbox">
     <p><textarea rows="8" cols="40" id="logchat" readonly="" style="color:blue;resize:none"></textarea></p>
     <p><textarea rows="1" cols="20" id="chat" style="resize:none"></textarea>
     <button type="button" onclick="onChat()">Enviar</button></p>
-=======
-  <div id="mini">
-    <video id="miniVideo" autoplay="autoplay" muted="true"/>
   </div>
 </div>
 <div id="drawingapp">
@@ -86,12 +86,7 @@
     <video id="drawLocalVideo" autoplay="autoplay" muted="true"/>
   </div>
   <div id="drawRemote">
-<<<<<<< HEAD
-    <video id="drawRemoteVideo" autoplay="autoplay" muted="true"/>
->>>>>>> origin/master
-=======
     <video id="drawRemoteVideo" autoplay="autoplay"/>
->>>>>>> 16d4fbab2694e6b28e5ab38a8bf967c524af3f24
   </div>
 </div>
 </body>
