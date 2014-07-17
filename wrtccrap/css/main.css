@@ -39,11 +39,13 @@ footer {
 }
 
 #chatbox{
-  position: absolute;
-  left: 4px;
+  position: fixed;
+  left: 50%;
   bottom: 34px;
   z-index: 100;
   display: none;
+  margin-left: -161px;
+  margin-right: auto; 
 }
 
 #logchat{
@@ -67,10 +69,19 @@ footer {
 }
 
 #inputchat{
-  font-size: 0.7em;
   padding-top: 14px;
   padding-left: 10px;
   padding-bottom: 14px;
+}
+
+#chat{
+  height: 24px;
+  overflow-y: hidden;
+  font-size: 0.8em;
+}
+
+#btnEnviar{
+  padding: 1px 8px;
 }
 
 #card {
@@ -139,48 +150,47 @@ footer {
 }
 
 #hangup {
- font-size: 13px; font-weight: bold;
- color: #FFFFFF;
- width: 128px;
- height: 24px;
- background-color: #808080;
- border-style: solid;
- border-color: #FFFFFF;
- margin: 2px;
+  padding: 1px 12px;
+  margin-left: 10px;
+  margin-right: 10px;
+  /*font-size: 13px; font-weight: bold;
+  color: #FFFFFF;
+  width: 128px;
+  height: 24px;
+  background-color: #808080;
+  border-style: solid;
+  border-color: #FFFFFF;
+  margin: 2px;*/
 }
 
 #tablero{
-  font-size: 13px; font-weight: bold;
+  padding: 1px 12px;
+  margin-left: 10px;
+  margin-right: 10px;
+  /*font-size: 13px; font-weight: bold;
   color: #FFFFFF;
   width: 128px;
   height: 24px;
   background-color: #808080;
   border-style: solid;
   border-color: #FFFFFF;
-  margin: 2px;
-}
-
-#detenerTablero{
-  font-size: 13px; font-weight: bold;
-  color: #FFFFFF;
-  width: 128px;
-  height: 24px;
-  background-color: #808080;
-  border-style: solid;
-  border-color: #FFFFFF;
-  margin: 2px;
+  margin: 2px;*/
 }
 
 #chatbtn{
-  font-size: 13px; font-weight: bold;
+  padding: 1px 12px;
+  margin-left: 10px;
+  margin-right: 10px;
+  /*font-size: 13px; font-weight: bold;
   color: #FFFFFF;
   width: 128px;
   height: 24px;
   background-color: #808080;
   border-style: solid;
   border-color: #FFFFFF;
-  margin: 2px;
+  margin: 2px;*/
 }
+
 #infoDiv {
   position: absolute;
   float: right;
@@ -256,7 +266,6 @@ footer {
   transform: scale(-1, 1);
   -webkit-transform: scale(-1, 1);
 }
-
 
 #drawLocalVideo {
   width: 100%;

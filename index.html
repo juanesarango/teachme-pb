@@ -68,20 +68,6 @@
   <div id="mini">
     <video id="miniVideo" autoplay="autoplay" muted="true"/>
   </div>
-  <div id= "chatbox">
-    <div class="row">
-      <div id = "logchat" class="col-md-10 col-md-offset-1">
-      </div>
-    </div>
-    <div class = "row" id = "inputchat">
-      <div class="col-md-8">
-        <textarea rows="1" id="chat" class="form-control" style="resize:none"></textarea>
-      </div>
-      <div class="col-md-4">
-        <button type="button" class="btn btn-info" onclick="onChat()">Enviar</button>
-      </div>
-    </div>
-  </div>
 </div>
 <div id="drawingapp">
   <div id="toolbar">
@@ -109,25 +95,25 @@
   <div id="logo_large" style="position: absolute; left: 4px; opacity: 0.8; bottom: 34px;">
       <img src="/static/logoVideo.png">
   </div>
-  <div id= "chatbox">
-    <div class="row">
-      <div id = "logchat" class="col-md-10 col-md-offset-1">
-      </div>
-    </div>
-    <div class = "row" id = "inputchat">
-      <div class="col-md-8">
-        <textarea rows="1" id="chat" class="form-control" style="resize:none"></textarea>
-      </div>
-      <div class="col-md-4">
-        <button type="button" class="btn btn-info" onclick="onChat()">Enviar</button>
-      </div>
-    </div>
-  </div>
   <div id="drawLocal">
     <video id="drawLocalVideo" autoplay="autoplay" muted="true"/>
   </div>
   <div id="drawRemote">
     <video id="drawRemoteVideo" autoplay="autoplay"/>
+  </div>
+</div>
+<div id= "chatbox">
+  <div class="row">
+    <div id = "logchat" class="col-md-9 col-md-offset-3" style="margin-left:25px; height: 100px; width:264px;">
+    </div>
+  </div>
+  <div class = "row" id = "inputchat">
+    <div class="col-md-9">
+      <textarea rows="1" id="chat" class="form-control" style="resize:none"></textarea>
+    </div>
+    <div class="col-md-3">
+      <button type="button" id= "btnEnviar" class="btn btn-info" onclick="onChat()">Enviar</button>
+    </div>
   </div>
 </div>
 </body>

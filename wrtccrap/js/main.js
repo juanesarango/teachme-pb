@@ -802,6 +802,14 @@ window.onresize = function(){
 function showChat(){
   chatbox = document.getElementById('chatbox');
   chatbox.style.display = "block";
+  if (tablero == false){
+    chatbox.style.left = "4px";
+    chatbox.style.marginLeft= "0%"; 
+  } else {
+    chatbox.style.left = "-161px";
+    chatbox.style.marginLeft= "50%";
+  }
+
   chat = true;
   displayButtons(videoChat);
 }
@@ -815,17 +823,17 @@ function hideChat(){
 
 function displayButtons(vd){
   if (chat == false){
-    btnChat = '<input type=\'button\' id=\'chatbtn\' value=\'Mostrar chat\' onclick=\'showChat()\' />'; 
+    btnChat = '<input type=\'button\' id=\'chatbtn\' class=\'btn btn-info\' value=\'Mostrar chat\' onclick=\'showChat()\' />'; 
   } else {
-    btnChat = '<input type=\'button\' id=\'chatbtn\' value=\'Esconder chat\' onclick=\'hideChat()\' />';
+    btnChat = '<input type=\'button\' id=\'chatbtn\' class=\'btn btn-warning\' value=\'Esconder chat\' onclick=\'hideChat()\' />';
   }
   if (tablero == false){
-    btnTablero = '<input type=\'button\' id=\'tablero\' value=\'Iniciar tablero\' onclick=\'onTablero()\' />';
+    btnTablero = '<input type=\'button\' id=\'tablero\' class=\'btn btn-info\' value=\'Iniciar tablero\' onclick=\'onTablero()\' />';
   } else {
-    btnTablero = '<input type=\'button\' id=\'detenerTablero\' value=\'Detener tablero\' onclick=\'offTablero()\' />';
+    btnTablero = '<input type=\'button\' id=\'tablero\' class=\'btn btn-warning\' value=\'Detener tablero\' onclick=\'offTablero()\' />';
   }
   if (vd== true){
-    btnVD = '<input type=\'button\' id=\'hangup\' value=\'Terminar sesión\' onclick=\'onHangup()\' />';
+    btnVD = '<input type=\'button\' id=\'hangup\' class=\'btn btn-danger\' value=\'Terminar sesión\' onclick=\'onHangup()\' />';
     videoChat = true;
   } else {
     btnVD = 'Conectando...         ';
@@ -854,6 +862,10 @@ function onTablero(s){
   drawingApp.style.height = window.innerHeight*0.9;
   drawConfi();
   displayButtons(videoChat);
+  if (chat==true){
+    hideChat();
+    showChat();
+  }
   if (!s){
     var sender = '{"fn":"onTablero", "onTablero":true}';
     sendData(sender);
@@ -873,6 +885,10 @@ function offTablero(s){
   containerDiv.style.display = "block";
   window.onresize();
   displayButtons(videoChat);
+  if (chat==true){
+    hideChat();
+    showChat();
+  }
   if (!s){
     var sender = '{"fn": "offTablero", "offTablero":true}';
     sendData(sender);
