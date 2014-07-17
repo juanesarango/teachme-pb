@@ -5,6 +5,12 @@
 
 <meta http-equiv="X-UA-Compatible" content="chrome=1"/>
 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
+<script type="text/javascript" src="/static/js/bootstrap.js"></script>
+
 <link rel="canonical" href="{{ room_link }}"/>
 <link rel="stylesheet" href="css/main.css"/>
 
@@ -33,6 +39,18 @@
   var audio_receive_codec = '{{ audio_receive_codec }}';
   var usuarioChat = '{{usuarioChat}}'
   setTimeout(initialize, 1);
+  //Del chat 
+  // $(function() {
+  //   $( "#chatbox" ).resizable();
+  // });
+  $('#chat').keypress(function(e) {
+    var code = (e.keyCode ? e.keyCode : e.which);
+    if (code == 13){
+      onChat();
+      return false;  // stop propagation of the keypress
+    }
+   return true;
+  });
 </script>
 <div id="container" ondblclick="enterFullScreen()">
   <div id="logo_large" style="position: absolute; top: 10px; left: 10px; z-index: 1000; opacity: 0.8;">
@@ -51,9 +69,18 @@
     <video id="miniVideo" autoplay="autoplay" muted="true"/>
   </div>
   <div id= "chatbox">
-    <p><textarea rows="8" cols="40" id="logchat" readonly="" style="color:blue;resize:none"></textarea></p>
-    <p><textarea rows="1" cols="20" id="chat" style="resize:none"></textarea>
-    <button type="button" onclick="onChat()">Enviar</button></p>
+    <div class="row">
+      <div id = "logchat" class="col-md-10 col-md-offset-1">
+      </div>
+    </div>
+    <div class = "row" id = "inputchat">
+      <div class="col-md-8">
+        <textarea rows="1" id="chat" class="form-control" style="resize:none"></textarea>
+      </div>
+      <div class="col-md-4">
+        <button type="button" class="btn btn-info" onclick="onChat()">Enviar</button>
+      </div>
+    </div>
   </div>
 </div>
 <div id="drawingapp">
@@ -81,6 +108,20 @@
   </canvas>
   <div id="logo_large" style="position: absolute; left: 4px; opacity: 0.8; bottom: 34px;">
       <img src="/static/logoVideo.png">
+  </div>
+  <div id= "chatbox">
+    <div class="row">
+      <div id = "logchat" class="col-md-10 col-md-offset-1">
+      </div>
+    </div>
+    <div class = "row" id = "inputchat">
+      <div class="col-md-8">
+        <textarea rows="1" id="chat" class="form-control" style="resize:none"></textarea>
+      </div>
+      <div class="col-md-4">
+        <button type="button" class="btn btn-info" onclick="onChat()">Enviar</button>
+      </div>
+    </div>
   </div>
   <div id="drawLocal">
     <video id="drawLocalVideo" autoplay="autoplay" muted="true"/>

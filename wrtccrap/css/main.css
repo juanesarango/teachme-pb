@@ -13,7 +13,6 @@ a:visited {color: #FFFFFF; }
 html, body {
   background-color: #000000;
   height: 100%;
-  font-family: Verdana, Arial, Helvetica, sans-serif;
 }
 body {
   margin: 0;
@@ -46,6 +45,34 @@ footer {
   z-index: 100;
   display: none;
 }
+
+#logchat{
+  height: 100px; 
+  background-color:#FFFFFF;
+  overflow-y: auto;
+  padding: 14 px;
+  border-radius: 8px;
+}
+
+.logsend{
+  text-align:right;
+  color: blue;
+  font-size: 1em;
+}
+
+.logreceive{
+  text-align:right;
+  color: red;
+  font-size: 1em;
+}
+
+#inputchat{
+  font-size: 0.7em;
+  padding-top: 14px;
+  padding-left: 10px;
+  padding-bottom: 14px;
+}
+
 #card {
   -webkit-transition-duration: 2s;
   -webkit-transform-style: preserve-3d;
@@ -124,13 +151,35 @@ footer {
 
 #tablero{
   font-size: 13px; font-weight: bold;
-   color: #FFFFFF;
-   width: 128px;
-   height: 24px;
-   background-color: #808080;
-   border-style: solid;
-   border-color: #FFFFFF;
-   margin: 2px;
+  color: #FFFFFF;
+  width: 128px;
+  height: 24px;
+  background-color: #808080;
+  border-style: solid;
+  border-color: #FFFFFF;
+  margin: 2px;
+}
+
+#detenerTablero{
+  font-size: 13px; font-weight: bold;
+  color: #FFFFFF;
+  width: 128px;
+  height: 24px;
+  background-color: #808080;
+  border-style: solid;
+  border-color: #FFFFFF;
+  margin: 2px;
+}
+
+#chatbtn{
+  font-size: 13px; font-weight: bold;
+  color: #FFFFFF;
+  width: 128px;
+  height: 24px;
+  background-color: #808080;
+  border-style: solid;
+  border-color: #FFFFFF;
+  margin: 2px;
 }
 #infoDiv {
   position: absolute;
