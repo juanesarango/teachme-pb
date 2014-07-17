@@ -172,25 +172,31 @@ class teacher(Handler):
 		area = self.request.get("select-area") 
 		tema = self.request.get("tema")
 		meet = datetime.datetime.strptime(self.request.get("date-meet"), "%Y-%m-%d %H:%M")
+		timezoneOffset = int(self.request.get("timezoneOffset"))
 
 		if meet and teacher_key:
 			if booking.check_availability_mentor(teacher_key, meet) and booking.check_availability_user(self.user, meet):
-				m = teachme_db.teachout(date = meet, learner = self.user.key, teacher = teacher_key.key, area = area, tema = tema)
-				m.put()
+				t = teachme_db.teachout(date = meet, learner = self.user.key, teacher = teacher_key.key, area = area, tema = tema)
+				t.put()
 
-				html_user = render_str("mail_booking.html", sujeto = self.user.name, mentor = teacher_key, t = m)
-				html_mentor = render_str("mail_booking_mentor.html", sujeto = teacher_key.name, u = self.user, t = m)
+				self.user.teachouts.append(t.key)
+				self.user.date_reserved.append(t.date)
+				self.user.timezoneOffset = timezoneOffset
+				self.user.put()
+				teacher_key.teachouts.append(t.key)
+				teacher_key.date_available.remove(t.date)
+				teacher_key.date_reserved.append(t.date)
+				teacher_key.put()
+
+				date_mentor = t.date - datetime.timedelta(minutes = teacher_key.timezoneOffset)
+				date_learner = t.date - datetime.timedelta(minutes = self.user.timezoneOffset)
+
+				html_user = render_str("mail_booking.html", sujeto = self.user.name, mentor = teacher_key, t = t, date = date_learner)
+				html_mentor = render_str("mail_booking_mentor.html", sujeto = teacher_key.name, u = self.user, t = t, date = date_mentor)
 				subject = "Confirmación de sesión agendada"
 				mail.send_mail("info@teachmeapp.com", self.user.mail, subject, "", html = html_user)
 				mail.send_mail("info@teachmeapp.com", teacher_key.mail, subject, "", html = html_mentor)
 
-				self.user.teachouts.append(m.key)
-				self.user.date_reserved.append(m.date)
-				self.user.put()
-				teacher_key.teachouts.append(m.key)
-				teacher_key.date_available.remove(m.date)
-				teacher_key.date_reserved.append(m.date)
-				teacher_key.put()
 				self.redirect("/teachouts")
 				return
 			else:
@@ -351,6 +357,7 @@ class calendar_teacher_add(Handler):
 			return
 
 		d = str(self.request.get("dateto"))
+		timezoneOffset = int(self.request.get("timezoneOffset"))
 		if d:
 			date = datetime.datetime.strptime(d, "%Y-%m-%d %H:%M")
 			repeated = booking.check_repeated_date(teacher, date)
@@ -359,9 +366,11 @@ class calendar_teacher_add(Handler):
 				teacher.date_available.append(date)
 				sorted(teacher.date_available)
 				teacher.mail = self.user.mail #Borrar esto
+				teacher.timezoneOffset = timezoneOffset #Borrar esto
+				self.user.timezoneOffset = timezoneOffset #Borrar esto
 				self.user.profile_pic = teacher.profile_pic
 				teacher.put()
-				self.user.put()
+				self.user.put() #borrar esto
 
 		
 		self.redirect("/profile/teacher/" + str(teacher.key.id()))

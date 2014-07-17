@@ -1,7 +1,7 @@
 cron:
 - description: teachouts status
   url: /tasks/teachoutsta
-  schedule: every 1 hours synchronized
+  schedule: every 30 minutes synchronized
 
 - description: reminder mail 24 hours
   url: /tasks/remindermailing24

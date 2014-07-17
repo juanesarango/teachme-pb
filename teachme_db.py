@@ -24,6 +24,7 @@ class user(ndb.Model):
 	date_created = ndb.DateTimeProperty(auto_now_add = True)
 	profile_pic = ndb.BlobKeyProperty()
 	profile_pic_r = ndb.StringProperty()
+	timezoneOffset = ndb.IntegerProperty()
 
 	teachouts = ndb.KeyProperty(repeated = True, kind = "teachout")
 	teachouts_expired = ndb.KeyProperty(repeated = True, kind = "teachout")
@@ -55,6 +56,7 @@ class teacher(ndb.Model):
 	areas = ndb.IntegerProperty(repeated = True)
 	subareas = ndb.StringProperty(repeated = True)
 	date_created = ndb.DateTimeProperty(auto_now_add = True)
+	timezoneOffset = ndb.IntegerProperty()
 
 	date_available = ndb.DateTimeProperty(repeated = True)
 	date_reserved = ndb.DateTimeProperty(repeated = True)

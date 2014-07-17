@@ -44,6 +44,7 @@ footer {
   left: 4px;
   bottom: 34px;
   z-index: 100;
+  display: none;
 }
 #card {
   -webkit-transition-duration: 2s;

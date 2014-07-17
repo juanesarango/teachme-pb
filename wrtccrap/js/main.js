@@ -843,4 +843,3 @@ function offTablero(s){
     sendData(sender);
   }
 }
-

@@ -30,12 +30,13 @@ a:visited{
 /* Formatos Predefinidos****************************************** */
 
 .ui-highlight .ui-state-default{
-  background-color : green;
+  background-color : #428bca;
   background-image :none;
   color: white;
   font-weight:bold;
   font-size: 12pt;
 }
+
 
 #horas{
   height: 244px;

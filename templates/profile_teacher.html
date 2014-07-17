@@ -78,6 +78,7 @@
 								<input type="datetime-local" step="1800" id="datetime">
 								<input type="hidden" name="te_id" value="{{teacher.key.id()}}">
 								<input type="hidden" name = "dateto" id="dateto_target">
+								<input type="hidden" name="timezoneOffset" id="timezoneOffset">
 								<p class="help-block">Escoge el día y la hora que tienes libre para dar asesorias</p>
 								<button class="btn btn-success" type="submit">Estoy disponible</button>
 							</form>
@@ -184,10 +185,20 @@
 
 			});
 			$('#datetime').change(function(){
-				var str = $(this).val().replace('T', " ");
-				var date = new Date(str);
+				var str = $(this).val();
+				var badDate = new Date(str);
+				var date = new Date();
+				var timezoneOffset = date.getTimezoneOffset();
+				date.setFullYear(badDate.getUTCFullYear());
+				date.setMonth(badDate.getUTCMonth());
+				date.setDate(badDate.getUTCDate());
+				date.setHours(badDate.getUTCHours());
+				date.setMinutes(badDate.getUTCMinutes());
+				date.setSeconds(0);
+				console.log(date);
 				var UTCdate = date.getUTCFullYear()+"-"+(parseInt(date.getUTCMonth())+1).toString()+"-"+date.getUTCDate()+" "+date.getUTCHours()+":"+date.getUTCMinutes();
 				$('#dateto_target').val(UTCdate);
+				$('#timezoneOffset').val(timezoneOffset);
 
 			})
 		});

@@ -47,13 +47,7 @@
 											<h4>{{t.area}} - Sin costo</h4>
 										</div>
 										<div class="col-md-5">
-											<script type="text/javascript">
-												$(document).ready(function(){
-													date = new Date("{{t.date.strftime("%Y-%m-%d %H:%M UTC")}}");
-													$('date').text(date.toDateString()+' at '+ date.toLocaleTimeString());
-												})
-											</script>
-											<p id="date"></p>
+											<p id="date">el {{date.strftime("%d-%m-%Y a las %I:%M %p")}}</p>
 										</div>
 									</div>
 									<hr class="hr">
