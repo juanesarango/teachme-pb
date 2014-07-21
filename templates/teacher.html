@@ -162,8 +162,8 @@
 				},
 				onSelect : function(date){
 					$("#horas").replaceWith( function(){
-						fecha = new Date(date);
-						strfecha = fecha.toDateString()
+						fecha = new Date(hours[date][0]);
+						strfecha = fecha.toDateString();
 		    			var s = "<div id='horas'> <h3>"+strfecha+"</h3>";
 		    			for (var h = 0; h < hours[date].length; h++) {
 		    				var lDate = hours[date][h];
