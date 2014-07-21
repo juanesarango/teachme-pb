@@ -13,6 +13,8 @@ var channelReady = false;
 var signalingReady = false;
 var tablero = false;
 var msgQueue = [];
+var chat = false;
+var videoChat = false;
 // Set up audio and video regardless of what devices are present.
 var sdpConstraints = {'mandatory': {
                       'OfferToReceiveAudio': true,
@@ -115,7 +117,7 @@ function onTurnResult() {
 
 function resetStatus() {
   if (!initiator) {
-    setStatus('Esperando a que la otra persona se una a la sesión de Teachme');
+    setStatus('Esperando a que la otra persona se una a la sesión de Teachme ');
   } else {
     setStatus('Inicializando la sesión de Teachme...');
   }
@@ -129,7 +131,7 @@ function doGetUserMedia() {
     console.log('Requested access to local media with mediaConstraints:\n' +
                 '  \'' + JSON.stringify(mediaConstraints) + '\'');
   } catch (e) {
-    alert('getUserMedia() failed. Is this a WebRTC capable browser?');
+    alert('Hubo un error al intentar acceder a la WebCam. Es este un explorador que soporta WebRTC?');
     console.log('getUserMedia failed with exception: ' + e.message);
   }
 }
@@ -144,8 +146,8 @@ function createPeerConnection() {
                 '  constraints: \'' + JSON.stringify(pcConstraints) + '\'.');
   } catch (e) {
     console.log('Failed to create PeerConnection, exception: ' + e.message);
-    alert('Cannot create RTCPeerConnection object; \
-          WebRTC is not supported by this browser.');
+    alert('No se pudo crear un objeto RTCPeerConnection; \
+          Este explorador no soporta el protocolo WebRTC.');
       return;
   }
   pc.onaddstream = onRemoteStreamAdded;
@@ -159,7 +161,7 @@ function createPeerConnection() {
       sendChannel = pc.createDataChannel("sendDataChannel", {reliable: true});
       trace('Created send data channel');
     }catch(e){
-      alert('Failed to create data Channel');
+      alert('Error al intentar crear el canal');
       trace('createDataChannel failed with exception: ' + e.message);
     }
     sendChannel.onopen = handleSendChannelStateChange;
@@ -200,6 +202,7 @@ function sendData(d){
   trace('send data: ' + data);
 }
 var rec;
+
 function handleMessage(event){
   //trace('receive message: ' + event.data);
   rec = JSON.parse(event.data);
@@ -233,7 +236,7 @@ function handleMessage(event){
 function maybeStart() {
   if (!started && signalingReady &&
       localStream && channelReady && turnDone) {
-    setStatus('Conectando...');
+    displayButtons(false);
     console.log('Creating PeerConnection.');
     createPeerConnection();
     console.log('Adding local stream.');
@@ -341,13 +344,14 @@ function onChannelMessage(message) {
   // Message delivery due to possible datastore query at server side,
   // So callee needs to cache messages before peerConnection is created.
   if (msg.type === 'chat') { 
-    //message_chat_new= msg.userid + ': ' + msg.message;
-    //message_chat = [document.getElementById("logchat").value];
-    //message_chat.push(message_chat_new);
-    if (document.getElementById("logchat").value==''){line = '';} else {line = '\n'}
-    message_chat = document.getElementById("logchat").value + line + msg.userid + ': ' + msg.message;
-    document.getElementById("logchat").value = message_chat;
-    document.getElementById("chat").value = "";
+    var p = document.createElement("h6");
+    if (msg.userid == usuarioChat) {
+      p.innerHTML = '<span class="logsend"><strong>' + msg.userid + '</strong>' + ': ' + msg.message + '</span>';
+      document.getElementById("chat").value = "";   
+    } else {
+      p.innerHTML = '<span class="logreceive"><strong>' + msg.userid + '</strong>' + ': ' + msg.message + '</span>';
+    }
+    document.getElementById("logchat").appendChild(p);
   }
   if (!initiator && !started) {
     if (msg.type === 'offer') {
@@ -384,7 +388,7 @@ function onUserMediaSuccess(stream) {
 function onUserMediaError(error) {
   console.log('Failed to get access to local media. Error code was ' +
               error.code);
-  alert('Failed to get access to local media. Error code was ' +
+  alert('No se pudo acceder a local media. El codigo del error  es ' +
         error.code + '.');
 }
 
@@ -485,9 +489,8 @@ function transitionToActive() {
   setTimeout(function() { miniVideo.style.opacity = 1; }, 1000);
   // Reset window display according to the asperio of remote video.
   window.onresize();
-  setStatus('<input type=\'button\' id=\'hangup\' value=\'Terminar sesión\' \
-            onclick=\'onHangup()\' /> <input type=\'button\' id=\'tablero\' value=\'Iniciar tablero\' \
-            onclick=\'onTablero()\' /> ');
+  videoChat = true;
+  displayButtons(videoChat);
 }
 
 function transitionToWaiting() {
@@ -796,6 +799,50 @@ window.onresize = function(){
   }
 };
 
+function showChat(){
+  chatbox = document.getElementById('chatbox');
+  chatbox.style.display = "block";
+  if (tablero == false){
+    chatbox.style.left = "4px";
+    chatbox.style.marginLeft= "0%"; 
+  } else {
+    chatbox.style.left = "-161px";
+    chatbox.style.marginLeft= "50%";
+  }
+
+  chat = true;
+  displayButtons(videoChat);
+}
+
+function hideChat(){
+  chatbox = document.getElementById('chatbox');
+  chatbox.style.display = "none";
+  chat = false;
+  displayButtons(videoChat);
+}
+
+function displayButtons(vd){
+  if (chat == false){
+    btnChat = '<input type=\'button\' id=\'chatbtn\' class=\'btn btn-info\' value=\'Mostrar chat\' onclick=\'showChat()\' />'; 
+  } else {
+    btnChat = '<input type=\'button\' id=\'chatbtn\' class=\'btn btn-warning\' value=\'Esconder chat\' onclick=\'hideChat()\' />';
+  }
+  if (tablero == false){
+    btnTablero = '<input type=\'button\' id=\'tablero\' class=\'btn btn-info\' value=\'Iniciar tablero\' onclick=\'onTablero()\' />';
+  } else {
+    btnTablero = '<input type=\'button\' id=\'tablero\' class=\'btn btn-warning\' value=\'Detener tablero\' onclick=\'offTablero()\' />';
+  }
+  if (vd== true){
+    btnVD = '<input type=\'button\' id=\'hangup\' class=\'btn btn-danger\' value=\'Terminar sesión\' onclick=\'onHangup()\' />';
+    videoChat = true;
+  } else {
+    btnVD = 'Conectando...         ';
+    btnTablero = ' ';
+    videoChat = false;
+  }
+  setStatus(btnVD  + btnTablero + btnChat);
+}
+
 function onTablero(s){
   tablero = true
   drawLocalVideo = document.getElementById('drawLocalVideo');
@@ -812,22 +859,24 @@ function onTablero(s){
   drawRemoteVideo.style.opacity = '1';
   //remoteVideo.style.opacity = '0'
   //miniVideoRemote.style.opacity = '1';
-
   drawingApp.style.height = window.innerHeight*0.9;
   drawConfi();
-  setStatus('<input type=\'button\' id=\'hangup\' value=\'Terminar sesión\' \
-            onclick=\'onHangup()\' /> <input type=\'button\' id=\'detenerTablero\' value=\'Detener tablero\' \
-            onclick=\'offTablero()\' /> ');
+  displayButtons(videoChat);
+  if (chat==true){
+    hideChat();
+    showChat();
+  }
   if (!s){
     var sender = '{"fn":"onTablero", "onTablero":true}';
     sendData(sender);
   }
-  
-
 }
 
 function offTablero(s){
-  tablero = false
+  tablero = false;
+  drawLocalVideo = document.getElementById('drawLocalVideo');
+  drawRemoteVideo = document.getElementById('drawRemoteVideo');
+  drawingApp = document.getElementById('drawingapp');
   drawingApp.style.display = "none";
   reattachMediaStream(remoteVideo, drawRemoteVideo);
   reattachMediaStream(miniVideo, drawLocalVideo);
@@ -835,11 +884,14 @@ function offTablero(s){
   drawLocalVideo.src = '';
   containerDiv.style.display = "block";
   window.onresize();
-  setStatus('<input type=\'button\' id=\'hangup\' value=\'Terminar sesión\' \
-            onclick=\'onHangup()\' /> <input type=\'button\' id=\'tablero\' value=\'Iniciar tablero\' \
-            onclick=\'onTablero()\' /> ');
+  displayButtons(videoChat);
+  if (chat==true){
+    hideChat();
+    showChat();
+  }
   if (!s){
     var sender = '{"fn": "offTablero", "offTablero":true}';
     sendData(sender);
   }
 }
+

@@ -13,7 +13,6 @@ a:visited {color: #FFFFFF; }
 html, body {
   background-color: #000000;
   height: 100%;
-  font-family: Verdana, Arial, Helvetica, sans-serif;
 }
 body {
   margin: 0;
@@ -40,12 +39,51 @@ footer {
 }
 
 #chatbox{
-  position: absolute;
-  left: 4px;
+  position: fixed;
+  left: 50%;
   bottom: 34px;
   z-index: 100;
   display: none;
+  margin-left: -161px;
+  margin-right: auto; 
 }
+
+#logchat{
+  height: 100px; 
+  background-color:#FFFFFF;
+  overflow-y: auto;
+  padding: 14 px;
+  border-radius: 8px;
+}
+
+.logsend{
+  text-align:right;
+  color: blue;
+  font-size: 1em;
+}
+
+.logreceive{
+  text-align:right;
+  color: red;
+  font-size: 1em;
+}
+
+#inputchat{
+  padding-top: 14px;
+  padding-left: 10px;
+  padding-bottom: 14px;
+}
+
+#chat{
+  height: 24px;
+  overflow-y: hidden;
+  font-size: 0.8em;
+}
+
+#btnEnviar{
+  padding: 1px 8px;
+}
+
 #card {
   -webkit-transition-duration: 2s;
   -webkit-transform-style: preserve-3d;
@@ -112,26 +150,47 @@ footer {
 }
 
 #hangup {
- font-size: 13px; font-weight: bold;
- color: #FFFFFF;
- width: 128px;
- height: 24px;
- background-color: #808080;
- border-style: solid;
- border-color: #FFFFFF;
- margin: 2px;
+  padding: 1px 12px;
+  margin-left: 10px;
+  margin-right: 10px;
+  /*font-size: 13px; font-weight: bold;
+  color: #FFFFFF;
+  width: 128px;
+  height: 24px;
+  background-color: #808080;
+  border-style: solid;
+  border-color: #FFFFFF;
+  margin: 2px;*/
 }
 
 #tablero{
-  font-size: 13px; font-weight: bold;
-   color: #FFFFFF;
-   width: 128px;
-   height: 24px;
-   background-color: #808080;
-   border-style: solid;
-   border-color: #FFFFFF;
-   margin: 2px;
+  padding: 1px 12px;
+  margin-left: 10px;
+  margin-right: 10px;
+  /*font-size: 13px; font-weight: bold;
+  color: #FFFFFF;
+  width: 128px;
+  height: 24px;
+  background-color: #808080;
+  border-style: solid;
+  border-color: #FFFFFF;
+  margin: 2px;*/
 }
+
+#chatbtn{
+  padding: 1px 12px;
+  margin-left: 10px;
+  margin-right: 10px;
+  /*font-size: 13px; font-weight: bold;
+  color: #FFFFFF;
+  width: 128px;
+  height: 24px;
+  background-color: #808080;
+  border-style: solid;
+  border-color: #FFFFFF;
+  margin: 2px;*/
+}
+
 #infoDiv {
   position: absolute;
   float: right;
@@ -207,7 +266,6 @@ footer {
   transform: scale(-1, 1);
   -webkit-transform: scale(-1, 1);
 }
-
 
 #drawLocalVideo {
   width: 100%;
