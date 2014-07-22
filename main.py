@@ -293,6 +293,18 @@ class aprende(Handler):
 			mentors = teachme_db.teacher.query(ndb.AND(teachme_db.teacher.areas == area.key.id(), teachme_db.teacher.aceptado==True))
 			self.render("aprende.html", mentors = mentors, area = area)
 
+class terminos(Handler):
+	def get(self):
+		self.render("terminos.html")
+
+class politicas(Handler):
+	def get(self):
+		self.render("politicas.html")
+
+class faq(Handler):
+	def get(self):
+		self.render("terminos.html")
+
 class profile_teacher(Handler, blobstore_handlers.BlobstoreUploadHandler):
 
 	def get(self, te_id):
@@ -432,6 +444,9 @@ app = webapp2.WSGIApplication([('/', MainPage),
 								('/profile/teacher/([0-9]+)?', profile_teacher),
 								('/editabout', editabout),
 								('/calendar/teacher/add', calendar_teacher_add),
+								('/terminos', terminos),
+								('/politicas', politicas),
+								('/faq', faq),
 								('/contacto', contacto),
 								('/upload', profile_teacher),
 								('/tasks/teachoutsta', teachouts_sta), 
