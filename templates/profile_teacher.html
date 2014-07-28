@@ -72,6 +72,31 @@
 					</div>
 					<hr>
 					<div class="row">
+						<div class="col-md-3 col-md-offset-1">
+							<div class="form-group">
+								<form method="post" action="/addtags" role="form">
+									<label for="tags">Conocimientos y habilidades: </label>
+									<input type="text" name="new_tags" class="form-control" id="t-tags" placeholder="Ingrese temas que domina" >
+									<p class="help-block">Agrega temas que dominas para visibilizar mejor tu conocimiento</p>
+									<input type="hidden" name="te_id" value="{{teacher.key.id()}}">	
+									<button class="btn btn-success" type="submit">Agregar</button>
+								</form>
+							</div>
+						</div>
+						<div class="col-md-7 col-md-offset-1">
+							{% for a in teacher.tags %}
+								<form method="post" action="/addtags"  role="form">
+									<div class="tagbox"><button type="submit" class="button-tag" >
+									×&nbsp;&nbsp;&nbsp;</button>{{a}}</div>
+									<input type="hidden" name="re_id" value="{{teacher.key.id()}}">
+									<input type="hidden" name="tag_r" value="{{a}}">
+								</form>
+							{% endfor %}
+						</div>
+					</div>
+
+					<hr>
+					<div class="row">
 						<div class="col-md-4 col-md-offset-1">
 							<form role="form" method="post" action="/calendar/teacher/add">
 								<h3>Ingresa tus horas disponibles</h3>
@@ -102,6 +127,7 @@
 		</div>	
 	</div>
 	<script type="text/javascript">
+
 		$(document).ready(function() {
 			$.datepicker.regional['es'] = {
 		        closeText: 'Cerrar',
@@ -120,6 +146,10 @@
 		        showMonthAfterYear: false,
 		        yearSuffix: ''
 		    };
+			var availableTags ={{taglist|safe}};
+			$( "#t-tags" ).autocomplete({
+				source: availableTags
+			});
 
 		    var fechas = {{fechas|safe}};
 		    var dates_local = [];
