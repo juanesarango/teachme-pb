@@ -4,6 +4,10 @@
 		<meta charset="utf-8">
 		<title>{% block title%}{% endblock %}</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="Descubre mentores expertos dispuestos a compartir su conocimiento contigo a través de clases online.">
+		<meta name="application-name" content="Teachme">
+		<meta name="google-site-verification" content="0yXZmkVP_MAflelIPzb7gwZOxDZ7o2LQdItc_QDtS0Y">
+		<meta name="keywords" content="Teachme, teachmeapp, teachme.com, teachmeapp.com, tutor, tutores, tutorias, mentor, mentores, mentoria, matemáticas, matematicas, física, fisica, química, quimica, español, ingles, geometria, algebra, cálculo, cálculo integral, cálculo diferencial, costos, tutorias medellin, tutorias bogotá, tutorias colombia, ayuda tareas">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 		<!-- Bootstrap -->
 		<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
@@ -49,11 +53,6 @@
 								{% for a in areas %}
 									<li><a href="/aprende/{{a.key.id()}}">{{a.name}}</a></li>
 								{% endfor %}
-								<!-- <li><a href="/aprende/matematicas">Matemáticas</a></li>
-								<li><a href="/aprende/fisica">Física</a></li>
-								<li><a href="/aprende/quimica">Química</a></li>
-								<li><a href="/aprende/biologia">Biología</a></li>
-								<li><a href="/aprende/musica">Música</a></li> -->
 							</ul>
 						</li>
 						{% if not teacher %}
