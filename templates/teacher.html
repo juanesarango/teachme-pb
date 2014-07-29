@@ -25,7 +25,7 @@
 					</div>
 					<hr>
 					<div class="row">
-						<div class="col-md-5 col-md-offset-1">
+						<div class="col-md-3 col-md-offset-1">
 							<h3>Ciudad</h3>
 							<p>{{mentor.ciudad}}</p>
 							<h3>País</h3>
@@ -33,10 +33,16 @@
 							<h3>Perfil de linkedin</h3>
 							<p><a href="{{mentor.linkedin}}" target="_blank">{{mentor.linkedin}}</a></p>
 						</div>
-						<div class="col-md-5">
+						<div class="col-md-3 col-md-offset-1">
 							<h3>Áreas del conocimiento</h3>
 							{% for a in t_areas %}
 								<p>{{a.name}}</p>
+							{% endfor %}
+						</div>
+						<div class="col-md-3">
+							<h3 for="tags">Conocimientos y habilidades</h3>
+							{% for a in teacher.tags %}
+								<div class="tagbox">{{a}}</div>
 							{% endfor %}
 						</div>
 					</div>

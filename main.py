@@ -22,6 +22,50 @@ import logging
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape = True)
 
+# tags = [u"Álgebra Lineal",
+# 		u"Álgebra Secundaria",
+# 		u"Cálculo Diferencial",
+# 		u"Cálculo Integral",
+# 		u"Cálculo Secundaria",
+# 		u"Cálculo Vectorial",
+# 		u"Ciencias Naturales",
+# 		u"Ecuaciones Diferenciales",
+# 		u"Electromagnetismo",
+# 		u"Estadística Descriptiva",
+# 		u"Estadística Inferencial",
+# 		u"Estadística Secundaria",
+# 		u"Excel básico",
+# 		u"Geometría Secundaria",
+# 		u"Lógica Matemática",
+# 		u"Matemáticas Bachillerato Internacional",
+# 		u"Matemáticas Financieras",
+# 		u"Matemáticas GMAT",
+# 		u"Matemáticas GRE",
+# 		u"Matemáticas operativas",
+# 		u"Matemáticas Primaria",
+# 		u"Matemáticas SABER 11",
+# 		u"MATLAB",
+# 		u"Mecánica Cuántica",
+# 		u"Mecánica de Fluidos",
+# 		u"Mecánica de Sólidos",
+# 		u"Modelos Probabilísticos",
+# 		u"Movimiento y Fuerzas",
+# 		u"Ondas y Óptica",
+# 		u"Pre-Cálculo",
+# 		u"Probabilidad Secundaria",
+# 		u"Probabilidad Universidad",
+# 		u"Programación en C+",
+# 		u"Programación por Objetos",
+# 		u"Química Inorgánica",
+# 		u"Química Orgánica",
+# 		u"Regresión Lineal",
+# 		u"Relatividad",
+# 		u"Teoría de Juegos",
+# 		u"Termodinámica",
+# 		u"Trigonometría",
+# 		u"Variable Compleja",
+# 		u"Variable Compleja"]
+
 def render_str(template, **params):
 	t = jinja_env.get_template(template)
 	return t.render(params)
@@ -74,7 +118,7 @@ class Handler(webapp2.RequestHandler):
 		tkey = self.read_secure_cookie("tei")
 		self.user = ukey and ndb.Key(urlsafe=ukey).get()
 		self.teacher = tkey and ndb.Key(urlsafe=tkey).get()
-
+		self.tags = teachme_db.tags.query().get()
 
 #########################################################################
 #Pagina principal
@@ -293,6 +337,18 @@ class aprende(Handler):
 			mentors = teachme_db.teacher.query(ndb.AND(teachme_db.teacher.areas == area.key.id(), teachme_db.teacher.aceptado==True))
 			self.render("aprende.html", mentors = mentors, area = area)
 
+class terminos(Handler):
+	def get(self):
+		self.render("terminos.html")
+
+class politicas(Handler):
+	def get(self):
+		self.render("politicas.html")
+
+class faq(Handler):
+	def get(self):
+		self.render("terminos.html")
+
 class profile_teacher(Handler, blobstore_handlers.BlobstoreUploadHandler):
 
 	def get(self, te_id):
@@ -313,7 +369,8 @@ class profile_teacher(Handler, blobstore_handlers.BlobstoreUploadHandler):
 		dates = json.dumps(fns.solo_dates(teacher.date_available))
 		hours = json.dumps(fns.solo_hours(teacher.date_available))
 		upload_url = blobstore.create_upload_url('/upload')
-		self.render("profile_teacher.html", teacher = teacher, t_areas = t_areas, upload_url = upload_url, dates = dates, hours = hours, fechas = fechas)
+		taglist = json.dumps(self.tags.name)
+		self.render("profile_teacher.html", teacher = teacher, t_areas = t_areas, upload_url = upload_url, dates = dates, hours = hours, fechas = fechas, taglist= taglist)
 
 	def post(self):
 		
@@ -338,12 +395,39 @@ class profile_teacher(Handler, blobstore_handlers.BlobstoreUploadHandler):
 class editabout(Handler):
 	def post(self):
 		te_id = self.request.get("te_id")
-		teacher = ndb.Key(teachme_db.teacher, int(te_id), parent = self.user.key).get()
 		about = self.request.get("editabout")
 		if about:
+			teacher = ndb.Key(teachme_db.teacher, int(te_id), parent = self.user.key).get()
 			teacher.about = about
 			teacher.put()
-		self.redirect("/profile/teacher/%s" % str(teacher.key.id()))
+		self.redirect("/profile/teacher/%s" % te_id)
+
+class addtags(Handler):
+	def post(self):
+		te_id = self.request.get("te_id")
+		logging.error(te_id)
+		if te_id:
+			new_tag = self.request.get("new_tags")
+			if new_tag:
+				teacher = ndb.Key(teachme_db.teacher, int(te_id), parent = self.user.key).get()
+				if  new_tag not in teacher.tags:
+					teacher.tags.append(new_tag)
+					teacher.put()
+					if new_tag not in self.tags.name:
+						logging.error(new_tag)
+						self.tags.name.append(new_tag)
+						self.tags.put()
+		else:
+			re_id = self.request.get("re_id")
+			if re_id:
+				teacher = ndb.Key(teachme_db.teacher, int(re_id), parent = self.user.key).get()
+				tag_r = self.request.get("tag_r")
+				if tag_r:
+					logging.error(tag_r)
+					teacher.tags.remove(tag_r)
+					teacher.put()
+					te_id = re_id
+		self.redirect("/profile/teacher/%s" % te_id)
 
 class calendar_teacher_add(Handler):
 	def post(self):
@@ -441,7 +525,11 @@ app = webapp2.WSGIApplication([('/', MainPage),
 								('/aprende/([0-9]+)?', aprende),
 								('/profile/teacher/([0-9]+)?', profile_teacher),
 								('/editabout', editabout),
+								('/addtags', addtags),
 								('/calendar/teacher/add', calendar_teacher_add),
+								('/terminos', terminos),
+								('/politicas', politicas),
+								('/faq', faq),
 								('/contacto', contacto),
 								('/upload', profile_teacher),
 								('/tasks/teachoutsta', teachouts_sta), 

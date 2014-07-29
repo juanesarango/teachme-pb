@@ -57,6 +57,7 @@ class teacher(ndb.Model):
 	subareas = ndb.StringProperty(repeated = True)
 	date_created = ndb.DateTimeProperty(auto_now_add = True)
 	timezoneOffset = ndb.IntegerProperty()
+	tags = ndb.StringProperty(repeated = True)
 
 	date_available = ndb.DateTimeProperty(repeated = True)
 	date_reserved = ndb.DateTimeProperty(repeated = True)
@@ -69,6 +70,9 @@ class teacher(ndb.Model):
 class areas(ndb.Model):
 	name = ndb.StringProperty(required = True)
 	subarea = ndb.StringProperty(repeated = True)
+
+class tags(ndb.Model):
+	name = ndb.StringProperty(repeated = True)
 
 class teachout(ndb.Model):
 	date = ndb.DateTimeProperty()
