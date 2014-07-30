@@ -30,6 +30,18 @@ a:visited{
 /* Formatos Predefinidos****************************************** */
 
 .ui-highlight .ui-state-default{
+  background-color : green;
+  background-image :none;
+  color: white;
+  font-weight:bold;
+  font-size: 12pt;
+}
+
+.ui-highlight .ui-state-active{
+  background-color : #428bca;
+}
+
+.ui-datepicker-current-day .ui-state-active{
   background-color : #428bca;
   background-image :none;
   color: white;
@@ -38,7 +50,7 @@ a:visited{
 }
 
 
-#horas{
+.horas{
   height: 244px;
   width: 200px;
   overflow: auto;
@@ -47,6 +59,15 @@ a:visited{
   border: solid 1px #cacaca
 }
 
+input[type=checkbox]{
+  display: none;
+}
+
+input[type=checkbox]:checked + label{
+  background-color: green;
+  color: white;
+  padding: 2px 5px;
+}
 
 /* imagen de fondo */
 .backgnd{
@@ -353,6 +374,7 @@ a:visited{
     opacity: 1;
     border:0;
 }
+<<<<<<< HEAD
 
 #register{
   border: 1px solid #428bca;
@@ -379,3 +401,5 @@ a:visited{
   color: white;
   border: 1px solid #145289;
 }
+=======
+>>>>>>> origin/master

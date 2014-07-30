@@ -475,22 +475,32 @@ class calendar_teacher_add(Handler):
 		if not teacher:
 			self.abort(403)
 			return
-
-		d = str(self.request.get("dateto"))
-		timezoneOffset = int(self.request.get("timezoneOffset"))
-		if d:
-			date = datetime.datetime.strptime(d, "%Y-%m-%d %H:%M")
-			repeated = booking.check_repeated_date(teacher, date)
-			if repeated[0]:
-				booking.erase_past_dates(teacher)
-				teacher.date_available.append(date)
-				sorted(teacher.date_available)
-				teacher.mail = self.user.mail #Borrar esto
-				teacher.timezoneOffset = timezoneOffset #Borrar esto
-				self.user.timezoneOffset = timezoneOffset #Borrar esto
-				self.user.profile_pic = teacher.profile_pic
-				teacher.put()
-				self.user.put() #borrar esto
+		#timezoneOffset = int(self.request.get("timezoneOffset"))
+		for i in range(24):
+			d = str(self.request.get(str(i)))
+			if d:
+				date = datetime.datetime.strptime(d, "%Y-%m-%d %H:%M")
+				repeated = booking.check_repeated_date(teacher, date)
+				if repeated[0]:
+					booking.erase_past_dates(teacher)
+					teacher.date_available.append(date)
+					sorted(teacher.date_available)
+		teacher.put()
+		# d = str(self.request.get("dateto"))
+		
+		# if d:
+		# 	date = datetime.datetime.strptime(d, "%Y-%m-%d %H:%M")
+		# 	repeated = booking.check_repeated_date(teacher, date)
+		# 	if repeated[0]:
+		# 		booking.erase_past_dates(teacher)
+		# 		teacher.date_available.append(date)
+		# 		sorted(teacher.date_available)
+		# 		teacher.mail = self.user.mail #Borrar esto
+		# 		teacher.timezoneOffset = timezoneOffset #Borrar esto
+		# 		self.user.timezoneOffset = timezoneOffset #Borrar esto
+		# 		self.user.profile_pic = teacher.profile_pic
+		# 		teacher.put()
+		# 		self.user.put() #borrar esto
 
 		
 		self.redirect("/profile/teacher/" + str(teacher.key.id()))
