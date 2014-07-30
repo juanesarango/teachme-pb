@@ -66,6 +66,8 @@ jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), a
 # 		u"Trigonometría",
 # 		u"Variable Compleja",
 # 		u"Variable Compleja"]
+# newtag = teachme_db.tags(name=name_of_tags)
+# newtag.put()
 
 def render_str(template, **params):
 	t = jinja_env.get_template(template)
@@ -137,8 +139,6 @@ class Handler(webapp2.RequestHandler):
 		tkey = self.read_secure_cookie("tei")
 		self.user = ukey and ndb.Key(urlsafe=ukey).get()
 		self.teacher = tkey and ndb.Key(urlsafe=tkey).get()
-		# newtag = teachme_db.tags(name=name_of_tags)
-		# newtag.put()
 		self.tags = teachme_db.tags.query().get()
 
 #########################################################################
