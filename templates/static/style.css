@@ -374,7 +374,6 @@ input[type=checkbox]:checked + label{
     opacity: 1;
     border:0;
 }
-<<<<<<< HEAD
 
 #register{
   border: 1px solid #428bca;
@@ -401,5 +400,4 @@ input[type=checkbox]:checked + label{
   color: white;
   border: 1px solid #145289;
 }
-=======
->>>>>>> origin/master
+
