@@ -128,7 +128,6 @@ a:visited{
 }
 
 .grid-container{
-	max-width: 1180px;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -353,4 +352,30 @@ a:visited{
 .button-tag:hover{
     opacity: 1;
     border:0;
+}
+
+#register{
+  border: 1px solid #428bca;
+  padding:4px;
+  margin:10px;
+  border-radius:5px;
+  background-color: #428bca;
+  color: white;
+}
+
+#aregister{
+  color: white;
+  text-decoration: none;
+}
+
+#aregister:hover{
+  color: white;
+  text-decoration: none;
+  cursor:pointer;
+}
+
+#register:hover{
+  background-color: #145289;
+  color: white;
+  border: 1px solid #145289;
 }

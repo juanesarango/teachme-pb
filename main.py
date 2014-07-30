@@ -22,7 +22,8 @@ import logging
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape = True)
 
-# tags = [u"Álgebra Lineal",
+# name_of_tags = [
+# 		u"Álgebra Lineal",
 # 		u"Álgebra Secundaria",
 # 		u"Cálculo Diferencial",
 # 		u"Cálculo Integral",
@@ -69,6 +70,24 @@ jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), a
 def render_str(template, **params):
 	t = jinja_env.get_template(template)
 	return t.render(params)
+
+# def depurar_teachouts():
+# 	q = teachme_db.teacher.query().get()
+# 	logging.error(q)
+# 	t = teachme_db.teachout.query().get()
+# 	logging.error("AAAAAAAAA")
+# 	logging.error(t)
+# 	if hasattr(q, '__iter__'):
+# 		for i in q:
+# 			for l in i.teachouts:
+# 				if not l in t:
+# 					l.delete()
+# 	else:
+# 		for l in q.teachouts:
+# 				logging.error("BBBBBBB")
+# 				logging.error(l)
+# 				if not l in t:
+# 					l.delete()
 
 
 #########################################################################
@@ -118,6 +137,8 @@ class Handler(webapp2.RequestHandler):
 		tkey = self.read_secure_cookie("tei")
 		self.user = ukey and ndb.Key(urlsafe=ukey).get()
 		self.teacher = tkey and ndb.Key(urlsafe=tkey).get()
+		# newtag = teachme_db.tags(name=name_of_tags)
+		# newtag.put()
 		self.tags = teachme_db.tags.query().get()
 
 #########################################################################
@@ -220,7 +241,7 @@ class teacher(Handler):
 
 		if meet and teacher_key:
 			if booking.check_availability_mentor(teacher_key, meet) and booking.check_availability_user(self.user, meet):
-				t = teachme_db.teachout(date = meet, learner = self.user.key, teacher = teacher_key.key, area = area, tema = tema)
+				t = teachme_db.teachout(date = meet, learner = self.user.key, teacher = teacher_key.key, area = area, tema = tema, pago = False)
 				t.put()
 
 				self.user.teachouts.append(t.key)
@@ -281,6 +302,7 @@ class comparte(Handler):
 
 class teachouts(Handler):
 	def get(self):
+		#depurar_teachouts()
 		if not self.user:
 			self.abort(403)
 			return
@@ -327,8 +349,22 @@ class teachouts(Handler):
 			etouts[t]= t.get()
 			ementor[t] = etouts[t].teacher.get()
 
+		self.render("/teachouts.html", touts = touts, mentor = mentor, disable = disable, faltan = faltan, m_touts = m_touts, learner = learner, m_disable = m_disable, m_faltan = m_faltan, etouts = etouts, ementor=ementor, m_etouts= m_etouts, elearner=elearner, codigo="")
 
-		self.render("/teachouts.html", touts = touts, mentor = mentor, disable = disable, faltan = faltan, m_touts = m_touts, learner = learner, m_disable = m_disable, m_faltan = m_faltan, etouts = etouts, ementor=ementor, m_etouts= m_etouts, elearner=elearner)
+	def post(self):
+		codigo = self.request.get("codigo")
+		PROMOS = [
+			"PRIMERACLASE",
+			"DEMOPRUEBA"
+			]
+		if codigo in PROMOS:
+			tout_key = self.request.get("teachout_key")
+			logging.error(tout_key)
+			tout = ndb.Key(urlsafe= tout_key).get()
+			logging.error(tout)
+			tout.pago = True
+			tout.put()
+		self.redirect("/teachouts")
 
 class aprende(Handler):
 	def get(self, ar):

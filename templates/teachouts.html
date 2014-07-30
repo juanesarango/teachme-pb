@@ -46,13 +46,19 @@
 									</div>
 									<div class="col-md-4">
 										<div class="row">
-											<a href="/session/?r={{m_touts[t].key.id()}}" target="_blank"> 
-												<button class="btn btn-success" {% if m_disable[t] == True %} disabled="disabled"{% endif %}>Únete ahora</button>
-											</a>
+											{% if m_disable[t] == True %}
+												<a href="/teachouts" target="_blank"> 
+													<button class="btn btn-success" disabled="disabled">Únete ahora</button>
+												</a>
+											{% else %}
+												<a href="/session/?r={{m_touts[t].key.id()}}" target="_blank"> 
+													<button class="btn btn-success">Únete ahora</button>
+												</a>
+											{% endif %}
 										</div>
 										<div class="row">
 											<a target="_blank" href="/teachout/cancel/{{m_touts[t].key.urlsafe()}}">
-												<button class="btn btn-danger" disabled="disabled">Cancelar</button>
+												<button class="btn btn-danger" disabled="disabled" style="margin-top:6px;">Cancelar</button>
 											</a>
 										</div>
 									</div>
@@ -101,34 +107,58 @@
 									</div>
 									<div class="col-md-4">
 										<div class="row">
-											<a href="/session/?r={{touts[t].key.id()}}" target="_blank">
-												<button class="btn btn-success" {% if disable[t] == True %} disabled="disabled"{% endif %}>Unete ahora</button>
-											</a>
+											{% if touts[t].pago == True %}
+												{% if disable[t] == True %}
+													<a href="/teachouts" target="_blank"> 
+														<button class="btn btn-success" disabled="disabled">Únete ahora</button>
+													</a>
+												{% else %}
+													<a href="/session/?r={{touts[t].key.id()}}" target="_blank"> 
+														<button class="btn btn-success">Únete ahora</button>
+													</a>
+												{% endif %}
+											{% else %}
+													<button class="btn btn-success" style="background-color:#428bca;" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-credit-card"></span>&nbsp;Paga la sesión</button>
+											{% endif %}
 										</div>
+										<!-- Modal -->
+										<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+										  <div class="modal-dialog">
+										    <div class="modal-content">
+										      <div class="modal-header">
+										        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+										        <h4 class="modal-title font-b" id="myModalLabel" >Plataformas de pago</h4>
+										      </div>
+										      <form role="form" method="post">
+											    	<div class="modal-body font-b">
+														<div class="col-lg-12">
+													    	<div class="input-group">
+													    		<h5 class="modal-title font-b">Bonos de descuento</h5>
+													    		<div class="input-group">
+														    		<span class="input-group-addon">$</span>
+														    		<input type="text" name="codigo" class="form-control" placeholder="Ingrese el código" value="{{codigo}}" autocomplete="off">
+														    		<input type="hidden" name="teachout_key" value="{{t.urlsafe()}}">	
+														    	</div>
+													    	</div>
+													  	</div>
+													</div>
+													<br>
+													<br>
+													<br>
+												    <div class="modal-footer">
+												        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+												        <button type="submit" class="btn btn-primary">Procesar pago</button>
+												    </div>
+											   </form>
+										    </div>
+										  </div>
+										</div>
+										<!-- Modal -->
 										<div class="row">
 											<a href="/teachout/cancel/{{touts[t].key.urlsafe()}}">
-												<button class="btn btn-danger" disabled="disabled">Cancelar</button>
+												<button class="btn btn-danger" disabled="disabled" style="margin-top:6px;">Cancelar</button>
 											</a>
 										</div>
-										<!-- Botón de Paypal -->
-										<!-- <div class="row">
-											<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-												<input type="hidden" name="cmd" value="_s-xclick">
-												<input type="hidden" name="hosted_button_id" value="GHP6J9H8W562J">
-												<table>
-												<tr><td><input type="hidden" name="on0" value="Cantidad de horas">Cantidad de horas</td></tr><tr><td><select name="os0">
-													<option value="1 hora">1 hora $15.00 USD</option>
-													<option value="2 horas">2 horas $30.00 USD</option>
-													<option value="3 horas">3 horas $45.00 USD</option>
-													<option value="4 horas">4 horas $60.00 USD</option>
-												</select> </td></tr>
-												</table>
-												<input type="hidden" name="currency_code" value="USD">
-												<input type="image" src="https://www.paypalobjects.com/es_ES/ES/i/btn/btn_paynowCC_LG.gif" border="0" name="submit" alt="PayPal. La forma rápida y segura de pagar en Internet.">
-												<img alt="" border="0" src="https://www.paypalobjects.com/es_XC/i/scr/pixel.gif" width="1" height="1">
-											</form>
-										</div> -->
-										<!-- Botón de Paypal -->
 									</div>
 								</div>
 							</div>
@@ -145,7 +175,6 @@
 					</div>
 				</div>
 			{% endfor %}
-<!-- Modificación Juanes -->
 			{% if teacher %}
 				{% if teacher.teachouts_expired %}
 					<div class="row">
