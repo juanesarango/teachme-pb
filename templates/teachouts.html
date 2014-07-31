@@ -47,7 +47,7 @@
 									<div class="col-md-4">
 										<div class="row">
 											<a href="/session/?r={{m_touts[t].key.id()}}" target="_blank"> 
-												<button class="btn btn-success" {% if m_disable[t] == True %} disabled="disabled"{% endif %}>Únete ahora</button>
+												<button class="btn btn-success" {% if m_disable[t] == True %} disabled="disabled"{% endif %}><span class="glyphicon glyphicon-facetime-video"></span> Únete ahora</button>
 											</a>
 										</div>
 										<div class="row">
@@ -102,7 +102,7 @@
 									<div class="col-md-4">
 										<div class="row">
 											<a href="/session/?r={{touts[t].key.id()}}" target="_blank">
-												<button class="btn btn-success" {% if disable[t] == True %} disabled="disabled"{% endif %}>Unete ahora</button>
+												<button class="btn btn-success" {% if disable[t] == True %} disabled="disabled"{% endif %}><span class="glyphicon glyphicon-facetime-video"></span> Unete ahora</button>
 											</a>
 										</div>
 										<div class="row">
@@ -238,6 +238,76 @@
 										</div>
 									</div>
 								</div>
+								<div class="row">
+									{% if etouts[t].status=="ok" %}
+										{% if etouts[t].rating %}
+											<div class="col-md-5">
+												<h4 class="text-primary">
+							        				<span class="glyphicon glyphicon-star"></span>
+							        				<span class="glyphicon glyphicon-star"></span>
+							        				<span class="glyphicon glyphicon-star"></span>
+							        				<span class="glyphicon glyphicon-star"></span>
+							        				<span class="glyphicon glyphicon-star"></span>
+												</h4>
+											</div>
+										{% else %}
+											<div class="col-md-5">
+												<p><button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#review{{t.id()}}"><span class="glyphicon glyphicon-star"></span> Califica este mentor</button></p>
+											</div>
+
+											<!-- Modal para calificación -->
+											<div class="modal fade" id="review{{t.id()}}" tabindex="-1" role="dialog" aria-labelledby="review{{t.id()}}Label" aria-hidden="true">
+												<div class="modal-dialog">
+												    <div class="modal-content">
+													    <div class="modal-header">
+													    	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+													    	<h4 class="modal-title font-b" id="review{{t.id()}}label">Califica a {{ementor[t].name}}</h4>
+													    </div>
+													    <form role="form" action="/calificar" method="post">
+													      	<div class="modal-body">
+													        	<div class="row">
+													        		<div class="col-md-3 col-md-offset-1">
+													        			<img {% if ementor[t].profile_pic_r %}src="{{ementor[t].profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %} class="img-circle img-100">
+													        		</div>
+													        		<div class="col-md-7">
+													        			<div class="form-group">
+													        				<h4 class="text-primary">
+														        				<span class="glyphicon glyphicon-star-empty star1"></span>
+														        				<span class="glyphicon glyphicon-star-empty star2"></span>
+														        				<span class="glyphicon glyphicon-star-empty star3"></span>
+														        				<span class="glyphicon glyphicon-star-empty star4"></span>
+														        				<span class="glyphicon glyphicon-star-empty star5"></span>
+													        				</h4>
+													        				<input type="hidden" name="reviewRating" class="reviewStar">
+													        				<p class="help-block">Califica de 1 a 5 tu experiencia con {{ementor[t].name}} </p>
+													        				<p class="help-block has-error">{{msg}}</p>
+													        			</div>
+													        		</div>
+													        	</div>
+													        	<hr>
+													        	<div class="row">
+													        		<div class="col-md-10 col-md-offset-1">
+													        			<div class="form-group">
+													        				<textarea class="form-control" rows="5" name="reviewComment" placeholder="Escribe un comentario acerca de tu experiencia con {{ementor[t].name}}"></textarea>
+													        				<p class="help-block">Tu comentario podra ser visto por los usuarios de Teachme</p>
+													        			</div>
+													        		</div>
+													        	</div>
+													      	</div>
+													      	<div class="modal-footer">
+													      		<input type="hidden" name="reviewMentor" value="{{ementor[t].key.urlsafe()}}">
+													      		<input type="hidden" name="reviewTout" value="{{t.urlsafe()}}">
+													        	<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+													        	<button type="submit" class="btn btn-primary">Calificar</button>
+													      	</div>
+												      	</form>
+												    </div>
+												</div>
+											</div>
+											<!-- Termina modal para calificación-->
+										{% endif %}
+									{% endif %}
+								</div>
 							</div>
 						</div>
 						<br>
@@ -254,5 +324,74 @@
 			{% endfor %}
 		</div>
 	</div>
+<script type="text/javascript">
+	$(document).ready( function(){
+		// $(".star1").hover( function(){
+		// 	$(this).toggleClass("glyphicon-star-empty glyphicon-star");
+		// })
+		// $(".star2").hover( function(){
+		// 	$(".star1").toggleClass("glyphicon-star-empty glyphicon-star");
+		// 	$(this).toggleClass("glyphicon-star-empty glyphicon-star");
+		// })
+		// $(".star3").hover( function(){
+		// 	$(".star1").toggleClass("glyphicon-star-empty glyphicon-star");
+		// 	$(".star2").toggleClass("glyphicon-star-empty glyphicon-star");
+		// 	$(this).toggleClass("glyphicon-star-empty glyphicon-star");
+		// })
+		// $(".star4").hover( function(){
+		// 	$(".star1").toggleClass("glyphicon-star-empty glyphicon-star");
+		// 	$(".star2").toggleClass("glyphicon-star-empty glyphicon-star");
+		// 	$(".star3").toggleClass("glyphicon-star-empty glyphicon-star");
+		// 	$(this).toggleClass("glyphicon-star-empty glyphicon-star");
+		// })
+		// $(".star5").hover( function(){
+		// 	$(".star1").toggleClass("glyphicon-star-empty glyphicon-star");
+		// 	$(".star2").toggleClass("glyphicon-star-empty glyphicon-star");
+		// 	$(".star3").toggleClass("glyphicon-star-empty glyphicon-star");
+		// 	$(".star4").toggleClass("glyphicon-star-empty glyphicon-star");
+		// 	$(this).toggleClass("glyphicon-star-empty glyphicon-star");
+		// })
 
+		$(".star1").click( function(){
+			$(this).removeClass("glyphicon-star-empty").addClass("glyphicon-star");
+			$(".star2").removeClass("glyphicon-star").addClass("glyphicon-star-empty");
+			$(".star3").removeClass("glyphicon-star").addClass("glyphicon-star-empty");
+			$(".star4").removeClass("glyphicon-star").addClass("glyphicon-star-empty");
+			$(".star5").removeClass("glyphicon-star").addClass("glyphicon-star-empty");
+			$(".reviewStar").val(1);
+		})
+		$(".star2").click( function(){
+			$(".star1").removeClass("glyphicon-star-empty").addClass("glyphicon-star");
+			$(this).removeClass("glyphicon-star-empty").addClass("glyphicon-star");
+			$(".star3").removeClass("glyphicon-star").addClass("glyphicon-star-empty");
+			$(".star4").removeClass("glyphicon-star").addClass("glyphicon-star-empty");
+			$(".star5").removeClass("glyphicon-star").addClass("glyphicon-star-empty");
+			$(".reviewStar").val(2);
+		})
+		$(".star3").click( function(){
+			$(".star1").removeClass("glyphicon-star-empty").addClass("glyphicon-star");
+			$(".star2").removeClass("glyphicon-star-empty").addClass("glyphicon-star");
+			$(this).removeClass("glyphicon-star-empty").addClass("glyphicon-star");
+			$(".star4").removeClass("glyphicon-star").addClass("glyphicon-star-empty");
+			$(".star5").removeClass("glyphicon-star").addClass("glyphicon-star-empty");
+			$(".reviewStar").val(3);
+		})
+		$(".star4").click( function(){
+			$(".star1").removeClass("glyphicon-star-empty").addClass("glyphicon-star");
+			$(".star2").removeClass("glyphicon-star-empty").addClass("glyphicon-star");
+			$(".star3").removeClass("glyphicon-star-empty").addClass("glyphicon-star");
+			$(this).removeClass("glyphicon-star-empty").addClass("glyphicon-star");
+			$(".star5").removeClass("glyphicon-star").addClass("glyphicon-star-empty");
+			$(".reviewStar").val(4);
+		})
+		$(".star5").click( function(){
+			$(".star1").removeClass("glyphicon-star-empty").addClass("glyphicon-star");
+			$(".star2").removeClass("glyphicon-star-empty").addClass("glyphicon-star");
+			$(".star3").removeClass("glyphicon-star-empty").addClass("glyphicon-star");
+			$(".star4").removeClass("glyphicon-star-empty").addClass("glyphicon-star");
+			$(this).removeClass("glyphicon-star-empty").addClass("glyphicon-star");
+			$(".reviewStar").val(5);
+		})
+	})
+</script>
 {% endblock %}

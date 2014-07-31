@@ -65,6 +65,9 @@ class teacher(ndb.Model):
 	teachouts = ndb.KeyProperty(repeated = True, kind = "teachout")
 	teachouts_expired = ndb.KeyProperty(repeated = True, kind = "teachout")
 
+	rating = ndb.IntegerProperty()
+	reviews = ndb.IntegerProperty()
+
 	aceptado = ndb.BooleanProperty()
 
 class areas(ndb.Model):
@@ -89,5 +92,13 @@ class teachout(ndb.Model):
 
 	log = ndb.StringProperty(repeated = True)
 
+	rating = ndb.IntegerProperty()
+	review = ndb.KeyProperty(kind="review")
 
+class review(ndb.Model):
+	rating = ndb.IntegerProperty(required = True)
+	comment = ndb.StringProperty()
+	user = ndb.KeyProperty(required = True, kind = "user")
+	teachout = ndb.KeyProperty(required = True, kind = "teachout")
+	date = ndb.DateTimeProperty(auto_now_add = True)
 	

@@ -22,7 +22,7 @@ import logging
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape = True)
 
-# tags = [u"Álgebra Lineal",
+# name_of_tags = [u"Álgebra Lineal",
 # 		u"Álgebra Secundaria",
 # 		u"Cálculo Diferencial",
 # 		u"Cálculo Integral",
@@ -118,7 +118,6 @@ class Handler(webapp2.RequestHandler):
 		tkey = self.read_secure_cookie("tei")
 		self.user = ukey and ndb.Key(urlsafe=ukey).get()
 		self.teacher = tkey and ndb.Key(urlsafe=tkey).get()
-		self.tags = teachme_db.tags.query().get()
 
 #########################################################################
 #Pagina principal
@@ -252,11 +251,17 @@ class teacher(Handler):
 
 class comparte(Handler):
 	def get(self):
+		if self.teacher:
+			self.abort(403)
+			return
 		areas = teachme_db.areas.query().order(teachme_db.areas.name)
 		self.render("comparte.html", areas = areas)
 
 	def post(self):
 		if not self.user:
+			self.abort(403)
+			return
+		if self.teacher:
 			self.abort(403)
 			return
 		name = self.user.name
@@ -469,6 +474,32 @@ class calendar_teacher_add(Handler):
 		
 		self.redirect("/profile/teacher/" + str(teacher.key.id()))
 
+class calificar(Handler):
+	def post(self):
+		if not self.user:
+			self.abort(403)
+			return
+		reviewRating = int(self.request.get("reviewRating"))
+		reviewComment = self.request.get("reviewComment")
+		reviewTout = ndb.Key(urlsafe=self.request.get("reviewTout")).get()
+		reviewMentor = ndb.Key(urlsafe=self.request.get("reviewMentor")).get()
+		reviewUser = self.user
+
+		if reviewRating and reviewTout and reviewMentor:
+			r = teachme_db.review(rating = reviewRating, comment = reviewComment, user = self.user.key, teachout = reviewTout.key, parent = reviewMentor.key)
+			r.put()
+
+			reviewMentor.rating = ((reviewMentor.rating*reviewMentor.reviews)+reviewRating)/(reviewMentor.reviews+1)
+			reviewMentor.reviews +=1
+			reviewMentor.put()
+
+			reviewTout.rating = reviewRating
+			reviewTout.review = r.key
+			reviewTout.put()
+			self.redirect("/teachouts")
+		else:
+			msg = "Ingresa tu calificación"
+			self.render("/teachouts.html", msg = msg)
 class contacto(Handler):
 	def get(self):
 		self.render("contacto.html")
@@ -532,6 +563,7 @@ app = webapp2.WSGIApplication([('/', MainPage),
 								('/faq', faq),
 								('/contacto', contacto),
 								('/upload', profile_teacher),
+								('/calificar', calificar),
 								('/tasks/teachoutsta', teachouts_sta), 
 								('/tasks/remindermailing24', reminder_mailing_24),
 								('/tasks/remindermailing15', reminder_mailing_15),

@@ -59,9 +59,9 @@ a:visited{
   border: solid 1px #cacaca
 }
 
-input[type=checkbox]{
+/*input[type=checkbox]{
   display: none;
-}
+}*/
 
 input[type=checkbox]:checked + label{
   background-color: green;

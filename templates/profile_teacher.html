@@ -34,8 +34,6 @@
 						</div>
 						<div class="col-md-7">
 							<h2>Acerca de ti</h2>
-							<!--  -->
-							<!--  -->
 							<p>{{teacher.about}}</p>
 							<div class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Editar<b class="caret"></b></a>
 								<ul class="dropdown-menu" style="min-width: 600px;">
@@ -71,9 +69,6 @@
 						</div>
 					</div>
 					<hr>
-<<<<<<< HEAD
-<!-- 					<div class="row">
-=======
 					<div class="row">
 						<div class="col-md-3 col-md-offset-1">
 							<div class="form-group">
@@ -97,34 +92,7 @@
 							{% endfor %}
 						</div>
 					</div>
-
 					<hr>
-					<div class="row">
->>>>>>> origin/master
-						<div class="col-md-4 col-md-offset-1">
-							<form role="form" method="post" action="/calendar/teacher/add">
-								<h3>Ingresa tus horas disponibles</h3>
-								<input type="datetime-local" step="1800" id="datetime">
-								<input type="hidden" name="te_id" value="{{teacher.key.id()}}">
-								<input type="hidden" name = "dateto" id="dateto_target">
-								<input type="hidden" name="timezoneOffset" id="timezoneOffset">
-								<p class="help-block">Escoge el día y la hora que tienes libre para dar asesorias</p>
-								<button class="btn btn-success" type="submit">Estoy disponible</button>
-							</form>
-						</div>
-						<div class="col-md-4">
-							<h3>Agenda libre</h3>
-							<div id="calendario">
-								
-							</div>
-						</div>
-						<div class="col-md-2">
-							<h3>Horas disponibles</h3>
-							<div id="horas" class="horas">
-								
-							</div>
-						</div>
-					</div> -->
 					<br>
 					<form role="form" method="post" action="/calendar/teacher/add">
 					<div class="row">
@@ -189,7 +157,7 @@
 		        dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
 		        dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
 		        weekHeader: 'Sm',
-		        dateFormat: 'yy-m-d',
+		        dateFormat: 'yy-mm-dd',
 		        firstDay: 1,
 		        isRTL: false,
 		        showMonthAfterYear: false,
@@ -205,10 +173,11 @@
 		    var hours_local = {};
 		    for (var f = 0; f < fechas.length; f++){
 
-		    	var dt = new Date(fechas[f]);
-		    	
-		    	var str_dt = dt.getFullYear().toString()+'-'+(dt.getMonth()+1).toString()+'-'+dt.getDate().toString();
-		    	
+		    	//var dt = new Date(fechas[f]);
+		    	var dt = new Date(fechas[f])
+		    	//var str_dt = dt.getFullYear().toString()+'-'+(dt.getMonth()+1).toString()+'-'+dt.getDate().toString();
+		    	var str_dt = moment(dt).format("YYYY-MM-DD")
+
 		    	if (dates_local.indexOf(str_dt)>=0){}
 		    	else{
 		    		dates_local.push(str_dt);
@@ -279,10 +248,11 @@
 			// });
 			$('#calendarioIn').datepicker({
 				beforeShowDay : function(date){
-					var y = date.getFullYear().toString(); // get full year
-					var m = (date.getMonth() + 1).toString(); // get month.
-					var d = date.getDate().toString(); // get Day
-					var currDate = y+'-'+m+'-'+d;
+					// var y = date.getFullYear().toString(); // get full year
+					// var m = (date.getMonth() + 1).toString(); // get month.
+					// var d = date.getDate().toString(); // get Day
+					// var currDate = y+'-'+m+'-'+d;
+					currDate = moment(date).format("YYYY-MM-DD")
 					if(dates.indexOf(currDate) >= 0){
 						return [true,"ui-highlight", ""];	
 					}else if( date <= moment().subtract('days', 1)){
@@ -292,8 +262,8 @@
 					}					
 				},
 				onSelect : function(date){
-					document.getElementById("fechaString").innerHTML = moment(date).lang('es').format("dddd D, MMMM");;
-					var d = new Date(date);
+					document.getElementById("fechaString").innerHTML = moment(date).lang('es').format("dddd D, MMMM");
+					var d = new Date(date.toString()+"T12:00");
 					for (var h = 0; h<24; h++) {
 						var c=document.getElementById(h.toString())
 						c.checked = false;
@@ -319,7 +289,6 @@
 				date.setHours(badDate.getUTCHours());
 				date.setMinutes(badDate.getUTCMinutes());
 				date.setSeconds(0);
-				console.log(date);
 				var UTCdate = date.getUTCFullYear()+"-"+(parseInt(date.getUTCMonth())+1).toString()+"-"+date.getUTCDate()+" "+date.getUTCHours()+":"+date.getUTCMinutes();
 				$('#dateto_target').val(UTCdate);
 				$('#timezoneOffset').val(timezoneOffset);
