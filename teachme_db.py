@@ -85,7 +85,8 @@ class teachout(ndb.Model):
 	area = ndb.StringProperty()
 	date_created = ndb.DateTimeProperty(auto_now_add = True)
 	tema = ndb.TextProperty()
-
+	pago = ndb.BooleanProperty()
+	
 	status = ndb.StringProperty()
 	status_mentor = ndb.StringProperty()
 	status_user = ndb.StringProperty()
