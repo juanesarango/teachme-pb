@@ -28,25 +28,6 @@ def render_str(template, **params):
 	t = jinja_env.get_template(template)
 	return t.render(params)
 
-# def depurar_teachouts():
-# 	q = teachme_db.teacher.query().get()
-# 	logging.error(q)
-# 	t = teachme_db.teachout.query().get()
-# 	logging.error("AAAAAAAAA")
-# 	logging.error(t)
-# 	if hasattr(q, '__iter__'):
-# 		for i in q:
-# 			for l in i.teachouts:
-# 				if not l in t:
-# 					l.delete()
-# 	else:
-# 		for l in q.teachouts:
-# 				logging.error("BBBBBBB")
-# 				logging.error(l)
-# 				if not l in t:
-# 					l.delete()
-
-
 #########################################################################
 # Handler Principal
 class Handler(webapp2.RequestHandler):
@@ -255,7 +236,7 @@ class comparte(Handler):
 
 		about = self.request.get("about")
 
-		t = teachme_db.teacher(name = name, lname=lname, mail = mail, ciudad = ciudad, pais = pais, linkedin = linkedin, areas = areas_in, about = about, aceptado = False, parent = self.user.key)
+		t = teachme_db.teacher(name = name, lname=lname, mail = mail, ciudad = ciudad, pais = pais, linkedin = linkedin, areas = areas_in, about = about, aceptado = False, reviews=0, rating=0, parent = self.user.key)
 		t.put()
 		self.login(self.user, t)
 		self.redirect("/profile/teacher/%s" % str(t.key.id()))
@@ -365,7 +346,7 @@ class profile_teacher(Handler, blobstore_handlers.BlobstoreUploadHandler):
 		dates = json.dumps(fns.solo_dates(teacher.date_available))
 		hours = json.dumps(fns.solo_hours(teacher.date_available))
 		upload_url = blobstore.create_upload_url('/upload')
-		taglist = json.dumps(self.tags.name)
+		taglist = json.dumps(teachme_db.tags.query().get().name)
 		self.render("profile_teacher.html", teacher = teacher, t_areas = t_areas, upload_url = upload_url, dates = dates, hours = hours, fechas = fechas, taglist= taglist)
 
 	def post(self):
@@ -400,6 +381,7 @@ class editabout(Handler):
 
 class addtags(Handler):
 	def post(self):
+		tags = teachme_db.tags.query().get()
 		te_id = self.request.get("te_id")
 		logging.error(te_id)
 		if te_id:
@@ -409,10 +391,10 @@ class addtags(Handler):
 				if  new_tag not in teacher.tags:
 					teacher.tags.append(new_tag)
 					teacher.put()
-					if new_tag not in self.tags.name:
+					if new_tag not in tags.name:
 						logging.error(new_tag)
-						self.tags.name.append(new_tag)
-						self.tags.put()
+						tags.name.append(new_tag)
+						tags.put()
 		else:
 			re_id = self.request.get("re_id")
 			if re_id:
@@ -537,6 +519,15 @@ class servehandler(blobstore_handlers.BlobstoreDownloadHandler):
         blob_info = blobstore.BlobInfo.get(resource)
         self.send_blob(blob_info)
 
+class manualtask(Handler):
+	def get(self):
+		mentors = teachme_db.teacher.query()
+		for m in mentors:
+			m.rating=0
+			m.reviews=0
+			m.put()
+		self.response.out.write('ok')
+
 app = webapp2.WSGIApplication([('/', MainPage),
 								('/signup', signup),
 								('/login' , login),
@@ -555,7 +546,8 @@ app = webapp2.WSGIApplication([('/', MainPage),
 								('/contacto', contacto),
 								('/upload', profile_teacher),
 								('/calificar', calificar),
-								('/tasks/teachoutsta', teachouts_sta), 
+								('/tasks/teachoutsta', teachouts_sta),
+								('/tasks/manualtask', manualtask), 
 								('/tasks/remindermailing24', reminder_mailing_24),
 								('/tasks/remindermailing15', reminder_mailing_15),
 								('/serve/([^/]+)?', servehandler)

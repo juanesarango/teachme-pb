@@ -18,6 +18,16 @@
 							<img class="img-circle img-100" {% if mentor.profile_pic_r %}src="{{mentor.profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}>
 							<h2>{{mentor.name}}</h2>
 							<h3>{{mentor.lname}}</h3>
+							<div class="row">
+								<div class="col-md-12">
+									<span class="starReviews-gray">
+										<span class="starReviews" style="width:{{mentor.rating*20}}%"></span>
+									</span>
+									<span> </span>
+									<span class="glyphicon glyphicon-comment"></span>
+									<span> {{mentor.reviews}}</span>
+								</div>
+							</div>
 						</div>
 						<div class="col-md-7">
 							<h2>Acerca de ti</h2>
@@ -139,7 +149,7 @@
 		    var cd = today.getFullYear().toString()+'-'+(today.getMonth()+1).toString()+'-'+today.getDate().toString(); 
 
 		    $("#horas").replaceWith( function(){
-		    	strfecha = today.toDateString()
+		    	strfecha = moment(today).lang('es').format("dddd D, MMMM");
 		    	var s = "<div id='horas'> <h3>"+ strfecha +"</h3>";
 		    	if(cd in hours){
 		    		for (var h = 0; h < hours[cd].length; h++) {
@@ -170,7 +180,7 @@
 				onSelect : function(date){
 					$("#horas").replaceWith( function(){
 						fecha = new Date(hours[date][0]);
-						strfecha = fecha.toDateString();
+						strfecha = moment(fecha).lang('es').format("dddd D, MMMM");
 		    			var s = "<div id='horas'> <h3>"+strfecha+"</h3>";
 		    			for (var h = 0; h < hours[date].length; h++) {
 		    				var lDate = hours[date][h];

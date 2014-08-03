@@ -282,13 +282,9 @@
 									{% if etouts[t].status=="ok" %}
 										{% if etouts[t].rating %}
 											<div class="col-md-5">
-												<h4 class="text-primary">
-							        				<span class="glyphicon glyphicon-star"></span>
-							        				<span class="glyphicon glyphicon-star"></span>
-							        				<span class="glyphicon glyphicon-star"></span>
-							        				<span class="glyphicon glyphicon-star"></span>
-							        				<span class="glyphicon glyphicon-star"></span>
-												</h4>
+											<span class="starReviews-gray">
+												<span class="starReviews" style="width:{{etouts[t].rating*20}}%"></span>
+											</span>
 											</div>
 										{% else %}
 											<div class="col-md-5">

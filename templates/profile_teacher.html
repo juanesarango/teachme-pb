@@ -142,7 +142,6 @@
 			</div>
 		</div>	
 	</div>
-	<script type="text/javascript" src="/static/js/moment.js"></script>
 	<script type="text/javascript">
 
 		$(document).ready(function() {
@@ -194,7 +193,8 @@
 		    var dates = dates_local;
 		    var hours = hours_local;
 		    var today = new Date();
-		    var cd = today.getFullYear().toString()+'-'+(today.getMonth()+1).toString()+'-'+today.getDate().toString(); 
+		 //   var cd = today.getFullYear().toString()+'-'+(today.getMonth()+1).toString()+'-'+today.getDate().toString();
+		    var cd = moment(today).format("YYYY-MM-DD");
 		 //    $("#horas").replaceWith( function(){
 		 //    	var s = "<div id='horas' class='horas'> <h3>"+ cd +"</h3>";
 		 //    	if(cd in hours){
@@ -207,7 +207,7 @@
 		 //    	return s;
 		 //    });
 			document.getElementById("fechaString").innerHTML = moment().lang('es').format("dddd D, MMMM");
-     		var d = new Date(cd);
+     		var d = new Date(cd+"T12:00");
 			for (var h = 0; h<24; h++) {
 				var c=document.getElementById(h.toString())
 				c.checked = false;
