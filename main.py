@@ -16,6 +16,8 @@ import teachme_db
 import fns
 import booking
 import logging
+#import stripe
+#import ssl
 
 ########################################################################
 #Definiciones de Jinja2 para los templates
@@ -156,13 +158,14 @@ class logout(Handler):
 class teacher(Handler):
 	def get(self, id):
 		mentor = ndb.Key(urlsafe = str(id)).get()
+		reviews = teachme_db.review.query(ancestor = mentor.key).order(-teachme_db.review.date)
 		t_areas = []
 		for a in mentor.areas:
 			t_areas.append(teachme_db.areas.get_by_id(int(a)))
 		fechas = json.dumps(booking.UTCfechas(mentor.date_available))
 		dates = json.dumps(fns.solo_dates(mentor.date_available))
 		hours = json.dumps(fns.solo_hours(mentor.date_available))
-		self.render("teacher.html", mentor = mentor, hours = hours, dates = dates, fechas = fechas, t_areas = t_areas)
+		self.render("teacher.html", mentor = mentor, hours = hours, dates = dates, fechas = fechas, t_areas = t_areas, reviews = reviews)
 
 	def post(self, id):
 		if not self.user:
@@ -236,7 +239,7 @@ class comparte(Handler):
 
 		about = self.request.get("about")
 
-		t = teachme_db.teacher(name = name, lname=lname, mail = mail, ciudad = ciudad, pais = pais, linkedin = linkedin, areas = areas_in, about = about, aceptado = False, reviews=0, rating=0, parent = self.user.key)
+		t = teachme_db.teacher(name = name, lname=lname, mail = mail, fee = 0, ciudad = ciudad, pais = pais, linkedin = linkedin, areas = areas_in, about = about, aceptado = False, reviews=0, rating=0, parent = self.user.key)
 		t.put()
 		self.login(self.user, t)
 		self.redirect("/profile/teacher/%s" % str(t.key.id()))
@@ -338,16 +341,16 @@ class profile_teacher(Handler, blobstore_handlers.BlobstoreUploadHandler):
 			self.abort(403)
 			return
 
-		t_areas = []
-		for a in teacher.areas:
-			t_areas.append(teachme_db.areas.get_by_id(int(a)).name)
-
+		# t_areas = []
+		# for a in teacher.areas:
+		# 	t_areas.append(teachme_db.areas.get_by_id(int(a)).name)
+		reviews = teachme_db.review.query(ancestor = teacher.key).order(-teachme_db.review.date)
 		fechas = json.dumps(booking.UTCfechas(teacher.date_available))
 		dates = json.dumps(fns.solo_dates(teacher.date_available))
 		hours = json.dumps(fns.solo_hours(teacher.date_available))
 		upload_url = blobstore.create_upload_url('/upload')
 		taglist = json.dumps(teachme_db.tags.query().get().name)
-		self.render("profile_teacher.html", teacher = teacher, t_areas = t_areas, upload_url = upload_url, dates = dates, hours = hours, fechas = fechas, taglist= taglist)
+		self.render("profile_teacher.html", teacher = teacher, upload_url = upload_url, dates = dates, hours = hours, fechas = fechas, taglist= taglist, reviews = reviews)
 
 	def post(self):
 		
@@ -371,13 +374,28 @@ class profile_teacher(Handler, blobstore_handlers.BlobstoreUploadHandler):
 
 class editabout(Handler):
 	def post(self):
-		te_id = self.request.get("te_id")
+		if not self.user and not self.teacher:
+			self.abort(403)
 		about = self.request.get("editabout")
+		fee = self.request.get("fee")
+		fn = self.request.get("fn")
 		if about:
-			teacher = ndb.Key(teachme_db.teacher, int(te_id), parent = self.user.key).get()
-			teacher.about = about
-			teacher.put()
-		self.redirect("/profile/teacher/%s" % te_id)
+			self.teacher.about = about
+		if fee:
+			self.teacher.fee = int(fee)
+		areas = teachme_db.areas.query()
+		if fn == "editAreas":
+			for a in areas:
+				ar = self.request.get(str(a.key.id()))
+				if ar:
+					if int(ar) not in self.teacher.areas:
+						self.teacher.areas.append(int(ar))
+				else:
+					if a.key.id() in self.teacher.areas:
+						self.teacher.areas.remove(a.key.id())
+		self.teacher.put()
+
+		self.redirect("/profile/teacher/%s" % self.teacher.key.id())
 
 class addtags(Handler):
 	def post(self):
@@ -523,10 +541,9 @@ class manualtask(Handler):
 	def get(self):
 		mentors = teachme_db.teacher.query()
 		for m in mentors:
-			m.rating=0
-			m.reviews=0
+			m.fee = 0
 			m.put()
-		self.response.out.write('ok')
+		self.response.out.write("ok")
 
 app = webapp2.WSGIApplication([('/', MainPage),
 								('/signup', signup),

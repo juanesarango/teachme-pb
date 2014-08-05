@@ -47,6 +47,7 @@ class teacher(ndb.Model):
 	lname = ndb.StringProperty()
 	mail = ndb.StringProperty()
 	about = ndb.TextProperty()
+	fee = ndb.IntegerProperty()
 	profile_pic = ndb.BlobKeyProperty()
 	profile_pic_r = ndb.StringProperty()
 	ciudad = ndb.StringProperty()

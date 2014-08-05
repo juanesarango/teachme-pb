@@ -37,8 +37,8 @@
 							</div>
 							<div class="col-md-8">
 								<a href="/teacher/{{t.key.urlsafe()}}"><h3>{{t.name}} {{t.lname}}</h3></a>
-								<p class="pf-70">{{t.about|truncate(170, True)}}</p>
-								<p>Tarifa: $15 USD por hora</p>
+								<p>{{t.about|truncate(170, True)}}</p>
+								<p>Tarifa: {{t.fee}} USD por hora</p>
 							</div>
 						</div>
 					</div>
