@@ -16,6 +16,8 @@ import teachme_db
 import fns
 import booking
 import logging
+import stripe
+import ssl
 
 ########################################################################
 #Definiciones de Jinja2 para los templates
@@ -70,8 +72,8 @@ jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), a
 # newtag.put()
 
 def render_str(template, **params):
-	t = jinja_env.get_template(template)
-	return t.render(params)
+	j = jinja_env.get_template(template)
+	return j.render(params)
 
 # def depurar_teachouts():
 # 	q = teachme_db.teacher.query().get()
@@ -220,14 +222,18 @@ class logout(Handler):
 
 class teacher(Handler):
 	def get(self, id):
-		mentor = ndb.Key(urlsafe = str(id)).get()
+		try:
+			mentor = ndb.Key(urlsafe = str(id)).get()
+		except:
+			self.abort(404)
 		t_areas = []
 		for a in mentor.areas:
 			t_areas.append(teachme_db.areas.get_by_id(int(a)))
 		fechas = json.dumps(booking.UTCfechas(mentor.date_available))
 		dates = json.dumps(fns.solo_dates(mentor.date_available))
 		hours = json.dumps(fns.solo_hours(mentor.date_available))
-		self.render("teacher.html", mentor = mentor, hours = hours, dates = dates, fechas = fechas, t_areas = t_areas)
+		mentor.fee = 15
+		self.render("teacher.html", mentor = mentor, hours = hours, dates = dates, fechas = fechas, t_areas = t_areas , codigo="")
 
 	def post(self, id):
 		if not self.user:
@@ -236,12 +242,49 @@ class teacher(Handler):
 		teacher_key = ndb.Key(urlsafe=str(id)).get()
 		area = self.request.get("select-area") 
 		tema = self.request.get("tema")
-		meet = datetime.datetime.strptime(self.request.get("date-meet"), "%Y-%m-%d %H:%M")
-		timezoneOffset = int(self.request.get("timezoneOffset"))
+		meet_wf = self.request.get("date-meet")
+		pago = False
 
-		if meet and teacher_key:
+		metodo = self.request.get("metodo_pago")
+		logging.error(metodo)			
+		if metodo == "BONO":
+			codigo = self.request.get("codigo")
+			PROMOS = [
+				"PRIMERACLASE",
+				"DEMOPRUEBA"
+				]
+			if codigo in PROMOS:
+				pago = True
+		elif metodo == "STRIPE":
+			# Set your secret key: remember to change this to your live secret key in production
+			# See your keys here https://dashboard.stripe.com/account
+			stripe.api_key = "sk_test_4UNYBdmDAESgVzq0CyZpM039"
+			# Get the credit card details submitted by the form
+			token = self.request.get("stripeToken")
+			logging.error(token)
+			# Create the charge on Stripe's servers - this will charge the user's card
+			try:
+			 	charge = stripe.Charge.create(
+			    	amount=1000, # amount in cents, again
+			     	currency="usd",
+			     	card=token,
+			    	description="info@teachmeapp.com"
+			  	)
+			  	pago = True
+			except stripe.CardError, e:
+			  	# The card has been declined
+			  	logging.error("FALLO PAGO")
+			  	pass
+			logging.error(token)
+
+		logging.error("PAGO")
+		logging.error(pago)
+
+		if meet_wf and teacher_key and pago == True:
+			meet = datetime.datetime.strptime(meet_wf, "%Y-%m-%d %H:%M")
+			timezoneOffset = int(self.request.get("timezoneOffset"))
 			if booking.check_availability_mentor(teacher_key, meet) and booking.check_availability_user(self.user, meet):
-				t = teachme_db.teachout(date = meet, learner = self.user.key, teacher = teacher_key.key, area = area, tema = tema, pago = False)
+				t = teachme_db.teachout(date = meet, learner = self.user.key, teacher = teacher_key.key, area = area, tema = tema)
 				t.put()
 
 				self.user.teachouts.append(t.key)
@@ -349,22 +392,7 @@ class teachouts(Handler):
 			etouts[t]= t.get()
 			ementor[t] = etouts[t].teacher.get()
 
-		self.render("/teachouts.html", touts = touts, mentor = mentor, disable = disable, faltan = faltan, m_touts = m_touts, learner = learner, m_disable = m_disable, m_faltan = m_faltan, etouts = etouts, ementor=ementor, m_etouts= m_etouts, elearner=elearner, codigo="")
-
-	def post(self):
-		codigo = self.request.get("codigo")
-		PROMOS = [
-			"PRIMERACLASE",
-			"DEMOPRUEBA"
-			]
-		if codigo in PROMOS:
-			tout_key = self.request.get("teachout_key")
-			logging.error(tout_key)
-			tout = ndb.Key(urlsafe= tout_key).get()
-			logging.error(tout)
-			tout.pago = True
-			tout.put()
-		self.redirect("/teachouts")
+		self.render("/teachouts.html", touts = touts, mentor = mentor, disable = disable, faltan = faltan, m_touts = m_touts, learner = learner, m_disable = m_disable, m_faltan = m_faltan, etouts = etouts, ementor=ementor, m_etouts= m_etouts, elearner=elearner)
 
 class aprende(Handler):
 	def get(self, ar):
@@ -441,7 +469,6 @@ class editabout(Handler):
 class addtags(Handler):
 	def post(self):
 		te_id = self.request.get("te_id")
-		logging.error(te_id)
 		if te_id:
 			new_tag = self.request.get("new_tags")
 			if new_tag:
@@ -450,7 +477,6 @@ class addtags(Handler):
 					teacher.tags.append(new_tag)
 					teacher.put()
 					if new_tag not in self.tags.name:
-						logging.error(new_tag)
 						self.tags.name.append(new_tag)
 						self.tags.put()
 		else:
@@ -459,7 +485,6 @@ class addtags(Handler):
 				teacher = ndb.Key(teachme_db.teacher, int(re_id), parent = self.user.key).get()
 				tag_r = self.request.get("tag_r")
 				if tag_r:
-					logging.error(tag_r)
 					teacher.tags.remove(tag_r)
 					teacher.put()
 					te_id = re_id

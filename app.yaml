@@ -1,5 +1,5 @@
 application: teachme-dev
-version: v1
+version: v0
 runtime: python27
 api_version: 1
 threadsafe: true
@@ -39,6 +39,10 @@ handlers:
   script: main.app
 #  secure: always
 
+- url: /remoteapi.*
+  script: google.appengine.ext.remote_api.handler.application
+  login: admin
+
 inbound_services:
 - channel_presence
 
@@ -47,5 +51,6 @@ libraries:
   version: "2.5.2"
 - name: jinja2
   version: latest
-
+- name: ssl
+  version: latest
 
