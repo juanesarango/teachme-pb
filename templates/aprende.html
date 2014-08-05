@@ -9,10 +9,11 @@
 		<br>
 		<div class="container">
 				<div class="row">
-					<div class="col-md-8 col-md-offset-2">
+					<div class="col-md-8 col-md-offset-2 bckg-b-30">
 						<h3 class="font-w">{{area.name}}</h3>
 					</div>
 				</div>
+				<br>
 			
 				{% for t in mentors %}
 				<div class="row">
@@ -22,11 +23,22 @@
 								<a href="/teacher/{{t.key.urlsafe()}}">
 									<img class="img-circle img-100" {% if t.profile_pic_r %}src="{{t.profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}>
 								</a>
+								<div class="row">
+									<div class="col-md-12">
+									<br>
+										<span class="starReviews-gray">
+											<span class="starReviews" style="width:{{t.rating*20}}%"></span>
+										</span>
+										<br>
+										<span class="glyphicon glyphicon-comment"></span>
+										<span> {{t.reviews}}</span>
+									</div>
+								</div>
 							</div>
 							<div class="col-md-8">
 								<a href="/teacher/{{t.key.urlsafe()}}"><h3>{{t.name}} {{t.lname}}</h3></a>
-								<p class="pf-70">{{t.about|truncate(170, True)}}</p>
-								<p>Tarifa: $15 USD por hora</p>
+								<p>{{t.about|truncate(170, True)}}</p>
+								<p>Tarifa: {{t.fee}} USD por hora</p>
 							</div>
 						</div>
 					</div>

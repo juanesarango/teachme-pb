@@ -16,83 +16,24 @@ import teachme_db
 import fns
 import booking
 import logging
+<<<<<<< HEAD
 import stripe
 import ssl
+=======
+#import stripe
+#import ssl
+>>>>>>> 4758c2fff8cdd9bc91226013453e1f9ce5e26433
 
 ########################################################################
 #Definiciones de Jinja2 para los templates
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape = True)
 
-# name_of_tags = [
-# 		u"Álgebra Lineal",
-# 		u"Álgebra Secundaria",
-# 		u"Cálculo Diferencial",
-# 		u"Cálculo Integral",
-# 		u"Cálculo Secundaria",
-# 		u"Cálculo Vectorial",
-# 		u"Ciencias Naturales",
-# 		u"Ecuaciones Diferenciales",
-# 		u"Electromagnetismo",
-# 		u"Estadística Descriptiva",
-# 		u"Estadística Inferencial",
-# 		u"Estadística Secundaria",
-# 		u"Excel básico",
-# 		u"Geometría Secundaria",
-# 		u"Lógica Matemática",
-# 		u"Matemáticas Bachillerato Internacional",
-# 		u"Matemáticas Financieras",
-# 		u"Matemáticas GMAT",
-# 		u"Matemáticas GRE",
-# 		u"Matemáticas operativas",
-# 		u"Matemáticas Primaria",
-# 		u"Matemáticas SABER 11",
-# 		u"MATLAB",
-# 		u"Mecánica Cuántica",
-# 		u"Mecánica de Fluidos",
-# 		u"Mecánica de Sólidos",
-# 		u"Modelos Probabilísticos",
-# 		u"Movimiento y Fuerzas",
-# 		u"Ondas y Óptica",
-# 		u"Pre-Cálculo",
-# 		u"Probabilidad Secundaria",
-# 		u"Probabilidad Universidad",
-# 		u"Programación en C+",
-# 		u"Programación por Objetos",
-# 		u"Química Inorgánica",
-# 		u"Química Orgánica",
-# 		u"Regresión Lineal",
-# 		u"Relatividad",
-# 		u"Teoría de Juegos",
-# 		u"Termodinámica",
-# 		u"Trigonometría",
-# 		u"Variable Compleja",
-# 		u"Variable Compleja"]
-# newtag = teachme_db.tags(name=name_of_tags)
-# newtag.put()
+
 
 def render_str(template, **params):
 	j = jinja_env.get_template(template)
 	return j.render(params)
-
-# def depurar_teachouts():
-# 	q = teachme_db.teacher.query().get()
-# 	logging.error(q)
-# 	t = teachme_db.teachout.query().get()
-# 	logging.error("AAAAAAAAA")
-# 	logging.error(t)
-# 	if hasattr(q, '__iter__'):
-# 		for i in q:
-# 			for l in i.teachouts:
-# 				if not l in t:
-# 					l.delete()
-# 	else:
-# 		for l in q.teachouts:
-# 				logging.error("BBBBBBB")
-# 				logging.error(l)
-# 				if not l in t:
-# 					l.delete()
-
 
 #########################################################################
 # Handler Principal
@@ -141,7 +82,6 @@ class Handler(webapp2.RequestHandler):
 		tkey = self.read_secure_cookie("tei")
 		self.user = ukey and ndb.Key(urlsafe=ukey).get()
 		self.teacher = tkey and ndb.Key(urlsafe=tkey).get()
-		self.tags = teachme_db.tags.query().get()
 
 #########################################################################
 #Pagina principal
@@ -222,18 +162,27 @@ class logout(Handler):
 
 class teacher(Handler):
 	def get(self, id):
+<<<<<<< HEAD
 		try:
 			mentor = ndb.Key(urlsafe = str(id)).get()
 		except:
 			self.abort(404)
+=======
+		mentor = ndb.Key(urlsafe = str(id)).get()
+		reviews = teachme_db.review.query(ancestor = mentor.key).order(-teachme_db.review.date)
+>>>>>>> 4758c2fff8cdd9bc91226013453e1f9ce5e26433
 		t_areas = []
 		for a in mentor.areas:
 			t_areas.append(teachme_db.areas.get_by_id(int(a)))
 		fechas = json.dumps(booking.UTCfechas(mentor.date_available))
 		dates = json.dumps(fns.solo_dates(mentor.date_available))
 		hours = json.dumps(fns.solo_hours(mentor.date_available))
+<<<<<<< HEAD
 		mentor.fee = 15
 		self.render("teacher.html", mentor = mentor, hours = hours, dates = dates, fechas = fechas, t_areas = t_areas , codigo="")
+=======
+		self.render("teacher.html", mentor = mentor, hours = hours, dates = dates, fechas = fechas, t_areas = t_areas, reviews = reviews)
+>>>>>>> 4758c2fff8cdd9bc91226013453e1f9ce5e26433
 
 	def post(self, id):
 		if not self.user:
@@ -316,11 +265,17 @@ class teacher(Handler):
 
 class comparte(Handler):
 	def get(self):
+		if self.teacher:
+			self.abort(403)
+			return
 		areas = teachme_db.areas.query().order(teachme_db.areas.name)
 		self.render("comparte.html", areas = areas)
 
 	def post(self):
 		if not self.user:
+			self.abort(403)
+			return
+		if self.teacher:
 			self.abort(403)
 			return
 		name = self.user.name
@@ -338,7 +293,7 @@ class comparte(Handler):
 
 		about = self.request.get("about")
 
-		t = teachme_db.teacher(name = name, lname=lname, mail = mail, ciudad = ciudad, pais = pais, linkedin = linkedin, areas = areas_in, about = about, aceptado = False, parent = self.user.key)
+		t = teachme_db.teacher(name = name, lname=lname, mail = mail, fee = 0, ciudad = ciudad, pais = pais, linkedin = linkedin, areas = areas_in, about = about, aceptado = False, reviews=0, rating=0, parent = self.user.key)
 		t.put()
 		self.login(self.user, t)
 		self.redirect("/profile/teacher/%s" % str(t.key.id()))
@@ -425,16 +380,16 @@ class profile_teacher(Handler, blobstore_handlers.BlobstoreUploadHandler):
 			self.abort(403)
 			return
 
-		t_areas = []
-		for a in teacher.areas:
-			t_areas.append(teachme_db.areas.get_by_id(int(a)).name)
-
+		# t_areas = []
+		# for a in teacher.areas:
+		# 	t_areas.append(teachme_db.areas.get_by_id(int(a)).name)
+		reviews = teachme_db.review.query(ancestor = teacher.key).order(-teachme_db.review.date)
 		fechas = json.dumps(booking.UTCfechas(teacher.date_available))
 		dates = json.dumps(fns.solo_dates(teacher.date_available))
 		hours = json.dumps(fns.solo_hours(teacher.date_available))
 		upload_url = blobstore.create_upload_url('/upload')
-		taglist = json.dumps(self.tags.name)
-		self.render("profile_teacher.html", teacher = teacher, t_areas = t_areas, upload_url = upload_url, dates = dates, hours = hours, fechas = fechas, taglist= taglist)
+		taglist = json.dumps(teachme_db.tags.query().get().name)
+		self.render("profile_teacher.html", teacher = teacher, upload_url = upload_url, dates = dates, hours = hours, fechas = fechas, taglist= taglist, reviews = reviews)
 
 	def post(self):
 		
@@ -458,16 +413,32 @@ class profile_teacher(Handler, blobstore_handlers.BlobstoreUploadHandler):
 
 class editabout(Handler):
 	def post(self):
-		te_id = self.request.get("te_id")
+		if not self.user and not self.teacher:
+			self.abort(403)
 		about = self.request.get("editabout")
+		fee = self.request.get("fee")
+		fn = self.request.get("fn")
 		if about:
-			teacher = ndb.Key(teachme_db.teacher, int(te_id), parent = self.user.key).get()
-			teacher.about = about
-			teacher.put()
-		self.redirect("/profile/teacher/%s" % te_id)
+			self.teacher.about = about
+		if fee:
+			self.teacher.fee = int(fee)
+		areas = teachme_db.areas.query()
+		if fn == "editAreas":
+			for a in areas:
+				ar = self.request.get(str(a.key.id()))
+				if ar:
+					if int(ar) not in self.teacher.areas:
+						self.teacher.areas.append(int(ar))
+				else:
+					if a.key.id() in self.teacher.areas:
+						self.teacher.areas.remove(a.key.id())
+		self.teacher.put()
+
+		self.redirect("/profile/teacher/%s" % self.teacher.key.id())
 
 class addtags(Handler):
 	def post(self):
+		tags = teachme_db.tags.query().get()
 		te_id = self.request.get("te_id")
 		if te_id:
 			new_tag = self.request.get("new_tags")
@@ -476,9 +447,10 @@ class addtags(Handler):
 				if  new_tag not in teacher.tags:
 					teacher.tags.append(new_tag)
 					teacher.put()
-					if new_tag not in self.tags.name:
-						self.tags.name.append(new_tag)
-						self.tags.put()
+					if new_tag not in tags.name:
+						logging.error(new_tag)
+						tags.name.append(new_tag)
+						tags.put()
 		else:
 			re_id = self.request.get("re_id")
 			if re_id:
@@ -530,6 +502,32 @@ class calendar_teacher_add(Handler):
 		
 		self.redirect("/profile/teacher/" + str(teacher.key.id()))
 
+class calificar(Handler):
+	def post(self):
+		if not self.user:
+			self.abort(403)
+			return
+		reviewRating = int(self.request.get("reviewRating"))
+		reviewComment = self.request.get("reviewComment")
+		reviewTout = ndb.Key(urlsafe=self.request.get("reviewTout")).get()
+		reviewMentor = ndb.Key(urlsafe=self.request.get("reviewMentor")).get()
+		reviewUser = self.user
+
+		if reviewRating and reviewTout and reviewMentor:
+			r = teachme_db.review(rating = reviewRating, comment = reviewComment, user = self.user.key, teachout = reviewTout.key, parent = reviewMentor.key)
+			r.put()
+
+			reviewMentor.rating = ((reviewMentor.rating*reviewMentor.reviews)+reviewRating)/(reviewMentor.reviews+1)
+			reviewMentor.reviews +=1
+			reviewMentor.put()
+
+			reviewTout.rating = reviewRating
+			reviewTout.review = r.key
+			reviewTout.put()
+			self.redirect("/teachouts")
+		else:
+			msg = "Ingresa tu calificación"
+			self.render("/teachouts.html", msg = msg)
 class contacto(Handler):
 	def get(self):
 		self.render("contacto.html")
@@ -576,6 +574,14 @@ class servehandler(blobstore_handlers.BlobstoreDownloadHandler):
         blob_info = blobstore.BlobInfo.get(resource)
         self.send_blob(blob_info)
 
+class manualtask(Handler):
+	def get(self):
+		mentors = teachme_db.teacher.query()
+		for m in mentors:
+			m.fee = 0
+			m.put()
+		self.response.out.write("ok")
+
 app = webapp2.WSGIApplication([('/', MainPage),
 								('/signup', signup),
 								('/login' , login),
@@ -593,7 +599,9 @@ app = webapp2.WSGIApplication([('/', MainPage),
 								('/faq', faq),
 								('/contacto', contacto),
 								('/upload', profile_teacher),
-								('/tasks/teachoutsta', teachouts_sta), 
+								('/calificar', calificar),
+								('/tasks/teachoutsta', teachouts_sta),
+								('/tasks/manualtask', manualtask), 
 								('/tasks/remindermailing24', reminder_mailing_24),
 								('/tasks/remindermailing15', reminder_mailing_15),
 								('/serve/([^/]+)?', servehandler)

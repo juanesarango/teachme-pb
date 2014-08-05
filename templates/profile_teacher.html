@@ -34,8 +34,6 @@
 						</div>
 						<div class="col-md-7">
 							<h2>Acerca de ti</h2>
-							<!--  -->
-							<!--  -->
 							<p>{{teacher.about}}</p>
 							<div class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Editar<b class="caret"></b></a>
 								<ul class="dropdown-menu" style="min-width: 600px;">
@@ -44,8 +42,23 @@
 											<form method="post" action="/editabout" role="form">
 												<label for="t-editabout">Acerca de ti:</label>
 												<textarea name="editabout" class="form-control" id="t-editabout" rows="6" placeholder="Edita la información sobre tu perfil, intereses y motivaciones" required></textarea>
-												<input type="hidden" name="te_id" value="{{teacher.key.id()}}">	
-												<button type="submit" class="btn btn-success">Editar</button>
+												<button type="submit" class="btn btn-success">Actualizar</button>
+											</form>
+										</a>
+									</li>
+								</ul>
+							</div>
+							<br>
+							<p><strong>Tarifa por hora: </strong>{{teacher.fee}} USD</p>
+							<p class="help-block">Tu tarifa por hora y en dólares. Recuerda que Teachme cobra una comisión en base a esta tarifa.</p>
+							<div class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Editar tarifa<b class="caret"></b></a>
+								<ul class="dropdown-menu" style="max-width: 250px;">
+									<li>
+										<a>
+											<form method="post" action="/editabout" role="form">
+												<label for="t-fee">Tarifa por hora:</label>
+												<input type="number" name="fee" min=0 max=100 class="form-control" id="t-fee" placeholder="USD" required>
+												<button type="submit" class="btn btn-success">Actualizar</button>
 											</form>
 										</a>
 									</li>
@@ -65,9 +78,13 @@
 						</div>
 						<div class="col-md-5">
 							<h3>Áreas del conocimiento</h3>
-							{% for a in t_areas %}
-								<p>{{a}}</p>
+							<form role="form" method="post" action="/editabout">
+								<input type="hidden" name="fn" value="editAreas">
+							{% for a in areas %}
+								<div class="checkbox"><input type="checkbox" name="{{a.key.id()}}" value="{{a.key.id()}}" id="cb{{a.name}}" {% if a.key.id() in teacher.areas %} checked="true"{% endif %}><label for="cb{{a.name}}">{{a.name}}</label></div>
 							{% endfor %}
+							<button class="btn btn-success center-block" type="submit">Actualizar areas</button>
+							</form>
 						</div>
 					</div>
 					<hr>
@@ -95,82 +112,80 @@
 						</div>
 					</div>
 					<hr>
-				<!--	<div class="row">
-						 <div class="col-md-4 col-md-offset-1">
-							<form role="form" method="post" action="/calendar/teacher/add">
-								<h3>Ingresa tus horas disponibles</h3>
-								<input type="datetime-local" step="1800" id="datetime">
-								<input type="hidden" name="te_id" value="{{teacher.key.id()}}">
-								<input type="hidden" name = "dateto" id="dateto_target">
-								<input type="hidden" name="timezoneOffset" id="timezoneOffset">
-								<p class="help-block">Escoge el día y la hora que tienes libre para dar asesorias</p>
-								<button class="btn btn-success" type="submit">Estoy disponible</button>
-							</form>
-						</div>
-						<div class="col-md-4">
-							<h3>Agenda libre</h3>
-							<div id="calendario">
-								
-							</div>
-						</div>
-						<div class="col-md-2">
-							<h3>Horas disponibles</h3>
-							<div id="horas" class="horas">
-								
-							</div>
-						</div>
-					</div> --> 
-
 					<br>
 					<form role="form" method="post" action="/calendar/teacher/add">
-					<div class="row">
-						<div class="col-md-5 col-md-offset-1">
-							<h3>Agenda libre</h3>
-							<div id="calendarioIn">
-								
+						<div class="row">
+							<div class="col-md-5 col-md-offset-1">
+								<h3>Agenda libre</h3>
+								<div id="calendarioIn">
+									
+								</div>
+							</div>
+							<div class="col-md-5">
+								<h3>Horas disponibles</h3>
+								<div id="horasIn" class="horas">
+								<h3 id="fechaString"></h3>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="0" value="00:00" id="0"><label for="0"> 0:00 AM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="1" value="01:00" id="1"><label for="1"> 1:00 AM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="2" value="02:00" id="2"><label for="2"> 2:00 AM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="3" value="03:00" id="3"><label for="3"> 3:00 AM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="4" value="04:00" id="4"><label for="4"> 4:00 AM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="5" value="05:00" id="5"><label for="5"> 5:00 AM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="6" value="06:00" id="6"><label for="6"> 6:00 AM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="7" value="07:00" id="7"><label for="7"> 7:00 AM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="8" value="08:00" id="8"><label for="8"> 8:00 AM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="9" value="09:00" id="9"><label for="9"> 9:00 AM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="10" value="10:00" id="10"><label for="10"> 10:00 AM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="11" value="11:00" id="11"><label for="11"> 11:00 AM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="12" value="12:00" id="12"><label for="12"> 12:00 PM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="13" value="13:00" id="13"><label for="13"> 1:00 PM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="14" value="14:00" id="14"><label for="14"> 2:00 PM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="15" value="15:00" id="15"><label for="15"> 3:00 PM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="16" value="16:00" id="16"><label for="16"> 4:00 PM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="17" value="17:00" id="17"><label for="17"> 5:00 PM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="18" value="18:00" id="18"><label for="18"> 6:00 PM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="19" value="19:00" id="19"><label for="19"> 7:00 PM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="20" value="20:00" id="20"><label for="20"> 8:00 PM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="21" value="21:00" id="21"><label for="21"> 9:00 PM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="22" value="22:00" id="22"><label for="22"> 10:00 PM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="23" value="23:00" id="23"><label for="23"> 11:00 PM</label></div> 
+										<input type="hidden" name="te_id" value="{{teacher.key.id()}}">
+								</div>
 							</div>
 						</div>
-						<div class="col-md-5">
-							<h3>Horas disponibles</h3>
-							<div id="horasIn" class="horas">
-							<h3 id="fechaString"></h3>
-									<div class="checkbox"><input type="checkbox" name="0" value="00:00" id="0"><label for="0"> 0:00 AM</label></div>
-									<div class="checkbox"><input type="checkbox" name="1" value="01:00" id="1"><label for="1"> 1:00 AM</label></div>
-									<div class="checkbox"><input type="checkbox" name="2" value="02:00" id="2"><label for="2"> 2:00 AM</label></div>
-									<div class="checkbox"><input type="checkbox" name="3" value="03:00" id="3"><label for="3"> 3:00 AM</label></div>
-									<div class="checkbox"><input type="checkbox" name="4" value="04:00" id="4"><label for="4"> 4:00 AM</label></div>
-									<div class="checkbox"><input type="checkbox" name="5" value="05:00" id="5"><label for="5"> 5:00 AM</label></div>
-									<div class="checkbox"><input type="checkbox" name="6" value="06:00" id="6"><label for="6"> 6:00 AM</label></div>
-									<div class="checkbox"><input type="checkbox" name="7" value="07:00" id="7"><label for="7"> 7:00 AM</label></div>
-									<div class="checkbox"><input type="checkbox" name="8" value="08:00" id="8"><label for="8"> 8:00 AM</label></div>
-									<div class="checkbox"><input type="checkbox" name="9" value="09:00" id="9"><label for="9"> 9:00 AM</label></div>
-									<div class="checkbox"><input type="checkbox" name="10" value="10:00" id="10"><label for="10"> 10:00 AM</label></div>
-									<div class="checkbox"><input type="checkbox" name="11" value="11:00" id="11"><label for="11"> 11:00 AM</label></div>
-									<div class="checkbox"><input type="checkbox" name="12" value="12:00" id="12"><label for="12"> 12:00 PM</label></div>
-									<div class="checkbox"><input type="checkbox" name="13" value="13:00" id="13"><label for="13"> 1:00 PM</label></div>
-									<div class="checkbox"><input type="checkbox" name="14" value="14:00" id="14"><label for="14"> 2:00 PM</label></div>
-									<div class="checkbox"><input type="checkbox" name="15" value="15:00" id="15"><label for="15"> 3:00 PM</label></div>
-									<div class="checkbox"><input type="checkbox" name="16" value="16:00" id="16"><label for="16"> 4:00 PM</label></div>
-									<div class="checkbox"><input type="checkbox" name="17" value="17:00" id="17"><label for="17"> 5:00 PM</label></div>
-									<div class="checkbox"><input type="checkbox" name="18" value="18:00" id="18"><label for="18"> 6:00 PM</label></div>
-									<div class="checkbox"><input type="checkbox" name="19" value="19:00" id="19"><label for="19"> 7:00 PM</label></div>
-									<div class="checkbox"><input type="checkbox" name="20" value="20:00" id="20"><label for="20"> 8:00 PM</label></div>
-									<div class="checkbox"><input type="checkbox" name="21" value="21:00" id="21"><label for="21"> 9:00 PM</label></div>
-									<div class="checkbox"><input type="checkbox" name="22" value="22:00" id="22"><label for="22"> 10:00 PM</label></div>
-									<div class="checkbox"><input type="checkbox" name="23" value="23:00" id="23"><label for="23"> 11:00 PM</label></div> 
-									<input type="hidden" name="te_id" value="{{teacher.key.id()}}">
-							</div>
+						<br>
+						<button class="btn btn-success center-block" type="submit">Estoy disponible</button>
+						<br>
+					</form>
+				</div>
+			</div>
+			<br>
+			<div class="row">
+				<div class="col-md-5 col-md-offset-1 bckg-w-80">
+					<div class="row">
+						<div class="col-md-10 col-md-offset-1">
+							<h3>Que piensan los usuarios de ti</h3>
+							<span class="starReviews-gray"><span class="starReviews" style="width:{{teacher.rating*20}}%"></span></span><span> </span><span class="glyphicon glyphicon-comment"></span><span> {{teacher.reviews}}</span>
 						</div>
 					</div>
-					<br>
-					<button class="btn btn-success center-block" type="submit">Estoy disponible</button>
-					<br>
-				</form>
+					<hr>
+					{% for r in reviews%}
+						<div class="row">
+							<div class="col-md-2 col-md-offset-1">
+								<img class="img-circle img-40" {% if r.user.get().profile_pic_r %}src="{{r.user.get().profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}>
+							</div>
+							<div class="col-md-8">
+								<span class="starReviews-gray"><span class="starReviews" style="width:{{r.rating*20}}%"></span></span> <span>{{r.date.strftime("%b %d, %Y")}}</span>
+								<p>{{r.comment}}</p>
+								<p><strong>{{r.user.get().name}}</strong></p>
+							</div>
+						</div>
+						<hr>
+					{% endfor %}
 				</div>
 			</div>
 		</div>	
 	</div>
-	<script type="text/javascript" src="/static/js/moment.js"></script>
 	<script type="text/javascript">
 
 		$(document).ready(function() {
@@ -185,7 +200,7 @@
 		        dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
 		        dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
 		        weekHeader: 'Sm',
-		        dateFormat: 'yy-m-d',
+		        dateFormat: 'yy-mm-dd',
 		        firstDay: 1,
 		        isRTL: false,
 		        showMonthAfterYear: false,
@@ -201,10 +216,11 @@
 		    var hours_local = {};
 		    for (var f = 0; f < fechas.length; f++){
 
-		    	var dt = new Date(fechas[f]);
-		    	
-		    	var str_dt = dt.getFullYear().toString()+'-'+(dt.getMonth()+1).toString()+'-'+dt.getDate().toString();
-		    	
+		    	//var dt = new Date(fechas[f]);
+		    	var dt = new Date(fechas[f])
+		    	//var str_dt = dt.getFullYear().toString()+'-'+(dt.getMonth()+1).toString()+'-'+dt.getDate().toString();
+		    	var str_dt = moment(dt).format("YYYY-MM-DD")
+
 		    	if (dates_local.indexOf(str_dt)>=0){}
 		    	else{
 		    		dates_local.push(str_dt);
@@ -221,7 +237,8 @@
 		    var dates = dates_local;
 		    var hours = hours_local;
 		    var today = new Date();
-		    var cd = today.getFullYear().toString()+'-'+(today.getMonth()+1).toString()+'-'+today.getDate().toString(); 
+		 //   var cd = today.getFullYear().toString()+'-'+(today.getMonth()+1).toString()+'-'+today.getDate().toString();
+		    var cd = moment(today).format("YYYY-MM-DD");
 		 //    $("#horas").replaceWith( function(){
 		 //    	var s = "<div id='horas' class='horas'> <h3>"+ cd +"</h3>";
 		 //    	if(cd in hours){
@@ -234,7 +251,7 @@
 		 //    	return s;
 		 //    });
 			document.getElementById("fechaString").innerHTML = moment().lang('es').format("dddd D, MMMM");
-     		var d = new Date(cd);
+     		var d = new Date(cd+"T12:00");
 			for (var h = 0; h<24; h++) {
 				var c=document.getElementById(h.toString())
 				c.checked = false;
@@ -275,10 +292,11 @@
 			// });
 			$('#calendarioIn').datepicker({
 				beforeShowDay : function(date){
-					var y = date.getFullYear().toString(); // get full year
-					var m = (date.getMonth() + 1).toString(); // get month.
-					var d = date.getDate().toString(); // get Day
-					var currDate = y+'-'+m+'-'+d;
+					// var y = date.getFullYear().toString(); // get full year
+					// var m = (date.getMonth() + 1).toString(); // get month.
+					// var d = date.getDate().toString(); // get Day
+					// var currDate = y+'-'+m+'-'+d;
+					currDate = moment(date).format("YYYY-MM-DD")
 					if(dates.indexOf(currDate) >= 0){
 						return [true,"ui-highlight", ""];	
 					}else if( date <= moment().subtract('days', 1)){
@@ -288,8 +306,8 @@
 					}					
 				},
 				onSelect : function(date){
-					document.getElementById("fechaString").innerHTML = moment(date).lang('es').format("dddd D, MMMM");;
-					var d = new Date(date);
+					document.getElementById("fechaString").innerHTML = moment(date).lang('es').format("dddd D, MMMM");
+					var d = new Date(date.toString()+"T12:00");
 					for (var h = 0; h<24; h++) {
 						var c=document.getElementById(h.toString())
 						c.checked = false;
@@ -315,7 +333,6 @@
 				date.setHours(badDate.getUTCHours());
 				date.setMinutes(badDate.getUTCMinutes());
 				date.setSeconds(0);
-				console.log(date);
 				var UTCdate = date.getUTCFullYear()+"-"+(parseInt(date.getUTCMonth())+1).toString()+"-"+date.getUTCDate()+" "+date.getUTCHours()+":"+date.getUTCMinutes();
 				$('#dateto_target').val(UTCdate);
 				$('#timezoneOffset').val(timezoneOffset);

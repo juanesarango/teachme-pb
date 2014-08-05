@@ -18,10 +18,22 @@
 							<img class="img-circle img-100" {% if mentor.profile_pic_r %}src="{{mentor.profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}>
 							<h2>{{mentor.name}}</h2>
 							<h3>{{mentor.lname}}</h3>
+							<div class="row">
+								<div class="col-md-12">
+									<span class="starReviews-gray">
+										<span class="starReviews" style="width:{{mentor.rating*20}}%"></span>
+									</span>
+									<span> </span>
+									<span class="glyphicon glyphicon-comment"></span>
+									<span> {{mentor.reviews}}</span>
+								</div>
+							</div>
 						</div>
 						<div class="col-md-7">
-							<h2>Acerca de ti</h2>
+							<h2>Acerca de {{mentor.name}}</h2>
 							<p>{{mentor.about}}</p>
+							<br>
+							<p><strong>Tarifa por hora: </strong>{% if mentor.fee == 0 %}gratis{% else %}{{mentor.fee}} USD{% endif %}</p>
 						</div>
 					</div>
 					<hr>
@@ -132,6 +144,31 @@
 					<br>
 				</div>
 			</div>
+			<br>
+			<div class="row">
+				<div class="col-md-5 col-md-offset-1 bckg-w-80">
+					<div class="row">
+						<div class="col-md-10 col-md-offset-1">
+							<h3>Que piensan los usuarios de {{mentor.name}}</h3>
+							<span class="starReviews-gray"><span class="starReviews" style="width:{{mentor.rating*20}}%"></span></span><span> </span><span class="glyphicon glyphicon-comment"></span><span> {{mentor.reviews}}</span>
+						</div>
+					</div>
+					<hr>
+					{% for r in reviews%}
+						<div class="row">
+							<div class="col-md-2 col-md-offset-1">
+								<img class="img-circle img-40" {% if r.user.get().profile_pic_r.profile_pic_r %}src="{{r.user.get().profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}>
+							</div>
+							<div class="col-md-8">
+								<span class="starReviews-gray"><span class="starReviews" style="width:{{r.rating*20}}%"></span></span> <span>{{r.date.strftime("%b %d, %Y")}}</span>
+								<p>{{r.comment}}</p>
+								<p><strong>{{r.user.get().name}}</strong></p>
+							</div>
+						</div>
+						<hr>
+					{% endfor %}
+				</div>
+			</div>
 		</div>
 	</div>
 
@@ -213,21 +250,22 @@
 			var today = new Date();
 			var cd = today.getFullYear().toString()+'-'+(today.getMonth()+1).toString()+'-'+today.getDate().toString(); 
 
-			$("#horas").replaceWith( function(){
-				strfecha = today.toDateString()
-				var s = "<div id='horas'> <h3>"+ strfecha +"</h3>";
-				if(cd in hours){
-					for (var h = 0; h < hours[cd].length; h++) {
-						//var lDate = new Date(cd+" "+hours[cd][h]);
-						var lDate = hours[cd][h];
-						var UTCdate = lDate.getUTCFullYear()+"-"+(parseInt(lDate.getUTCMonth())+1).toString()+"-"+lDate.getUTCDate()+" "+lDate.getUTCHours()+":"+lDate.getUTCMinutes();
-						s = s+"<div class='radio'><label><input type='radio' name='date-meet' value='"+UTCdate+"'>"+hours[cd][h].toLocaleTimeString()+"</label></div>";
-					};
-				};
-				
-				s = s+"</div";
-				return s;
-			});
+
+		    $("#horas").replaceWith( function(){
+		    	strfecha = moment(today).lang('es').format("dddd D, MMMM");
+		    	var s = "<div id='horas'> <h3>"+ strfecha +"</h3>";
+		    	if(cd in hours){
+		    		for (var h = 0; h < hours[cd].length; h++) {
+		    			//var lDate = new Date(cd+" "+hours[cd][h]);
+		    			var lDate = hours[cd][h];
+		    			var UTCdate = lDate.getUTCFullYear()+"-"+(parseInt(lDate.getUTCMonth())+1).toString()+"-"+lDate.getUTCDate()+" "+lDate.getUTCHours()+":"+lDate.getUTCMinutes();
+		    			s = s+"<div class='radio'><label><input type='radio' name='date-meet' value='"+UTCdate+"'>"+hours[cd][h].toLocaleTimeString()+"</label></div>";
+		    		};
+		   		};
+		    	
+		    	s = s+"</div";
+		    	return s;
+		    });
 
 			$.datepicker.setDefaults( $.datepicker.regional[ "es" ] );
 			$('.calendario').datepicker({
@@ -245,15 +283,16 @@
 				onSelect : function(date){
 					$("#horas").replaceWith( function(){
 						fecha = new Date(hours[date][0]);
-						strfecha = fecha.toDateString();
-						var s = "<div id='horas'> <h3>"+strfecha+"</h3>";
-						for (var h = 0; h < hours[date].length; h++) {
-							var lDate = hours[date][h];
-							var UTCdate = lDate.getUTCFullYear()+"-"+(parseInt(lDate.getUTCMonth())+1).toString()+"-"+lDate.getUTCDate()+" "+lDate.getUTCHours()+":"+lDate.getUTCMinutes();
-							s = s+"<div class='radio'><label><input type='radio' name='date-meet' value='"+UTCdate+"'>"+hours[date][h].toLocaleTimeString()+"</label></div>";
-						};
-						s = s+"</div";
-						return s;
+						strfecha = moment(fecha).lang('es').format("dddd D, MMMM");
+		    			var s = "<div id='horas'> <h3>"+strfecha+"</h3>";
+		    			for (var h = 0; h < hours[date].length; h++) {
+		    				var lDate = hours[date][h];
+		    				var UTCdate = lDate.getUTCFullYear()+"-"+(parseInt(lDate.getUTCMonth())+1).toString()+"-"+lDate.getUTCDate()+" "+lDate.getUTCHours()+":"+lDate.getUTCMinutes();
+		    				s = s+"<div class='radio'><label><input type='radio' name='date-meet' value='"+UTCdate+"'>"+hours[date][h].toLocaleTimeString()+"</label></div>";
+		    			};
+		    			s = s+"</div";
+		    			return s;
+
 					});
 				},
 
