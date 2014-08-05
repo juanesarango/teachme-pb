@@ -180,7 +180,7 @@ class teacher(Handler):
 		teacher_key = ndb.Key(urlsafe=str(id)).get()
 		area = self.request.get("select-area") 
 		tema = self.request.get("tema")
-		meet_wf = self.request.get("date-meet")
+		meet_wf = self.request.get("dateMeet")
 		pago = False
 
 		# Si ingreso fecha

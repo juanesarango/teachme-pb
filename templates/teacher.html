@@ -66,7 +66,7 @@
 						</div>
 					</div>
 					<hr>
-					<form role="form" method="post" id="payment-form">
+					<form role="form" method="post" id="schedule-form">
 						<div class="row">
 							<div class="col-md-4 col-md-offset-1">
 								<label>Agenda libre</label>
@@ -99,53 +99,84 @@
 						</div>
 						<br>
 						<input type="hidden" name="timezoneOffset" id="timezoneOffset">
-						<button class="btn btn-success center-block" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-calendar"></span>&nbsp;Agendar</button>
+						{% if mentor.fee > 0 %}
+						<button class="btn btn-success center-block" type="button" data-toggle="modal" data-target="#modalPayment" id="buttonSchedule" disabled="true"><span class="glyphicon glyphicon-calendar"></span>&nbsp;Agendar</button>
+						{% else %}
+						<input type="hidden" name="metodo_pago" value="GRATIS">
+						<button class="btn btn-success center-block" type="submit" id="buttonSchedule" disabled="true"><span class="glyphicon glyphicon-calendar"></span>&nbsp;Agendar</button>
+						{% endif %}
+					</form>
+						{% if mentor.fee > 0 %}
 						<!-- Modal Plataforma de pago-->
-						<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal fade" id="modalPayment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 							<div class="modal-dialog">
 								<div class="modal-content">
-							  		<div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-										<h4 class="modal-title font-b" id="myModalLabel" >Plataformas de pago</h4>
-							  		</div>
-									<div class="modal-body font-b">
-										<div class="row">
-									  		<span class="payment-errors"></span>
-									  		<div class="form-row">
-												<label>
-										  			<span>Card Number</span>
-										  			<input type="text" size="20" data-stripe="number"/>
-												</label>
-									  		</div>
-											<div class="form-row">
-												<label>
-													<span>CVC</span>
-													<input type="text" size="4" data-stripe="cvc"/>
-												</label>
+									<form role="form" method="post" id="payment-form">
+								  		<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+											<h4 class="modal-title font-b inline" id="myModalLabel" >Recibimos todas las tarjetas de crédito</h4>
+											<img src="/static/img/creditcards.png" class="img-responsive inline">
+								  		</div>
+										<div class="modal-body font-b">
+											
+											<span class"payment-errors"></span>
+											<div class="form-group">
+												<div class="input-group">
+													<div class="input-group-addon"><span class="glyphicon glyphicon-credit-card"></span></div>
+													<input type="text" data-stripe="number" class="form-control" id="paymentCard" placeholder="Número de tarjeta">
+													<div class="input-group-addon"><span id="cardType"></span></div>
+												</div>
 											</div>
-											<div class="form-row">
-												<label>
-										  			<span>Expiration (MM/YYYY)</span>
-										  			<input type="text" size="2" data-stripe="exp-month"/>
-												</label>
-													<span> / </span>
-													<input type="text" size="4" data-stripe="exp-year"/>
-									  		</div>
+											<div class="row">
+												<div class="col-md-5">
+													<div class="form-group">
+														<div class="input-group">
+															<div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+															<input type="text" data-stripe="CVC" class="form-control" id="paymentCVC" placeholder="CVC">
+														</div>
+													</div>
+												</div>
+												<div class="col-md-3">
+													<div class="form-group">
+														<div class="input-group">
+															<div class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></div>
+															<input type="text" data-stripe="exp-month" class="form-control" id="paymentExpMonth" placeholder="MM">
+														</div>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group">
+														<div class="input-group">
+															<div class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></div>
+															<input type="text" data-stripe="exp-year" class="form-control" id="paymentExpYear" placeholder="YYYY">
+														</div>
+													</div>
+												</div>
+											</div>
+											<br>
+											<div class="row">
+												<div class="col-md-10 col-md-offset-1">
+													<p class="text-justify">
+														En Teachme trabajamos con las mejores tecnologias de pagos por internet. Nuestro proveedor de pagos es <a href="https://stripe.com/" target="_blank">Stripe</a>, compañia en la cual inversores como <a href="http://es.wikipedia.org/wiki/Sequoia_Capital" title="Son los inversores de grandes empresas como Apple, Google..." target="_blank">Sequoia Capital</a> han puesto su confianza. Por lo que puedes estar tranquilo al realizar tu pago con nosotros por medio de Stripe.
+													</p>
+													<a href="https://stripe.com/" target="_blank"><img src="/static/img/poweredStripe.png"></a>
+												</div>
+											</div>
+											
 										</div>
-									</div>
-									<br>
-									<br>
-									<br>
-									<div class="modal-footer">
-										<input type="hidden" name="metodo_pago" value="STRIPE">
-										<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-										<button type="submit" class="btn btn-primary">Procesar Pago</button>
-									</div>
+										<br>
+										<br>
+										<br>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+											<button type="submit" class="btn btn-primary" value="Submit">Procesar Pago</button>
+										</div>
+									</form>
 								</div>
 						  	</div>
 						</div>
 						<!-- Fin Modal -->
-					</form>
+						{% endif %}
 					<br>
 					<br>
 				</div>
@@ -179,35 +210,6 @@
 	</div>
 
 	<script type="text/javascript">
-
-		Stripe.setPublishableKey('pk_test_4UNYYrmEeEGBIaGCITmtU6oN');
-		jQuery(function($) {
-			 $('#payment-form').submit(function(event) {
-				var $form = $(this);
-				// Disable the submit button to prevent repeated clicks
-				$form.find('button').prop('disabled', true);
-				Stripe.card.createToken($form, stripeResponseHandler);
-				// Prevent the form from submitting with the default action
-				return false;
-			  });
-			});
-
-
-		function stripeResponseHandler(status, response) {
-		  var $form = $('#payment-form');
-		  if (response.error) {
-			// Show the errors on the form
-			$form.find('.payment-errors').text(response.error.message);
-			$form.find('button').prop('disabled', false);
-		  } else {
-			// response contains id and card, which contains additional card details
-			var token = response.id;
-			// Insert the token into the form so it gets submitted to the server
-			$form.append($('<input type="hidden" name="stripeToken" />').val(token));
-			// and submit
-			$form.get(0).submit();
-		  }
-		};
 
 		$(document).ready(function() {
 			$.datepicker.regional['es'] = {
@@ -265,7 +267,7 @@
 		    			//var lDate = new Date(cd+" "+hours[cd][h]);
 		    			var lDate = hours[cd][h];
 		    			var UTCdate = lDate.getUTCFullYear()+"-"+(parseInt(lDate.getUTCMonth())+1).toString()+"-"+lDate.getUTCDate()+" "+lDate.getUTCHours()+":"+lDate.getUTCMinutes();
-		    			s = s+"<div class='radio'><label><input type='radio' name='date-meet' value='"+UTCdate+"'>"+hours[cd][h].toLocaleTimeString()+"</label></div>";
+		    			s = s+"<div class='radio'><label><input type='radio' class='input-radio' name='dateMeet' value='"+UTCdate+"'>"+hours[cd][h].toLocaleTimeString()+"</label></div>";
 		    		};
 		   		};
 		    	
@@ -294,7 +296,7 @@
 		    			for (var h = 0; h < hours[date].length; h++) {
 		    				var lDate = hours[date][h];
 		    				var UTCdate = lDate.getUTCFullYear()+"-"+(parseInt(lDate.getUTCMonth())+1).toString()+"-"+lDate.getUTCDate()+" "+lDate.getUTCHours()+":"+lDate.getUTCMinutes();
-		    				s = s+"<div class='radio'><label><input type='radio' name='date-meet' value='"+UTCdate+"'>"+hours[date][h].toLocaleTimeString()+"</label></div>";
+		    				s = s+"<div class='radio'><label><input type='radio' class='input-radio' name='dateMeet' value='"+UTCdate+"'>"+hours[date][h].toLocaleTimeString()+"</label></div>";
 		    			};
 		    			s = s+"</div";
 		    			return s;
@@ -305,8 +307,91 @@
 			});
 			var timezoneOffset = new Date().getTimezoneOffset();
 			$('#timezoneOffset').val(timezoneOffset);
+
+			// $('#schedule-form').dateMeet.click(function(){
+			// 	if ($('#t-temas').val()){
+			// 		$('#schedule-form').find('button').prop('disabled', false);
+			// 	}
+			// })
+			$('#t-temas').change(function(){
+				$('#schedule-form').find('button').prop('disabled', false);
+			})
 		});
 
+	</script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#paymentCard').change(function(){
+				var cardNumber = $(this).val();
+				if(Stripe.card.validateCardNumber(cardNumber)){
+					var cardType = Stripe.card.cardType(cardNumber);
+					$(this).parent().removeClass("has-error").addClass("has-success")
+					$('#cardType').html(cardType);
+
+				}else{
+					$(this).parent().removeClass("has-success").addClass("has-error")
+				}
+			})
+			$('#paymentCVC').change(function(){
+				var cardCVC = $(this).val();
+				if(Stripe.card.validateCVC(cardCVC)){
+					$(this).parent().removeClass("has-error").addClass("has-success")
+				}else{
+					$(this).parent().removeClass("has-success").addClass("has-error")
+				}
+			})
+			$('#paymentExpMonth').change(function(){
+				var cardMonth = parseInt($(this).val());
+				var cardYear = parseInt($('#paymentExpYear').val());
+				if(Stripe.card.validateExpiry(cardMonth, cardYear)){
+					$(this).parent().removeClass("has-error").addClass("has-success");
+					$('#paymentExpYear').parent().removeClass("has-error").addClass("has-success");
+				}else{
+					$(this).parent().removeClass("has-success").addClass("has-error");
+					$('#paymentExpYear').parent().removeClass("has-success").addClass("has-error");
+				}
+			})
+			$('#paymentExpYear').change(function(){
+				var cardYear = parseInt($(this).val());
+				var cardMonth = parseInt($('#paymentExpMonth').val());
+				if(Stripe.card.validateExpiry(cardMonth, cardYear)){
+					$(this).parent().removeClass("has-error").addClass("has-success");
+					$('#paymentExpMonth').parent().removeClass("has-error").addClass("has-success");
+				}else{
+					$(this).parent().removeClass("has-success").addClass("has-error");
+					$('#paymentExpMonth').parent().removeClass("has-success").addClass("has-error");
+				}
+			})
+
+			Stripe.setPublishableKey('pk_test_4UNYYrmEeEGBIaGCITmtU6oN');
+				$('#payment-form').submit(function(event) {
+				var $form = $(this);
+				// Disable the submit button to prevent repeated clicks
+				$form.find('button').prop('disabled', true);
+				Stripe.card.createToken($form, stripeResponseHandler);
+				// Prevent the form from submitting with the default action
+				return false;
+			});
+
+
+			function stripeResponseHandler(status, response) {
+			  var $form = $('#payment-form');
+			  if (response.error) {
+				// Show the errors on the form
+				$form.find('.payment-errors').text(response.error.message);
+				$form.find('button').prop('disabled', false);
+			  } else {
+				// response contains id and card, which contains additional card details
+				var token = response.id;
+				// Insert the token into the form so it gets submitted to the server
+				$('#schedule-form').append($('<input type="hidden" name="stripeToken" />').val(token));
+				$('#schedule-form').append($('<input type="hidden" name="metodo_pago" value="STRIPE" />'));
+				// and submit
+				// $('#schedule-form').get(0).submit();
+			  }
+			};
+
+			})
 	</script>
 
 {% endblock %}
