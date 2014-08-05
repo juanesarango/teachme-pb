@@ -99,11 +99,26 @@
 						</div>
 						<br>
 						<input type="hidden" name="timezoneOffset" id="timezoneOffset">
-						{% if mentor.fee > 0 %}
-						<button class="btn btn-success center-block" type="button" data-toggle="modal" data-target="#modalPayment" id="buttonSchedule" disabled="true"><span class="glyphicon glyphicon-calendar"></span>&nbsp;Agendar</button>
+						{% if user %}
+							{% if mentor.fee > 0 %}
+							<button class="btn btn-success center-block" type="button" data-toggle="modal" data-target="#modalPayment" id="buttonSchedule" disabled="true"><span class="glyphicon glyphicon-calendar"></span>&nbsp;Agendar</button>
+							{% else %}
+							<input type="hidden" name="metodo_pago" value="GRATIS">
+							<button class="btn btn-success center-block" type="submit" id="buttonSchedule" disabled="true"><span class="glyphicon glyphicon-calendar"></span>&nbsp;Agendar</button>
+							{% endif %}
 						{% else %}
-						<input type="hidden" name="metodo_pago" value="GRATIS">
-						<button class="btn btn-success center-block" type="submit" id="buttonSchedule" disabled="true"><span class="glyphicon glyphicon-calendar"></span>&nbsp;Agendar</button>
+							<div class="row">
+								<div class="col-md-10 col-md-offset-1 text-center">
+									<h3>Inicia sesión o regístrate <strong>gratis</strong> para poder agendar a {{mentor.name}}</h3>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-4 col-md-offset-4 text-center">
+									<br>
+									<a href="/signup?redirect=/teacher/{{mentor.key.id()}}"><button class="btn btn-success">Registrate gratis!</button></a>
+									<a href="/login?redirect=/teacher/{{mentor.key.id()}}"><button class="btn btn-success">Inicia Sesión</button></a>
+								</div>
+							</div>
 						{% endif %}
 					</form>
 						{% if mentor.fee > 0 %}
@@ -387,7 +402,7 @@
 				$('#schedule-form').append($('<input type="hidden" name="stripeToken" />').val(token));
 				$('#schedule-form').append($('<input type="hidden" name="metodo_pago" value="STRIPE" />'));
 				// and submit
-				// $('#schedule-form').get(0).submit();
+				$('#schedule-form').get(0).submit();
 			  }
 			};
 
