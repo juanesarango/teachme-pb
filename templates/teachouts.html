@@ -5,6 +5,12 @@
 {% block body %}
 
 	<div class="backgnd" style="background-image: url('/static/teachouts.jpg')">
+		{% if flag == "SUCCEED" %}   
+			<div class="alert alert-success alert-dismissible" role="alert" style="position: absolute; margin-left: 300px; width:800px;">
+				<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true" >&times;</span><span class="sr-only">Cerrar</span></button>
+				<strong>Transacción exitosa!</strong> Tu pago ha sido procesado exitósamente.
+			</div>
+		{%endif %}
 		<br>
 		<br>
 		<div class="container">

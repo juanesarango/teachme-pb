@@ -31,6 +31,8 @@ class user(ndb.Model):
 	
 	date_reserved = ndb.DateTimeProperty(repeated = True)
 
+	pagos = ndb.KeyProperty(repeated= True, kind = "payments")
+
 	@classmethod
 	def register(cls, name, lname, mail, pw):
 		pw_hash = make_pw_hash(mail, pw)
@@ -103,3 +105,10 @@ class review(ndb.Model):
 	teachout = ndb.KeyProperty(required = True, kind = "teachout")
 	date = ndb.DateTimeProperty(auto_now_add = True)
 	
+class payments(ndb.Model):
+	teachout = ndb.KeyProperty(required = True, kind = "teachout")
+	date = ndb.DateTimeProperty(auto_now_add = True)
+	teacher = ndb.KeyProperty(kind = "teacher")
+	cantidad = ndb.FloatProperty(required = True)
+	metodo = ndb.StringProperty()
+	charge = ndb.JsonProperty()

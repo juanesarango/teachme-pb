@@ -163,6 +163,7 @@ class teacher(Handler):
 			mentor = ndb.Key(urlsafe = str(id)).get()
 		except:
 			self.abort(404)
+		flag = self.request.get("t")
 		reviews = teachme_db.review.query(ancestor = mentor.key).order(-teachme_db.review.date)
 		t_areas = []
 		for a in mentor.areas:
@@ -170,8 +171,7 @@ class teacher(Handler):
 		fechas = json.dumps(booking.UTCfechas(mentor.date_available))
 		dates = json.dumps(fns.solo_dates(mentor.date_available))
 		hours = json.dumps(fns.solo_hours(mentor.date_available))
-		mentor.fee = 15
-		self.render("teacher.html", mentor = mentor, hours = hours, dates = dates, fechas = fechas, t_areas = t_areas, reviews = reviews)
+		self.render("teacher.html", mentor = mentor, hours = hours, dates = dates, fechas = fechas, t_areas = t_areas, reviews = reviews, flag= flag)
 
 	def post(self, id):
 		if not self.user:
@@ -183,70 +183,89 @@ class teacher(Handler):
 		meet_wf = self.request.get("date-meet")
 		pago = False
 
-		metodo = self.request.get("metodo_pago")
-		logging.error(metodo)			
-		if metodo == "BONO":
-			codigo = self.request.get("codigo")
-			PROMOS = [
-				"PRIMERACLASE",
-				"DEMOPRUEBA"
-				]
-			if codigo in PROMOS:
-				pago = True
-		elif metodo == "STRIPE":
-			# Set your secret key: remember to change this to your live secret key in production
-			# See your keys here https://dashboard.stripe.com/account
-			stripe.api_key = "sk_test_4UNYBdmDAESgVzq0CyZpM039"
-			# Get the credit card details submitted by the form
-			token = self.request.get("stripeToken")
-			logging.error(token)
-			# Create the charge on Stripe's servers - this will charge the user's card
-			try:
-			 	charge = stripe.Charge.create(
-			    	amount=1000, # amount in cents, again
-			     	currency="usd",
-			     	card=token,
-			    	description="info@teachmeapp.com"
-			  	)
-			  	pago = True
-			except stripe.CardError, e:
-			  	# The card has been declined
-			  	logging.error("FALLO PAGO")
-			  	pass
-			logging.error(token)
-
-		logging.error("PAGO")
-		logging.error(pago)
-
-		if meet_wf and teacher_key and pago == True:
+		# Si ingreso fecha
+		if meet_wf and teacher_key:
 			meet = datetime.datetime.strptime(meet_wf, "%Y-%m-%d %H:%M")
 			timezoneOffset = int(self.request.get("timezoneOffset"))
+			# Si la fecha no está ocupada por el mentor ni el usuario
 			if booking.check_availability_mentor(teacher_key, meet) and booking.check_availability_user(self.user, meet):
-				t = teachme_db.teachout(date = meet, learner = self.user.key, teacher = teacher_key.key, area = area, tema = tema)
-				t.put()
+				metodo = self.request.get("metodo_pago")
+				# Elige el método de pago
+				if metodo == "BONO":
+					codigo = self.request.get("codigo")
+					PROMOS = [
+						"PRIMERACLASE",
+						"DEMOPRUEBA"
+						]
+					if codigo in PROMOS:
+						pago = True
+				elif metodo == "STRIPE":
+					if os.environ.get('SERVER_SOFTWARE', '').startswith('Development'):
+						stripe.verify_ssl_certs = False
+					# Set your secret key: remember to change this to your live secret key in production: https://dashboard.stripe.com/account
+					stripe.api_key = "sk_test_4UNYBdmDAESgVzq0CyZpM039"
+					token = self.request.get("stripeToken")
+					logging.error(token)
+					# Create the charge on Stripe's servers - this will charge the user's card
+					try:
+						amount = teacher_key.fee*100
+						if amount == 0:
+							amount = 3000
+					 	charge = stripe.Charge.create(
+					    	amount=amount, # amount in cents, again
+					     	currency="usd",
+					     	card=token,
+					    	description="info@teachmeapp.com"
+					  	)
+					  	pago = True
+					except stripe.CardError, e:
+					  	# The card has been declined
+					  	logging.error("FALLO PAGO")
+					  	pass
+				# Si el pago fue exitoso
+				elif metodo == "GRATIS" and teacher_key.fee==0:
+					pago = True
+				else:
+					self.abort(403)
+					return
 
-				self.user.teachouts.append(t.key)
-				self.user.date_reserved.append(t.date)
-				self.user.timezoneOffset = timezoneOffset
-				self.user.put()
-				teacher_key.teachouts.append(t.key)
-				teacher_key.date_available.remove(t.date)
-				teacher_key.date_reserved.append(t.date)
-				teacher_key.put()
+				if pago ==True:
+					# Crea el teachout
+					t = teachme_db.teachout(date = meet, learner = self.user.key, teacher = teacher_key.key, area = area, tema = tema)
+					t.put()
+					# Guarda info de la transacción
+					if metodo =="STRIPE":
+						factura = teachme_db.payments(parent = self.user.key, teachout = t.key, teacher = teacher_key.key, metodo = metodo, cantidad = amount, charge = charge )			
+					else:
+						factura = teachme_db.payments(parent = self.user.key, teachout = t.key, teacher = teacher_key.key, metodo = metodo, cantidad = teacher_key.fee)
+					factura.put()
 
-				date_mentor = t.date - datetime.timedelta(minutes = teacher_key.timezoneOffset)
-				date_learner = t.date - datetime.timedelta(minutes = self.user.timezoneOffset)
+					self.user.teachouts.append(t.key)
+					self.user.pagos.append(factura.key)
+					self.user.date_reserved.append(t.date)
+					self.user.timezoneOffset = timezoneOffset
+					self.user.put()
+					teacher_key.teachouts.append(t.key)
+					teacher_key.date_available.remove(t.date)
+					teacher_key.date_reserved.append(t.date)
+					teacher_key.put()
 
-				html_user = render_str("mail_booking.html", sujeto = self.user.name, mentor = teacher_key, t = t, date = date_learner)
-				html_mentor = render_str("mail_booking_mentor.html", sujeto = teacher_key.name, u = self.user, t = t, date = date_mentor)
-				subject = "Confirmación de sesión agendada"
-				mail.send_mail("info@teachmeapp.com", self.user.mail, subject, "", html = html_user)
-				mail.send_mail("info@teachmeapp.com", teacher_key.mail, subject, "", html = html_mentor)
+					date_mentor = t.date - datetime.timedelta(minutes = teacher_key.timezoneOffset)
+					date_learner = t.date - datetime.timedelta(minutes = self.user.timezoneOffset)
 
-				self.redirect("/teachouts")
-				return
+					html_user = render_str("mail_booking.html", sujeto = self.user.name, mentor = teacher_key, t = t, date = date_learner)
+					html_mentor = render_str("mail_booking_mentor.html", sujeto = teacher_key.name, u = self.user, t = t, date = date_mentor)
+					subject = "Confirmación de sesión agendada"
+					mail.send_mail("info@teachmeapp.com", self.user.mail, subject, "", html = html_user)
+					mail.send_mail("info@teachmeapp.com", teacher_key.mail, subject, "", html = html_mentor)
+
+					self.redirect("/teachouts?t=SUCCEED")
+					return
+				else:
+					self.redirect("/teacher/"+ str(teacher_key.key.urlsafe()))
+					return
 			else:
-				self.redirect("/teacher/"+ str(teacher_key.key.urlsafe()))
+				self.redirect("/teacher/"+ str(teacher_key.key.urlsafe())+"?t=FAILED")
 				return
 		else:
 			self.redirect("/teacher/"+ str(teacher_key.key.urlsafe()))
@@ -290,6 +309,8 @@ class comparte(Handler):
 class teachouts(Handler):
 	def get(self):
 		#depurar_teachouts()
+		flag = self.request.get("t")
+		logging.error("FLAG: "+flag)
 		if not self.user:
 			self.abort(403)
 			return
@@ -336,7 +357,7 @@ class teachouts(Handler):
 			etouts[t]= t.get()
 			ementor[t] = etouts[t].teacher.get()
 
-		self.render("/teachouts.html", touts = touts, mentor = mentor, disable = disable, faltan = faltan, m_touts = m_touts, learner = learner, m_disable = m_disable, m_faltan = m_faltan, etouts = etouts, ementor=ementor, m_etouts= m_etouts, elearner=elearner)
+		self.render("/teachouts.html", touts = touts, mentor = mentor, disable = disable, faltan = faltan, m_touts = m_touts, learner = learner, m_disable = m_disable, m_faltan = m_faltan, etouts = etouts, ementor=ementor, m_etouts= m_etouts, elearner=elearner, flag=flag)
 
 class aprende(Handler):
 	def get(self, ar):
@@ -461,7 +482,6 @@ class calendar_teacher_add(Handler):
 		if not teacher:
 			self.abort(403)
 			return
-		#timezoneOffset = int(self.request.get("timezoneOffset"))
 		for i in range(24):
 			d = str(self.request.get(str(i)))
 			if d:
@@ -472,22 +492,6 @@ class calendar_teacher_add(Handler):
 					teacher.date_available.append(date)
 					sorted(teacher.date_available)
 		teacher.put()
-		# d = str(self.request.get("dateto"))
-		
-		# if d:
-		# 	date = datetime.datetime.strptime(d, "%Y-%m-%d %H:%M")
-		# 	repeated = booking.check_repeated_date(teacher, date)
-		# 	if repeated[0]:
-		# 		booking.erase_past_dates(teacher)
-		# 		teacher.date_available.append(date)
-		# 		sorted(teacher.date_available)
-		# 		teacher.mail = self.user.mail #Borrar esto
-		# 		teacher.timezoneOffset = timezoneOffset #Borrar esto
-		# 		self.user.timezoneOffset = timezoneOffset #Borrar esto
-		# 		self.user.profile_pic = teacher.profile_pic
-		# 		teacher.put()
-		# 		self.user.put() #borrar esto
-
 		
 		self.redirect("/profile/teacher/" + str(teacher.key.id()))
 
@@ -565,13 +569,28 @@ class servehandler(blobstore_handlers.BlobstoreDownloadHandler):
 
 class manualtask(Handler):
 	def get(self):
-		mentors = teachme_db.teacher.query()
-		for m in mentors:
-			m.fee = 0
-			m.rating = 0
-			m.reviews = 0
-			m.put()
-		self.response.out.write("ok")
+		# mentors = teachme_db.teacher.query()
+		# for m in mentors:
+		# 	m.fee = 0
+		# 	m.rating = 0
+		# 	m.reviews = 0
+		# 	m.put()
+		# self.response.out.write("ok")
+		if os.environ.get('SERVER_SOFTWARE', '').startswith('Development'):
+			stripe.verify_ssl_certs = False
+		stripe.api_key = "sk_test_4UNYBdmDAESgVzq0CyZpM039"
+		token = "tok_14OCSf4dC1pWt1qWvAzOdSIA"
+		try:
+		 	charge = stripe.Charge.create(
+		    	amount=1000, # amount in cents, again
+		     	currency="usd",
+		     	card=token,
+		    	description="info@teachmeapp.com"
+		  	)
+		  	self.response.out.write("pago ok")
+		except stripe.CardError, e:
+		  	self.response.out.write("pago fail")
+		  	pass
 
 app = webapp2.WSGIApplication([('/', MainPage),
 								('/signup', signup),
