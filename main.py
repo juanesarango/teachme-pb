@@ -16,13 +16,10 @@ import teachme_db
 import fns
 import booking
 import logging
-<<<<<<< HEAD
 import stripe
 import ssl
-=======
 #import stripe
 #import ssl
->>>>>>> 4758c2fff8cdd9bc91226013453e1f9ce5e26433
 
 ########################################################################
 #Definiciones de Jinja2 para los templates
@@ -162,27 +159,19 @@ class logout(Handler):
 
 class teacher(Handler):
 	def get(self, id):
-<<<<<<< HEAD
 		try:
 			mentor = ndb.Key(urlsafe = str(id)).get()
 		except:
 			self.abort(404)
-=======
-		mentor = ndb.Key(urlsafe = str(id)).get()
 		reviews = teachme_db.review.query(ancestor = mentor.key).order(-teachme_db.review.date)
->>>>>>> 4758c2fff8cdd9bc91226013453e1f9ce5e26433
 		t_areas = []
 		for a in mentor.areas:
 			t_areas.append(teachme_db.areas.get_by_id(int(a)))
 		fechas = json.dumps(booking.UTCfechas(mentor.date_available))
 		dates = json.dumps(fns.solo_dates(mentor.date_available))
 		hours = json.dumps(fns.solo_hours(mentor.date_available))
-<<<<<<< HEAD
 		mentor.fee = 15
-		self.render("teacher.html", mentor = mentor, hours = hours, dates = dates, fechas = fechas, t_areas = t_areas , codigo="")
-=======
 		self.render("teacher.html", mentor = mentor, hours = hours, dates = dates, fechas = fechas, t_areas = t_areas, reviews = reviews)
->>>>>>> 4758c2fff8cdd9bc91226013453e1f9ce5e26433
 
 	def post(self, id):
 		if not self.user:
@@ -579,6 +568,8 @@ class manualtask(Handler):
 		mentors = teachme_db.teacher.query()
 		for m in mentors:
 			m.fee = 0
+			m.rating = 0
+			m.reviews = 0
 			m.put()
 		self.response.out.write("ok")
 
