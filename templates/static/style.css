@@ -337,7 +337,7 @@ a:visited{
 #flechita{
   position: absolute;
   right: 60px;
-  top: 600px;
+  /*top: 600px;*/
   width: 100px;
   height: 100px;
   color: #428bca;
