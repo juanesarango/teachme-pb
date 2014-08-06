@@ -203,7 +203,7 @@ class teacher(Handler):
 					if os.environ.get('SERVER_SOFTWARE', '').startswith('Development'):
 						stripe.verify_ssl_certs = False
 					# Set your secret key: remember to change this to your live secret key in production: https://dashboard.stripe.com/account
-					stripe.api_key = "sk_test_4UNYBdmDAESgVzq0CyZpM039"
+					stripe.api_key = "sk_live_4UNYyvnaDMGTjlidSqmDbuVm"
 					token = self.request.get("stripeToken")
 					logging.error(token)
 					# Create the charge on Stripe's servers - this will charge the user's card
@@ -215,7 +215,8 @@ class teacher(Handler):
 					    	amount=amount, # amount in cents, again
 					     	currency="usd",
 					     	card=token,
-					    	description=self.user.mail
+					    	description="Sesión con " + self.teacher_key.name
+					    	receipt_email= self.user.mail
 					  	)
 					  	pago = True
 					except stripe.CardError, e:
@@ -235,7 +236,7 @@ class teacher(Handler):
 					t.put()
 					# Guarda info de la transacción
 					if metodo =="STRIPE":
-						factura = teachme_db.payments(parent = self.user.key, teachout = t.key, teacher = teacher_key.key, metodo = metodo, cantidad = amount, charge = charge )			
+						factura = teachme_db.payments(parent = self.user.key, teachout = t.key, teacher = teacher_key.key, metodo = metodo, cantidad = amount, charge = charge.id )			
 					else:
 						factura = teachme_db.payments(parent = self.user.key, teachout = t.key, teacher = teacher_key.key, metodo = metodo, cantidad = teacher_key.fee)
 					factura.put()
@@ -259,6 +260,8 @@ class teacher(Handler):
 					mail.send_mail("info@teachmeapp.com", self.user.mail, subject, "", html = html_user)
 					mail.send_mail("info@teachmeapp.com", teacher_key.mail, subject, "", html = html_mentor)
 
+					if metodo== "GRATIS":
+						self.redirect("/teachouts")
 					self.redirect("/teachouts?t=SUCCEED")
 					return
 				else:
@@ -569,13 +572,13 @@ class servehandler(blobstore_handlers.BlobstoreDownloadHandler):
 
 class manualtask(Handler):
 	def get(self):
-		mentors = teachme_db.teacher.query()
-		for m in mentors:
-			if m.name == "Juan Esteban":
-				m.fee = 15
-				m.rating = 0
-				m.reviews = 0
-				m.put()
+		# mentors = teachme_db.teacher.query()
+		# for m in mentors:
+		# 	if m.name == "Juan Esteban":
+		# 		m.fee = 15
+		# 		m.rating = 0
+		# 		m.reviews = 0
+		# 		m.put()
 		self.response.out.write("ok")
 
 app = webapp2.WSGIApplication([('/', MainPage),

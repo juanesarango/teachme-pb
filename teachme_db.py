@@ -111,4 +111,4 @@ class payments(ndb.Model):
 	teacher = ndb.KeyProperty(kind = "teacher")
 	cantidad = ndb.FloatProperty(required = True)
 	metodo = ndb.StringProperty()
-	charge = ndb.JsonProperty()
+	charge = ndb.StringProperty()
