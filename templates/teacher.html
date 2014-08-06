@@ -387,7 +387,7 @@
 				$('#schedule-form').append($('<input type="hidden" name="stripeToken" />').val(token));
 				$('#schedule-form').append($('<input type="hidden" name="metodo_pago" value="STRIPE" />'));
 				// and submit
-				// $('#schedule-form').get(0).submit();
+				$('#schedule-form').get(0).submit();
 			  }
 			};
 

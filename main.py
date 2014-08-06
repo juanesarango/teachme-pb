@@ -215,7 +215,7 @@ class teacher(Handler):
 					    	amount=amount, # amount in cents, again
 					     	currency="usd",
 					     	card=token,
-					    	description="info@teachmeapp.com"
+					    	description=self.user.mail
 					  	)
 					  	pago = True
 					except stripe.CardError, e:
@@ -262,13 +262,13 @@ class teacher(Handler):
 					self.redirect("/teachouts?t=SUCCEED")
 					return
 				else:
-					self.redirect("/teacher/"+ str(teacher_key.key.urlsafe()))
+					self.redirect("/teacher/"+ str(teacher_key.key.urlsafe())+"?t=FAILED")
 					return
 			else:
 				self.redirect("/teacher/"+ str(teacher_key.key.urlsafe())+"?t=FAILED")
 				return
 		else:
-			self.redirect("/teacher/"+ str(teacher_key.key.urlsafe()))
+			self.redirect("/teacher/"+ str(teacher_key.key.urlsafe())+"?t=FAILED")
 			return
 
 class comparte(Handler):
@@ -569,28 +569,14 @@ class servehandler(blobstore_handlers.BlobstoreDownloadHandler):
 
 class manualtask(Handler):
 	def get(self):
-		# mentors = teachme_db.teacher.query()
-		# for m in mentors:
-		# 	m.fee = 0
-		# 	m.rating = 0
-		# 	m.reviews = 0
-		# 	m.put()
-		# self.response.out.write("ok")
-		if os.environ.get('SERVER_SOFTWARE', '').startswith('Development'):
-			stripe.verify_ssl_certs = False
-		stripe.api_key = "sk_test_4UNYBdmDAESgVzq0CyZpM039"
-		token = "tok_14OCSf4dC1pWt1qWvAzOdSIA"
-		try:
-		 	charge = stripe.Charge.create(
-		    	amount=1000, # amount in cents, again
-		     	currency="usd",
-		     	card=token,
-		    	description="info@teachmeapp.com"
-		  	)
-		  	self.response.out.write("pago ok")
-		except stripe.CardError, e:
-		  	self.response.out.write("pago fail")
-		  	pass
+		mentors = teachme_db.teacher.query()
+		for m in mentors:
+			if m.name == "Juan Esteban":
+				m.fee = 15
+				m.rating = 0
+				m.reviews = 0
+				m.put()
+		self.response.out.write("ok")
 
 app = webapp2.WSGIApplication([('/', MainPage),
 								('/signup', signup),
