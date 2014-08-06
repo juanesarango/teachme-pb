@@ -44,9 +44,6 @@ handlers:
   script: main.app
   secure: always
 
-builtins:
-- remote_api: on
-
 inbound_services:
 - channel_presence
 
@@ -57,4 +54,7 @@ libraries:
   version: latest
 - name: ssl
   version: latest
+
+builtins:
+- remoteapi: on
 
