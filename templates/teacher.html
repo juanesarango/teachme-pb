@@ -21,7 +21,7 @@
 					<div class="row">
 						<div class="col-md-3 col-md-offset-1">
 							<br>
-							<img class="img-circle img-100" {% if mentor.profile_pic_r %}src="{{mentor.profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}>
+							<img class="img-circle img-150" {% if mentor.profile_pic_r %}src="{{mentor.profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}>
 							<h2>{{mentor.name}}</h2>
 							<h3>{{mentor.lname}}</h3>
 							<div class="row">
@@ -166,7 +166,7 @@
 											<div class="row">
 												<div class="col-md-10 col-md-offset-1">
 													<p class="text-justify">
-														En Teachme trabajamos con las mejores tecnologias de pagos por internet. Nuestro proveedor de pagos es <a href="https://stripe.com/" target="_blank">Stripe</a>, compañia en la cual inversores como <a href="http://es.wikipedia.org/wiki/Sequoia_Capital" title="Son los inversores de grandes empresas como Apple, Google..." target="_blank">Sequoia Capital</a> han puesto su confianza. Por lo que puedes estar tranquilo al realizar tu pago con nosotros por medio de Stripe.
+														En Teachme trabajamos con las mejores tecnologías de pagos por internet. Nuestro proveedor de pagos es <a href="https://stripe.com/" target="_blank">Stripe</a>, compañía en la cual inversores como <a href="http://es.wikipedia.org/wiki/Sequoia_Capital" title="Son los inversores de grandes empresas como Apple, Google..." target="_blank">Sequoia Capital</a> han puesto su confianza. Puedes estar tranquilo al realizar tu pago con nosotros por medio de Stripe.
 													</p>
 													<a href="https://stripe.com/" target="_blank"><img src="/static/img/poweredStripe.png"></a>
 												</div>
@@ -395,6 +395,7 @@
 				// Insert the token into the form so it gets submitted to the server
 				$('#schedule-form').append($('<input type="hidden" name="stripeToken" />').val(token));
 				$('#schedule-form').append($('<input type="hidden" name="metodo_pago" value="STRIPE" />'));
+				$('#schedule-form').append($('<input type="hidden" name="mentorName" value="{{mentor.name}} {{mentor.lname}}" />'));
 				// and submit
 				$('#schedule-form').get(0).submit();
 			  }

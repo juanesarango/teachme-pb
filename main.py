@@ -215,8 +215,8 @@ class teacher(Handler):
 					    	amount=amount, # amount in cents, again
 					     	currency="usd",
 					     	card=token,
-					    	description="Sesión con " + self.teacher_key.name
-					    	receipt_email= self.user.mail
+					    	description= u"Sesión con " + self.request.get("mentorName"),
+					    	receipt_email = self.user.mail
 					  	)
 					  	pago = True
 					except stripe.CardError, e:

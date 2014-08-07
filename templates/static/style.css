@@ -317,9 +317,14 @@ a:visited{
   width: 100px;
 }
 
-.img-40{
-  height: 40px;
-  width: 40px;
+.img-150{
+  height: 150px;
+  width: 150px;
+}
+
+.img-60{
+  height: 60px;
+  width: 60px;
 }
 
 .hr {
