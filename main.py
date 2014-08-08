@@ -204,7 +204,7 @@ class teacher(Handler):
 					if os.environ.get('SERVER_SOFTWARE', '').startswith('Development'):
 						stripe.verify_ssl_certs = False
 					# Set your secret key: remember to change this to your live secret key in production: https://dashboard.stripe.com/account
-					stripe.api_key = "sk_test_4UNYBdmDAESgVzq0CyZpM039"
+					stripe.api_key = "sk_live_4UNYyvnaDMGTjlidSqmDbuVm"
 					token = self.request.get("stripeToken")
 					logging.error(token)
 					# Create the charge on Stripe's servers - this will charge the user's card
@@ -216,7 +216,8 @@ class teacher(Handler):
 					    	amount=amount, # amount in cents, again
 					     	currency="usd",
 					     	card=token,
-					    	description=self.user.mail
+					    	description= u"Sesión con " + self.request.get("mentorName"),
+					    	receipt_email = self.user.mail
 					  	)
 					  	pago = True
 					except stripe.CardError, e:
@@ -236,7 +237,7 @@ class teacher(Handler):
 					t.put()
 					# Guarda info de la transacción
 					if metodo =="STRIPE":
-						factura = teachme_db.payments(parent = self.user.key, teachout = t.key, teacher = teacher_key.key, metodo = metodo, cantidad = amount, charge = charge )			
+						factura = teachme_db.payments(parent = self.user.key, teachout = t.key, teacher = teacher_key.key, metodo = metodo, cantidad = amount, charge = charge.id )			
 					else:
 						factura = teachme_db.payments(parent = self.user.key, teachout = t.key, teacher = teacher_key.key, metodo = metodo, cantidad = teacher_key.fee)
 					factura.put()
@@ -260,6 +261,8 @@ class teacher(Handler):
 					mail.send_mail("info@teachmeapp.com", self.user.mail, subject, "", html = html_user)
 					mail.send_mail("info@teachmeapp.com", teacher_key.mail, subject, "", html = html_mentor)
 
+					if metodo== "GRATIS":
+						self.redirect("/teachouts")
 					self.redirect("/teachouts?t=SUCCEED")
 					return
 				else:
@@ -576,6 +579,7 @@ class manualtask(Handler):
 				images.delete_serving_url(m.profile_pic)
 				m.profile_pic_r = images.get_serving_url(m.profile_pic, size = 140, secure_url=True)
 				m.put()
+
 		self.response.out.write("ok")
 
 app = webapp2.WSGIApplication([('/', MainPage),
