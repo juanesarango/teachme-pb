@@ -43,14 +43,14 @@
   // $(function() {
   //   $( "#chatbox" ).resizable();
   // });
-  $('#chat').keypress(function(e) {
-    var code = (e.keyCode ? e.keyCode : e.which);
-    if (code == 13){
-      onChat();
-      return false;  // stop propagation of the keypress
-    }
-   return true;
-  });
+  // $('#chat').keypress(function(e) {
+  //   var code = (e.keyCode ? e.keyCode : e.which);
+  //   if (code == 13){
+  //     onChat();
+  //     return false;  // stop propagation of the keypress
+  //   }
+  //  return true;
+  // });
 </script>
 <div id="container" ondblclick="enterFullScreen()">
   <div id="logo_large" style="position: absolute; top: 10px; left: 10px; z-index: 1000; opacity: 0.8;">
@@ -116,6 +116,31 @@
     </div>
   </div>
 </div>
+<script>
+$(function() {
+    $( "#chatbox" ).draggable();
+  });
+$(function() {
+    $( "#mini" ).draggable();
+  });
+$(function() {
+    $( "#drawLocal" ).draggable();
+  });
+$(function() {
+    $( "#drawRemote" ).draggable();
+  });
+$('#chat').bind('keyup', function(e) {
+    if ( e.keyCode === 13 ) {
+      onChat()
+    }
+});
+// var height = 0;
+// $('#logchat').each(function(i, value){
+//     height += parseInt($(this).height());
+// });
+// height += '';
+// $('div').animate({scrollTop: height});
+</script>
 </body>
 <footer id="status">
 </footer>
