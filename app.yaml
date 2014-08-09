@@ -1,9 +1,10 @@
 application: teachme-dev
-version: v1
+version: vp0
 runtime: python27
 api_version: 1
 threadsafe: true
 handlers:
+
 - url: /static
   static_dir: templates/static
   secure: always
@@ -46,6 +47,7 @@ handlers:
 
 builtins:
 - remote_api: on
+
 
 inbound_services:
 - channel_presence

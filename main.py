@@ -123,7 +123,8 @@ class signup(Handler):
 				u = teachme_db.user.register(self.name, self.lname, self.mail, self.pw)
 				u.put()
 				subject = u.name + u", Bienvenido a Teachme"
-				html = render_str("mail_template.html", sujeto = u.name)
+				enlace = "https://www.teachmeapp.com/verify/user/" + u.key.urlsafe()
+				html = render_str("mail_template.html", sujeto = u.name, enlace = enlace)
 				mail.send_mail("info@teachmeapp.com", u.mail, subject, "", html = html)
 				self.login(u, None)
 				self.redirect(redirect)
@@ -417,7 +418,7 @@ class profile_teacher(Handler, blobstore_handlers.BlobstoreUploadHandler):
 					images.delete_serving_url(teacher.profile_pic)
 				blobstore.delete(teacher.profile_pic)
 			teacher.profile_pic = blob_info.key()
-			teacher.profile_pic_r = images.get_serving_url(teacher.profile_pic, size = 140)
+			teacher.profile_pic_r = images.get_serving_url(teacher.profile_pic, size = 140, secure_url=True)
 			self.user.profile_pic = blob_info.key()
 			self.user.profile_pic_r = teacher.profile_pic_r
 			teacher.put()
@@ -572,13 +573,13 @@ class servehandler(blobstore_handlers.BlobstoreDownloadHandler):
 
 class manualtask(Handler):
 	def get(self):
-		# mentors = teachme_db.teacher.query()
-		# for m in mentors:
-		# 	if m.name == "Juan Esteban":
-		# 		m.fee = 15
-		# 		m.rating = 0
-		# 		m.reviews = 0
-		# 		m.put()
+		mentors = teachme_db.teacher.query()
+		for m in mentors:
+			if m.profile_pic_r:
+				images.delete_serving_url(m.profile_pic)
+				m.profile_pic_r = images.get_serving_url(m.profile_pic, size = 140, secure_url=True)
+				m.put()
+
 		self.response.out.write("ok")
 
 app = webapp2.WSGIApplication([('/', MainPage),
