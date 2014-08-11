@@ -112,7 +112,8 @@
 							<div class="col-md-8">
 								<a href="/teacher/{{t.key.urlsafe()}}"><h3>{{t.name}} {{t.lname}}</h3></a>
 								<p>{{t.about|truncate(120, True)}}</p>
-								<p>Tarifa: {{t.fee}} USD por hora</p>
+								<p class="pull-left"><span class="glyphicon glyphicon-credit-card"></span> {{t.fee}} USD por hora</p>
+								<p class="pull-right">{% if t.date_available|first_date %}<span class="glyphicon glyphicon-calendar"></span> {{t.date_available|first_date}}{% endif %}</p>
 							</div>
 						</div>
 						<hr>

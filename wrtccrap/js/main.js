@@ -803,7 +803,7 @@ function showChat(){
   chatbox = document.getElementById('chatbox');
   chatbox.style.display = "block";
   if (tablero == false){
-    chatbox.style.left = "4px";
+    chatbox.style.left = "20%";
     chatbox.style.marginLeft= "0%"; 
   } else {
     chatbox.style.left = "-161px";

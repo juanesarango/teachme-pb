@@ -63,6 +63,13 @@ def solo_dates(dt):
 			dates.append(str(d.year)+'-'+str(d.month)+'-'+str(d.day))
 	return dates
 
+def first_date(dt):
+	fd = solo_dates(dt)
+	if len(fd)>0:
+		return fd[0]
+	else:
+		return False
+
 def solo_hours(dt):
 	hours = {}
 	today = datetime.datetime.now()
