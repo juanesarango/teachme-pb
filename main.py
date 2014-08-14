@@ -14,6 +14,7 @@ from google.appengine.api import mail
 from google.appengine.api import images
 from google.appengine.api import search
 import teachme_db
+import teachme_index
 import fns
 import booking
 import logging
@@ -579,12 +580,38 @@ class manualtask(Handler):
 		# 		images.delete_serving_url(m.profile_pic)
 		# 		m.profile_pic_r = images.get_serving_url(m.profile_pic, size = 140, secure_url=True)
 		# 		m.put()
+		teachme_index.create_index()
 		self.response.out.write("ok")
+
+class buscar(Handler):
+	def get(self):
+		self.redirect("/")
+		
+	def post(self):
+		# query_string = self.request.get("query_string")
+		# results = teachme_index.make_query(query_string)
+		# if results:
+		# 	number_returned = len(results.results)
+		# 	self.render("search_results.html", results= results, number_returned = number_returned)
+		# else:
+		# 	self.redirect("/")
+		query_string = self.request.get("query_string")
+		results = teachme_index.make_query(query_string)
+		if results:
+			number_returned = len(results.results)
+			mentors = []
+			for docs in results:
+				mentors.append(ndb.Key(urlsafe = docs.fields[5].value).get())
+			self.render("search_results.html", results=results, mentors= mentors, number_returned = number_returned, query_string=query_string)
+		else:
+			self.redirect("/")
+
 
 app = webapp2.WSGIApplication([('/', MainPage),
 								('/signup', signup),
 								('/login' , login),
 								('/logout' , logout),
+								('/buscar' , buscar),
 								('/teacher/([^/]+)?', teacher),
 								('/comparte', comparte),
 								('/teachouts', teachouts),

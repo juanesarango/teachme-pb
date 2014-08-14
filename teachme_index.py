@@ -1,4 +1,5 @@
 from google.appengine.api import search
+from google.appengine.ext import ndb
 import teachme_db
 import datetime
 
@@ -21,14 +22,14 @@ def create_index():
 		    search.TextField(name="Pais", value=i.pais),
 		    search.TextField(name="Idiomas", value=list2string(i.idiomas)),
 		    search.TextField(name="Tags", value=list2string(i.tags)),
-		    search.TextField(name="ID", value=str(i.key.id())),
+		    search.TextField(name="key", value=i.key.urlsafe()),
 		    search.DateField(name="Updated", value=datetime.datetime.now().date()),
 		    
 		    search.NumberField(name="Fee", value=i.fee),
 		    search.NumberField(name="Rating", value=i.rating),
 		    ]
 
-		d = search.Document(doc_id = str(i.key.id()), fields=fields)
+		d = search.Document(doc_id = i.key.urlsafe(), fields=fields)
 
 		try:
 			index.put(d)
@@ -36,7 +37,7 @@ def create_index():
 		except:
 			print 'No se pudo crear el indice'
 
-def make_query(query_string, doc_limit=5):
+def make_query(query_string, doc_limit=10):
 
 	#ejemplo de un query_string: query_string = "Juan Esteban"
 	try:
@@ -49,17 +50,22 @@ def make_query(query_string, doc_limit=5):
   		number_found = search_results.number_found
   		if number_found ==1:
   			print 'Se encontro ' +  str(number_found) + ' resultado'	
-  		print 'Se encontraron ' +  str(number_found) + ' resultados'
-		for document in search_results:
-			print u"Document_id: {doc_id}\n".format(doc_id=document.doc_id)
-			for f in document.fields:
-				print u"{nombre_campo}: {valor_campo}\n".format(nombre_campo=f.name,valor_campo=f.value)
+  		else:
+  			print 'Se encontraron ' +  str(number_found) + ' resultados'
+		# for document in search_results:
+		# 	print u"Document_id: {doc_id}\n".format(doc_id=document.doc_id)
+		# 	for f in document.fields:
+		# 		print u"{nombre_campo}: {valor_campo}\n".format(nombre_campo=f.name,valor_campo=f.value)
+		return search_results
 	except search.Error:
 		print 'No se encontraron resultados'
 
 def edit_index(id, field_name, field_value):
 	index = search.Index(name=_INDEX_NAME)
-	i = ndb.Key(urlsafe = str(id)).get()
+	try:
+		i = ndb.Key(urlsafe = str(id)).get()
+	except ProtocolBufferDecodeError, e:
+		 i = ndb.Key('teacher',long(id))
 	if field_name=="Nombre":
 		v.nombre=field_value
 	else:
@@ -102,9 +108,13 @@ def edit_index(id, field_name, field_value):
 		    search.NumberField(name="Rating", value=v.rating),
 		    ]
 
-	d = search.Document(doc_id = str(i.key.id()), fields=fields)
+	d = search.Document(doc_id = id, fields=fields)
 	try:
 		index.put(d)
 		print 'Documento actualizado'
 	except:
-		print 'No se pudo crear el indice'	    
+		print 'No se pudo crear el indice'
+
+def delete_index(ids):
+	index = search.Index(name=_INDEX_NAME)
+	index.delete(document_ids=ids)    
