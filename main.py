@@ -89,7 +89,7 @@ class MainPage(Handler):
 		areas = teachme_db.areas.query().order(teachme_db.areas.name)
 		mentors={}
 		for a in areas:
-			mentors[a.key.id()] = teachme_db.teacher.query(ndb.AND(teachme_db.teacher.areas == a.key.id(), teachme_db.teacher.aceptado==True)).fetch(3)
+			mentors[a.key.id()] = teachme_db.teacher.query(ndb.AND(teachme_db.teacher.areas == a.key.id(), teachme_db.teacher.aceptado==True)).order(-teachme_db.teacher.rating).fetch(3)
 		
 		self.render("main_page.html", mentors = mentors)
 
@@ -368,7 +368,7 @@ class aprende(Handler):
 	def get(self, ar):
 		area = teachme_db.areas.get_by_id(int(ar))
 		if area:
-			mentors = teachme_db.teacher.query(ndb.AND(teachme_db.teacher.areas == area.key.id(), teachme_db.teacher.aceptado==True))
+			mentors = teachme_db.teacher.query(ndb.AND(teachme_db.teacher.areas == area.key.id(), teachme_db.teacher.aceptado==True)).order(-teachme_db.teacher.rating)
 			self.render("aprende.html", mentors = mentors, area = area)
 
 class terminos(Handler):
@@ -566,6 +566,10 @@ class reminder_mailing_15(Handler):
 		t15 = booking.teachouts_15()
 		booking.reminder_mail(t15, 15)
 
+class sitemap(Handler):
+	def get(self):
+		self.render("sitemap.xml")
+
 class servehandler(blobstore_handlers.BlobstoreDownloadHandler):
     def get(self, resource):
         resource = str(urllib.unquote(resource))
@@ -605,6 +609,7 @@ app = webapp2.WSGIApplication([('/', MainPage),
 								('/tasks/manualtask', manualtask), 
 								('/tasks/remindermailing24', reminder_mailing_24),
 								('/tasks/remindermailing15', reminder_mailing_15),
+								('/sitemap.xml', sitemap),
 								('/serve/([^/]+)?', servehandler)
 								],
 								debug=True)

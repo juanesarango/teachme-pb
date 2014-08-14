@@ -102,4 +102,12 @@ class Areas(Handler):
 			self.render("admin_areas", error_area = error_area, error_subarea = error_subarea)
 			return
 
-app = webapp2.WSGIApplication([('/admin/areas', Areas)], debug=True)
+class Users(Handler):
+	def get(self):
+		if self.user:
+			if self.user.mail in admins:
+				u = teachme_db.user.query().order(-teachme_db.user.date_created)
+				self.render("admin_users.html", u = u)
+
+app = webapp2.WSGIApplication([('/admin/areas', Areas),
+								('/admin/users', Users)], debug=True)
