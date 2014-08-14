@@ -88,7 +88,7 @@ class MainPage(Handler):
 		areas = teachme_db.areas.query().order(teachme_db.areas.name)
 		mentors={}
 		for a in areas:
-			mentors[a.key.id()] = teachme_db.teacher.query(ndb.AND(teachme_db.teacher.areas == a.key.id(), teachme_db.teacher.aceptado==True)).order(-teachme_dc.teacher.rating)fetch(5)
+			mentors[a.key.id()] = teachme_db.teacher.query(ndb.AND(teachme_db.teacher.areas == a.key.id(), teachme_db.teacher.aceptado==True)).order(-teachme_db.teacher.rating).fetch(5)
 		
 		self.render("main_page.html", mentors = mentors)
 
