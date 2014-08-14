@@ -21,6 +21,25 @@ indexes:
   - name: date
     direction: desc
 
+- kind: teacher
+  properties:
+  - name: aceptado
+  - name: areas
+  - name: fee
+
+- kind: teacher
+  properties:
+  - name: aceptado
+  - name: areas
+  - name: rating
+
+- kind: teacher
+  properties:
+  - name: aceptado
+  - name: areas
+  - name: rating
+    direction: desc
+
 - kind: teachout
   properties:
   - name: status
