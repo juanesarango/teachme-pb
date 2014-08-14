@@ -12,14 +12,13 @@ from google.appengine.ext import blobstore
 from google.appengine.ext.webapp import blobstore_handlers
 from google.appengine.api import mail
 from google.appengine.api import images
+from google.appengine.api import search
 import teachme_db
 import fns
 import booking
 import logging
 import stripe
 import ssl
-#import stripe
-#import ssl
 
 ########################################################################
 #Definiciones de Jinja2 para los templates
@@ -89,7 +88,7 @@ class MainPage(Handler):
 		areas = teachme_db.areas.query().order(teachme_db.areas.name)
 		mentors={}
 		for a in areas:
-			mentors[a.key.id()] = teachme_db.teacher.query(ndb.AND(teachme_db.teacher.areas == a.key.id(), teachme_db.teacher.aceptado==True)).order(-teachme_db.teacher.rating).fetch(3)
+			mentors[a.key.id()] = teachme_db.teacher.query(ndb.AND(teachme_db.teacher.areas == a.key.id(), teachme_db.teacher.aceptado==True)).order(-teachme_dc.teacher.rating)fetch(5)
 		
 		self.render("main_page.html", mentors = mentors)
 
@@ -578,13 +577,12 @@ class servehandler(blobstore_handlers.BlobstoreDownloadHandler):
 
 class manualtask(Handler):
 	def get(self):
-		mentors = teachme_db.teacher.query()
-		for m in mentors:
-			if m.profile_pic_r:
-				images.delete_serving_url(m.profile_pic)
-				m.profile_pic_r = images.get_serving_url(m.profile_pic, size = 140, secure_url=True)
-				m.put()
-
+		# mentors = teachme_db.teacher.query()
+		# for m in mentors:
+		# 	if m.profile_pic_r:
+		# 		images.delete_serving_url(m.profile_pic)
+		# 		m.profile_pic_r = images.get_serving_url(m.profile_pic, size = 140, secure_url=True)
+		# 		m.put()
 		self.response.out.write("ok")
 
 app = webapp2.WSGIApplication([('/', MainPage),
