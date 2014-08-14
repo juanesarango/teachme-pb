@@ -41,10 +41,25 @@ class Handler(webapp2.RequestHandler):
 		self.response.out.write(*a, **kw)
 
 	def render_str(self, template, **params):
+		suggestions=[]
+		
 		self.areas = teachme_db.areas.query().order(teachme_db.areas.name)
+		for  l in self.areas:
+			suggestions.append(l.name)
+		
+		teachers = teachme_db.teacher.query().order(teachme_db.teacher.name)
+		for l in teachers:
+			suggestions.append(l.name+" "+l.lname)
+		
+		tags = teachme_db.tags.query().get().name
+		for l in tags:
+			suggestions.append(l)
+
 		params['user'] = self.user
 		params['teacher'] = self.teacher
 		params['areas'] = self.areas
+		params['suggestions'] = json.dumps(suggestions)
+		logging.error(suggestions)
 		return render_str(template, **params)
 
 	def render(self, template, **kw):

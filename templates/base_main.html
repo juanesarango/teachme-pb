@@ -86,7 +86,7 @@
 					</ul>
 					<form class="navbar-form navbar-left" role="search" action="/buscar" method="post">
 						<div class="form-group">
-							<input name="query_string" type="text" class="form-control" placeholder="Buscar">
+							<input id="search_query" name="query_string" type="text" class="form-control" placeholder="Buscar">
 						</div>
 						<button type="submit" class="btn btn-default">Buscar</button>
 					</form>
@@ -176,6 +176,10 @@
 			}
 			});
 		});
+		var datos ={{suggestions|safe}};
+			$("#search_query").autocomplete({
+				source: datos
+			});
 		</script>
 	</body>
 </html>

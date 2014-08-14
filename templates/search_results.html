@@ -16,18 +16,6 @@
 			    {% endif %}
 			    <br>
 			    <br>
-			    <!-- {% for scored_document in results %}
-			     	<a href = "/teacher/{{scored_document.fields[5].value}}" style="text-decoration:none;">
-			    	Nombre: {{scored_document.fields[0].value}}<br>
-			    	Tags: {{scored_document.fields[4].value}}<br>
-			    	Ciudad: {{scored_document.fields[1].value}}<br>
-			    	País: {{scored_document.fields[2].value}}<br>
-			    	Precio: USD {{scored_document.fields[7].value}}<br>
-			    	Calificación: {{scored_document.fields[8].value}}<br>
-			    	</a>
-			    	<br>
-			    	<br>
-			    {% endfor %} -->
 			    {% for t in mentors %}
 				<div class="row">
 					<div class="col-md-12 center">
@@ -41,7 +29,7 @@
 							<div class="col-md-7">
 								<a href="/teacher/{{t.key.urlsafe()}}" style="text-decoration:none;"><h3>{{t.name}} {{t.lname}}</h3>
 								<span style="color: white;">
-								Tags: {%for tag in t.tags %}{{tag}}&nbsp;{% endfor %}<br>
+								Tags: {%for tag in t.tags[:8] %}{{tag}}{% if not loop.last %},&nbsp;{% endif %}{% endfor %}<br>
 								Áreas: {%for area in areas %}{%for t_area in t.areas %}{%if area.key.id()==t_area %}{{area.name}}&nbsp;{% endif %}{% endfor %}{% endfor %}<br>
 			    				Ciudad: {{t.ciudad}}<br>
 			    				País: {{t.pais}}<br>
