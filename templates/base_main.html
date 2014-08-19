@@ -33,10 +33,11 @@
 		<!-- For facebook sharing posts-->
 
 		<meta property="og:image" content="https://www.teachmeapp.com/static/portada.jpg">
-		<meta property="og:title" content="Teachme | Tutorias online en matemáticas, física, ciencias y muchos temas más">
+		<meta property="og:title" content="Teachme | Tutorías online en matemáticas, física, ciencias y muchos temas más">
 		<meta property="og:url" content="https://www.teachmeapp.com">
 		<meta property="og:site_name" content="Teachme">
 		<meta property="og:description" content="Descubre mentores expertos dispuestos a compartir su conocimiento contigo a través de clases online.">
+
 		<script>
 		(function(i,s,o,g,r,a,m){
 			i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -87,9 +88,15 @@
 							<li><a href="/comparte">Enseña</a></li>
 						{% endif %}
 					</ul>
+<<<<<<< HEAD
 					<form class="navbar-form navbar-left" role="search">
 						<div class="form-group">
 							<input type="text" class="form-control" placeholder="Buscar">
+=======
+					<form class="navbar-form navbar-left" role="search" action="/buscar" method="post">
+						<div class="form-group">
+							<input id="search_query" name="query_string" type="text" class="form-control" placeholder="Buscar">
+>>>>>>> parent of c2a17cb... nada
 						</div>
 						<button type="submit" class="btn btn-default">Buscar</button>
 					</form>
@@ -179,6 +186,13 @@
 			}
 			});
 		});
+<<<<<<< HEAD
+=======
+		var datos ={{suggestions|safe}};
+			$("#search_query").autocomplete({
+				source: datos
+			});
+>>>>>>> parent of c2a17cb... nada
 		</script>
 	</body>
 </html>
