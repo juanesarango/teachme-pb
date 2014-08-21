@@ -4,15 +4,20 @@
 {% endblock %}
 {% block body %}
 
-<script type="text/javascript" src="static/js/pdfobject.js"></script>
-<script type='text/javascript'>
-  function embedPDF(){
-    var myPDF = new PDFObject({ 
-      url: '/static/pdf/terminos_de_uso.pdf'
-    }).embed('containerid'); 
-    // Be sure your document contains an element with the ID 'containerid' 
-  }
-  window.onload = embedPDF; //Feel free to replace window.onload if needed.
+<script language="JavaScript">
+	function autoResize(id){
+	    var newheight;
+	    var newwidth;
+
+	    if(document.getElementById){
+
+	        newheight=document.getElementById(id).contentWindow.document.body.scrollHeight;
+	        newwidth=document.getElementById(id).contentWindow.document.body.scrollWidth;
+	    }
+	    document.getElementById(id).height= (newheight) + "px";
+	    document.getElementById(id).width= (newwidth) + "px";
+	}
+
 </script>
 
 <div class="backgnd" style="background-image: url('/static/signup.jpg')">
@@ -21,10 +26,8 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2 bckg-b-80">
-				<h3>Términos de Uso</h3>
-				<div id="containerid" style="height:500px; width: 100%;">
-					<h5>Parece que tu navegador no soporta Adobe Reader o lector de pdf. No te preoocupes puedes descargarl. <a href="/static/pdf/terminos_de_uso.pdf">Haz click aquí para descargar el PDF</a></h3>
-				</div>
+				<br>
+				<iframe src="/static/legal/TERMINOS DE USO.htm" id="iframe1" style="width: 100%; padding:40px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" vspace="0" hspace="0" onLoad="autoResize('iframe1');">Tu navegador está desactualizado.</iframe>
 			</div>
 		</div>
 	</div>
