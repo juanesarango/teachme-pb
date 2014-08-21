@@ -27,8 +27,6 @@ template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape = True)
 jinja_env.filters['first_date'] = fns.first_date
 
-
-
 def render_str(template, **params):
 	j = jinja_env.get_template(template)
 	return j.render(params)
@@ -293,6 +291,7 @@ class teacher(Handler):
 
 class comparte(Handler):
 	def get(self):
+
 		if self.teacher:
 			self.abort(403)
 			return
@@ -381,10 +380,16 @@ class teachouts(Handler):
 
 class aprende(Handler):
 	def get(self, ar):
-		area = teachme_db.areas.get_by_id(int(ar))
+		area = teachme_db.areas.query(teachme_db.areas.url==ar).get()
+		if not area:
+			area = teachme_db.areas.get_by_id(int(ar))
+			logging.error(area)
 		if area:
 			mentors = teachme_db.teacher.query(ndb.AND(teachme_db.teacher.areas == area.key.id(), teachme_db.teacher.aceptado==True)).order(-teachme_db.teacher.rating)
 			self.render("aprende.html", mentors = mentors, area = area)
+			return
+		self.abort(500)
+
 
 class terminos(Handler):
 	def get(self):
@@ -599,7 +604,21 @@ class manualtask(Handler):
 		# 		images.delete_serving_url(m.profile_pic)
 		# 		m.profile_pic_r = images.get_serving_url(m.profile_pic, size = 140, secure_url=True)
 		# 		m.put()
-		teachme_index.create_index()
+		# teachme_index.create_index()
+		areas_dict={
+			4654112461291520: 'dibujo',
+			5144752345317376: 'biologia',
+			5153049148391424: 'idiomas',
+			5668600916475904: 'matematicas',
+			5692462144159744: 'musica',
+			5715999101812736: 'fisica',
+			5732568548769792: 'quimica' 		
+			}
+		areas = teachme_db.areas.query().fetch()
+		for a in areas:
+			a.url = 'clases-de-' + areas_dict[a.key.id()] + '-online'
+			a.put()
+
 		self.response.out.write("ok")
 
 class buscar(Handler):
@@ -607,13 +626,6 @@ class buscar(Handler):
 		self.redirect("/")
 		
 	def post(self):
-		# query_string = self.request.get("query_string")
-		# results = teachme_index.make_query(query_string)
-		# if results:
-		# 	number_returned = len(results.results)
-		# 	self.render("search_results.html", results= results, number_returned = number_returned)
-		# else:
-		# 	self.redirect("/")
 		query_string = self.request.get("query_string")
 		results = teachme_index.make_query(query_string)
 		if results:
@@ -634,7 +646,7 @@ app = webapp2.WSGIApplication([('/', MainPage),
 								('/teacher/([^/]+)?', teacher),
 								('/comparte', comparte),
 								('/teachouts', teachouts),
-								('/aprende/([0-9]+)?', aprende),
+								('/aprende/([\w-]+)?', aprende),
 								('/profile/teacher/([0-9]+)?', profile_teacher),
 								('/editabout', editabout),
 								('/addtags', addtags),

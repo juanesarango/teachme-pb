@@ -1,5 +1,5 @@
 application: teachme-dev
-version: v1
+version: v0
 runtime: python27
 api_version: 1
 threadsafe: true
@@ -7,7 +7,7 @@ handlers:
 
 - url: /static
   static_dir: templates/static
-  secure: always
+  # secure: always
 
 - url: /favicon\.ico
   static_files: favicon.ico
@@ -15,35 +15,35 @@ handlers:
 
 - url: /html
   static_dir: wrtccrap/html
-  secure: always
+  # secure: always
 
 - url: /images
   static_dir: wrtccrap/images
-  secure: always
+  # secure: always
 
 - url: /js
   static_dir: wrtccrap/js
-  secure: always
+  # secure: always
 
 - url: /session/css
   static_dir: wrtccrap/css
-  secure: always
+  # secure: always
 
 - url: /admin.*
   script: admin.app
-  secure: always
+  # secure: always
 
 - url: /session.*
   script: wrtc.app
-  secure: always
+  # secure: always
 
 - url: /_ah/channel.*
   script: wrtc.app
-  secure: always
+  # secure: always
 
 - url: /.*
   script: main.app
-  secure: always
+  # secure: always
 
 builtins:
 - remote_api: on
