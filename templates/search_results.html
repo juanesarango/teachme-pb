@@ -6,7 +6,7 @@
 		<br>
 		<br>
 		<div class="row">
-			<div class="col-md-6 col-md-offset-3 bckg-b-80">
+			<div class="col-md-8 col-md-offset-2 bckg-b-80">
 				<h3>Resultados de la búsqueda:  {{query_string}}</h3> 
 				<br>
 				{% if results.number_found == 1 %}
@@ -20,7 +20,7 @@
 				<div class="row">
 					<div class="col-md-12 center">
 						<div class="row">
-							<div class="col-md-4 col-md-offset-1" style="padding-left:45px;padding-top: 22px;">
+							<div class="col-md-4" style="padding-left:45px;padding-top: 22px;">
 								<br>
 								<a href="/teacher/{{t.key.urlsafe()}}">
 									<img class="img-circle" style="height:120px;width:120px;" {% if t.profile_pic_r %}src="{{t.profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}>
@@ -29,12 +29,12 @@
 							<div class="col-md-7">
 								<a href="/teacher/{{t.key.urlsafe()}}" style="text-decoration:none;"><h3>{{t.name}} {{t.lname}}</h3>
 								<span style="color: white;">
-								Tags: {%for tag in t.tags[:8] %}{{tag}}{% if not loop.last %},&nbsp;{% endif %}{% endfor %}<br>
-								Áreas: {%for area in areas %}{%for t_area in t.areas %}{%if area.key.id()==t_area %}{{area.name}}&nbsp;{% endif %}{% endfor %}{% endfor %}<br>
-			    				Ciudad: {{t.ciudad}}<br>
-			    				País: {{t.pais}}<br>
-			    				Precio: USD {{t.fee}}<br>
-			    				Calificación: {{t.rating}}&nbsp;<span class="starReviews-gray"><span class="starReviews" style="width:{{t.rating*20}}%"></span></span><br></p></span>
+								<strong>Tags:</strong> {%for tag in t.tags[:8] %}{{tag}}{% if not loop.last %},&nbsp;{% endif %}{% endfor %}<br>
+								<strong>Áreas:</strong> {%for area in areas %}{%for t_area in t.areas %}{%if area.key.id()==t_area %}{{area.name}}&nbsp;{% endif %}{% endfor %}{% endfor %}<br>
+			    				<strong>Ciudad:</strong> {{t.ciudad}}<br>
+			    				<strong>País:</strong> {{t.pais}}<br>
+			    				<strong>Precio:</strong> USD {{t.fee}}<br>
+			    				<strong>Calificación:</strong> {{t.rating}}&nbsp;<span class="starReviews-gray"><span class="starReviews" style="width:{{t.rating*20}}%"></span></span><br></p></span>
 								<p class="pull-right">{% if t.date_available|first_date %}<span class="glyphicon glyphicon-calendar"></span> {{t.date_available|first_date}}{% endif %}</p>
 								</a>
 							</div>

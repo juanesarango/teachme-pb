@@ -78,8 +78,8 @@
 							<p><a href="{{teacher.linkedin}}" target="_blank">{{teacher.linkedin}}</a></p>
 						</div>
 						<div class="col-md-7 col-md-offset-1">
-							<h3 style="display: inline-block">Áreas del conocimiento&nbsp;&nbsp;&nbsp;&nbsp;</h3><button class="btn btn-success center-block" style="display: inline-block" type="submit">Actualizar áreas</button>
 							<form role="form" method="post" action="/editabout">
+								<h3 style="display: inline-block">Áreas del conocimiento&nbsp;&nbsp;&nbsp;&nbsp;</h3><button class="btn btn-success center-block" style="display: inline-block" type="submit">Actualizar áreas</button>
 								<input type="hidden" name="fn" value="editAreas">
 							{% for a in areas %}
 								<div class="checkbox"><input type="checkbox" name="{{a.key.id()}}" value="{{a.key.id()}}" id="cb{{a.name}}" {% if a.key.id() in teacher.areas %} checked="true"{% endif %}><label for="cb{{a.name}}">{{a.name}}</label></div>
