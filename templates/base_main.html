@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<title>{% block title%}{% endblock %}</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="description" content="Descubre mentores expertos dispuestos a compartir su conocimiento contigo a través de clases online.">
+		{% block description %}{% endblock %}
 		<meta name="application-name" content="Teachme">
 		<meta name="google-site-verification" content="0yXZmkVP_MAflelIPzb7gwZOxDZ7o2LQdItc_QDtS0Y">
 		<meta name="keywords" content="Teachme, teachmeapp, teachme.com, teachmeapp.com, tutor, tutores, tutorías, tutoria, mentor, mentores, mentoría, mentoria, matemáticas, matematicas, física, fisica, química, quimica, español, ingles, geometria, algebra, cálculo, cálculo integral, cálculo diferencial, costos, tutorias medellin, tutorias bogotá, tutorias colombia, ayuda tareas">
@@ -63,8 +63,8 @@
 	{% block welcome %}
 
 	{% endblock %}
-		<nav class="navbar navbar-inverse container navbar-fixed-top" role="navigation">
-			<div class="container-fluid">
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+			<div class="container">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#teachme-navbar-collapse-1">
 						<span class="sr-only">Toggle navigation</span>
@@ -94,12 +94,14 @@
 							<li><a href="/comparte">Enseña</a></li>
 						{% endif %}
 					</ul>
-					<form class="navbar-form navbar-left" role="search" action="/buscar" method="post">
-						<div class="form-group">
-							<input id="search_query" name="query_string" type="text" class="form-control" placeholder="Buscar">
-						</div>
-						<button type="submit" class="btn btn-default">Buscar</button>
-					</form>
+					{% if active_page != "main_page" %}
+						<form class="navbar-form navbar-left" role="search" action="/buscar" method="post">
+							<div class="form-group">
+								<input id="search_query" name="query_string" type="text" class="form-control" placeholder="Buscar">
+							</div>
+							<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+						</form>
+					{% endif %}
 					<ul class="nav navbar-nav navbar-right">
 						{% if user %}
 							<li><a href="/teachouts">Tus Sesiones</a></li>

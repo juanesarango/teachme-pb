@@ -1,5 +1,8 @@
 {% extends "base_main.html" %}
-{% block title %} Resultados {% endblock %}
+{% block title %} Los mejores tutores en {{query_string}} | Teachme {% endblock %}
+{% block description %}
+	<meta name="description" content="Conéctate online con los mejores tutores en {{query_string}} y recibe ayuda instantánea">
+{% endblock %}
 {% block body %}
 <div class="backgnd" style="background-image: url('/static/signup.jpg')">
 	<div class="container">
@@ -17,6 +20,9 @@
 			    <br>
 			    <br>
 			    {% for t in mentors %}
+			    {% if loop.first%}
+			    <hr>
+			    {% endif %}
 				<div class="row">
 					<div class="col-md-12 center">
 						<div class="row">
@@ -33,14 +39,15 @@
 								<strong>Áreas:</strong> {%for area in areas %}{%for t_area in t.areas %}{%if area.key.id()==t_area %}{{area.name}}&nbsp;{% endif %}{% endfor %}{% endfor %}<br>
 			    				<strong>Ciudad:</strong> {{t.ciudad}}<br>
 			    				<strong>País:</strong> {{t.pais}}<br>
-			    				<strong>Precio:</strong> USD {{t.fee}}<br>
-			    				<strong>Calificación:</strong> {{t.rating}}&nbsp;<span class="starReviews-gray"><span class="starReviews" style="width:{{t.rating*20}}%"></span></span><br></p></span>
-								<p class="pull-right">{% if t.date_available|first_date %}<span class="glyphicon glyphicon-calendar"></span> {{t.date_available|first_date}}{% endif %}</p>
+			    				<span class="glyphicon glyphicon-credit-card"></span> USD {{t.fee}}<br>
+			    				<p class="pull-left"><span class="starReviews-gray"><span class="starReviews" style="width:{{t.rating*20}}%"></span></span></p></span>
+								<p class="pull-right">{% if t.date_available|first_date %}<span class="glyphicon glyphicon-calendar"></span> {{t.date_available|first_date}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{% endif %}</p>
 								</a>
 							</div>
 						</div>
 					</div>
 				</div>
+				<hr>
 				{% else %}
 				<div class="row">
 					<div class="col-md-12 col-md-offset-1">

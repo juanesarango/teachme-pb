@@ -1,18 +1,55 @@
 {% extends "base_main.html" %}
+{% set active_page = "main_page" %}
 {% block title %}
 	Teachme | Tutorias online en matemáticas, física, ciencias y muchos temas mas
 {% endblock %}
-
+{% block description %}
+	<meta name="description" content="Descubre mentores expertos dispuestos a compartir su conocimiento contigo a través de clases online.">
+{% endblock %}
 {% block body %}
 <div class="cover">
-	<div class="container">
-<!-- 		<iframe width="640" height="505" src="https://tackk.com/fe2m4t/embed" scrolling="auto" frameborder="0" allowtransparency="true" style="border:none;min-width:400px;min-height:325px;"></iframe>
- -->
-		<div class= "row">
+	<div class="container-fluid">
+
+		<div class="row" style="margin: 100px 0 0 0;">
+			<div class="col-md-6 col-md-offset-1 font-w bckg-b-40">
+				<h1>Encuentra <strong>Tutores</strong> en el tema que necesitas</h1>
+				<h4><strong>Teachme</strong> te permite contactar a los expertos online que necesitas en cualquier momento</h4>
+				<br>
+				<br>
+				<form class="form" role="form" action="/buscar" method="post">
+					<div class="row">
+						<div class="col-md-10">
+							<div class="form-group">
+								<label class="sr-only" for="search_query">Buscar</label>
+								<input type="text" placeholder="En que necesitas ayuda? Trata con 'Cálculo diferencial'" class="form-control input-lg" id="search_query" name="query_string">
+							</div>
+						</div>
+						<div class="col-md-2">
+							<button type="submit" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-search"></span></button>
+						</div>
+					</div>
+				</form>
+				<br>
+				<br>
+			</div>
+			<div class="col-md-4">
+				<div class="embed-responsive embed-responsive-4by3" id="teachme-video">
+					<iframe class="embed-responsive-item" src="//player.vimeo.com/video/103958731?title=0&amp;portrait=0"  frameborder="0"  webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+					<script src="static/js/jquery.fitvids.js"></script>
+					<script>
+						$(document).ready(function(){
+						    // Target your .container, .wrapper, .post, etc.
+						    $("#teachme-video").fitVids();
+						});
+					</script>
+				</div>
+			</div>
+		</div>
+		<!-- <div class= "row">
 			<div class="col-md-9">
 			</div>
 			<div class="col-md-2" style="margin: 100px 60px 0 0;">
-				<button type="button" class="btn btn-default btn-lg" onclick="location.href='/session/?debug=demo'"><span class="glyphicon glyphicon-play-circle" style = "font-size:40px;"></span><br>Prueba el DEMO del<br><strong>Aula Virtual</strong> de <strong>TeachMe</strong>&nbsp;</button>
+				<a href="https://www.youtube.com/watch?v=mC-tKWPdg6c&list=UURfDpYrr9ix-rO8ZWwOqMgQ" target="_blank"> <button type="button" class="btn btn-default btn-lg"  onclick=""><span class="glyphicon glyphicon-play-circle" style = "font-size:40px;"></span><br>Como funciona<br><strong>TeachMe</strong>?</button></a>
 			</div>
 		</div>
 		<div class="row">
@@ -22,27 +59,28 @@
 			<div class="col-md-4" style="margin-top: 30px">
 				<h3 class="font-w"><strong>Teachme</strong> es una nueva manera de encontrar asesorías académicas en una gran variedad de tópicos</h3>
 			</div>
-		</div>
-		<div class="row hidden-xs hidden-sm" style="margin-top: 60px;">
+		</div> -->
+<!-- 		<div class="row hidden-xs hidden-sm" style="margin-top: 60px;">
 			<div class="col-md-8 col-md-offset-2 bckg-w-50">
-				<div class="col-md-3 text-center">
-					<h1><span class="glyphicon glyphicon-book"></span></h1>
-					<p>Escoge un tema del cual deseas aprender, reforzar, u obtener ayuda. Hay todo un mundo de conocimiento por devorar!</p>
+				<div class="row">
+					<h3 class="text-center">Es muy fácil, mira como funciona</h3>
 				</div>
-				<div class="col-md-3 text-center">
-					<h1><span class="glyphicon glyphicon-user"></span></h1>
-					<p>Escoge un asesor de acuerdo a calificaciones de otros usuarios, su experiencia, y su disponibilidad.</p>
-				</div>
-				<div class="col-md-3 text-center clearfix">
-					<h1><span class="glyphicon glyphicon-calendar"></span></h1>
-					<p>Mira el horario disponible del asesor de tu preferencia, y escoge el día y hora que mas se acomode a tu horario.</p>
-				</div>
-				<div class="col-md-3 text-center">
-					<h1><span class="glyphicon glyphicon-facetime-video"></span></h1>
-					<p>Agenda una cita de acuerdo a su horario, y estás listo para tu asesoría mediante una videollamada y una pizarra virtual.</p>
+				<div class="row">
+					<div class="col-md-4 text-center">
+						<h1><span class="glyphicon glyphicon-book"></span></h1>
+						<h4>1. Busca el tema que en que necesitas ayuda</h4>
+					</div>
+					<div class="col-md-4 text-center">
+						<h1><span class="glyphicon glyphicon-user"></span></h1>
+						<h4>2. Explora entre los tutores cual te gusta más</h4>
+					</div>
+					<div class="col-md-4 text-center">
+						<h1><span class="glyphicon glyphicon-facetime-video"></span></h1>
+						<h4>3. Conectate con el en nuestra aula virtual</h4>
+					</div>
 				</div>
 			</div>
-		</div>
+		</div> -->
 	</div>
 	<div class= "row" id="flechita">
 		<div class="col-md-1"  style="margin: 0 0 10px;">
@@ -51,178 +89,230 @@
 	</div>
 </div>
 
-<div class="row hidden-md hidden-lg">
-	<div class="col-md-8 col-md-offset-2 bckg-w-50">
-		<div class="col-md-3 text-center">
-			<h1><span class="glyphicon glyphicon-book"></span></h1>
-			<p>Escoge un tema del cual deseas aprender, reforzar, u obtener ayuda. Hay todo un mundo de conocimiento por devorar!</p>
+<div class="row bckg-blue">
+	<div class="col-md-8 col-md-offset-2">
+		<div class="row">
+		<br>
+			<h1 class="text-center">Es muy fácil, mira como funciona</h1>
+		<br>
 		</div>
-		<div class="col-md-3 text-center">
-			<h1><span class="glyphicon glyphicon-user"></span></h1>
-			<p>Escoge un asesor de acuerdo a calificaciones de otros usuarios, su experiencia, y su disponibilidad.</p>
+		<div class="row">
+			<div class="col-md-4 text-center">
+				<h1><span class="glyphicon gly-big glyphicon-book"></span></h1>
+				<h3>1. Busca el tema que buscas</h3>
+				<p class="text-justify">Puedes obtener ayuda en el tema que quieras, desde fraccionarios hasta cocina argentina.</p>
+				<!-- <p class="text-justify">Escoge un tema del cual deseas aprender, reforzar, u obtener ayuda. Hay todo un mundo de conocimiento por devorar!</p> -->
+			</div>
+			<div class="col-md-4 text-center">
+				<h1><span class="glyphicon gly-big glyphicon-user"></span></h1>
+				<!-- <p class="text-justify">Escoge un asesor de acuerdo a calificaciones de otros usuarios, su experiencia, y su disponibilidad.</p> -->
+				<h3>2. Explora entre los tutores cual te gusta más</h3>
+				<p class="text-justify">Agenda a un tutor a la hora que más te convenga, o instantaneamente a los que esten en linea.</p>
+			</div>
+	<!-- 		<div class="col-md-3 text-center clearfix">
+				<h1><span class="glyphicon gly-big glyphicon-calendar"></span></h1>
+				<p class="text-justify">Mira el horario disponible del asesor de tu preferencia, y escoge el día y hora que más se acomode a tu horario.</p>
+			</div> -->
+			<div class="col-md-4 text-center">
+				<h1><span class="glyphicon gly-big glyphicon-facetime-video"></span></h1>
+				<h3>3. Conectate con el en nuestra aula virtual</h3>
+				<p class="text-justify">En nuestra aula virtual tenemos video, audio, chat, un increible tablero compartido, transferencia de archivos, compartimiento de pantalla... Todo esto para que sientas al tutor a tu lado</p>
+				<!-- <p>Agenda una cita de acuerdo a su horario, y estás listo para tu asesoría mediante una videollamada y una pizarra virtual.</p> -->
+			</div>
 		</div>
-		<div class="col-md-3 text-center clearfix">
-			<h1><span class="glyphicon glyphicon-calendar"></span></h1>
-			<p>Mira el horario disponible del asesor de tu preferencia, y escoge el día y hora que más se acomode a tu horario.</p>
-		</div>
-		<div class="col-md-3 text-center">
-			<h1><span class="glyphicon glyphicon-facetime-video"></span></h1>
-			<p>Agenda una cita de acuerdo a su horario, y estás listo para tu asesoría mediante una videollamada y una pizarra virtual.</p>
-		</div>
+		<br>
 	</div>
 </div>
 
 <a name="middle_section"></a>
-
-<div class="backgnd" >
-<div class="container bckg-b-80">
-	<div class="row">
-		<div class="col-md-12"><h2>Encuentra mentores por áreas</h2></div>
-	</div>
-	<div class="row">
-		<div class="col-md-2 col-md-offset-2 ">
-			<ul class="nav nav-pills nav-stacked">
-				{% for a in areas %}
-					<li {% if loop.first %}class="active"{% endif %}><a href="#{{a.name}}" data-toggle="pill">{{a.name}}</a></li>
-				{% endfor %}
-			</ul>
+<div class="bckg-b-80">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12"><h2>Encuentra mentores por áreas</h2></div>
 		</div>
-		<div class="col-md-6">
-			<hr>
-			<div class="tab-content">
-				{% for a in areas %}
-					<div class="tab-pane fade {% if loop.first %}in active{% endif %}" id="{{a.name}}">
-					{% for t in mentors[a.key.id()] %}
-						<div class="row">
-							<div class="col-md-4">
-								<a href="/teacher/{{t.key.urlsafe()}}">
-									<img class="img-circle img-100" {% if t.profile_pic_r %}src="{{t.profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}>
-								</a>
-								<div class="row">
-									<div class="col-md-12">
-									<br>
-										<span class="starReviews-gray">
-											<span class="starReviews" style="width:{{t.rating*20}}%"></span>
-										</span>
+		<div class="row">
+			<div class="col-md-2 col-md-offset-2 ">
+				<ul class="nav nav-pills nav-stacked">
+					{% for a in areas %}
+						<li {% if loop.first %}class="active"{% endif %}><a href="#{{a.name}}" data-toggle="pill">{{a.name}}</a></li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="col-md-6">
+				<hr>
+				<div class="tab-content">
+					{% for a in areas %}
+						<div class="tab-pane fade {% if loop.first %}in active{% endif %}" id="{{a.name}}">
+						{% for t in mentors[a.key.id()] %}
+							<div class="row">
+								<div class="col-md-4">
+									<a href="/teacher/{{t.key.urlsafe()}}">
+										<img class="img-circle img-100" {% if t.profile_pic_r %}src="{{t.profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}>
+									</a>
+									<div class="row">
+										<div class="col-md-12">
 										<br>
-										<span class="glyphicon glyphicon-comment"></span>
-										<span> {{t.reviews}}</span>
+											<span class="starReviews-gray">
+												<span class="starReviews" style="width:{{t.rating*20}}%"></span>
+											</span>
+											<br>
+											<span class="glyphicon glyphicon-comment"></span>
+											<span> {{t.reviews}}</span>
+										</div>
 									</div>
 								</div>
+								<div class="col-md-8">
+									<a href="/teacher/{{t.key.urlsafe()}}"><h3>{{t.name}} {{t.lname}}</h3></a>
+									<p>{{t.about|truncate(120, True)}}</p>
+									<p class="pull-left"><span class="glyphicon glyphicon-credit-card"></span> {{t.fee}} USD por hora</p>
+									<p class="pull-right">{% if t.date_available|first_date %}<span class="glyphicon glyphicon-calendar"></span> {{t.date_available|first_date}}{% endif %}</p>
+								</div>
 							</div>
-							<div class="col-md-8">
-								<a href="/teacher/{{t.key.urlsafe()}}"><h3>{{t.name}} {{t.lname}}</h3></a>
-								<p>{{t.about|truncate(120, True)}}</p>
-								<p class="pull-left"><span class="glyphicon glyphicon-credit-card"></span> {{t.fee}} USD por hora</p>
-								<p class="pull-right">{% if t.date_available|first_date %}<span class="glyphicon glyphicon-calendar"></span> {{t.date_available|first_date}}{% endif %}</p>
-							</div>
-						</div>
-						<hr>
-					{% else %}
-						<h3><span class="glyphicon glyphicon-info-sign"></span> Lo sentimos. Estamos trabajando para traerte a los mejores mentores en esta área.</h3>
+							<hr>
+						{% else %}
+							<h3><span class="glyphicon glyphicon-info-sign"></span> Lo sentimos. Estamos trabajando para traerte a los mejores mentores en esta área.</h3>
+						{% endfor %}
+					</div>
 					{% endfor %}
 				</div>
-				{% endfor %}
-				<!-- 
-				<div class="tab-pane fade in active" id="mátematicas">
-					{% for t in mentors[areas[0]] %}
-						<div class="row">
-							<div class="col-md-4">
-								<a href="/teacher/{{t.key.urlsafe()}}">
-									<img class="img-circle img-100" src="/serve/{{t.profile_pic}}">
-								</a>
-							</div>
-							<div class="col-md-8">
-								<a href="/teacher/{{t.key.urlsafe()}}"><h3>{{t.name}} {{t.lname}}</h3></a>
-								<p class="pf-70">{{t.about|truncate(170, True)}}</p>
-								<p>Tarifa: $15 USD por hora</p>
-							</div>
-						</div>
-						<hr>
-					{% else %}
-						<h3><span class="glyphicon glyphicon-info-sign"></span> Lo sentimos. Estamos trabajando para traerte a los mejores mentores en esta área.</h3>
-					{% endfor %}
+			</div>
+		</div>
+	</div>
+	<br>
+	<br>
+	<br>
+</div>
+<div class="container">
+	<div class="row">
+	<br>
+	<br>
+	<br>
+		<h2 class="text-center">
+			Que estan diciendo los aprendices de <strong>Teachme</strong>?
+		</h2>
+	</div>
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+			<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+			  <!-- Indicators -->
+			  <ol class="carousel-indicators">
+			    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+			    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+			    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+			    <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+			    <li data-target="#carousel-example-generic" data-slide-to="4"></li>
+			    <li data-target="#carousel-example-generic" data-slide-to="5"></li>
+			  </ol>
 
-				</div>
-				<div class="tab-pane fade" id="física">
-					{% for t in mentors[areas[1]] %}
-						<div class="row">
-							<div class="col-md-4">
-								<a href="/teacher/{{t.key.urlsafe()}}">
-									<img class="img-circle img-100" src="/serve/{{t.profile_pic}}">
-								</a>
+			  <!-- Wrapper for slides -->
+			  <div class="carousel-inner">
+			    <div class="item active">
+			        <div class="media">
+				        	<div class="row">
+								<br>
 							</div>
-							<div class="col-md-8">
-								<a href="/teacher/{{t.key.urlsafe()}}"><h3>{{t.name}} {{t.lname}}</h3></a>
-								<p class="pf-70">{{t.about|truncate(170, True)}}</p>
-								<p>Tarifa: $15 USD por hora</p>
-							</div>
+							<a class="pull-left" href="#">
+						    	<img class="media-object redondo-profile" src="/static/img/Testimonios/t1.jpg" alt="">
+							</a>
+							<div class="media-body">
+						    	<blockquote>
+									<h4 class="media-heading">" Casi que no tenemos una alternativa cómoda para estudiar. Gracias! "</h4>
+									<footer>Alejandro Jaramillo</footer>
+								</blockquote>
+						  	</div>
 						</div>
-						<hr>
-					{% else %}
-						<h3><span class="glyphicon glyphicon-info-sign"></span> Lo sentimos. Estamos trabajando para traerte a los mejores mentores en esta área.</h3>
-					{% endfor %}
-				</div>
-				<div class="tab-pane fade" id="quimica">
-					{% for t in mentors[areas[2]] %}
-						<div class="row">
-							<div class="col-md-4">
-								<a href="/teacher/{{t.key.urlsafe()}}">
-									<img class="img-circle img-100" src="/serve/{{t.profile_pic}}">
-								</a>
+						<br>
+			    </div>
+			    <div class="item">
+			        <div class="media">
+				        	<div class="row">
+								<br>
 							</div>
-							<div class="col-md-8">
-								<a href="/teacher/{{t.key.urlsafe()}}"><h3>{{t.name}} {{t.lname}}</h3></a>
-								<p class="pf-70">{{t.about|truncate(170, True)}}</p>
-								<p>Tarifa: $15 USD por hora</p>
-							</div>
+							<a class="pull-left" href="#">
+						    	<img class="media-object redondo-profile" src="/static/img/Testimonios/t2.jpg" alt="">
+							</a>
+							<div class="media-body">
+						 		<blockquote>
+									<h4 class="media-heading">" Muy Bacano, esto era lo que necesitaba. Gracias totales.. "</h4>
+									<footer>Alejandro Arabia</footer>
+								</blockquote>
+						  	</div>
 						</div>
-						<hr>
-					{% else %}
-						<h3><span class="glyphicon glyphicon-info-sign"></span> Lo sentimos. Estamos trabajando para traerte a los mejores mentores en esta área.</h3>
-					{% endfor %}
-				</div>
-				<div class="tab-pane fade" id="biologia">
-					{% for t in mentors[areas[3]] %}
-						<div class="row">
-							<div class="col-md-4">
-								<a href="/teacher/{{t.key.urlsafe()}}">
-									<img class="img-circle img-100" src="/serve/{{t.profile_pic}}">
-								</a>
+						<br>
+			    </div>
+			    <div class="item">
+			        <div class="media">
+				        	<div class="row">
+								<br>
 							</div>
-							<div class="col-md-8">
-								<a href="/teacher/{{t.key.urlsafe()}}"><h3>{{t.name}} {{t.lname}}</h3></a>
-								<p class="pf-70">{{t.about|truncate(170, True)}}</p>
-								<p>Tarifa: $15 USD por hora</p>
-							</div>
+							<a class="pull-left" href="#">
+						    	<img class="media-object redondo-profile" src="/static/img/Testimonios/t3.jpg" alt="">
+							</a>
+							<div class="media-body">
+						 		<blockquote>
+									<h4 class="media-heading">" UuuuFF, muy bacana esta pag, la recomiendo para todos, estas son las herramientas que necesitamos los estudiantes.  "</h4>
+									<footer>Alejandro Pérez</footer>
+								</blockquote>
+						  	</div>
 						</div>
-						<hr>
-					{% else %}
-						<h3><span class="glyphicon glyphicon-info-sign"></span> Lo sentimos. Estamos trabajando para traerte a los mejores mentores en esta área.</h3>
-					{% endfor %}
-				</div>
-				<div class="tab-pane fade" id="musica">
-					{% for t in mentors[areas[4]] %}
-						<div class="row">
-							<div class="col-md-4">
-								<a href="/teacher/{{t.key.urlsafe()}}">
-									<img class="img-circle img-100" src="/serve/{{t.profile_pic}}">
-								</a>
+						<br>
+			    </div>
+			    <div class="item">
+			        <div class="media">
+				        	<div class="row">
+								<br>
 							</div>
-							<div class="col-md-8">
-								<a href="/teacher/{{t.key.urlsafe()}}"><h3>{{t.name}} {{t.lname}}</h3></a>
-								<p class="pf-70">{{t.about|truncate(170, True)}}</p>
-								<p>Tarifa: $15 USD por hora</p>
-							</div>
+							<a class="pull-left" href="#">
+						    	<img class="media-object redondo-profile" src="/static/img/Testimonios/t11.jpg" alt="">
+							</a>
+							<div class="media-body">
+						    	<blockquote>
+									<h4 class="media-heading">" Ey muchachos, muchas gracias, doy clases de música y fotografía. "</h4>
+									<footer>Satiago Henao</footer>
+								</blockquote>
+						  	</div>
 						</div>
-						<hr>
-					{% else %}
-						<h3><span class="glyphicon glyphicon-info-sign"></span> Lo sentimos. Estamos trabajando para traerte a los mejores mentores en esta área.</h3>
-					{% endfor %}
-				</div> -->
+						<br>
+			    </div>
+			    <div class="item">
+			        <div class="media">
+				        	<div class="row">
+								<br>
+							</div>
+							<a class="pull-left" href="#">
+						    	<img class="media-object redondo-profile" src="/static/img/Testimonios/t9.jpg" alt="">
+							</a>
+							<div class="media-body">
+						 		<blockquote>
+									<h4 class="media-heading">" Siii. Por fin entendí factorización, buenísima esta página. Graciaaaassss.. "</h4>
+									<footer>Maria Paulina</footer>
+								</blockquote>
+						  	</div>
+						</div>
+						<br>
+			    </div>
+			    <div class="item">
+			        <div class="media">
+				        	<div class="row">
+								<br>
+							</div>
+							<a class="pull-left" href="#">
+						    	<img class="media-object redondo-profile" src="/static/img/Testimonios/t3.jpg" alt="">
+							</a>
+							<div class="media-body">
+						 		<blockquote>
+									<h4 class="media-heading">" Excelente, no tengo que moverme de mi casa para encontrarme con un profesor. Muchas graciaaas!! "</h4>
+									<footer>Luisa Londoño</footer>
+								</blockquote>
+						  	</div>
+						</div>
+						<br>
+			    </div>
 			</div>
 		</div>
 	</div>
 </div>
-</div>	
+	<br>
+	<br>
+	<br>
 {% endblock %}
