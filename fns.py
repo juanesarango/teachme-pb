@@ -4,6 +4,7 @@ import random
 import hashlib
 import hmac
 import datetime
+import unicodedata
 
 def valid_name(name):
 	USER_RE = re.compile(r"^.{3,20}$")
@@ -103,5 +104,11 @@ def parse_areas(a):
 			 "musica" : u'Música'}
 	if a in areas:
 		return areas[a]
+	else:
+		return None
+
+def normalise_unicode(word):
+	if isinstance(word, unicode):
+		return unicodedata.normalize('NFKD',word).encode('ASCII','ignore').lower()
 	else:
 		return None

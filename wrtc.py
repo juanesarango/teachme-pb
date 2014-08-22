@@ -312,7 +312,6 @@ class DisconnectPage(webapp2.RequestHandler):
 
 
 class MessagePage(webapp2.RequestHandler):
-  
   def post(self):
     message = self.request.body
     room_key = self.request.get('r')
@@ -325,7 +324,6 @@ class MessagePage(webapp2.RequestHandler):
         logging.warning('Unknown room ' + room_key)
 
 class MainPage(webapp2.RequestHandler):
-  
   def validation(self, room_key):
     tout = teachme_db.teachout.get_by_id(int(room_key))
     if not tout:

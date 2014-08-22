@@ -3,6 +3,7 @@ from google.appengine.api import search
 from google.appengine.ext import ndb
 import teachme_db
 import datetime
+import fns
 
 _INDEX_NAME = 'Profesores'
 
@@ -18,23 +19,17 @@ def id2str_areas(ids):
 	for a in areas:
 		for aid in ids:
 			if aid==a.key.id():
-				astr.append(a.name)
-				if (a.name == u"Matemáticas"):
-					astr.append(u"Matematicas")
-				elif (a.name == u"Física"):
-					astr.append(u"Fisica")
-				elif (a.name == u"Biología"):
-					astr.append(u"Biologia")
-				elif (a.name == u"Música"):
-					astr.append(u"Musica")
-				elif (a.name == u"Química"):
-					astr.append(u"Quimica")		
+				astr.append(fns.normalise_unicode(a.name))	
 	return list2string(astr)
 
-def create_index():
+def create_index(entity=None):
 	index = search.Index(name=_INDEX_NAME)
+	if entity:
+		teachers = [entity]
+	else:
+		teachers = teachme_db.teacher.query()
 
-	for i in teachme_db.teacher.query():
+	for i in teachers:
 		
 		fields = [
 		    search.TextField(name="Nombre", value=i.name+" "+i.lname),
@@ -81,61 +76,30 @@ def make_query(query_string, doc_limit=10):
 	except search.Error:
 		print 'No se encontraron resultados'
 
-def edit_index(id, field_name, field_value):
-	index = search.Index(name=_INDEX_NAME)
-	try:
-		i = ndb.Key(urlsafe = str(id)).get()
-	except ProtocolBufferDecodeError, e:
-		 i = ndb.Key('teacher',long(id))
-	if field_name=="Nombre":
-		v.nombre=field_value
-	else:
-		v.nombre=i.name+" "+i.lname
-	if field_name=="Ciudad":
-		v.ciudad=field_value
-	else:
-		v.ciudad=i.ciudad
-	if field_name=="Pais":
-		v.pais=field_value
-	else:
-		v.pais=i.pais
-	if field_name=="Idiomas":
-		v.idiomas=field_value
-	else:
-		v.idiomas=list2string(i.idiomas)
-	if field_name=="Tags":
-		v.tags=field_value
-	else:
-		v.tags=list2string(i.tags)
-	if field_name=="Fee":
-		v.fee=field_value
-	else:
-		v.fee=i.fee
-	if field_name=="Rating":
-		v.rating=field_value
-	else:
-		v.rating=i.rating
-	
-	fields = [
-		    search.TextField(name="Nombre", value=v.nombre),
-		    search.TextField(name="Ciudad", value=v.ciudad),
-		    search.TextField(name="Pais", value=v.pais),
-		    search.TextField(name="Idiomas", value=v.idiomas),
-		    search.TextField(name="Tags", value=v.tags),
-		    search.TextField(name="ID", value=str(i.key.id())),
-		    search.DateField(name="Updated", value=datetime.datetime.now().date()),
-		    
-		    search.NumberField(name="Fee", value=v.fee),
-		    search.NumberField(name="Rating", value=v.rating),
-		    ]
-
-	d = search.Document(doc_id = id, fields=fields)
-	try:
-		index.put(d)
-		print 'Documento actualizado'
-	except:
-		print 'No se pudo crear el indice'
 
 def delete_index(ids):
 	index = search.Index(name=_INDEX_NAME)
-	index.delete(document_ids=ids)    
+	index.delete(document_ids=ids) 
+
+def update_index(entity, field_name, field_value, replace=False):
+	index = search.Index(name=_INDEX_NAME)
+	document  = index.get(entity.key.urlsafe())
+	if document:	
+		fields = document.fields
+		new_fields = []
+		for f in fields:
+			if f.name==field_name:
+				if replace:
+					new_fields.append(search.TextField(name=field_name, value=field_value))
+				else:
+					new_fields.append(search.TextField(name=field_name, value=f.value+""+field_value))
+			else:
+				new_fields.append(f)
+		new_doc = search.Document(doc_id=entity.key.urlsafe(), fields=new_fields)
+		try:
+			index.put(new_doc)
+			print 'Documento actualizado: se actualizo el campo '+ field_name
+		except:
+			print 'No se pudo crear el indice'
+	else:
+		print 'Esta entidad no esta indexada'	
