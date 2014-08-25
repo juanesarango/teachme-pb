@@ -11,50 +11,50 @@
 		<br>
 		<br>
 		<div class="container">
-				<div class="row">
-					<div class="col-md-8 col-md-offset-2 bckg-b-30">
-						<h3 class="font-w" style="margin-top: 8px; margin-bottom: 8px;">{{area.name}}</h3>
-					</div>
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2 bckg-b-30">
+					<h3 class="font-w" style="margin-top: 8px; margin-bottom: 8px;">{{area.name}}</h3>
 				</div>
-				<br>
-				{% for t in mentors %}
-				<div class="row">
-					<div class="col-md-6 col-md-offset-3 bckg-b-80">
-						<div class="row">
-							<div class="col-md-4">
-								<a href="/teacher/{{t.key.urlsafe()}}">
-									<img class="img-circle img-100" {% if t.profile_pic_r %}src="{{t.profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}>
-								</a>
-								<div class="row">
-									<div class="col-md-12">
+			</div>
+			<br>
+			{% for t in mentors %}
+			<div class="row">
+				<div class="col-md-6 col-md-offset-3 bckg-b-80">
+					<div class="row">
+						<div class="col-md-4">
+							<a href="/teacher/{{t.key.urlsafe()}}">
+								<img class="img-circle img-100" {% if t.profile_pic_r %}src="{{t.profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}>
+							</a>
+							<div class="row">
+								<div class="col-md-12">
+								<br>
+									<span class="starReviews-gray">
+										<span class="starReviews" style="width:{{t.rating*20}}%"></span>
+									</span>
 									<br>
-										<span class="starReviews-gray">
-											<span class="starReviews" style="width:{{t.rating*20}}%"></span>
-										</span>
-										<br>
-										<span class="glyphicon glyphicon-comment"></span>
-										<span> {{t.reviews}}</span>
-									</div>
+									<span class="glyphicon glyphicon-comment"></span>
+									<span> {{t.reviews}}</span>
 								</div>
 							</div>
-							<div class="col-md-8">
-								<a href="/teacher/{{t.key.urlsafe()}}"><h3>{{t.name}} {{t.lname}}</h3></a>
-								<p>{{t.about|truncate(170, True)}}</p>
-								<p class="pull-left"><span class="glyphicon glyphicon-credit-card"></span> {{t.fee}} USD por hora</p>
-								<p class="pull-right">{% if t.date_available|first_date %}<span class="glyphicon glyphicon-calendar"></span> {{t.date_available|first_date}}{% endif %}</p>
-							</div>
+						</div>
+						<div class="col-md-8">
+							<a href="/teacher/{{t.key.urlsafe()}}"><h3>{{t.name}} {{t.lname}}</h3></a>
+							<p>{{t.about|truncate(170, True)}}</p>
+							<p class="pull-left"><span class="glyphicon glyphicon-credit-card"></span> {{t.fee}} USD por hora</p>
+							<p class="pull-right">{% if t.date_available|first_date %}<span class="glyphicon glyphicon-calendar"></span> {{t.date_available|first_date}}{% endif %}</p>
 						</div>
 					</div>
 				</div>
-				<br>
-				<br>
-				{% else %}
-				<div class="row">
-					<div class="col-md-6 col-md-offset-3 bckg-b-80">
-						<h3><span class="glyphicon glyphicon-info-sign"></span> Lo sentimos. Estamos trabajando para traerte a los mejores mentores en esta área.</h3>
-					</div>
+			</div>
+			<br>
+			<br>
+			{% else %}
+			<div class="row">
+				<div class="col-md-6 col-md-offset-3 bckg-b-80">
+					<h3><span class="glyphicon glyphicon-info-sign"></span> Lo sentimos. Estamos trabajando para traerte a los mejores mentores en esta área.</h3>
 				</div>
-				{% endfor %}
+			</div>
+			{% endfor %}
 			
 		</div>
 	</div>

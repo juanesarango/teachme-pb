@@ -241,9 +241,10 @@ a:visited{
 
   .cover{
     background-image: url('/static/portada.jpg');
+    background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;
-    min-height: 400px
+    min-height: 350px
   }
 
 .form-background{
@@ -273,7 +274,7 @@ blockquote{
 }
 
 .bckg-blue{
-  background-color: #428bca;
+  background-color: rgba(66,139,202,0.7);
   color: white;
 }
 
