@@ -300,6 +300,11 @@ blockquote{
   background-color: rgba(255,255,255,0.5);
 }
 
+.bckg-w-30{
+  background-color: rgba(255,255,255,0.3);
+  color: black;
+}
+
 .bckg-b-30{
   background-color: rgba(0,0,0,0.7);
   color: white;
