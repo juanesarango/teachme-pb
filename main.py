@@ -403,7 +403,7 @@ class politicas(Handler):
 
 class faq(Handler):
 	def get(self):
-		self.render("terminos.html")
+		self.render("faq.html")
 
 class profile_teacher(Handler, blobstore_handlers.BlobstoreUploadHandler):
 

@@ -32,6 +32,10 @@ a:visited{
   width: 80%;
 }
 
+.bg-w{
+  background-color: white;
+}
+
 .starReviews-gray{
   display: inline-block;
   height: 20px;
