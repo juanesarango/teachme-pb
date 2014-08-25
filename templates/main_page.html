@@ -9,12 +9,10 @@
 {% block body %}
 <div class="cover">
 	<div class="container-fluid">
-
-		<div class="row" style="margin: 100px 0 0 0;">
-			<div class="col-md-6 col-md-offset-1 font-w bckg-b-40">
-				<h1>Encuentra <strong>Tutores</strong> en el tema que necesitas</h1>
-				<h4><strong>Teachme</strong> te permite contactar a los expertos online que necesitas en cualquier momento</h4>
-				<br>
+		<div class="row" style="margin: 90px 0 0 0;">
+			<div class="col-md-7 col-md-offset-1 font-w bckg-b-40">
+				<h1 style="font-size: 30px;">Encuentra <strong>Tutores</strong> en el tema que necesitas</h1>
+				<h4 style="font-size: 18px;"><strong>Teachme</strong> te permite contactar a los expertos online que necesitas en cualquier momento</h4>
 				<br>
 				<form class="form" role="form" action="/buscar" method="post">
 					<div class="row">
@@ -30,9 +28,8 @@
 					</div>
 				</form>
 				<br>
-				<br>
 			</div>
-			<div class="col-md-4">
+			<div class="col-md-3" style="padding-top:20px;">
 				<div class="embed-responsive embed-responsive-4by3" id="teachme-video">
 					<iframe class="embed-responsive-item" src="//player.vimeo.com/video/103958731?title=0&amp;portrait=0"  frameborder="0"  webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 					<script src="static/js/jquery.fitvids.js"></script>
@@ -82,55 +79,61 @@
 			</div>
 		</div> -->
 	</div>
-	<div class= "row" id="flechita">
+<!-- 	<div class= "row" id="flechita">
 		<div class="col-md-1"  style="margin: 0 0 10px;">
 			<a href="#middle_section"><span class="glyphicon glyphicon-chevron-down" onclick></span></a>
 		</div>	
+	</div> -->
+	<br>
+	<br>
+	<div class="row bckg-blue">
+		<div class="col-md-8 col-md-offset-2">
+			<div class="row" style="height: 50px;">
+				<h3 class="text-center">Es muy fácil, mira como funciona</h3>
+			<br>
+			</div>
+			<div class="row">
+				<div class="col-md-4 text-center">
+					<h1 style="font-size:50px;"><span class="glyphicon gly-big glyphicon-book"></span></h1>
+					<h3>Busca por temas lo que deseas aprender</h3>
+					<!-- <p class="text-justify">Puedes obtener ayuda en el tema que quieras, desde fraccionarios hasta cocina argentina.</p> -->
+					<!-- <p class="text-justify">Escoge un tema del cual deseas aprender, reforzar, u obtener ayuda. Hay todo un mundo de conocimiento por devorar!</p> -->
+				</div>
+				<div class="col-md-4 text-center">
+					<h1 style="font-size:50px;"><span class="glyphicon gly-big glyphicon-user"></span></h1>
+					<!-- <p class="text-justify">Escoge un asesor de acuerdo a calificaciones de otros usuarios, su experiencia, y su disponibilidad.</p> -->
+					<h3>Explora entre los tutores cuál te gusta más</h3>
+					<!-- <p class="text-justify">Agenda a un tutor a la hora que más te convenga, o instantaneamente a los que esten en linea.</p> -->
+				</div>
+		<!-- 		<div class="col-md-3 text-center clearfix">
+					<h1><span class="glyphicon gly-big glyphicon-calendar"></span></h1>
+					<p class="text-justify">Mira el horario disponible del asesor de tu preferencia, y escoge el día y hora que más se acomode a tu horario.</p>
+				</div> -->
+				<div class="col-md-4 text-center">
+					<h1 style="font-size:50px;"><span class="glyphicon gly-big glyphicon-facetime-video"></span></h1>
+					<h3>Conéctate con el tutor en nuestra aula virtual</h3>
+					<!-- <p class="text-justify">En nuestra aula virtual tenemos video, audio, chat, un increible tablero compartido, transferencia de archivos, compartimiento de pantalla... Todo esto para que sientas al tutor a tu lado</p> -->
+					<!-- <p>Agenda una cita de acuerdo a su horario, y estás listo para tu asesoría mediante una videollamada y una pizarra virtual.</p> -->
+				</div>
+			</div>
+			<br>
+		</div>
 	</div>
-</div>
 
-<div class="row bckg-blue">
-	<div class="col-md-8 col-md-offset-2">
-		<div class="row">
-		<br>
-			<h1 class="text-center">Es muy fácil, mira como funciona</h1>
-		<br>
-		</div>
-		<div class="row">
-			<div class="col-md-4 text-center">
-				<h1><span class="glyphicon gly-big glyphicon-book"></span></h1>
-				<h3>1. Busca el tema que buscas</h3>
-				<p class="text-justify">Puedes obtener ayuda en el tema que quieras, desde fraccionarios hasta cocina argentina.</p>
-				<!-- <p class="text-justify">Escoge un tema del cual deseas aprender, reforzar, u obtener ayuda. Hay todo un mundo de conocimiento por devorar!</p> -->
-			</div>
-			<div class="col-md-4 text-center">
-				<h1><span class="glyphicon gly-big glyphicon-user"></span></h1>
-				<!-- <p class="text-justify">Escoge un asesor de acuerdo a calificaciones de otros usuarios, su experiencia, y su disponibilidad.</p> -->
-				<h3>2. Explora entre los tutores cual te gusta más</h3>
-				<p class="text-justify">Agenda a un tutor a la hora que más te convenga, o instantaneamente a los que esten en linea.</p>
-			</div>
-	<!-- 		<div class="col-md-3 text-center clearfix">
-				<h1><span class="glyphicon gly-big glyphicon-calendar"></span></h1>
-				<p class="text-justify">Mira el horario disponible del asesor de tu preferencia, y escoge el día y hora que más se acomode a tu horario.</p>
-			</div> -->
-			<div class="col-md-4 text-center">
-				<h1><span class="glyphicon gly-big glyphicon-facetime-video"></span></h1>
-				<h3>3. Conectate con el en nuestra aula virtual</h3>
-				<p class="text-justify">En nuestra aula virtual tenemos video, audio, chat, un increible tablero compartido, transferencia de archivos, compartimiento de pantalla... Todo esto para que sientas al tutor a tu lado</p>
-				<!-- <p>Agenda una cita de acuerdo a su horario, y estás listo para tu asesoría mediante una videollamada y una pizarra virtual.</p> -->
-			</div>
-		</div>
-		<br>
-	</div>
+	<br>
 </div>
 
 <a name="middle_section"></a>
 <div class="bckg-b-80">
 	<div class="container">
+		<br>
+		<br>
 		<div class="row">
-			<div class="col-md-12"><h2>Encuentra mentores por áreas</h2></div>
+			<div class="col-md-12"><h2 class="text-center">Encuentra mentores por áreas</h2></div>
 		</div>
 		<div class="row">
+			<br>
+			<br>
 			<div class="col-md-2 col-md-offset-2 ">
 				<ul class="nav nav-pills nav-stacked">
 					{% for a in areas %}
@@ -143,7 +146,7 @@
 				<div class="tab-content">
 					{% for a in areas %}
 						<div class="tab-pane fade {% if loop.first %}in active{% endif %}" id="{{a.name}}">
-						{% for t in mentors[a.key.id()] %}
+						{% for t in mentors[a.key.id()][:3] %}
 							<div class="row">
 								<div class="col-md-4">
 									<a href="/teacher/{{t.key.urlsafe()}}">
@@ -186,9 +189,8 @@
 	<div class="row">
 	<br>
 	<br>
-	<br>
 		<h2 class="text-center">
-			Que estan diciendo los aprendices de <strong>Teachme</strong>?
+			Que están diciendo los aprendices de <strong>Teachme</strong>?
 		</h2>
 	</div>
 	<div class="row">
@@ -250,7 +252,7 @@
 							</a>
 							<div class="media-body">
 						 		<blockquote>
-									<h4 class="media-heading">" UuuuFF, muy bacana esta pag, la recomiendo para todos, estas son las herramientas que necesitamos los estudiantes.  "</h4>
+									<h4 class="media-heading">" UuuuFF, muy bacana ésta página, la recomiendo para todos, estas son las herramientas que necesitamos los estudiantes.  "</h4>
 									<footer>Alejandro Pérez</footer>
 								</blockquote>
 						  	</div>
@@ -268,7 +270,7 @@
 							<div class="media-body">
 						    	<blockquote>
 									<h4 class="media-heading">" Ey muchachos, muchas gracias, doy clases de música y fotografía. "</h4>
-									<footer>Satiago Henao</footer>
+									<footer>Santiago Henao</footer>
 								</blockquote>
 						  	</div>
 						</div>
@@ -284,7 +286,7 @@
 							</a>
 							<div class="media-body">
 						 		<blockquote>
-									<h4 class="media-heading">" Siii. Por fin entendí factorización, buenísima esta página. Graciaaaassss.. "</h4>
+									<h4 class="media-heading">" Síii. Por fin entendí factorización, buenísima esta página. Graciaaaassss.. "</h4>
 									<footer>Maria Paulina</footer>
 								</blockquote>
 						  	</div>

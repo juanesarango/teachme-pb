@@ -102,7 +102,7 @@ class MainPage(Handler):
 		areas = teachme_db.areas.query().order(teachme_db.areas.name)
 		mentors={}
 		for a in areas:
-			mentors[a.key.id()] = teachme_db.teacher.query(ndb.AND(teachme_db.teacher.areas == a.key.id(), teachme_db.teacher.aceptado==True)).order(-teachme_db.teacher.rating).fetch(5)
+			mentors[a.key.id()] = teachme_db.teacher.query(ndb.AND(teachme_db.teacher.areas == a.key.id(), teachme_db.teacher.aceptado==True)).order(-teachme_db.teacher.rating).fetch(3)
 		
 		self.render("main_page.html", mentors = mentors)
 
@@ -136,6 +136,7 @@ class signup(Handler):
 			else:
 				u = teachme_db.user.register(self.name, self.lname, self.mail, self.pw)
 				u.put()
+				teachme_index.update(index)
 				subject = u.name + u", Bienvenido a Teachme"
 				enlace = "https://www.teachmeapp.com/verify/user/" + u.key.urlsafe()
 				html = render_str("mail_template.html", sujeto = u.name, enlace = enlace)
@@ -322,6 +323,7 @@ class comparte(Handler):
 
 		t = teachme_db.teacher(name = name, lname=lname, mail = mail, fee = 0, ciudad = ciudad, pais = pais, linkedin = linkedin, areas = areas_in, about = about, aceptado = False, reviews=0, rating=0, parent = self.user.key)
 		t.put()
+		teachme_index.create_index(t)
 		self.login(self.user, t)
 		self.redirect("/profile/teacher/%s" % str(t.key.id()))
 
@@ -468,6 +470,8 @@ class editabout(Handler):
 					if a.key.id() in self.teacher.areas:
 						self.teacher.areas.remove(a.key.id())
 		self.teacher.put()
+		if fn == "editAreas":
+			teachme_index.create_index(self.teacher)
 
 		self.redirect("/profile/teacher/%s" % self.teacher.key.id())
 
@@ -482,6 +486,7 @@ class addtags(Handler):
 				if  new_tag not in teacher.tags:
 					teacher.tags.append(new_tag)
 					teacher.put()
+					teachme_index.create_index(teacher)
 					if new_tag not in tags.name:
 						logging.error(new_tag)
 						tags.name.append(new_tag)
@@ -494,6 +499,7 @@ class addtags(Handler):
 				if tag_r:
 					teacher.tags.remove(tag_r)
 					teacher.put()
+					teachme_index.create_index(teacher)
 					te_id = re_id
 		self.redirect("/profile/teacher/%s" % te_id)
 
@@ -605,6 +611,7 @@ class manualtask(Handler):
 		# 		m.profile_pic_r = images.get_serving_url(m.profile_pic, size = 140, secure_url=True)
 		# 		m.put()
 		# teachme_index.create_index()
+		unicodedata.normalize('NFKD',u'Matemáticas').encode('ASCII','ignore')
 		areas_dict={
 			4654112461291520: 'dibujo',
 			5144752345317376: 'biologia',
@@ -627,7 +634,7 @@ class buscar(Handler):
 		
 	def post(self):
 		query_string = self.request.get("query_string")
-		results = teachme_index.make_query(query_string)
+		results = teachme_index.make_query(fns.normalise_unicode(query_string))
 		if results:
 			number_returned = len(results.results)
 			mentors = []
