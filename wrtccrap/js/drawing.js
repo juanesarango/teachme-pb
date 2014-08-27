@@ -40,14 +40,14 @@ function drawConfi(){
 };
 var putPoint = function(e){
 	if (dragging){
-		if (!e.which){
-			var colorBefore = context.fillStyle;
-			var widthBefore = context.lineWidth;
-			context.fillStyle = e.colorRemote;
-			context.strokeStyle = e.colorRemote;
-			context.lineWidth = e.widthRemote;
-			radius = e.widthRemote/2;
-		}
+		// if (!e.which){
+		// 	var colorBefore = context.fillStyle;
+		// 	var widthBefore = context.lineWidth;
+		// 	context.fillStyle = e.colorRemote;
+		// 	context.strokeStyle = e.colorRemote;
+		// 	context.lineWidth = e.widthRemote;
+		// 	radius = e.widthRemote/2;
+		// }
 		context.lineTo(e.offsetX, e.offsetY);
 		context.stroke();
 		context.beginPath();
@@ -55,25 +55,30 @@ var putPoint = function(e){
 		context.fill();
 		context.beginPath();
 		context.moveTo(e.offsetX, e.offsetY);
-		if (e.which){
-			var sender = {"fn":"putPoint", "putPoint":true, "e":{"offsetX": e.offsetX, "offsetY": e.offsetY, "colorRemote": context.fillStyle, "widthRemote": context.lineWidth}};
-			sendData(JSON.stringify(sender));
-		}else{
-			context.fillStyle = colorBefore;
-			context.strokeStyle = colorBefore;
-			context.lineWidth = widthBefore;
-			radius = widthBefore/2;
-		}
+		var sender = {"fn":"putPoint", "putPoint":true, "e":{"offsetX": e.offsetX, "offsetY": e.offsetY, "colorRemote": context.fillStyle, "widthRemote": context.lineWidth}};
+		sendData(JSON.stringify(sender));
+		// if (e.which){
+		// 	var sender = {"fn":"putPoint", "putPoint":true, "e":{"offsetX": e.offsetX, "offsetY": e.offsetY, "colorRemote": context.fillStyle, "widthRemote": context.lineWidth}};
+		// 	sendData(JSON.stringify(sender));
+		// }
+		// }else{
+		// 	context.fillStyle = colorBefore;
+		// 	context.strokeStyle = colorBefore;
+		// 	context.lineWidth = widthBefore;
+		// 	radius = widthBefore/2;
+		// }
 	}
 }
 
 var engage = function(e){
 	dragging = true;
-	if(e.which){
-		var sender = {"fn":"engage", "engage": true, "e":{"offsetX": e.offsetX, "offsetY": e.offsetY, "colorRemote": context.fillStyle, "widthRemote": context.lineWidth}};
-		sendData(JSON.stringify(sender));
-	}
-	e.which = false;
+	var sender = {"fn":"engage", "engage": true, "e":{"offsetX": e.offsetX, "offsetY": e.offsetY, "colorRemote": context.fillStyle, "widthRemote": context.lineWidth}};
+	sendData(JSON.stringify(sender));
+	// if(e.which){
+	// 	var sender = {"fn":"engage", "engage": true, "e":{"offsetX": e.offsetX, "offsetY": e.offsetY, "colorRemote": context.fillStyle, "widthRemote": context.lineWidth}};
+	// 	sendData(JSON.stringify(sender));
+	// }
+	// e.which = false;
 	putPoint(e);
 	
 }
@@ -81,12 +86,47 @@ var engage = function(e){
 var disengage = function(e, s){
 	dragging = false;
 	context.beginPath();
-	if (!s){
-		var sender = {"fn":"disengage", "disengage":true};
-		sendData(JSON.stringify(sender));
-	}
+	var sender = {"fn":"disengage", "disengage":true};
+	sendData(JSON.stringify(sender));
+	// if (!s){
+	// 	var sender = {"fn":"disengage", "disengage":true};
+	// 	sendData(JSON.stringify(sender));
+	// }
 }
 
+var putPointRemote = function(e){
+	if (draggingRemote=true){
+		var colorBefore = context.fillStyle;
+		var widthBefore = context.lineWidth;
+		context.fillStyle = e.colorRemote;
+		context.strokeStyle = e.colorRemote;
+		context.lineWidth = e.widthRemote;
+		radius = e.widthRemote/2;
+
+		context.lineTo(e.offsetX, e.offsetY);
+		context.stroke();
+		context.beginPath();
+		context.arc(e.offsetX, e.offsetY, radius, 0, Math.PI*2);
+		context.fill();
+		context.beginPath();
+		context.moveTo(e.offsetX, e.offsetY);
+
+		context.fillStyle = colorBefore;
+		context.strokeStyle = colorBefore;
+		context.lineWidth = widthBefore;
+		radius = widthBefore/2;
+	}	
+}
+
+var engageRemote = function(e){
+	draggingRemote = true;
+	putPointRemote(e);
+}
+
+var disengageRemote = function(e){
+	draggingRemote = false;
+	context.beginPath();
+}
 
 
 var setRadius = function(newRadius){

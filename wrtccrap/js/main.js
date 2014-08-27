@@ -14,6 +14,7 @@ var signalingReady = false;
 var tablero = false;
 var msgQueue = [];
 var chat = false;
+var screenSharing = false;
 var videoChat = false;
 // Set up audio and video regardless of what devices are present.
 var sdpConstraints = {'mandatory': {
@@ -222,13 +223,13 @@ function handleMessage(event){
       };
       break;
     case "engage":
-      if (rec.engage) engage(rec.e);
+      if (rec.engage) engageRemote(rec.e);
       break;
     case "disengage":
-      if (rec.disengage) disengage("", rec.disengage);
+      if (rec.disengage) disengageRemote("", rec.disengage);
       break;
     case "putPoint":
-      if (rec.putPoint) putPoint(rec.e);
+      if (rec.putPoint) putPointRemote(rec.e);
       break;
   }
 }
@@ -832,15 +833,21 @@ function displayButtons(vd){
   } else {
     btnTablero = '<input type=\'button\' id=\'tablero\' class=\'btn btn-warning\' value=\'Detener tablero\' onclick=\'offTablero()\' />';
   }
+  if (screenSharing == false){
+    btnScreenSharing = '<input type=\'button\' id=\'screenSharing\' class=\'btn btn-info\' value=\'Compartir Pantalla\' onclick=\'onScreenSharing()\' />';
+  } else {
+    btnScreenSharing = '<input type=\'button\' id=\'screenSharing\' class=\'btn btn-warning\' value=\'Detener Compartir Pantalla\' onclick=\'offScreenSharing()\' />';
+  }
   if (vd== true){
     btnVD = '<input type=\'button\' id=\'hangup\' class=\'btn btn-danger\' value=\'Terminar sesión\' onclick=\'onHangup()\' />';
     videoChat = true;
   } else {
     btnVD = 'Conectando...         ';
     btnTablero = ' ';
+    btnScreenSharing = ' ';
     videoChat = false;
   }
-  setStatus(btnVD  + btnTablero + btnChat);
+  setStatus(btnVD  + btnTablero + btnChat + btnScreenSharing);
 }
 
 function onTablero(s){
@@ -893,5 +900,25 @@ function offTablero(s){
     var sender = '{"fn": "offTablero", "offTablero":true}';
     sendData(sender);
   }
+}
+
+function onScreenSharing(){
+  navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.getUserMedia;
+  navigator.getUserMedia({
+    video: {
+      mandatory: {
+        chromeMediaSource: 'screen'
+        // maxWidth: 640,
+        // maxHeight: 480
+      }
+    }
+  }, function(stream) {
+    attachMediaStream(localVideo, stream);
+    pc.removeStream(localStream);
+    pc.addStream(stream);
+   }, function() {
+      console.log('Hay error');
+   }
+  )
 }
 

@@ -376,10 +376,10 @@ class MainPage(webapp2.RequestHandler):
     user_agent = self.request.headers['User-Agent']
     room_key = sanitize(self.request.get('r'))
     # We will call the teachouts database to bring the participants and the date and time of the session
-    val, merror = self.validation(room_key)
-    logging.info(merror)
-    if not val:
-      self.abort(403)
+    #val, merror = self.validation(room_key)
+    #logging.info(merror)
+    #if not val:
+    #  self.abort(403)
     stun_server = self.request.get('ss')
     if not stun_server:
       stun_server = get_default_stun_server(user_agent)
@@ -476,6 +476,8 @@ class MainPage(webapp2.RequestHandler):
       if not room and debug != "full":
         # New room.
         user = generate_random(8)
+        #julian
+        #user = self.user.key.urlsafe()
         room = Room(key_name = room_key)
         room.add_user(user)
         if debug != 'loopback':
@@ -486,6 +488,8 @@ class MainPage(webapp2.RequestHandler):
       elif room and room.get_occupancy() == 1 and debug != 'full':
         # 1 occupant.
         user = generate_random(8)
+        #julian
+        #user = self.user.key.urlsafe()
         room.add_user(user)
         initiator = 1
       else:
