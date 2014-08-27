@@ -35,8 +35,8 @@
 							<div class="col-md-7">
 								<a href="/teacher/{{t.key.urlsafe()}}" style="text-decoration:none;"><h3>{{t.name}} {{t.lname}}</h3>
 								<span style="color: white;">
-								<strong>Tags:</strong> {%for tag in t.tags[:8] %}{{tag}}{% if not loop.last %},&nbsp;{% endif %}{% endfor %}<br>
 								<strong>Áreas:</strong> {%for area in areas %}{%for t_area in t.areas %}{%if area.key.id()==t_area %}{{area.name}}&nbsp;{% endif %}{% endfor %}{% endfor %}<br>
+								<strong>Conocimientos:</strong> {%for tag in t.tags[:8] %}{{tag}}{% if not loop.last %},&nbsp;{% endif %}{% endfor %}<br>
 			    				<strong>Ciudad:</strong> {{t.ciudad}}<br>
 			    				<strong>País:</strong> {{t.pais}}<br>
 			    				<span class="glyphicon glyphicon-credit-card"></span> USD {{t.fee}}<br>
