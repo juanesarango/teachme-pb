@@ -3,6 +3,8 @@ var miniVideo;
 var remoteVideo;
 var localStream;
 var remoteStream;
+var localScreenStream;
+var remoteScreenStream;
 var channel;
 var pc;
 var socket;
@@ -16,6 +18,7 @@ var msgQueue = [];
 var chat = false;
 var screenSharing = false;
 var videoChat = false;
+var remoteScreenSharing = false; 
 // Set up audio and video regardless of what devices are present.
 var sdpConstraints = {'mandatory': {
                       'OfferToReceiveAudio': true,
@@ -231,6 +234,13 @@ function handleMessage(event){
     case "putPoint":
       if (rec.putPoint) putPointRemote(rec.e);
       break;
+    case "onScreenSharing":
+      remoteScreenSharing = true;
+      miniVideo.muted = false;
+      break;
+    case "offScreenSharing":
+      remoteScreenSharing = false;
+      offRemoteScreenSharing();
   }
 }
 
@@ -429,9 +439,15 @@ function onIceCandidate(event) {
 
 function onRemoteStreamAdded(event) {
   console.log('Remote stream added.');
-  reattachMediaStream(miniVideo, localVideo);
+  if (remoteScreenSharing == false){
+    reattachMediaStream(miniVideo, localVideo);
+    remoteStream = event.stream;
+  }else{
+    reattachMediaStream(miniVideo, remoteVideo);
+    miniVideo.muted = false;
+    remoteScreenStream = event.stream;
+  }
   attachMediaStream(remoteVideo, event.stream);
-  remoteStream = event.stream;
   waitForRemoteVideo();
 }
 
@@ -824,22 +840,22 @@ function hideChat(){
 
 function displayButtons(vd){
   if (chat == false){
-    btnChat = '<input type=\'button\' id=\'chatbtn\' class=\'btn btn-info\' value=\'Mostrar chat\' onclick=\'showChat()\' />'; 
+    btnChat = '<input type=\'button\' id=\'chatbtn\' class=\'btn wrtcbtn btn-info\' value=\'Mostrar chat\' onclick=\'showChat()\' />'; 
   } else {
-    btnChat = '<input type=\'button\' id=\'chatbtn\' class=\'btn btn-warning\' value=\'Esconder chat\' onclick=\'hideChat()\' />';
+    btnChat = '<input type=\'button\' id=\'chatbtn\' class=\'btn wrtcbtn btn-warning\' value=\'Esconder chat\' onclick=\'hideChat()\' />';
   }
   if (tablero == false){
-    btnTablero = '<input type=\'button\' id=\'tablero\' class=\'btn btn-info\' value=\'Iniciar tablero\' onclick=\'onTablero()\' />';
+    btnTablero = '<input type=\'button\' id=\'tablero\' class=\'btn wrtcbtn btn-info\' value=\'Iniciar tablero\' onclick=\'onTablero()\' />';
   } else {
-    btnTablero = '<input type=\'button\' id=\'tablero\' class=\'btn btn-warning\' value=\'Detener tablero\' onclick=\'offTablero()\' />';
+    btnTablero = '<input type=\'button\' id=\'tablero\' class=\'btn wrtcbtn btn-warning\' value=\'Detener tablero\' onclick=\'offTablero()\' />';
   }
   if (screenSharing == false){
-    btnScreenSharing = '<input type=\'button\' id=\'screenSharing\' class=\'btn btn-info\' value=\'Compartir Pantalla\' onclick=\'onScreenSharing()\' />';
+    btnScreenSharing = '<input type=\'button\' id=\'screenSharing\' class=\'btn wrtcbtn btn-info\' value=\'Compartir Pantalla\' onclick=\'onScreenSharing()\' />';
   } else {
-    btnScreenSharing = '<input type=\'button\' id=\'screenSharing\' class=\'btn btn-warning\' value=\'Detener Compartir Pantalla\' onclick=\'offScreenSharing()\' />';
+    btnScreenSharing = '<input type=\'button\' id=\'screenSharing\' class=\'btn wrtcbtn btn-warning\' value=\'Detener Compartir Pantalla\' onclick=\'offScreenSharing()\' />';
   }
   if (vd== true){
-    btnVD = '<input type=\'button\' id=\'hangup\' class=\'btn btn-danger\' value=\'Terminar sesión\' onclick=\'onHangup()\' />';
+    btnVD = '<input type=\'button\' id=\'hangup\' class=\'btn wrtcbtn btn-danger\' value=\'Terminar sesión\' onclick=\'onHangup()\' />';
     videoChat = true;
   } else {
     btnVD = 'Conectando...         ';
@@ -847,7 +863,14 @@ function displayButtons(vd){
     btnScreenSharing = ' ';
     videoChat = false;
   }
-  setStatus(btnVD  + btnTablero + btnChat + btnScreenSharing);
+  if (tablero == true) {
+    setStatus(btnVD  + btnTablero + btnChat);
+  } else if (screenSharing == true){
+    setStatus(btnVD + btnChat + btnScreenSharing);
+  }
+  else{
+    setStatus(btnVD  + btnTablero + btnChat + btnScreenSharing);
+  }
 }
 
 function onTablero(s){
@@ -907,18 +930,36 @@ function onScreenSharing(){
   navigator.getUserMedia({
     video: {
       mandatory: {
-        chromeMediaSource: 'screen'
-        // maxWidth: 640,
-        // maxHeight: 480
+        chromeMediaSource: 'screen',
+         maxWidth: 1280,
+         maxHeight: 720
       }
     }
   }, function(stream) {
-    attachMediaStream(localVideo, stream);
-    pc.removeStream(localStream);
+    screenSharing = true;
+    displayButtons(videoChat);
+    sendData('{"fn": "onScreenSharing"}');
+    attachMediaStream(miniVideo, stream);
     pc.addStream(stream);
+    localScreenStream = stream;
+    doCall();
    }, function() {
       console.log('Hay error');
    }
   )
 }
 
+function offScreenSharing(){
+  pc.removeStream(localScreenStream);
+  attachMediaStream(miniVideo, localStream);
+  sendData('{"fn": "offScreenSharing"}');
+  screenSharing = false;
+  displayButtons(videoChat);
+  localScreenStream.stop();
+}
+
+function offRemoteScreenSharing(){
+  attachMediaStream(remoteVideo, remoteStream);
+  attachMediaStream(miniVideo, localStream);
+  miniVideo.muted = true;
+}
