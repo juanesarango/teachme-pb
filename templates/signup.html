@@ -49,6 +49,11 @@
 					</div>
 					<button type="submit" class="btn btn-success">Registrate</button>
 					<input type="hidden" name="redirect" value={{redirect}}>
+					<input type="hidden" name="timezoneOffset" id="timezoneOffset">
+					<script type="text/javascript">
+						var timezoneOffset = new Date().getTimezoneOffset();
+						$('#timezoneOffset').val(timezoneOffset);
+					</script>
 					<br>
 					<br>
 				</form>
