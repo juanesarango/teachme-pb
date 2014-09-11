@@ -2,7 +2,7 @@ function drawConfi(){
 	canvas = document.getElementById('canvas');
 	context = canvas.getContext('2d');
 
-	radius = 10;
+	radius = 3;
 	dragging = false;
 
 	canvas.width = window.innerWidth;
@@ -10,14 +10,19 @@ function drawConfi(){
 
 	context.lineWidth = radius*2;
 
-	minRad = 1,
-	maxRad = 100,
-	defaultRad = 20,
-	interval = 2,
-	radSpan = document.getElementById('radval'),
-	decRad = document.getElementById('decrad'),
+	minRad = 1;
+	maxRad = 100;
+	defaultRad = 20;
+	interval = 1;
+	eraser =  document.getElementById('eraser');
+	radSpan = document.getElementById('radval');
+	decRad = document.getElementById('decrad');
 	incRad = document.getElementById('incrad');
 
+	eraser.addEventListener('click', function(){
+		bgColor = window.getComputedStyle(document.body, null).getPropertyValue('backgroundColor');
+		setColor(bgColor);
+	});
 	decRad.addEventListener('click', function(){
 		setRadius(radius-interval);
 	});
@@ -28,15 +33,15 @@ function drawConfi(){
 	swatches = document.getElementsByClassName('swatch');
 
 	canvas.addEventListener('mousedown', engage);
-	canvas.addEventListener('mouseup', disengage)
+	canvas.addEventListener('mouseup', disengage);
 	canvas.addEventListener('mousemove', putPoint);
 
-	context.fillStyle = "white";
-	context.strokeStyle = "white";
+	context.fillStyle = "black";
+	context.strokeStyle = "black";
 
 	for (var i = 0, n = swatches.length; i<n; i++){
-	swatches[i].addEventListener('click', setSwatch);
-}
+		swatches[i].addEventListener('click', setSwatch);
+	}
 };
 var putPoint = function(e){
 	if (dragging){
@@ -94,8 +99,8 @@ var setRadius = function(newRadius){
 		newRadius = minRad;
 	else if(newRadius>maxRad)
 		newRadius = maxRad;
-	radius = newRadius
-	context.lineWidth = radius*2
+	radius = newRadius;
+	context.lineWidth = radius*2;
 	radSpan.innerHTML = radius;
 }
 

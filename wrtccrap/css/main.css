@@ -153,42 +153,18 @@ footer {
   padding: 1px 12px;
   margin-left: 10px;
   margin-right: 10px;
-  /*font-size: 13px; font-weight: bold;
-  color: #FFFFFF;
-  width: 128px;
-  height: 24px;
-  background-color: #808080;
-  border-style: solid;
-  border-color: #FFFFFF;
-  margin: 2px;*/
 }
 
 #tablero{
   padding: 1px 12px;
   margin-left: 10px;
   margin-right: 10px;
-  /*font-size: 13px; font-weight: bold;
-  color: #FFFFFF;
-  width: 128px;
-  height: 24px;
-  background-color: #808080;
-  border-style: solid;
-  border-color: #FFFFFF;
-  margin: 2px;*/
 }
 
 #chatbtn{
   padding: 1px 12px;
   margin-left: 10px;
   margin-right: 10px;
-  /*font-size: 13px; font-weight: bold;
-  color: #FFFFFF;
-  width: 128px;
-  height: 24px;
-  background-color: #808080;
-  border-style: solid;
-  border-color: #FFFFFF;
-  margin: 2px;*/
 }
 
 #infoDiv {
@@ -210,10 +186,10 @@ footer {
 #toolbar{
   width: 100%;
   height: 50px;
-  padding: 10px;
-  background-color: #2f2f2f;
+  background-color: #428bca;
   color: white;
     }
+
 .radcontrol{
   width: 30px;
   height: 30px;
@@ -231,6 +207,13 @@ footer {
   float: right;
 } 
 
+#eraser{
+  width: 40px;
+  margin-top: 5px;
+  margin-right: 40px;
+  vertical-align: top;
+}
+
 .swatch{
   width: 30px;
   height: 30px;
@@ -238,9 +221,20 @@ footer {
   box-shadow: inset 0px 1px 0px rgba(255,255,255,0.5), 0px 2px 2px rgba(0,0,0,0.5);
   display: inline-block;
   margin-left: 10px;
+  margin-top: 10px;
 }
 
 .swatch.active{
+  border: 2px solid white;
+  box-shadow: inset 0px 1px 2px rgba(0,0,0,0.5);
+}
+
+.eraser-swatch{
+  box-shadow: inset 0px 1px 0px rgba(255,255,255,0.5), 0px 2px 2px rgba(0,0,0,0.5);
+  display: inline-block;
+}
+
+.eraser-swatch.active{
   border: 2px solid white;
   box-shadow: inset 0px 1px 2px rgba(0,0,0,0.5);
 }

@@ -69,7 +69,6 @@ class Handler(webapp2.RequestHandler):
 		if self.request.get("remember")=="yes":
 			next_month = (datetime.datetime.now() + datetime.timedelta(days=30)).strftime('%a, %d %b %Y %H:%M:%S GMT')
 			self.response.headers.add_header('Set-Cookie','%s=%s; Path=/; expires= %s' % (name, cookie_val, next_month))
-			#self.response.headers.add_header('Set-Cookie','%s=%s; Path=/' % (name, cookie_val))
 		else:
 			tomorrow = (datetime.datetime.now() + datetime.timedelta(days=1)).strftime('%a, %d %b %Y %H:%M:%S GMT')
 			self.response.headers.add_header('Set-Cookie','%s=%s; Path=/; expires= %s' % (name, cookie_val, tomorrow))
