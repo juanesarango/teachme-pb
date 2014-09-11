@@ -476,6 +476,8 @@ class MainPage(webapp2.RequestHandler):
       if not room and debug != "full":
         # New room.
         user = generate_random(8)
+        #julian
+        #user = self.user.key.urlsafe()
         room = Room(key_name = room_key)
         room.add_user(user)
         if debug != 'loopback':
@@ -486,6 +488,8 @@ class MainPage(webapp2.RequestHandler):
       elif room and room.get_occupancy() == 1 and debug != 'full':
         # 1 occupant.
         user = generate_random(8)
+        #julian
+        #user = self.user.key.urlsafe()
         room.add_user(user)
         initiator = 1
       else:

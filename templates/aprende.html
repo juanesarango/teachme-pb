@@ -12,65 +12,66 @@
 		<br>
 		<div class="container">
 			<div class="row">
-				<div class="col-md-8 col-md-offset-2 bckg-b-30">
-					<h5> Explora los mejores tutores en</h5>
-					<h1 class="font-w" style="margin-top: 8px; margin-bottom: 12px;">{{area.name}}</h1>
-					<!-- <h6> Ya sea que busques clases para aprender algo nuevo, </h6> 
-					<h6> resolver algo duda, o complementar lo aprendido en clase. </h6> -->
-				</div>
-			</div>
-			<br>
-			<div class="row">
-				<div class="col-md-2 col-md-offset-2" style="background:transparent; padding-right:20px; padding-left:0px;">
-					<div class="panel-areas bckg-b-80" style="padding:20px;">
-						<ul class="nav nav-pills nav-stacked">
-						{% for a in areas %}
-							<li style="font-size:16px;" {% if a.name==area.name %}class="active"{% endif %}>
-							{% if a.url %}
-								<a href="/aprende/{{a.url}}">
-							{% else %}
-								<a href="/aprende/{{a.key.id()}}">
-							{% endif %}
-							{{a.name}}</a></li>
-						{% endfor %}
-						</ul>
+				<div class="col-md-8 col-md-offset-2 bckg-b-80">
+					<div class="row">
+						<div class="col-md-12" style="padding:20px;">
+							<h1>{{area.name}}</h1>
+							<h2 style="font-size: 16px; color: white;">Estás buscando tutores en línea en {{area.name}}? o estás buscando tutorías semanales en {{area.name}}? <strong>Teachme</strong> es la solución para ti.</h2>
+						</div>
 					</div>
-				</div>
-				<div class="col-md-6">
-					{% for t in mentors %}
-					<div class="row bckg-b-80">
-						<div class="col-md-4">
-							<a href="/teacher/{{t.key.urlsafe()}}">
-								<img class="img-circle img-100" {% if t.profile_pic_r %}src="{{t.profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}>
-							</a>
-							<div class="row">
-								<div class="col-md-12">
-								<br>
-									<span class="starReviews-gray">
-										<span class="starReviews" style="width:{{t.rating*20}}%"></span>
-									</span>
-									<br>
-									<span class="glyphicon glyphicon-comment"></span>
-									<span> {{t.reviews}}</span>
-								</div>
-							</div>
+					<br>
+					<div class="row">
+						<div class="col-md-4" style="padding:20px;">
+								<ul class="nav nav-pills nav-stacked">
+								{% for a in areas %}
+									<li style="font-size:16px;" {% if a.name==area.name %}class="active"{% endif %}>
+									{% if a.url %}
+										<a href="/aprende/{{a.url}}">
+									{% else %}
+										<a href="/aprende/{{a.key.id()}}">
+									{% endif %}
+									{{a.name}}</a></li>
+								{% endfor %}
+								</ul>
+						
 						</div>
 						<div class="col-md-8">
-							<a href="/teacher/{{t.key.urlsafe()}}"><h3>{{t.name}} {{t.lname}}</h3></a>
-							<p>{{t.about|truncate(170, True)}}</p>
-							<p class="pull-left"><span class="glyphicon glyphicon-credit-card"></span> {{t.fee}} USD por hora</p>
-							<p class="pull-right">{% if t.date_available|first_date %}<span class="glyphicon glyphicon-calendar"></span> {{t.date_available|first_date}}{% endif %}</p>
+							<hr>
+							{% for t in mentors %}
+							<div class="row">
+								<div class="col-md-4">
+									<a href="/teacher/{{t.key.urlsafe()}}">
+										<img class="img-circle img-100" {% if t.profile_pic_r %}src="{{t.profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}>
+									</a>
+									<div class="row">
+										<div class="col-md-12">
+										<br>
+											<span class="starReviews-gray">
+												<span class="starReviews" style="width:{{t.rating*20}}%"></span>
+											</span>
+											<br>
+											<span class="glyphicon glyphicon-comment"></span>
+											<span> {{t.reviews}}</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-8">
+									<a href="/teacher/{{t.key.urlsafe()}}"><h3>{{t.name}} {{t.lname}}</h3></a>
+									<p>{{t.about|truncate(170, True)}}</p>
+									<p class="pull-left"><span class="glyphicon glyphicon-credit-card"></span> {{t.fee}} USD por hora</p>
+									<p class="pull-right">{% if t.date_available|first_date %}<span class="glyphicon glyphicon-calendar"></span> {{t.date_available|first_date}}{% endif %}</p>
+								</div>
+							</div>
+							<hr>
+						{% else %}
+							<div class="row">
+								<div class="col-md-6 col-md-offset-3 bckg-b-80">
+									<h3><span class="glyphicon glyphicon-info-sign"></span> Lo sentimos. Estamos trabajando para traerte a los mejores mentores en esta área.</h3>
+								</div>
+							</div>
+						{% endfor %}
 						</div>
 					</div>
-					<br>
-					<br>
-				{% else %}
-					<div class="row">
-						<div class="col-md-6 col-md-offset-3 bckg-b-80">
-							<h3><span class="glyphicon glyphicon-info-sign"></span> Lo sentimos. Estamos trabajando para traerte a los mejores mentores en esta área.</h3>
-						</div>
-					</div>
-				{% endfor %}
 				</div>
 			</div>
 		</div>
