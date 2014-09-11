@@ -34,9 +34,9 @@ class user(ndb.Model):
 	pagos = ndb.KeyProperty(repeated= True, kind = "payments")
 
 	@classmethod
-	def register(cls, name, lname, mail, pw):
+	def register(cls, name, lname, mail, pw, tzo):
 		pw_hash = make_pw_hash(mail, pw)
-		return user(name = name, lname = lname, mail = mail, pw_hash = pw_hash)
+		return user(name = name, lname = lname, mail = mail, pw_hash = pw_hash, timezoneOffset = tzo)
 
 	@classmethod
 	def login(cls, mail, pw):

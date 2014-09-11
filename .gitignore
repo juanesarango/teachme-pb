@@ -37,3 +37,4 @@ Icon
 .Trashes
 
 *.py[co]
+*.pyc

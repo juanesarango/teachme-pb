@@ -120,6 +120,7 @@ class signup(Handler):
 		self.mail = self.request.get('mail')
 		self.pw = self.request.get('pw')
 		self.pwcon = self.request.get('pwcon')
+		self.tzo = int(self.request.get('timezoneOffset'))
 		redirect = self.request.get('redirect')
 
 		params = dict(name = self.name, email = self.mail, lname = self.lname, redirect= redirect)
@@ -134,14 +135,16 @@ class signup(Handler):
 				msg = "Ese e-mail ya se ecuentra registrado."
 				self.render("signup.html", error_mail = msg)
 			else:
-				u = teachme_db.user.register(self.name, self.lname, self.mail, self.pw)
+				u = teachme_db.user.register(self.name, self.lname, self.mail, self.pw, self.tzo)
 				u.put()
-				teachme_index.update(index)
+				# teachme_index.update_index(index)
 				subject = u.name + u", Bienvenido a Teachme"
 				enlace = "https://www.teachmeapp.com/verify/user/" + u.key.urlsafe()
 				html = render_str("mail_template.html", sujeto = u.name, enlace = enlace)
 				mail.send_mail("info@teachmeapp.com", u.mail, subject, "", html = html)
 				self.login(u, None)
+				if not redirect:
+					redirect = '/'
 				self.redirect(redirect)
 
 class login(Handler):
@@ -321,7 +324,7 @@ class comparte(Handler):
 
 		about = self.request.get("about")
 
-		t = teachme_db.teacher(name = name, lname=lname, mail = mail, fee = 0, ciudad = ciudad, pais = pais, linkedin = linkedin, areas = areas_in, about = about, aceptado = False, reviews=0, rating=0, parent = self.user.key)
+		t = teachme_db.teacher(name = name, lname=lname, mail = mail, fee = 0, ciudad = ciudad, pais = pais, linkedin = linkedin, areas = areas_in, about = about, aceptado = False, reviews=0, rating=0, timezoneOffset = self.user.timezoneOffset, parent = self.user.key)
 		t.put()
 		teachme_index.create_index(t)
 		self.login(self.user, t)
@@ -522,6 +525,9 @@ class calendar_teacher_add(Handler):
 					booking.erase_past_dates(teacher)
 					teacher.date_available.append(date)
 					sorted(teacher.date_available)
+		timezoneOffset = self.request.get('timezoneOffset')
+		if timezoneOffset:
+			teacher.timezoneOffset = int(timezoneOffset)
 		teacher.put()
 		
 		self.redirect("/profile/teacher/" + str(teacher.key.id()))
