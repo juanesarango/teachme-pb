@@ -1,0 +1,37 @@
+@font-face {
+	font-family: "Flaticon";
+	src: url("flaticon.eot");
+	src: url("flaticon.eot#iefix") format("embedded-opentype"),
+	url("flaticon.woff") format("woff"),
+	url("flaticon.ttf") format("truetype"),
+	url("flaticon.svg") format("svg");
+	font-weight: normal;
+	font-style: normal;
+}
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
+	font-family: Flaticon;
+        font-size: 20px;
+font-style: normal;
+margin-left: 20px;
+}.flaticon-book137:before {
+	content: "\e000";
+}
+.flaticon-books30:before {
+	content: "\e001";
+}
+.flaticon-communities:before {
+	content: "\e002";
+}
+.flaticon-connected20:before {
+	content: "\e003";
+}
+.flaticon-connected22:before {
+	content: "\e004";
+}
+.flaticon-professor1:before {
+	content: "\e005";
+}
+.flaticon-teacher14:before {
+	content: "\e006";
+}

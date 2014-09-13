@@ -495,3 +495,14 @@ blockquote{
   border: 1px solid #145289;
 }
 
+#buttonSchedule{
+  margin-left: 15px;
+}
+
+/*#teacher-data h4,
+#teacher-data p{
+  display: inline;
+  vertical-align: top;
+  line-height: 28px;
+}
+*/
