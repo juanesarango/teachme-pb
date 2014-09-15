@@ -22,8 +22,8 @@
 						<div class="col-md-3 col-md-offset-1">
 							<br>
 							<img class="img-circle img-150" {% if mentor.profile_pic_r %}src="{{mentor.profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}>
-							<h3>{{mentor.name}}</h3>
-							<h4>{{mentor.lname}}</h4>
+							<br>
+							<br>
 							<div class="row">
 								<div class="col-md-12">
 									<span class="starReviews-gray">
@@ -34,10 +34,10 @@
 									<span> {{mentor.reviews}}</span>
 								</div>
 							</div>
-							<br>
 							<div class="row">
-								<button class="btn btn-success" type="button" data-toggle="modal" data-target="#modalBooking"><span class="glyphicon glyphicon-calendar"></span>&nbsp;Agenda una hora</button>
+								<button class="btn btn-success" type="button" id="buttonBooking" data-toggle="modal" data-target="#modalBooking"><span class="glyphicon glyphicon-calendar"></span>&nbsp;Agenda una hora</button>
 							</div>
+							<p><span class="glyphicon glyphicon-credit-card"></span> {{mentor.fee}} USD por hora</p>
 						</div>
 						<!-- Start Booking Modal -->
 						<div class="modal fade" id="modalBooking" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -50,7 +50,7 @@
 						      		<div class="modal-body">
 							        	<form role="form" method="post" id="schedule-form">
 											<div class="row">
-												<div class="col-md-4 col-md-offset-1" style="padding-right:0px;">
+												<div class="col-md-4 col-md-offset-1" style="padding:0px;">
 													<label>Agenda libre</label>
 													<div class="calendario">
 													</div>
@@ -96,34 +96,33 @@
 						</div>
 						<!-- End Booking Modal -->
 						<div class="col-md-7">
-							<h3>Acerca de {{mentor.name}}</h3>
-							<p>{{mentor.about}}</p>
+							<h1>{{mentor.name}}&nbsp;<small>{{mentor.lname}}</small></h1>
 							<br>
-							<p><span class="glyphicon glyphicon-credit-card"></span> {{mentor.fee}} USD por hora</p>
+							<h4><small>Acerca</small></h4>
+							<p class="text-justify">{{mentor.about}}</p>
 						</div>
 					</div>
-					<hr>
+					<hr style="margin-top:0px;">
 					<div class="row">
 						<div class="col-md-3 col-md-offset-1" id="teacher-data">
-							<h4><strong>Ciudad:</strong> {{mentor.ciudad}}</h4>
-							<h4><strong>País:</strong> {{mentor.pais}}</h4>
-							<h4><strong>Perfil de linkedin: </strong></h4>
+							<h4><small>Ciudad:</small> {{mentor.ciudad}}</h4>
+							<h4><small>País:</small> {{mentor.pais}}</h4>
+							<h4><small>Perfil de linkedin: </small></h4>
 							<p><a href="{{mentor.linkedin}}" target="_blank">{{mentor.linkedin}}</a></p>
 						</div>
-						<div class="col-md-3 col-md-offset-1">
-							<h4>Áreas del conocimiento</h4>
+						<div class="col-md-3">
+							<h4><small>Áreas del conocimiento</small></h4>
 							{% for a in t_areas %}
-								<p>{{a.name}}</p>
+								<h4>{{a.name}}</h4>
 							{% endfor %}
 						</div>
-						<div class="col-md-3">
-							<h4 for="tags">Conocimientos y habilidades</h4>
+						<div class="col-md-4">
+							<h4 for="tags"><small>Conocimientos y habilidades</small></h4>
 							{% for a in mentor.tags %}
 								<div class="tagbox">{{a}}</div>
 							{% endfor %}
 						</div>
 					</div>
-					<hr>
 					{% if mentor.fee > 0 %}
 					<!-- Modal Plataforma de pago-->
 					<div class="modal fade" id="modalPayment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -204,7 +203,7 @@
 				<div class="col-md-5 col-md-offset-1 bckg-w-80">
 					<div class="row">
 						<div class="col-md-10 col-md-offset-1">
-							<h4>Que piensan los usuarios de {{mentor.name}}</h4>
+							<h4>Qué piensan los usuarios de {{mentor.name}}</h4>
 							<span class="starReviews-gray"><span class="starReviews" style="width:{{mentor.rating*20}}%"></span></span><span> </span><span class="glyphicon glyphicon-comment"></span><span> {{mentor.reviews}}</span>
 						</div>
 					</div>

@@ -499,6 +499,12 @@ blockquote{
   margin-left: 15px;
 }
 
+#buttonBooking{
+    margin-left: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 /*#teacher-data h4,
 #teacher-data p{
   display: inline;
