@@ -41,8 +41,8 @@ class Handler(webapp2.RequestHandler):
 	def render_str(self, template, **params):
 		suggestions=[]
 		
-		self.areas = teachme_db.areas.query().order(teachme_db.areas.name)
-		for  l in self.areas:
+		areas = teachme_db.areas.query().order(teachme_db.areas.name)
+		for  l in areas:
 			suggestions.append(l.name)
 		
 		teachers = teachme_db.teacher.query().order(teachme_db.teacher.name)
@@ -53,9 +53,12 @@ class Handler(webapp2.RequestHandler):
 		for l in tags:
 			suggestions.append(l)
 
+		superareas = teachme_db.superareas.query().order(teachme_db.superareas.name)
+
 		params['user'] = self.user
 		params['teacher'] = self.teacher
-		params['areas'] = self.areas
+		params['areas'] = areas
+		params['superareas'] = superareas 
 		params['suggestions'] = json.dumps(suggestions)
 		logging.error(suggestions)
 		return render_str(template, **params)
