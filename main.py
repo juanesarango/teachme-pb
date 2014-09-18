@@ -60,7 +60,8 @@ class Handler(webapp2.RequestHandler):
 		params['areas'] = areas
 		params['superareas'] = superareas 
 		params['suggestions'] = json.dumps(suggestions)
-		#logging.info(suggestions)
+		params['shareUrl'] = self.request.url
+		logging.error(suggestions)
 		return render_str(template, **params)
 
 	def render(self, template, **kw):
