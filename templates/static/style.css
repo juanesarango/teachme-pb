@@ -164,6 +164,25 @@ a:visited{
   display: inline-block;
 }
 
+.no-padding{
+  padding: 0px;
+}
+
+#share-fb:hover{
+  color: #425f9c;
+  background-color: transparent;
+}
+
+#share-tw:hover{
+  color: #00aced;
+  background-color: transparent;
+}
+
+#share-gplus:hover{
+  color: #C7382E;
+  background-color: transparent;
+}
+
 .boton-verde{
   background-color: green;
   border: 0px;

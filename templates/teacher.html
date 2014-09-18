@@ -1,7 +1,9 @@
 {% extends "base_main.html" %}
-{% block title %}
-	{{mentor.name}} {{mentor.lname}} | Teachme
-{% endblock %}
+{% set shareImg = mentor.profile_pic %}
+{% set title = mentor.name+" "mentor.lname+" | Teachme" %}
+{% set shareText = "Conoce a "+mentor.name+" "+mentor.lname+" y accede a todo el conocimiento que posee" %}
+{% set sharHt = "teachme" %}
+
 {% block description %}
 	<meta name="description" content="{{mentor.name}} {{mentor.lname}} te puede ayudar en temas como {% for a in t_areas %}{{a.name}}{% if not loop.last %}, {% else %}.{% endif %}{% endfor %}">
 {% endblock %}

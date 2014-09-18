@@ -57,6 +57,7 @@ class Handler(webapp2.RequestHandler):
 		params['teacher'] = self.teacher
 		params['areas'] = self.areas
 		params['suggestions'] = json.dumps(suggestions)
+		params['shareUrl'] = self.request.url
 		logging.error(suggestions)
 		return render_str(template, **params)
 
