@@ -47,3 +47,9 @@ stripe/__init__.pyc
 teachme_db.pyc
 teachme_index.pyc
 
+*.pyc
+*.pyc
+main.pyc
+teachme_db.pyc
+main.pyc
+

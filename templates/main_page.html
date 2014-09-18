@@ -45,48 +45,7 @@
 				</div>
 			</div>
 		</div>
-		<!-- <div class= "row">
-			<div class="col-md-9">
-			</div>
-			<div class="col-md-2" style="margin: 100px 60px 0 0;">
-				<a href="https://www.youtube.com/watch?v=mC-tKWPdg6c&list=UURfDpYrr9ix-rO8ZWwOqMgQ" target="_blank"> <button type="button" class="btn btn-default btn-lg"  onclick=""><span class="glyphicon glyphicon-play-circle" style = "font-size:40px;"></span><br>Como funciona<br><strong>TeachMe</strong>?</button></a>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-8" style="margin: 30px 0 0 0;">
-				<h1 class="font-w">Comparte conocimientos con personas alrededor del mundo en <strong>Teachme</strong>.</h1>
-			</div>
-			<div class="col-md-4" style="margin-top: 30px">
-				<h3 class="font-w"><strong>Teachme</strong> es una nueva manera de encontrar asesorías académicas en una gran variedad de tópicos</h3>
-			</div>
-		</div> -->
-<!-- 		<div class="row hidden-xs hidden-sm" style="margin-top: 60px;">
-			<div class="col-md-8 col-md-offset-2 bckg-w-50">
-				<div class="row">
-					<h3 class="text-center">Es muy fácil, mira como funciona</h3>
-				</div>
-				<div class="row">
-					<div class="col-md-4 text-center">
-						<h1><span class="glyphicon glyphicon-book"></span></h1>
-						<h4>1. Busca el tema que en que necesitas ayuda</h4>
-					</div>
-					<div class="col-md-4 text-center">
-						<h1><span class="glyphicon glyphicon-user"></span></h1>
-						<h4>2. Explora entre los tutores cual te gusta más</h4>
-					</div>
-					<div class="col-md-4 text-center">
-						<h1><span class="glyphicon glyphicon-facetime-video"></span></h1>
-						<h4>3. Conectate con el en nuestra aula virtual</h4>
-					</div>
-				</div>
-			</div>
-		</div> -->
 	</div>
-<!-- 	<div class= "row" id="flechita">
-		<div class="col-md-1"  style="margin: 0 0 10px;">
-			<a href="#middle_section"><span class="glyphicon glyphicon-chevron-down" onclick></span></a>
-		</div>	
-	</div> -->
 	<br>
 	<br>
 	<br>
@@ -100,24 +59,15 @@
 				<div class="col-md-4 text-center">
 					<h1><span style="font-size:80px" class="flaticon-educational18"></span></h1>
 					<h3>Busca por temas lo que deseas aprender</h3>
-					<!-- <p class="text-justify">Puedes obtener ayuda en el tema que quieras, desde fraccionarios hasta cocina argentina.</p> -->
-					<!-- <p class="text-justify">Escoge un tema del cual deseas aprender, reforzar, u obtener ayuda. Hay todo un mundo de conocimiento por devorar!</p> -->
 				</div>
 				<div class="col-md-4 text-center">
 					<h1><span style="font-size:80px" class="flaticon-communities"></span></h1>
-					<!-- <p class="text-justify">Escoge un asesor de acuerdo a calificaciones de otros usuarios, su experiencia, y su disponibilidad.</p> -->
 					<h3>Explora entre los tutores cuál te gusta más</h3>
-					<!-- <p class="text-justify">Agenda a un tutor a la hora que más te convenga, o instantaneamente a los que esten en linea.</p> -->
 				</div>
-		<!-- 		<div class="col-md-3 text-center clearfix">
-					<h1><span style="font-size:80px" class="glyphicon gly-big glyphicon-calendar"></span></h1>
-					<p class="text-justify">Mira el horario disponible del asesor de tu preferencia, y escoge el día y hora que más se acomode a tu horario.</p>
-				</div> -->
+
 				<div class="col-md-4 text-center">
 					<h1><span style="font-size:80px" class="flaticon-online"></span></h1>
 					<h3>Conéctate con el tutor en nuestra aula virtual</h3>
-					<!-- <p class="text-justify">En nuestra aula virtual tenemos video, audio, chat, un increible tablero compartido, transferencia de archivos, compartimiento de pantalla... Todo esto para que sientas al tutor a tu lado</p> -->
-					<!-- <p>Agenda una cita de acuerdo a su horario, y estás listo para tu asesoría mediante una videollamada y una pizarra virtual.</p> -->
 				</div>
 			</div>
 			<br>
@@ -138,12 +88,25 @@
 		<div class="row">
 			<br>
 			<br>
-			<div class="col-md-2 col-md-offset-2 ">
+			<div class="col-md-2 col-md-offset-1">
 				<ul class="nav nav-pills nav-stacked">
-					{% for a in areas %}
-						<li {% if loop.first %}class="active"{% endif %}><a href="#{{a.name}}" data-toggle="pill">{{a.name}}</a></li>
+					{% for s in superareas %}
+						<li {% if loop.first %}class="active"{% endif %}><a href="#{{s.name}}" data-toggle="pill">{{s.name}}</a></li>
 					{% endfor %}
 				</ul>
+			</div>
+			<div class="col-md-2">
+				<div class="tab-content">
+				{% for s in superareas %}
+					<div class= "tab-pane fade {% if loop.first %}in active{% endif %}" id="{{s.name}}">
+						{% for a in s.areas %}
+							<ul class="nav nav-pills nav-stacked">
+								<li {% if loop.first %}class="active"{% endif %}><a href="#{{a.get().name}}" data-toggle="tab">{{a.get().name}}</a></li>
+							</ul>
+						{% endfor %}
+					</div>
+				{% endfor %}
+				</div>
 			</div>
 			<div class="col-md-6">
 				<hr>

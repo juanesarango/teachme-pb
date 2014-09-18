@@ -3,6 +3,8 @@ function drawConfi(){
 	context = canvas.getContext('2d');
 
 	radius = 3;
+	pencilradius = radius;
+	pencilcolor = "white";
 	dragging = false;
 
 	canvas.width = window.innerWidth;
@@ -15,20 +17,66 @@ function drawConfi(){
 	defaultRad = 20;
 	interval = 1;
 	eraser =  document.getElementById('eraser');
-	radSpan = document.getElementById('radval');
-	decRad = document.getElementById('decrad');
-	incRad = document.getElementById('incrad');
+	eraser1 =  document.getElementById('eraser1');
+	eraser2 =  document.getElementById('eraser2');
+	eraser3 =  document.getElementById('eraser3');
+	pencil =  document.getElementById('pencil');
+	pencil1 =  document.getElementById('pencil1');
+	pencil2 =  document.getElementById('pencil2');
+	pencil3 =  document.getElementById('pencil3');
+	backstep =  document.getElementById('backstep');
+	clean =  document.getElementById('clean');
 
-	eraser.addEventListener('click', function(){
-		bgColor = window.getComputedStyle(document.body, null).getPropertyValue('backgroundColor');
-		setColor(bgColor);
+	eraser1.addEventListener('click', function(){
+		// bgColor = window.getComputedStyle(document.body, null).getPropertyValue('backgroundColor');
+		pencilcolor = context.fillStyle;
+		pencilradius = radius;
+		setColor("black");
+		setRadius(3);
+		eraser.style.fontSize = 12;
 	});
-	decRad.addEventListener('click', function(){
-		setRadius(radius-interval);
+	eraser2.addEventListener('click', function(){
+		// bgColor = window.getComputedStyle(document.body, null).getPropertyValue('backgroundColor');
+		pencilcolor = context.fillStyle;
+		pencilradius = radius;
+		setColor("black");
+		setRadius(12);
+		eraser.style.fontSize = 18;
 	});
-	incRad.addEventListener('click', function(){
-		setRadius(radius+interval);
+	eraser3.addEventListener('click', function(){
+		// bgColor = window.getComputedStyle(document.body, null).getPropertyValue('backgroundColor');
+		pencilcolor = context.fillStyle;
+		pencilradius = radius;
+		setColor("black");
+		setRadius(40);
+		eraser.style.fontSize = 24;
 	});
+
+	pencil1.addEventListener('click', function(){
+		setRadius(1);
+		setColor(pencilcolor);
+		pencil.style.fontSize = 12;
+	});
+	pencil2.addEventListener('click', function(){
+		setRadius(2);
+		setColor(pencilcolor);
+		pencil.style.fontSize = 18;
+	});
+	pencil3.addEventListener('click', function(){
+		setRadius(4);
+		setColor(pencilcolor);
+		pencil.style.fontSize = 24;
+	});
+
+	clean.addEventListener('click',function(){
+		// Store the current transformation matrix
+		context.save();
+		// Use the identity matrix while clearing the canvas
+		context.setTransform(1, 0, 0, 1, 0, 0);
+		context.clearRect(0, 0, canvas.width, canvas.height);
+		// Restore the transform
+		context.restore();
+	})
 
 	swatches = document.getElementsByClassName('swatch');
 
@@ -36,8 +84,8 @@ function drawConfi(){
 	canvas.addEventListener('mouseup', disengage);
 	canvas.addEventListener('mousemove', putPoint);
 
-	context.fillStyle = "black";
-	context.strokeStyle = "black";
+	setColor("white");
+	swatches[0].className += ' active';
 
 	for (var i = 0, n = swatches.length; i<n; i++){
 		swatches[i].addEventListener('click', setSwatch);
@@ -45,14 +93,6 @@ function drawConfi(){
 };
 var putPoint = function(e){
 	if (dragging){
-		// if (!e.which){
-		// 	var colorBefore = context.fillStyle;
-		// 	var widthBefore = context.lineWidth;
-		// 	context.fillStyle = e.colorRemote;
-		// 	context.strokeStyle = e.colorRemote;
-		// 	context.lineWidth = e.widthRemote;
-		// 	radius = e.widthRemote/2;
-		// }
 		context.lineTo(e.offsetX, e.offsetY);
 		context.stroke();
 		context.beginPath();
@@ -62,16 +102,6 @@ var putPoint = function(e){
 		context.moveTo(e.offsetX, e.offsetY);
 		var sender = {"fn":"putPoint", "putPoint":true, "e":{"offsetX": e.offsetX, "offsetY": e.offsetY, "colorRemote": context.fillStyle, "widthRemote": context.lineWidth}};
 		sendData(JSON.stringify(sender));
-		// if (e.which){
-		// 	var sender = {"fn":"putPoint", "putPoint":true, "e":{"offsetX": e.offsetX, "offsetY": e.offsetY, "colorRemote": context.fillStyle, "widthRemote": context.lineWidth}};
-		// 	sendData(JSON.stringify(sender));
-		// }
-		// }else{
-		// 	context.fillStyle = colorBefore;
-		// 	context.strokeStyle = colorBefore;
-		// 	context.lineWidth = widthBefore;
-		// 	radius = widthBefore/2;
-		// }
 	}
 }
 
@@ -79,11 +109,6 @@ var engage = function(e){
 	dragging = true;
 	var sender = {"fn":"engage", "engage": true, "e":{"offsetX": e.offsetX, "offsetY": e.offsetY, "colorRemote": context.fillStyle, "widthRemote": context.lineWidth}};
 	sendData(JSON.stringify(sender));
-	// if(e.which){
-	// 	var sender = {"fn":"engage", "engage": true, "e":{"offsetX": e.offsetX, "offsetY": e.offsetY, "colorRemote": context.fillStyle, "widthRemote": context.lineWidth}};
-	// 	sendData(JSON.stringify(sender));
-	// }
-	// e.which = false;
 	putPoint(e);
 	
 }
@@ -93,10 +118,6 @@ var disengage = function(e, s){
 	context.beginPath();
 	var sender = {"fn":"disengage", "disengage":true};
 	sendData(JSON.stringify(sender));
-	// if (!s){
-	// 	var sender = {"fn":"disengage", "disengage":true};
-	// 	sendData(JSON.stringify(sender));
-	// }
 }
 
 var putPointRemote = function(e){
@@ -133,21 +154,25 @@ var disengageRemote = function(e){
 	context.beginPath();
 }
 
+// var setRadius = function(newRadius){
+// 	if(newRadius<minRad)
+// 		newRadius = minRad;
+// 	else if(newRadius>maxRad)
+// 		newRadius = maxRad;
+// 	radius = newRadius;
+// 	context.lineWidth = radius*2;
+// 	radSpan.innerHTML = radius;
+// }
 
 var setRadius = function(newRadius){
-	if(newRadius<minRad)
-		newRadius = minRad;
-	else if(newRadius>maxRad)
-		newRadius = maxRad;
 	radius = newRadius;
 	context.lineWidth = radius*2;
-	radSpan.innerHTML = radius;
 }
-
 
 function setColor(color){
 	context.fillStyle = color;
 	context.strokeStyle = color;
+	setRadius(pencilradius);
 	var active = document.getElementsByClassName('active')[0];
 	if(active){
 		active.className = 'swatch';
@@ -158,4 +183,5 @@ function setSwatch(e){
 	var swatch = e.target;
 	setColor(swatch.style.backgroundColor);
 	swatch.className += ' active';
+	pencilcolor = swatch.style.backgroundColor;
 }

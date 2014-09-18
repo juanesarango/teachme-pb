@@ -219,18 +219,13 @@ footer {
 
 #rad{
   float: left;
+  margin-top: 0px;
+  margin-left: 20px;
 }
 
 #colors{
   float: right;
 } 
-
-#eraser{
-  width: 40px;
-  margin-top: 5px;
-  margin-right: 40px;
-  vertical-align: top;
-}
 
 .swatch{
   width: 30px;
@@ -239,20 +234,10 @@ footer {
   box-shadow: inset 0px 1px 0px rgba(255,255,255,0.5), 0px 2px 2px rgba(0,0,0,0.5);
   display: inline-block;
   margin-left: 10px;
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
 .swatch.active{
-  border: 2px solid white;
-  box-shadow: inset 0px 1px 2px rgba(0,0,0,0.5);
-}
-
-.eraser-swatch{
-  box-shadow: inset 0px 1px 0px rgba(255,255,255,0.5), 0px 2px 2px rgba(0,0,0,0.5);
-  display: inline-block;
-}
-
-.eraser-swatch.active{
   border: 2px solid white;
   box-shadow: inset 0px 1px 2px rgba(0,0,0,0.5);
 }
@@ -273,7 +258,7 @@ footer {
   width: 20%;
   bottom: 32px;
   right: 250px;
-  /*left: 4px;*/
+  left: 4px;
   opacity: 1.0;
   transform: scale(-1, 1);
   -webkit-transform: scale(-1, 1);
@@ -286,6 +271,7 @@ footer {
   -webkit-transition-property: opacity;
   -webkit-transition-duration: 2s;
 }
+
 #drawRemoteVideo {
   width: 100%;
   height: 100%;
@@ -293,3 +279,13 @@ footer {
   -webkit-transition-property: opacity;
   -webkit-transition-duration: 2s;
 }
+
+.boardicon{
+  border: 1px solid #428bca;
+  padding:4px;
+  border-radius:10px;
+  background-color: #428bca;
+  color: white;
+  text-align: center;
+}
+

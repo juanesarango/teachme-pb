@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Sesión Teachme</title>
+
+<meta http-equiv="X-UA-Compatible" content="chrome=1"/>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
+<script type="text/javascript" src="/static/js/bootstrap.js"></script>
+
+<link rel="canonical" href="{{ room_link }}"/>
+<link rel="stylesheet" href="css/main.css"/>
+
+<script type="text/javascript" src="/_ah/channel/jsapi"></script>
+<script src="/js/main.js"></script>
+<!-- Load the polyfill to switch-hit between Chrome and Firefox -->
+<script src="/js/adapter.js"></script>
+<script src="/js/drawing.js"></script>
+<link rel="stylesheet" type="text/css" href="css/flaticon.css">
+
+</head>
+<body>
+
+  <div id="toolbar">
+    <div id="rad">
+      <button type="button" class="btn dropdown-toggle boardicon" data-toggle="dropdown" id="backstep" title="Deshacer cambio">
+          <span class="flaticon-reply" style="font-size:22px;"></span>
+      </button>
+      <button type="button" class="btn dropdown-toggle boardicon" data-toggle="dropdown" id="clean" title="Limpiar el tablero">
+          <span class="flaticon-bin2" style="font-size:27px;"></span>
+      </button>
+      <div class="btn-group">
+        <button type="button" class="btn dropdown-toggle boardicon" data-toggle="dropdown" id="eraser" title="Definir tamaño del borrador">
+          <span class="flaticon-eraser8" style="font-size:24px;"></span> <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu" style="min-width:80px;">
+          <li><a id="eraser1"><span class="flaticon-eraser8 boardicon-item" style="font-size:12px;"></span></a></li>
+          <li><a id="eraser2"><span class="flaticon-eraser8 boardicon-item" style="font-size:18px;"></span></a></li>
+          <li><a id="eraser3"><span class="flaticon-eraser8 boardicon" style="font-size:24px;"></span></a></li>
+        </ul>
+        <!-- <div id="decrad" class="radcontrol">-</div>
+        <div id="incrad" class="radcontrol">+</div> -->
+      </div>
+       <div class="btn-group">
+        <button type="button" class="btn dropdown-toggle boardicon" data-toggle="dropdown" id="pencil" title="Definir grosor del trazo">
+          <span class="flaticon-gross" style="font-size:24px;"></span> <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu" style="min-width:80px;">
+          <li><a id="pencil1"><span class="flaticon-gross boardicon" style="font-size:12px;"></span></a></li>
+          <li><a id="pencil2"><span class="flaticon-gross boardicon" style="font-size:18px;"></span></a></li>
+          <li><a id="pencil3"><span class="flaticon-gross boardicon" style="font-size:24px;"></span></a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="colors">
+      <div class="swatch active" style="background-color: white"></div>
+      <div class="swatch" style="background-color: grey"></div>
+      <div class="swatch" style="background-color: black"></div>
+      <div class="swatch" style="background-color: red"></div>
+      <div class="swatch" style="background-color: orange"></div>
+      <div class="swatch" style="background-color: yellow"></div>
+      <div class="swatch" style="background-color: green"></div>
+      <div class="swatch" style="background-color: blue"></div>
+      <div class="swatch" style="background-color: indigo"></div>
+      <div class="swatch" style="background-color: violet"></div>
+    </div>
+    <canvas id="canvas">
+      Tu navegador esta desactualizado
+    </canvas>
+    <div id="logo_large" style="position: absolute; left: 4px; opacity: 0.8; bottom: 34px;">
+        <img src="/static/logoVideo.png">
+    </div>
+    <div id="drawLocal">
+      <video id="drawLocalVideo" autoplay="autoplay" muted="true"/>
+    </div>
+    <div id="drawRemote">
+      <video id="drawRemoteVideo" autoplay="autoplay"/>
+    </div>
+  </div>
+  <div id= "chatbox">
+    <div class="row">
+      <div id = "logchat" class="col-md-9 col-md-offset-3" style="margin-left:25px; height: 100px; width:264px;">
+      </div>
+    </div>
+    <div class = "row" id = "inputchat">
+      <div class="col-md-9">
+        <textarea rows="1" id="chat" class="form-control" style="resize:none"></textarea>
+      </div>
+      <div class="col-md-3">
+        <button type="button" id= "btnEnviar" class="btn btn-info" onclick="onChat()">Enviar</button>
+      </div>
+    </div>
+  </div>
+</body>
+<footer id="status">
+</footer>
+<div id="infoDiv"></div>
+</html>

@@ -378,6 +378,7 @@ class MainPage(webapp2.RequestHandler):
     # We will call the teachouts database to bring the participants and the date and time of the session
     val, merror = self.validation(room_key)
     logging.info(merror)
+    val=True
     if not val:
       self.abort(403)
     stun_server = self.request.get('ss')
@@ -522,7 +523,7 @@ class MainPage(webapp2.RequestHandler):
                        'stereo': stereo,
                        'audio_send_codec': audio_send_codec,
                        'audio_receive_codec': audio_receive_codec,
-                       'usuarioChat' : self.user.name
+                       'usuarioChat' : self.user.name if self.user else u'Anónimo'
                       }
     if unittest:
       target_page = 'wrtccrap/test/test_' + unittest + '.html'
@@ -534,9 +535,16 @@ class MainPage(webapp2.RequestHandler):
     logging.info('User ' + user + ' added to room ' + room_key)
     logging.info('Room ' + room_key + ' has state ' + str(room))
 
+class Board(webapp2.RequestHandler):
+  def get(self):
+    template = jinja_environment.get_template('pruebatablero.html')
+    self.response.out.write(template.render(""))
+
+
 
 app = webapp2.WSGIApplication([
     ('/session/', MainPage),
+    ('/session/board', Board),
     ('/session/message', MessagePage),
     ('/_ah/channel/connected/', ConnectPage),
     ('/_ah/channel/disconnected/', DisconnectPage)
