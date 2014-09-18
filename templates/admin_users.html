@@ -14,7 +14,7 @@
 			<div class="col-md-6 col-md-offset-3 bckg-b-80">
 				<div class="row">
 					<div class="col-md-4">
-							<img class="img-circle img-100" {% if i.profile_pic_r %}src="{{i.profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}>
+							<img class="img-circle img-100" {% if i.profile_pic_r %}src="{{i.profile_pic_r}}?type=large"{% else %} src="/static/avatar.png"{% endif %}>
 					</div>
 					<div class="col-md-8">
 					<h3>{{i.name}} {{i.lname}}</h3>

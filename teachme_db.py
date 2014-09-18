@@ -20,11 +20,14 @@ class user(ndb.Model):
 	name = ndb.StringProperty(required = True)
 	lname = ndb.StringProperty(required = True)
 	mail = ndb.StringProperty(required = True)
-	pw_hash = ndb.StringProperty(required = True, indexed = False)
+	pw_hash = ndb.StringProperty(indexed = False)
 	date_created = ndb.DateTimeProperty(auto_now_add = True)
 	profile_pic = ndb.BlobKeyProperty()
 	profile_pic_r = ndb.StringProperty()
 	timezoneOffset = ndb.IntegerProperty()
+	fbID = ndb.IntegerProperty()
+	gender = ndb.StringProperty()
+
 
 	teachouts = ndb.KeyProperty(repeated = True, kind = "teachout")
 	teachouts_expired = ndb.KeyProperty(repeated = True, kind = "teachout")

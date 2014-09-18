@@ -16,7 +16,7 @@
 		<!-- end Bootstrap -->
 
 		<!-- Google Fonts -->
-		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
 		
 		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/themes/smoothness/jquery-ui.css" />
 		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js"></script>
@@ -62,9 +62,11 @@
 			mixpanel.init("5981c12522e8891b9564958486bb8592");
 		</script>
 		<!-- end Mixpanel -->
+
 	</head>
 
 	<body>
+		<script type="text/javascript" src="/static/js/facebookLogin.js"></script>
 	{% block welcome %}
 
 	{% endblock %}
@@ -126,18 +128,29 @@
 								<ul class="dropdown-menu min-width-200">
 									<li>
 										<a>
-											<form method="post" action="/login" role="form">
+											<form method="post" action="/login" role="form" id="loginForm">
+												<div class="center-block"><fb:login-button scope="public_profile,email" onlogin="checkLoginState();" class="center-block text-center">
+												</fb:login-button></div>
+												<hr>
+												O ingresa con tu correo:
 												<div class="form-group">
-													Correo Electronico: <input name="mail" class="form-control" type="email" placeholder="email@domain.com">
+													<div class="input-group">
+														<div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
+														<input name="mail" class="form-control" type="email" placeholder="email@domain.com" id="mailLogin">
+													</div>
 													<p class="help-block">{{error}}</p>
 												</div>
 												<div class="form-group">
-													Contraseña: <input name="pw" class="form-control" type="password">
+													<div class="input-group">
+														<div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+														<input name="pw" class="form-control" type="password">
+													</div>
 												</div>
 												<div class="checkbox">
 													<input name="remember" type="checkbox" value="yes"> Recuérdame
 												</div>	
-												<button type="submit" class="btn btn-success">Ingresa</button>
+												<button type="submit" class="btn btn-success">Ingresa</button><br>
+												<input type="hidden" name="fbID" id="fbIDLogin">
 											</form>
 										</a>
 									</li>

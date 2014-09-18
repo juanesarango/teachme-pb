@@ -12,25 +12,31 @@
 		<br>
 		<br>
 		<div class="row">
-			<div class="col-md-6 col-md-offset-3 bckg-b-80">
+			<div class="col-md-4 col-md-offset-4 bckg-b-80">
 				<h3>Ingresa</h3>
-				<form role="form" method="post">
+				<form role="form" method="post" id="login">
+					<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+					</fb:login-button>
+					<hr>
 					<div class="form-group">
-						<label>
-							E-Mail
-							<input type="email" name="mail" value="{{mail}}" class="form-control" placeholder="email@domain.com">
-							<p class="help-block">{{error}}</p>
-						</label>
+						<label class="sr-only" for="mail">E-Mail</label>
+						<div class="input-group">
+							<div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
+							<input type="email" name="mail" value="{{mail}}" class="form-control" placeholder="email@domain.com" id="mail">
+						</div>
+						<p class="help-block">{{error}}</p>
 					</div>
 					<div class="form-group">
-						<label>
-							Contraseña
-							<input type="password" name="pw" class="form-control">
-						</label>
+						<label class="sr-only" for="pw">Contraseña</label>
+						<div class="input-group">
+							<div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+							<input type="password" name="pw" class="form-control" id="pw" placeholder="Password">
+						</div>
 					</div>
 					<div class="checkbox">
 						<input name="remember" type="checkbox" value="yes"> Recuérdame
 					</div>	
+					<input type="hidden" name="fbID" id="fbID">
 					<button type="submit" class="btn btn-success">Ingresa</button>
 					<input type="hidden" name="redirect" value={{redirect}}>
 					<br>

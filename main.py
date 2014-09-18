@@ -122,26 +122,37 @@ class signup(Handler):
 		self.mail = self.request.get('mail')
 		self.pw = self.request.get('pw')
 		self.pwcon = self.request.get('pwcon')
+		self.fbID = self.request.get('fbID')
+		self.gender = self.request.get('gender')
 		self.tzo = int(self.request.get('timezoneOffset'))
 		redirect = self.request.get('redirect')
 
 		params = dict(name = self.name, email = self.mail, lname = self.lname, redirect= redirect)
-
-		params, have_error =fns.valid_register(self.name, self.lname, self.pw, self.pwcon, self.mail, params, have_error)
+		if not self.fbID:
+			params, have_error =fns.valid_register(self.name, self.lname, self.pw, self.pwcon, self.mail, params, have_error)
 
 		if have_error:
 			self.render('signup.html', **params)
 		else:
 			u = teachme_db.user.query(teachme_db.user.mail == self.mail).get()
 			if u:
-				msg = "Ese e-mail ya se ecuentra registrado."
-				self.render("signup.html", error_mail = msg)
+				if not self.fbID:
+					msg = "Ese e-mail ya se ecuentra registrado."
+					self.render("signup.html", error_mail = msg)
+				elif self.fbID == u.fbID:
+					t = teachme_db.teacher.query(ancestor = u.key).get()
+					self.login(u, t)
+					self.redirect('/')
 			else:
-				u = teachme_db.user.register(self.name, self.lname, self.mail, self.pw, self.tzo)
+				if not self.fbID:
+					u = teachme_db.user.register(self.name, self.lname, self.mail, self.pw, self.tzo)
+				else:
+					profile_pic_r = "https://graph.facebook.com/v2.1/"+str(self.fbID)+"/picture"
+					u = teachme_db.user(name = self.name, lname = self.lname, mail = self.mail, fbID = int(self.fbID), gender = self.gender, timezoneOffset = self.tzo, profile_pic_r = profile_pic_r)
 				u.put()
 				# teachme_index.update_index(index)
 				subject = u.name + u", Bienvenido a Teachme"
-				enlace = "https://www.teachmeapp.com/verify/user/" + u.key.urlsafe()
+				enlace = "https://www.teachmeapp.com/user/verify/?r=" + u.key.urlsafe()
 				html = render_str("mail_template.html", sujeto = u.name, enlace = enlace)
 				mail.send_mail("info@teachmeapp.com", u.mail, subject, "", html = html)
 				self.login(u, None)
@@ -159,9 +170,12 @@ class login(Handler):
 	def post(self):
 		mail = self.request.get("mail")
 		pw = self.request.get("pw")
+		fbID = self.request.get('fbID')
 		redirect = self.request.get("redirect")
-
-		u = teachme_db.user.login(mail, pw)
+		if not fbID:
+			u = teachme_db.user.login(mail, pw)
+		else:
+			u = teachme_db.user.query(ndb.AND(teachme_db.user.mail == mail, teachme_db.user.fbID == int(fbID))).get()
 		if u:
 			t = teachme_db.teacher.query(ancestor = u.key).get()
 			self.login(u, t)
@@ -652,6 +666,15 @@ class buscar(Handler):
 		else:
 			self.redirect("/")
 
+class user_verify(Handler):
+	def get(self):
+		ukey = self.request.get('r')
+		user = ndb.Key(urlsafe=ukey).get()
+		if user:
+			user.verificate = True
+			user.put()
+			self.redirect('/?m=1')
+
 
 app = webapp2.WSGIApplication([('/', MainPage),
 								('/signup', signup),
@@ -659,6 +682,7 @@ app = webapp2.WSGIApplication([('/', MainPage),
 								('/logout' , logout),
 								('/buscar' , buscar),
 								('/teacher/([^/]+)?', teacher),
+								('/user/verify/([^/]+)?', user_verify),
 								('/comparte', comparte),
 								('/teachouts', teachouts),
 								('/aprende/([\w-]+)?', aprende),
