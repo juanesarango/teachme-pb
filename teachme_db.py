@@ -78,11 +78,7 @@ class teacher(ndb.Model):
 
 class areas(ndb.Model):
 	name = ndb.StringProperty(required = True)
-	url =  ndb.StringProperty()
-
-class superareas(ndb.Model):
-	name = ndb.StringProperty(required = True)
-	areas = ndb.KeyProperty(kind=areas, repeated=True)
+	subarea = ndb.StringProperty(repeated = True)
 	url =  ndb.StringProperty()
 
 class tags(ndb.Model):

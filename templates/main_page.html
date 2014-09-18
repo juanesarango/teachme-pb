@@ -45,7 +45,9 @@
 				</div>
 			</div>
 		</div>
+
 	</div>
+
 	<br>
 	<br>
 	<br>
@@ -64,7 +66,6 @@
 					<h1><span style="font-size:80px" class="flaticon-communities"></span></h1>
 					<h3>Explora entre los tutores cuál te gusta más</h3>
 				</div>
-
 				<div class="col-md-4 text-center">
 					<h1><span style="font-size:80px" class="flaticon-online"></span></h1>
 					<h3>Conéctate con el tutor en nuestra aula virtual</h3>
@@ -88,25 +89,12 @@
 		<div class="row">
 			<br>
 			<br>
-			<div class="col-md-2 col-md-offset-1">
+			<div class="col-md-2 col-md-offset-2 ">
 				<ul class="nav nav-pills nav-stacked">
-					{% for s in superareas %}
-						<li {% if loop.first %}class="active"{% endif %}><a href="#{{s.name}}" data-toggle="pill">{{s.name}}</a></li>
+					{% for a in areas %}
+						<li {% if loop.first %}class="active"{% endif %}><a href="#{{a.name}}" data-toggle="pill">{{a.name}}</a></li>
 					{% endfor %}
 				</ul>
-			</div>
-			<div class="col-md-2">
-				<div class="tab-content">
-				{% for s in superareas %}
-					<div class= "tab-pane fade {% if loop.first %}in active{% endif %}" id="{{s.name}}">
-						{% for a in s.areas %}
-							<ul class="nav nav-pills nav-stacked">
-								<li {% if loop.first %}class="active"{% endif %}><a href="#{{a.get().name}}" data-toggle="tab">{{a.get().name}}</a></li>
-							</ul>
-						{% endfor %}
-					</div>
-				{% endfor %}
-				</div>
 			</div>
 			<div class="col-md-6">
 				<hr>
