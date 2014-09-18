@@ -60,7 +60,7 @@ class Handler(webapp2.RequestHandler):
 		params['areas'] = areas
 		params['superareas'] = superareas 
 		params['suggestions'] = json.dumps(suggestions)
-		logging.error(suggestions)
+		#logging.info(suggestions)
 		return render_str(template, **params)
 
 	def render(self, template, **kw):
@@ -240,7 +240,7 @@ class teacher(Handler):
 					# Set your secret key: remember to change this to your live secret key in production: https://dashboard.stripe.com/account
 					stripe.api_key = "sk_live_4UNYyvnaDMGTjlidSqmDbuVm"
 					token = self.request.get("stripeToken")
-					logging.error(token)
+					logging.info(token)
 					# Create the charge on Stripe's servers - this will charge the user's card
 					try:
 						amount = teacher_key.fee*100
@@ -350,7 +350,7 @@ class teachouts(Handler):
 	def get(self):
 		#depurar_teachouts()
 		flag = self.request.get("t")
-		logging.error("FLAG: "+flag)
+		logging.info("FLAG: "+flag)
 		if not self.user:
 			self.abort(403)
 			return
@@ -404,7 +404,7 @@ class aprende(Handler):
 		area = teachme_db.areas.query(teachme_db.areas.url==ar).get()
 		if not area:
 			area = teachme_db.areas.get_by_id(int(ar))
-			logging.error(area)
+			logging.warning(area)
 		if area:
 			mentors = teachme_db.teacher.query(ndb.AND(teachme_db.teacher.areas == area.key.id(), teachme_db.teacher.aceptado==True)).order(-teachme_db.teacher.rating)
 			self.render("aprende.html", mentors = mentors, area = area)
@@ -507,7 +507,7 @@ class addtags(Handler):
 					teacher.put()
 					teachme_index.create_index(teacher)
 					if new_tag not in tags.name:
-						logging.error(new_tag)
+						logging.info(new_tag)
 						tags.name.append(new_tag)
 						tags.put()
 		else:

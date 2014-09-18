@@ -73,15 +73,18 @@
 <div id="drawingapp">
   <div id="toolbar">
     <div id="rad">
-      <button type="button" class="btn dropdown-toggle boardicon" data-toggle="dropdown" id="backstep" title="Deshacer cambio">
-          <span class="flaticon-reply" style="font-size:22px;"></span>
+      <button type="button" class="btn dropdown-toggle boardicon" data-toggle="dropdown" id="undo" title="Deshacer cambio">
+          <span class="flaticon-reply" style="font-size:24px;"></span>
+      </button>
+      <button type="button" class="btn dropdown-toggle boardicon" data-toggle="dropdown" id="redo" title="Rehacer cambio">
+          <span class="flaticon-arrow66" style="font-size:22px;"></span>
       </button>
       <button type="button" class="btn dropdown-toggle boardicon" data-toggle="dropdown" id="clean" title="Limpiar el tablero">
           <span class="flaticon-bin2" style="font-size:27px;"></span>
       </button>
       <div class="btn-group">
         <button type="button" class="btn dropdown-toggle boardicon" data-toggle="dropdown" id="eraser" title="Definir tamaño del borrador">
-          <span class="flaticon-eraser8" style="font-size:24px;"></span> <span class="caret"></span>
+          <span class="flaticon-eraser8" style="font-size:24px;" id="erasericon"></span> <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu" style="min-width:80px;">
           <li><a id="eraser1"><span class="flaticon-eraser8" style="font-size:12px;"></span></a></li>
@@ -91,7 +94,7 @@
       </div>
        <div class="btn-group">
         <button type="button" class="btn dropdown-toggle boardicon" data-toggle="dropdown" id="pencil" title="Definir grosor del trazo">
-          <span class="flaticon-gross" style="font-size:24px;"></span> <span class="caret"></span>
+          <span class="flaticon-gross" style="font-size:24px;" id ="pencilicon"></span> <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu" style="min-width:80px;">
           <li><a id="pencil1"><span class="flaticon-gross" style="font-size:12px;"></span></a></li>

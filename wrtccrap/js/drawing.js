@@ -16,16 +16,25 @@ function drawConfi(){
 	maxRad = 100;
 	defaultRad = 20;
 	interval = 1;
+
 	eraser =  document.getElementById('eraser');
+	iconEraser =  document.getElementById('erasericon');
 	eraser1 =  document.getElementById('eraser1');
 	eraser2 =  document.getElementById('eraser2');
 	eraser3 =  document.getElementById('eraser3');
 	pencil =  document.getElementById('pencil');
+	iconPencil =  document.getElementById('pencilicon');
 	pencil1 =  document.getElementById('pencil1');
 	pencil2 =  document.getElementById('pencil2');
 	pencil3 =  document.getElementById('pencil3');
-	backstep =  document.getElementById('backstep');
+	undo =  document.getElementById('undo');
+	redo =  document.getElementById('redo');
 	clean =  document.getElementById('clean');
+
+	cPushArray = new Array();
+	cStep = -1;
+	cPush();
+	blank = cPushArray[0];
 
 	eraser1.addEventListener('click', function(){
 		// bgColor = window.getComputedStyle(document.body, null).getPropertyValue('backgroundColor');
@@ -33,7 +42,7 @@ function drawConfi(){
 		pencilradius = radius;
 		setColor("black");
 		setRadius(3);
-		eraser.style.fontSize = 12;
+		iconEraser.style.fontSize = "12px";
 	});
 	eraser2.addEventListener('click', function(){
 		// bgColor = window.getComputedStyle(document.body, null).getPropertyValue('backgroundColor');
@@ -41,7 +50,7 @@ function drawConfi(){
 		pencilradius = radius;
 		setColor("black");
 		setRadius(12);
-		eraser.style.fontSize = 18;
+		iconEraser.style.fontSize = "18px";
 	});
 	eraser3.addEventListener('click', function(){
 		// bgColor = window.getComputedStyle(document.body, null).getPropertyValue('backgroundColor');
@@ -49,33 +58,47 @@ function drawConfi(){
 		pencilradius = radius;
 		setColor("black");
 		setRadius(40);
-		eraser.style.fontSize = 24;
+		iconEraser.style.fontSize = "24px";
 	});
 
 	pencil1.addEventListener('click', function(){
 		setRadius(1);
 		setColor(pencilcolor);
-		pencil.style.fontSize = 12;
+		pencilradius=radius;
+		iconPencil.style.fontSize = "12px";
 	});
 	pencil2.addEventListener('click', function(){
 		setRadius(2);
 		setColor(pencilcolor);
-		pencil.style.fontSize = 18;
+		pencilradius=radius;
+		iconPencil.style.fontSize = "18px";
 	});
 	pencil3.addEventListener('click', function(){
 		setRadius(4);
 		setColor(pencilcolor);
-		pencil.style.fontSize = 24;
+		pencilradius=radius;
+		iconPencil.style.fontSize = "24px";
 	});
 
 	clean.addEventListener('click',function(){
-		// Store the current transformation matrix
-		context.save();
-		// Use the identity matrix while clearing the canvas
-		context.setTransform(1, 0, 0, 1, 0, 0);
-		context.clearRect(0, 0, canvas.width, canvas.height);
-		// Restore the transform
-		context.restore();
+		cStep++;
+	    if (cStep < cPushArray.length) { cPushArray.length = cStep; }
+	    cPushArray.push(blank);
+	    context.putImageData(blank,0,0);
+		var sender = {"fn":"clearBoard"};
+		sendData(JSON.stringify(sender));
+	});
+
+	undo.addEventListener('click',function(){
+		cUndo();
+		var sender = {"fn":"undo"};
+		sendData(JSON.stringify(sender));
+	})
+
+	redo.addEventListener('click',function(){
+		cRedo();
+		var sender = {"fn":"redo"};
+		sendData(JSON.stringify(sender));
 	})
 
 	swatches = document.getElementsByClassName('swatch');
@@ -91,6 +114,7 @@ function drawConfi(){
 		swatches[i].addEventListener('click', setSwatch);
 	}
 };
+
 var putPoint = function(e){
 	if (dragging){
 		context.lineTo(e.offsetX, e.offsetY);
@@ -116,6 +140,7 @@ var engage = function(e){
 var disengage = function(e, s){
 	dragging = false;
 	context.beginPath();
+	cPush();
 	var sender = {"fn":"disengage", "disengage":true};
 	sendData(JSON.stringify(sender));
 }
@@ -152,17 +177,8 @@ var engageRemote = function(e){
 var disengageRemote = function(e){
 	draggingRemote = false;
 	context.beginPath();
+	cPush();
 }
-
-// var setRadius = function(newRadius){
-// 	if(newRadius<minRad)
-// 		newRadius = minRad;
-// 	else if(newRadius>maxRad)
-// 		newRadius = maxRad;
-// 	radius = newRadius;
-// 	context.lineWidth = radius*2;
-// 	radSpan.innerHTML = radius;
-// }
 
 var setRadius = function(newRadius){
 	radius = newRadius;
@@ -172,7 +188,6 @@ var setRadius = function(newRadius){
 function setColor(color){
 	context.fillStyle = color;
 	context.strokeStyle = color;
-	setRadius(pencilradius);
 	var active = document.getElementsByClassName('active')[0];
 	if(active){
 		active.className = 'swatch';
@@ -181,7 +196,40 @@ function setColor(color){
 
 function setSwatch(e){
 	var swatch = e.target;
+	setRadius(pencilradius);
 	setColor(swatch.style.backgroundColor);
 	swatch.className += ' active';
 	pencilcolor = swatch.style.backgroundColor;
+	iconPencil.style.color = pencilcolor;
+}
+
+function clearRemote(){
+	cStep++;
+    if (cStep < cPushArray.length) { cPushArray.length = cStep; }
+    cPushArray.push(blank);
+    context.putImageData(blank,0,0);
+}
+
+function cPush() {
+	console.log("PUSH");
+    cStep++;
+    console.log(cStep);
+    if (cStep < cPushArray.length) { cPushArray.length = cStep; }
+    cPushArray.push(context.getImageData(0,0,canvas.width,canvas.height));
+}
+
+function cUndo() {
+    if (cStep > 0) {
+    	console.log("UNDO");
+        cStep--;
+        context.putImageData(cPushArray[cStep],0,0);
+    }
+}
+
+function cRedo() {
+    if (cStep < cPushArray.length-1) {
+        console.log("REDO");
+        cStep++;
+        context.putImageData(cPushArray[cStep],0,0);
+    }
 }
