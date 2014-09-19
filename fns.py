@@ -112,3 +112,9 @@ def normalise_unicode(word):
 		return unicodedata.normalize('NFKD',word).encode('ASCII','ignore').lower()
 	else:
 		return None
+
+def alert(number):
+	alertas = {1 : ['alert-success', 'Se ha verificado tu cuenta exitosamente. Ahora a aprender!'],
+				2 : ['alert-success', 'Esta es un ensayo']}
+
+	return alertas[number]

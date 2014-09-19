@@ -10,6 +10,12 @@
 
 {% block body %}
 <div class="cover">
+	{% if alert %}   
+		<div class="alert {{alert[0]}} alert-dismissible text-center" role="alert" style="position: absolute; margin-left: 10%; width:80%;z-index: 2;">
+			<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true" >&times;</span><span class="sr-only">Cerrar</span></button>
+			{{alert[1]}}
+		</div>
+	{%endif %}
 	<div class="container-fluid">
 		<div class="row" style="margin: 120px 0 0 0;">
 			<div class="col-md-7 col-md-offset-1 font-w bckg-b-40">

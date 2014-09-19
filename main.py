@@ -97,13 +97,17 @@ class Handler(webapp2.RequestHandler):
 #Pagina principal
 class MainPage(Handler):
 	def get(self):
-		#areas = ["Matemáticas", "Física", "Química", "Biología", "Música"]
+		al = self.request.get('m')
+		if al:
+			alert = fns.alert(int(al))
+		else:
+			alert = False
 		areas = teachme_db.areas.query().order(teachme_db.areas.name)
 		mentors={}
 		for a in areas:
 			mentors[a.key.id()] = teachme_db.teacher.query(ndb.AND(teachme_db.teacher.areas == a.key.id(), teachme_db.teacher.aceptado==True)).order(-teachme_db.teacher.rating).fetch(3)
 		
-		self.render("main_page.html", mentors = mentors)
+		self.render("main_page.html", mentors = mentors, alert = alert)
 
 class signup(Handler):
 	def get(self):
