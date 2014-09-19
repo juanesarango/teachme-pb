@@ -36,8 +36,10 @@ Icon
 .Spotlight-V100
 .Trashes
 
-*.py[cod]
-.pyc
+*.py[co]
+*.pyc
+*.pyc
+*.pyc
 stripe/error.pyc
 stripe/http_client.pyc
 stripe/resource.pyc
@@ -46,10 +48,9 @@ stripe/version.pyc
 stripe/__init__.pyc
 teachme_db.pyc
 teachme_index.pyc
-
 *.pyc
 *.pyc
 main.pyc
 teachme_db.pyc
 main.pyc
-
+*.pyc

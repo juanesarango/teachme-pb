@@ -14,27 +14,24 @@
 font-style: normal;
 margin-left: 10px;
 margin-right: 10px;
-}.flaticon-bin2:before {
+}.flaticon-arrow66:before {
 	content: "\e000";
 }
-.flaticon-eraser2:before {
+.flaticon-back1:before {
 	content: "\e001";
 }
-.flaticon-eraser8:before {
+.flaticon-bin2:before {
 	content: "\e002";
 }
-.flaticon-gross:before {
+.flaticon-eraser8:before {
 	content: "\e003";
 }
-.flaticon-hanging9:before {
+.flaticon-floppy12:before {
 	content: "\e004";
 }
-.flaticon-new10:before {
+.flaticon-gross:before {
 	content: "\e005";
 }
 .flaticon-reply:before {
 	content: "\e006";
-}
-.flaticon-small82:before {
-	content: "\e007";
 }

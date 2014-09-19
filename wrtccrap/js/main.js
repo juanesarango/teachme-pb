@@ -241,6 +241,16 @@ function handleMessage(event){
     case "offScreenSharing":
       remoteScreenSharing = false;
       offRemoteScreenSharing();
+      break;
+    case "clearBoard":
+      clearRemote();
+      break;
+    case "undo":
+      cUndo();
+      break;
+    case "redo":
+      cRedo();
+      break;
   }
 }
 
