@@ -26,9 +26,12 @@ margin-right: 10px;
 .flaticon-eraser8:before {
 	content: "\e003";
 }
-.flaticon-gross:before {
+.flaticon-floppy12:before {
 	content: "\e004";
 }
-.flaticon-reply:before {
+.flaticon-gross:before {
 	content: "\e005";
+}
+.flaticon-reply:before {
+	content: "\e006";
 }

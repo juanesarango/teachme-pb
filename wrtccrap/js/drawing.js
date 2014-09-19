@@ -30,6 +30,7 @@ function drawConfi(){
 	undo =  document.getElementById('undo');
 	redo =  document.getElementById('redo');
 	clean =  document.getElementById('clean');
+	save = document.getElementById('save')
 
 	cPushArray = new Array();
 	cStep = -1;
@@ -113,6 +114,8 @@ function drawConfi(){
 	for (var i = 0, n = swatches.length; i<n; i++){
 		swatches[i].addEventListener('click', setSwatch);
 	}
+
+	save.addEventListener('click', download, false);
 };
 
 var putPoint = function(e){
@@ -134,7 +137,6 @@ var engage = function(e){
 	var sender = {"fn":"engage", "engage": true, "e":{"offsetX": e.offsetX, "offsetY": e.offsetY, "colorRemote": context.fillStyle, "widthRemote": context.lineWidth}};
 	sendData(JSON.stringify(sender));
 	putPoint(e);
-	
 }
 
 var disengage = function(e, s){
@@ -233,3 +235,39 @@ function cRedo() {
         context.putImageData(cPushArray[cStep],0,0);
     }
 }
+
+function download() {
+
+	var backgroundColor = "black";
+	var w = canvas.width;
+	var h = canvas.height;
+	var data;
+
+	if(backgroundColor){
+		//get the current ImageData for the canvas.
+		data = context.getImageData(0, 0, w, h);
+		//store the current globalCompositeOperation
+		var compositeOperation = context.globalCompositeOperation;
+		//set to draw behind current content
+		context.globalCompositeOperation = "destination-over";
+		//set background color
+		context.fillStyle = backgroundColor;
+		//draw background / rect on entire canvas
+		context.fillRect(0,0,w,h);
+	}
+	//get the image data from the canvas
+	var imageData = canvas.toDataURL('image/png');
+	
+	if(backgroundColor){
+		//clear the canvas
+		context.clearRect (0,0,w,h);
+		//restore it with original / cached ImageData
+		context.putImageData(data, 0,0);
+		//reset the globalCompositeOperation to what it was
+		context.globalCompositeOperation = compositeOperation;
+	}
+	//return the Base64 encoded data url string
+    this.href = imageData;
+    // var dt = canvas.toDataURL('image/jpg');
+    // this.href = dt;
+};
