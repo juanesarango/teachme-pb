@@ -16,12 +16,12 @@
 				<h1 style="font-size: 30px;">Encuentra <strong>Tutores</strong> en el tema que necesitas</h1>
 				<h4 style="font-size: 18px;"><strong>Teachme</strong> te permite contactar a los expertos online que necesitas en cualquier momento</h4>
 				<br>
-				<form class="form" role="form" action="/buscar" method="post">
+				<form class="form" role="form" action="/buscar/" method="get">
 					<div class="row">
 						<div class="col-md-10">
 							<div class="form-group">
 								<label class="sr-only" for="search_query">Buscar</label>
-								<input type="text" placeholder="En que necesitas ayuda? Trata con 'Cálculo diferencial'" class="form-control input-lg" id="search_query" name="query_string">
+								<input type="text" placeholder="En que necesitas ayuda? Trata con 'Cálculo diferencial'" class="form-control input-lg" id="search_query" name="q">
 							</div>
 						</div>
 						<div class="col-md-2">
@@ -76,7 +76,7 @@
 	</div>
 	<br>
 	<div class="row">
-		<p class="text-center font-w">Te gusta? Compartenos con amor &nbsp; &nbsp; &nbsp; 
+		<p class="text-center font-w">Te gusta? Compartenos con <span class="flaticon-heart15"></span> &nbsp; &nbsp; &nbsp; <br>
 			<a style="font-size:27px"  href="https://www.facebook.com/dialog/share?app_id=1519397808297922&display=popup&href={{shareUrl}}&redirect_uri={{shareUrl}}" class="black-hover share-fb" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
 				<span class="flaticon-facebook29"></span>
 			</a>

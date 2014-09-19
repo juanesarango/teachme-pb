@@ -58,7 +58,6 @@ class Handler(webapp2.RequestHandler):
 		params['areas'] = self.areas
 		params['suggestions'] = json.dumps(suggestions)
 		params['shareUrl'] = self.request.url
-		logging.error(suggestions)
 		return render_str(template, **params)
 
 	def render(self, template, **kw):
@@ -650,10 +649,18 @@ class manualtask(Handler):
 
 class buscar(Handler):
 	def get(self):
-		self.redirect("/")
+		query_string = self.request.get("q")
+		results = teachme_index.make_query(fns.normalise_unicode(query_string))
+		if results:
+			number_returned = len(results.results)
+			mentors = []
+			for docs in results:
+				mentors.append(ndb.Key(urlsafe = docs.fields[5].value).get())
+			self.render("search_results.html", results=results, mentors= mentors, number_returned = number_returned, query_string=query_string)
+		# self.redirect("/")
 		
 	def post(self):
-		query_string = self.request.get("query_string")
+		query_string = self.request.get("q")
 		results = teachme_index.make_query(fns.normalise_unicode(query_string))
 		if results:
 			number_returned = len(results.results)
@@ -678,7 +685,7 @@ app = webapp2.WSGIApplication([('/', MainPage),
 								('/signup', signup),
 								('/login' , login),
 								('/logout' , logout),
-								('/buscar' , buscar),
+								('/buscar/' , buscar),
 								('/teacher/([^/]+)?', teacher),
 								('/user/verify/', user_verify),
 								('/comparte', comparte),

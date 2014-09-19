@@ -23,18 +23,21 @@ margin-left: 20px;*/
 .flaticon-facebook29:before {
 	content: "\e002";
 }
-.flaticon-online:before {
+.flaticon-heart15:before {
 	content: "\e003";
 }
-.flaticon-share11:before {
+.flaticon-online:before {
 	content: "\e004";
 }
-.flaticon-social105:before {
+.flaticon-share11:before {
 	content: "\e005";
 }
-.flaticon-social38:before {
+.flaticon-social105:before {
 	content: "\e006";
 }
-.flaticon-social5:before {
+.flaticon-social38:before {
 	content: "\e007";
+}
+.flaticon-social5:before {
+	content: "\e008";
 }

@@ -102,9 +102,9 @@
 						{% endif %}
 					</ul>
 					{% if active_page != "main_page" %}
-						<form class="navbar-form navbar-left" role="search" action="/buscar" method="post">
+						<form class="navbar-form navbar-left" role="search" action="/buscar/" method="get">
 							<div class="form-group">
-								<input id="search_query" name="query_string" type="text" class="form-control" placeholder="Quiero aprender...">
+								<input id="search_query" name="q" type="text" class="form-control" placeholder="Quiero aprender...">
 							</div>
 							<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
 						</form>
@@ -160,7 +160,7 @@
 						{% endif %}
 							<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="flaticon-share11" style="font-size:25px"></span></a>
 								<ul class="dropdown-menu" style="font-size:30px;">
-									<li class="dropdown-header">Te gusta? Compartenos con amor :)</li>
+									<li class="dropdown-header text-center">Te gusta? Compartenos con <span class="flaticon-heart15"></span></li>
 									<li class="text-center">
 										<a style="display: inline-block; padding: 0px;"  href="https://www.facebook.com/dialog/share?app_id=1519397808297922&display=popup&href={{shareUrl}}&redirect_uri={{shareUrl}}" id="share-fb" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
 											<span class="flaticon-facebook29"></span>

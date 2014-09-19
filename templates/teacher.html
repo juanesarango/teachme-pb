@@ -2,7 +2,7 @@
 {% set shareImg = mentor.profile_pic_r %}
 {% set title = mentor.name+" "+mentor.lname+" | Teachme" %}
 {% set shareText = "Conoce a "+mentor.name+" "+mentor.lname+" y accede a todo el conocimiento que posee" %}
-{% set sharHt = "teachme" %}
+{% set shareHt = "teachme" %}
 
 {% block description %}
 	<meta name="description" content="{{mentor.name}} {{mentor.lname}} te puede ayudar en temas como {% for a in t_areas %}{{a.name}}{% if not loop.last %}, {% else %}.{% endif %}{% endfor %}">
@@ -21,7 +21,7 @@
 				<br>
 				<div class="col-md-10 col-md-offset-1 bckg-w-80">
 					<div class="share-mentor">
-						<p class="text-center">Compárteme 
+						<p class="text-center">Compárteme <span class="flaticon-heart15"></span>
 							<a style="font-size:27px"  href="https://www.facebook.com/dialog/share?app_id=1519397808297922&display=popup&href={{shareUrl}}&redirect_uri={{shareUrl}}" class="share-fb" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
 								<span class="flaticon-facebook29"></span>
 							</a>

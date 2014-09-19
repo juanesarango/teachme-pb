@@ -176,32 +176,38 @@ a:visited{
 }
 /*Botón comparte*/
 #share-fb:hover{
+  text-decoration: none;
   color: #425f9c;
   background-color: transparent;
 }
 
 #share-tw:hover{
+  text-decoration: none;
   color: #00aced;
   background-color: transparent;
 }
 
 #share-gplus:hover{
+  text-decoration: none;
   color: #C7382E;
   background-color: transparent;
 }
 
 /*Comparte en mentores y pagina principal hover*/
 .share-fb:hover{
+  text-decoration: none;
   color: #425f9c;
   background-color: transparent;
 }
 
 .share-tw:hover{
+  text-decoration: none;
   color: #00aced;
   background-color: transparent;
 }
 
 .share-gplus:hover{
+  text-decoration: none;
   color: #C7382E;
   background-color: transparent;
 }

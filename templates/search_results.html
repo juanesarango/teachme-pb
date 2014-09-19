@@ -1,9 +1,15 @@
 {% extends "base_main.html" %}
-{% set shareImg = "https://www.teachmeapp.com/static/comparte2.jpg" %}
-{% set title = "Los mejores tutores en "+query_string+" | Teachme" %}
-{% set shareText = "Conéctate online con los mejores tutores en "+query_string+" y recibe ayuda instantánea" %}
-{% set sharHt = "teachme" %}
-
+{% if results.number_found >= 1%}
+	{% set shareImg = "https://www.teachmeapp.com/static/comparte2.jpg" %}
+	{% set title = "Los mejores tutores en "+query_string+" | Teachme" %}
+	{% set shareText = "Conéctate online con los mejores tutores en "+query_string+" y recibe ayuda instantánea" %}
+	{% set shareHt = "teachme" %}
+{% else %}
+	{% set shareImg = "https://www.teachmeapp.com/static/comparte2.jpg" %}
+	{% set title = "Eres un teso en "+query_string+"? | Teachme" %}
+	{% set shareText = "Únete a Teachme, comparte todo tu conocimiento en "+query_string+" y monetiza tu tiempo" %}
+	{% set shareHt = "sihaytrabajo" %}
+{% endif %}
 {% block description %}
 	<meta name="description" content="Conéctate online con los mejores tutores en {{query_string}} y recibe ayuda instantánea">
 {% endblock %}
@@ -24,42 +30,53 @@
 			    <br>
 			    <br>
 			    {% for t in mentors %}
-			    {% if loop.first%}
-			    <hr>
-			    {% endif %}
-				<div class="row">
-					<div class="col-md-12 center">
-						<div class="row">
-							<div class="col-md-4" style="padding-left:45px;padding-top: 22px;">
-								<br>
-								<a href="/teacher/{{t.key.urlsafe()}}">
-									<img class="img-circle" style="height:120px;width:120px;" {% if t.profile_pic_r %}src="{{t.profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}>
-								</a>
-							</div>
-							<div class="col-md-7">
-								<a href="/teacher/{{t.key.urlsafe()}}" style="text-decoration:none;"><h3>{{t.name}} {{t.lname}}</h3>
-								<span style="color: white;">
-								<strong>Áreas:</strong> {%for area in areas %}{%for t_area in t.areas %}{%if area.key.id()==t_area %}{{area.name}}&nbsp;{% endif %}{% endfor %}{% endfor %}<br>
-								<strong>Conocimientos:</strong> {%for tag in t.tags[:8] %}{{tag}}{% if not loop.last %},&nbsp;{% endif %}{% endfor %}<br>
-			    				<strong>Ciudad:</strong> {{t.ciudad}}<br>
-			    				<strong>País:</strong> {{t.pais}}<br>
-			    				<span class="glyphicon glyphicon-credit-card"></span> USD {{t.fee}}<br>
-			    				<p class="pull-left"><span class="starReviews-gray"><span class="starReviews" style="width:{{t.rating*20}}%"></span></span></p></span>
-								<p class="pull-right">{% if t.date_available|first_date %}<span class="glyphicon glyphicon-calendar"></span> {{t.date_available|first_date}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{% endif %}</p>
-								</a>
+				    {% if loop.first%}
+				    	<hr>
+				    {% endif %}
+					<div class="row">
+						<div class="col-md-12 center">
+							<div class="row">
+								<div class="col-md-4" style="padding-left:45px;padding-top: 22px;">
+									<br>
+									<a href="/teacher/{{t.key.urlsafe()}}">
+										<img class="img-circle" style="height:120px;width:120px;" {% if t.profile_pic_r %}src="{{t.profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}>
+									</a>
+								</div>
+								<div class="col-md-7">
+									<a href="/teacher/{{t.key.urlsafe()}}" style="text-decoration:none;"><h3>{{t.name}} {{t.lname}}</h3>
+									<span style="color: white;">
+									<strong>Áreas:</strong> {%for area in areas %}{%for t_area in t.areas %}{%if area.key.id()==t_area %}{{area.name}}&nbsp;{% endif %}{% endfor %}{% endfor %}<br>
+									<strong>Conocimientos:</strong> {%for tag in t.tags[:8] %}{{tag}}{% if not loop.last %},&nbsp;{% endif %}{% endfor %}<br>
+				    				<strong>Ciudad:</strong> {{t.ciudad}}<br>
+				    				<strong>País:</strong> {{t.pais}}<br>
+				    				<span class="glyphicon glyphicon-credit-card"></span> USD {{t.fee}}<br>
+				    				<p class="pull-left"><span class="starReviews-gray"><span class="starReviews" style="width:{{t.rating*20}}%"></span></span></p></span>
+									<p class="pull-right">{% if t.date_available|first_date %}<span class="glyphicon glyphicon-calendar"></span> {{t.date_available|first_date}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{% endif %}</p>
+									</a>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<hr>
+					<hr>
 				{% else %}
-				<div class="row">
-					<div class="col-md-12 col-md-offset-1">
-						<span class="glyphicon glyphicon-info-sign"></span> Tu búsqueda no arrojó ningún resultado. Inténtalo nuevamente.
-						<br>
-						<br>
+					<div class="row">
+						<div class="col-md-11 col-md-offset-1">
+							<span class="glyphicon glyphicon-info-sign"></span> Opps, lo sentimos. Ayudanos a encontrar personas con este conocimiento compartiendo lo siguiente en tus redes sociales. Te lo sabremos agradecer y los usuarios de <strong>Teachme</strong> también <span class="flaticon-heart15"></span>
+							<p class="text-center font-w">
+								<a style="font-size:37px"  href="https://www.facebook.com/dialog/share?app_id=1519397808297922&display=popup&href={{shareUrl}}&redirect_uri={{shareUrl}}" class="share-fb" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
+									<span class="flaticon-facebook29"></span>
+								</a>
+								<a style="font-size:37px"  href="https://twitter.com/share?url={{shareUrl}}&via=teachme_app&text={{shareText|replace(' ','+')}}&hashtags={{shareHt}}" class="share-tw" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
+									<span class="flaticon-social38"></span>
+								</a>
+								<a style="font-size:37px"  href="https://plus.google.com/share?url={{shareUrl}}" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="share-gplus">
+									<span class="flaticon-social5"></span>
+								</a>
+							</p>
+							<br>
+							<br>
+						</div>
 					</div>
-				</div>
 				{% endfor %}
 			</div>
 		</div>
