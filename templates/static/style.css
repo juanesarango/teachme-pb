@@ -168,6 +168,13 @@ a:visited{
   padding: 0px;
 }
 
+.share-mentor{
+  position: absolute;
+  right: 8px;
+  top: 4px;
+  z-index: 1;
+}
+/*Botón comparte*/
 #share-fb:hover{
   color: #425f9c;
   background-color: transparent;
@@ -181,6 +188,42 @@ a:visited{
 #share-gplus:hover{
   color: #C7382E;
   background-color: transparent;
+}
+
+/*Comparte en mentores y pagina principal hover*/
+.share-fb:hover{
+  color: #425f9c;
+  background-color: transparent;
+}
+
+.share-tw:hover{
+  color: #00aced;
+  background-color: transparent;
+}
+
+.share-gplus:hover{
+  color: #C7382E;
+  background-color: transparent;
+}
+/*Comparte en mentores, pagina principal*/
+.share-fb{
+  color: inherit;
+  background-color: transparent;
+}
+
+.share-tw{
+  color: inherit;
+  background-color: transparent;
+}
+
+.share-gplus{
+  color: inherit;
+  background-color: transparent;
+}
+/*Para el comparte, hover negro*/
+
+.black-hover:hover{
+  color: black;
 }
 
 .boton-verde{
@@ -369,12 +412,13 @@ blockquote{
 .navbar-default {
   background-color: transparent;
   border-color: transparent;
+  z-index: 2;
 }
 
 .navbar-inverse{
   background-color: rgba(0,0,0,0.8);
   border-color: #080808;
-  z-index: 1;
+  z-index: 2;
 }
 
 .img-100{

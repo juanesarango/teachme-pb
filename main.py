@@ -458,7 +458,7 @@ class profile_teacher(Handler, blobstore_handlers.BlobstoreUploadHandler):
 					images.delete_serving_url(teacher.profile_pic)
 				blobstore.delete(teacher.profile_pic)
 			teacher.profile_pic = blob_info.key()
-			teacher.profile_pic_r = images.get_serving_url(teacher.profile_pic, size = 140, secure_url=True)
+			teacher.profile_pic_r = images.get_serving_url(teacher.profile_pic, size = 200, secure_url=True)
 			self.user.profile_pic = blob_info.key()
 			self.user.profile_pic_r = teacher.profile_pic_r
 			teacher.put()
@@ -667,7 +667,7 @@ class buscar(Handler):
 class user_verify(Handler):
 	def get(self):
 		ukey = self.request.get('r')
-		user = ndb.Key(urlsafe=ukey).get()
+		user = ndb.Key(urlsafe = str(ukey)).get()
 		if user:
 			user.verificate = True
 			user.put()
@@ -680,7 +680,7 @@ app = webapp2.WSGIApplication([('/', MainPage),
 								('/logout' , logout),
 								('/buscar' , buscar),
 								('/teacher/([^/]+)?', teacher),
-								('/user/verify/([^/]+)?', user_verify),
+								('/user/verify/', user_verify),
 								('/comparte', comparte),
 								('/teachouts', teachouts),
 								('/aprende/([\w-]+)?', aprende),

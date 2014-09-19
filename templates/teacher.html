@@ -1,6 +1,6 @@
 {% extends "base_main.html" %}
-{% set shareImg = mentor.profile_pic %}
-{% set title = mentor.name+" "mentor.lname+" | Teachme" %}
+{% set shareImg = mentor.profile_pic_r %}
+{% set title = mentor.name+" "+mentor.lname+" | Teachme" %}
 {% set shareText = "Conoce a "+mentor.name+" "+mentor.lname+" y accede a todo el conocimiento que posee" %}
 {% set sharHt = "teachme" %}
 
@@ -20,6 +20,19 @@
 			<div class="row">
 				<br>
 				<div class="col-md-10 col-md-offset-1 bckg-w-80">
+					<div class="share-mentor">
+						<p class="text-center">Compárteme 
+							<a style="font-size:27px"  href="https://www.facebook.com/dialog/share?app_id=1519397808297922&display=popup&href={{shareUrl}}&redirect_uri={{shareUrl}}" class="share-fb" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
+								<span class="flaticon-facebook29"></span>
+							</a>
+							<a style="font-size:27px"  href="https://twitter.com/share?url={{shareUrl}}&via=teachme_app&text={{shareText|replace(' ','+')}}&hashtags={{shareHt}}" class="share-tw" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
+								<span class="flaticon-social38"></span>
+							</a>
+							<a style="font-size:27px"  href="https://plus.google.com/share?url={{shareUrl}}" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="share-gplus">
+								<span class="flaticon-social5"></span>
+							</a>
+						</p>
+					</div>
 					<div class="row">
 						<div class="col-md-3 col-md-offset-1">
 							<br>
