@@ -226,7 +226,7 @@
 					{% for r in reviews%}
 						<div class="row">
 							<div class="col-md-2 col-md-offset-1">
-								<img class="img-circle img-40" {% if r.user.get().profile_pic_r.profile_pic_r %}src="{{r.user.get().profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}>
+								<img class="img-circle img-40" {% if r.user.get().profile_pic_r %}src="{{r.user.get().profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}>
 							</div>
 							<div class="col-md-8">
 								<span class="starReviews-gray"><span class="starReviews" style="width:{{r.rating*20}}%"></span></span> <span>{{r.date.strftime("%b %d, %Y")}}</span>

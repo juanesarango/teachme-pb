@@ -684,6 +684,56 @@ class user_verify(Handler):
 			user.put()
 			self.redirect('/?m=1')
 
+class account(Handler):
+	def get(self):
+		if not self.user:
+			self.abort(403)
+			return
+		al = self.request.get('m')
+		if al:
+			alert = fns.alert(int(al))
+		else:
+			alert = False
+		self.render("account.html", alert = alert)
+
+	def post(self):
+		if not self.user:
+			self.abort(403)
+			return
+		name = self.request.get("name")
+		lname = self.request.get("lname")
+		oldpw = self.request.get("oldpw")
+		newpw = self.request.get("newpw")
+		update = False
+		updatenpw = False
+
+		if self.user.name != name:
+			self.user.name = name
+			if self.teacher:
+				self.teacher.name = name
+			update = True
+			updatenpw = True
+		if self.user.lname != lname:
+			self.user.lname = lname
+			if self.teacher:
+				self.teacher.lname = lname
+			update = True
+			updatenpw = True
+		if newpw:
+			if teachme_db.valid_pw(self.user.mail, oldpw, self.user.pw_hash):
+				self.user.pw_hash = teachme_db.make_pw_hash(self.user.mail, newpw)
+				update = True
+			else:
+				self.redirect('/account?m=3')
+				return
+		if update:
+			self.user.put()
+			if self.teacher and updatenpw:
+				self.teacher.put()
+			self.redirect('/account?m=2')
+		else:
+			self.redirect('/account?m=4')
+
 
 app = webapp2.WSGIApplication([('/', MainPage),
 								('/signup', signup),
@@ -696,6 +746,7 @@ app = webapp2.WSGIApplication([('/', MainPage),
 								('/teachouts', teachouts),
 								('/aprende/([\w-]+)?', aprende),
 								('/profile/teacher/([0-9]+)?', profile_teacher),
+								('/account', account),
 								('/editabout', editabout),
 								('/addtags', addtags),
 								('/calendar/teacher/add', calendar_teacher_add),
