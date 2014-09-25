@@ -11,7 +11,7 @@
 [class^="flaticon-"]:before, [class*=" flaticon-"]:before,
 [class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
 	font-family: Flaticon;
-/*        font-size: 20px;
+        /*font-size: 20px;
 font-style: normal;
 margin-left: 20px;*/
 }.flaticon-communities:before {
@@ -26,18 +26,21 @@ margin-left: 20px;*/
 .flaticon-heart15:before {
 	content: "\e003";
 }
-.flaticon-online:before {
+.flaticon-linkedin7:before {
 	content: "\e004";
 }
-.flaticon-share11:before {
+.flaticon-online:before {
 	content: "\e005";
 }
-.flaticon-social105:before {
+.flaticon-share11:before {
 	content: "\e006";
 }
-.flaticon-social38:before {
+.flaticon-social105:before {
 	content: "\e007";
 }
-.flaticon-social5:before {
+.flaticon-social38:before {
 	content: "\e008";
+}
+.flaticon-social5:before {
+	content: "\e009";
 }

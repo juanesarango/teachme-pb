@@ -21,7 +21,7 @@
 				<br>
 				<div class="col-md-10 col-md-offset-1 bckg-w-80">
 					<div class="share-mentor">
-						<p class="text-center">Compárteme <span class="flaticon-heart15"></span>
+						<p class="text-center">Compárteme <!-- <span class="flaticon-heart15"></span> -->
 							<a style="font-size:27px"  href="https://www.facebook.com/dialog/share?app_id=1519397808297922&display=popup&href={{shareUrl}}&redirect_uri={{shareUrl}}" class="share-fb" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
 								<span class="flaticon-facebook29"></span>
 							</a>
@@ -79,7 +79,7 @@
 													<div class="row">
 														<div class="form-group">
 															<label for="t-select-area">Área</label>
-															<select name ="select-area" class="form-control" id="t-selec-area" required>
+															<select name ="select-area" class="form-control" id="t-select-area" required>
 																{% for a in t_areas %}
 																	<option value= "{{a.name}}">{{a.name}}</option>
 																{% endfor %}
@@ -89,21 +89,34 @@
 													<div class="row">
 														<div class="form-group">
 															<label for="t-temas">Temas de la sesión</label>
-															<textarea name="tema" class="form-control" id="t-temas" rows="6" placeholder="Aprovecha este espacio para comunicarle al mentor los temas que quisieras abordar durante la sesión." required></textarea>
+															<textarea name="tema" class="form-control" id="t-temas" rows="7" placeholder="Aprovecha este espacio para comunicarle al mentor los temas que quisieras abordar durante la sesión." required></textarea>
 														</div>
 													</div>
 												</div>
 											</div>
 											<input type="hidden" name="timezoneOffset" id="timezoneOffset">
 										</form>
+										<div class="row">
+											<div class ="col-md-10 col-md-offset-1">
+												<h6 id="error-tema" style="color: red" align="center"></h6>
+												<h6 id="error-hora" style="color: red" align="center"></h6>
+												{% if fechas|length ==0 %}
+													<h5 align="center">El mentor no ha configurado horas disponibles&nbsp;<br>
+													<a href="#"><span class="glyphicon glyphicon-comment"></span> Envíale un mensaje</a> para proponerle una hora</h5>
+												{% else %}
+													<h5 align="center">Ninguna hora te satisface?&nbsp;
+													<a href="#"><span class="glyphicon glyphicon-comment"></span> Envíale un mensaje</a> para proponerle una hora</h5>
+												{% endif %}
+											</div>
+										</div>
 						      		</div>
 						      		<div class="modal-footer">
-						        		<button type="button" class="btn btn-default" data-dismiss="modal">Atrás</button>
+										<button type="button" class="btn btn-default" data-dismiss="modal">Atrás</button>
 										{% if mentor.fee > 0 %}
-											<button class="btn btn-success" type="button" data-toggle="modal" data-target="#modalPayment" id="buttonSchedule" disabled="true"><span class="glyphicon glyphicon-calendar"></span>&nbsp;Agendar</button>
+											<button class="btn btn-success" type="button" data-toggle="modal" data-target="#modalPayment" id="buttonSchedule" disabled="false"><span class="glyphicon glyphicon-calendar"></span>&nbsp;Agendar</button>
 										{% else %}
 											<input type="hidden" name="metodo_pago" value="GRATIS">
-											<button class="btn btn-success center-block" type="submit" id="buttonSchedule" disabled="true"><span class="glyphicon glyphicon-calendar"></span>&nbsp;Agendar</button>
+											<button class="btn btn-success center-block" type="submit" id="buttonSchedule" disabled="false"><span class="glyphicon glyphicon-calendar"></span>&nbsp;Agendar</button>
 										{% endif %}
 						      		</div>
 						    	</div>
@@ -122,8 +135,7 @@
 						<div class="col-md-3 col-md-offset-1" id="teacher-data">
 							<h4><small>Ciudad:</small> {{mentor.ciudad}}</h4>
 							<h4><small>País:</small> {{mentor.pais}}</h4>
-							<h4><small>Perfil de linkedin: </small></h4>
-							<p><a href="{{mentor.linkedin}}" target="_blank">{{mentor.linkedin}}</a></p>
+							<h4><small>Redes Sociales:   </small>{% if mentor.linkedin %}<a href="{{mentor.linkedin}}" target="_blank"><span class="flaticon-linkedin7" style="color: #4875B4; font-size:25px;"></span></a>{% endif %}</h4>
 						</div>
 						<div class="col-md-3">
 							<h4><small>Áreas del conocimiento</small></h4>
@@ -150,7 +162,6 @@
 										<img src="/static/img/creditcards.png" class="img-responsive inline">
 							  		</div>
 									<div class="modal-body font-b">
-										
 										<span class"payment-errors"></span>
 										<div class="form-group">
 											<div class="input-group">
@@ -194,7 +205,14 @@
 												<a href="https://stripe.com/" target="_blank"><img src="/static/img/poweredStripe.png"></a>
 											</div>
 										</div>
-										
+										<div class="row">
+											<div class="col-md-10 col-md-offset-1">
+												<h5>Profesor: {{mentor.name}}&nbsp;{{mentor.lname}}</h5>
+												<h5>Detalle: Una sesión de <span id="tema-factura"></span> en TeachMe</h5>
+												<h5>Pago:{{mentor.fee}} USD</h5>
+												<h5>Horas: 1</h5>
+											</div>
+										</div>
 									</div>
 									<br>
 									<br>
@@ -333,10 +351,36 @@
 		    				s = s+"<div class='radio'><label><input type='radio' class='input-radio' name='dateMeet' value='"+UTCdate+"'>"+hours[date][h].toLocaleTimeString()+"</label></div>";
 		    			};
 		    			s = s+"</div";
+		    			
 		    			return s;
-					});
+					})
+					setupRadioEvent();
 				},
+
 			});
+
+			var setupRadioEvent = function (){
+				$(".input-radio").on('change',function(el){
+					var errors=0;
+					if($('#t-temas').val()!=""){
+						$("#error-tema").html("");
+					}
+					else{
+						errors++;
+					}
+					if($('.input-radio:checked').length !=0){
+						$("#error-hora").html("");
+					}
+					else{
+						errors++;
+					}
+					if(errors==0){
+						$('#buttonSchedule').prop('disabled', false);	
+					}
+			});
+
+			}
+		
 			var timezoneOffset = new Date().getTimezoneOffset();
 			$('#timezoneOffset').val(timezoneOffset);
 
@@ -345,9 +389,41 @@
 			// 		$('#schedule-form').find('button').prop('disabled', false);
 			// 	}
 			// })
+			// $('#t-temas').change(function(){
+			// 	$('#buttonSchedule').prop('disabled', false);
+			// })
+
 			$('#t-temas').change(function(){
-				$('#buttonSchedule').prop('disabled', false);
+				var errors = 0;
+				var tema = $('#t-select-area').val();
+				$("#tema-factura").html(tema);
+
+				if($('#t-temas').val()==""){
+					$("#error-tema").html("Escribe algo para que el mentor tenga información sobre lo que quieres");
+					$('#t-temas').focus()
+					errors++;	
+				}
+				else{
+					$("#error-tema").html("");
+				}
+
+				if($('.input-radio:checked').length ==0){
+					$("#error-hora").html("Selecciona una hora disponible");
+					$('#horas').focus()
+					errors++;
+				}
+				else{
+					$("#error-hora").html("");
+				}
+
+				if(errors==0){
+					$('#buttonSchedule').prop('disabled', false);	
+				}
+				else{
+					$('#buttonSchedule').prop('disabled', true);	
+				}
 			})
+			
 		});
 
 	</script>
@@ -405,7 +481,6 @@
 				return false;
 			});
 
-
 			function stripeResponseHandler(status, response) {
 			  var $form = $('#payment-form');
 			  if (response.error) {
@@ -423,8 +498,7 @@
 				$('#schedule-form').get(0).submit();
 			  }
 			};
-
-			})
+		})
 	</script>
 
 {% endblock %}
