@@ -5,6 +5,7 @@ from google.appengine.api import mail
 import teachme_db
 import logging
 import main
+from libs.elibom import Client
 
 def parse_24_12(hora, minuto):
 	if int(hora)<=12:
@@ -121,6 +122,27 @@ def tout_user_update(user, tout, date):
 	if date in u.date_reserved:
 		u.date_reserved.remove(date)
 	u.put()
+
+def notify_sms(user, user2, method, who, date):
+	#Función para enviar notificaciones de agendamiento y recordatorio por sms. 
+	#method 0 para enviar notificación de agendamiento y 1 para recordatorio.
+	#who 0 para mentor, 1 para user.
+
+	msgMentor = { 0 : [u'{user} ha agendado una sesión contigo en Teachme: {date}. Mira los detalles en tu correo',
+					   u'Has agendado una sesión con {user} en Teachme: {date}. Mira los detalles en tu correo'],
+				  1 : [u'Recuerda que en minutos tienes una sesión con {user} en Teachme. {date}',
+				  	   u'Recuerda que en minutos tienes una sesión con {user} en Teachme. {date}']}
+
+	elibom = Client.ElibomClient('info@teachmeapp.com', 'Xw1EqiL4q0')
+
+	if user.movil:
+		try:
+			response = elibom.send_message(str(user.movil), msguser[method][who].format(user = user2.name, date = date.strftime('%I:%M %p, %d %b %Y')))
+			logging.info('Elibom %s, cel: %s' % (response, user.movil))
+		except Client.ElibomClientExeption, e:
+			logging.error(e)
+	return
+
 
 def teachouts_24():
 	dif26 = datetime.datetime.now() + datetime.timedelta(hours = 26)
