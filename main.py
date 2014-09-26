@@ -155,7 +155,7 @@ class signup(Handler):
 				subject = u.name + u", Bienvenido a Teachme"
 				enlace = "https://www.teachmeapp.com/user/verify/?r=" + u.key.urlsafe()
 				html = render_str("mail_template.html", sujeto = u.name, enlace = enlace)
-				mail.send_mail("info@teachmeapp.com", u.mail, subject, "", html = html)
+				mail.send_mail("TeachMe <info@teachmeapp.com>", u.mail, subject, "", html = html)
 				self.login(u, None)
 				if not redirect:
 					redirect = '/'
@@ -293,8 +293,8 @@ class teacher(Handler):
 					html_user = render_str("mail_booking.html", sujeto = self.user.name, mentor = teacher_key, t = t, date = date_learner)
 					html_mentor = render_str("mail_booking_mentor.html", sujeto = teacher_key.name, u = self.user, t = t, date = date_mentor)
 					subject = "Confirmación de sesión agendada"
-					mail.send_mail("info@teachmeapp.com", self.user.mail, subject, "", html = html_user)
-					mail.send_mail("info@teachmeapp.com", teacher_key.mail, subject, "", html = html_mentor)
+					mail.send_mail("TeachMe <info@teachmeapp.com>", self.user.mail, subject, "", html = html_user)
+					mail.send_mail("TeachMe <info@teachmeapp.com>", teacher_key.mail, subject, "", html = html_mentor)
 
 					if metodo== "GRATIS":
 						self.redirect("/teachouts")
@@ -437,9 +437,6 @@ class profile_teacher(Handler, blobstore_handlers.BlobstoreUploadHandler):
 			self.abort(403)
 			return
 
-		# t_areas = []
-		# for a in teacher.areas:
-		# 	t_areas.append(teachme_db.areas.get_by_id(int(a)).name)
 		reviews = teachme_db.review.query(ancestor = teacher.key).order(-teachme_db.review.date)
 		fechas = json.dumps(booking.UTCfechas(teacher.date_available))
 		dates = json.dumps(fns.solo_dates(teacher.date_available))
@@ -508,16 +505,55 @@ class msg2mentor(Handler):
 
 		if mensaje and teacher_key:
 			teacher = ndb.Key(urlsafe=str(teacher_key)).get()
-			logging.error(teacher)
-			logging.error(mensaje)
-			html_mail = render_str("mail_question.html", para=teacher, de=self.user, mensaje=mensaje)
+			m = teachme_db.msg(mFrom=self.user.key, mTo=teacher.key.parent(), mensaje=mensaje)
+			m.put()
+			c = teachme_db.chat(parent=self.user.key, teacher=teacher.key, msgs=[m])
+			c.put()
+			html_mail = render_str("mail_question.html", para=teacher, de=self.user, m=m, chat=c.key.urlsafe())
 			logging.error("ok template")
-			mail.send_mail(sender=self.user.mail, to=teacher.mail, subject="Un usuario te ha hecho una pregunta", body="", html=html_mail)
+			mail.send_mail(sender="TeachMe <info@teachmeapp.com>", to=teacher.mail, subject="Un usuario de Teachme te ha hecho una pregunta", body="", html=html_mail)
 			logging.error("ok")
-			self.redirect("/profile/teacher/%s" % teacher.key.id())
+			self.redirect("/teacher/%s" % teacher_key)
 		else:
 			self.redirect("/")
 
+class reply(Handler):
+	def get(self):
+		r = self.request.get("r")
+		logging.error(r)
+		msg = ndb.Key(urlsafe=str(r)).get()
+		c = self.request.get("c")
+		logging.error(c)
+		chat = ndb.Key(urlsafe=str(c)).get()
+		learner = msg.mFrom.get()
+		teacher = msg.mTo.get()
+		fecha = msg.created
+		self.render("responder.html", mentor=teacher, learner=learner, mensaje=msg.mensaje, fecha=fecha, msg=r, chat=c)
+
+	def post(self):
+		newMsg = self.request.get("replyMsg")
+		msgKey = self.request.get("msgKey")
+		chatKey = self.request.get("chatKey")
+		logging.error(newMsg)
+		logging.error(msgKey)
+		logging.error(chatKey)
+		msg = ndb.Key(urlsafe=str(msgKey)).get()
+		chat = ndb.Key(urlsafe=str(chatKey)).get()
+
+		if not newMsg:
+			e_replyMsg = "No has escrito ningún mensaje para responder"
+			self.render("responder.html", mentor=msg.teacher, learner=msgKey.parent().get(), mensaje=msg.mensaje, fecha=msg.created, msg=msgKey.urlsafe(), chat=chatKey.urlsafe(), e_replyMsg=e_replyMsg)
+			return
+		else:
+			m = teachme_db.msg(mFrom=msg.mTo, mTo=msg.mFrom, mensaje=newMsg)
+			m.put()
+			chat.msgs.append(m)
+			chat.put()
+			html_mail = render_str("mail_reply.html", para=msg.mFrom.get(), de=msg.mTo.get(), m=m, p=msg, chat=chat.key.urlsafe())
+			logging.error("ok template")
+			mail.send_mail(sender="TeachMe <info@teachmeapp.com>", to=msg.mFrom.get().mail, subject="El mentor de Teachme ha respondido tu pregunta", body="", html=html_mail)
+			logging.error("ok")
+			self.redirect("/")
 
 class addtags(Handler):
 	def post(self):
@@ -599,6 +635,7 @@ class calificar(Handler):
 		else:
 			msg = "Ingresa tu calificación"
 			self.render("/teachouts.html", msg = msg)
+
 class contacto(Handler):
 	def get(self):
 		self.render("contacto.html")
@@ -610,12 +647,12 @@ class contacto(Handler):
 		if not email:
 			email = " "
 		if name and text:
-			sender_address = "info@teachmeapp.com"
+			sender_address = "TeachMe <info@teachmeapp.com>"
 			subject = u'Contáctanos auto'
 			body = "Mensaje de: "+format(name)+"""
 			"""+format(text)+"""
 			"""+format(email)
-			mail.send_mail(sender_address, "info@teachmeapp.com", subject, body)
+			mail.send_mail(sender_address,"TeachMe <info@teachmeapp.com>", subject, body)
 			e_text = "Gracias por tomarte el tiempo de escribirnos :)"
 			self.render("contacto.html", e_text=e_text)
 			return
@@ -722,6 +759,7 @@ app = webapp2.WSGIApplication([('/', MainPage),
 								('/profile/teacher/([0-9]+)?', profile_teacher),
 								('/editabout', editabout),
 								('/msg2mentor', msg2mentor),
+								('/reply/', reply),
 								('/addtags', addtags),
 								('/calendar/teacher/add', calendar_teacher_add),
 								('/terminos', terminos),

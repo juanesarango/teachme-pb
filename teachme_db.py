@@ -116,3 +116,14 @@ class payments(ndb.Model):
 	cantidad = ndb.FloatProperty(required = True)
 	metodo = ndb.StringProperty()
 	charge = ndb.StringProperty()
+
+class msg(ndb.Model):
+	mFrom = ndb.KeyProperty(kind = "user")
+	mTo = ndb.KeyProperty(kind = "user")
+	created = ndb.DateTimeProperty(auto_now_add = True)
+	mensaje = ndb.TextProperty()
+
+class chat(ndb.Model):
+	msgs = ndb.StructuredProperty(msg, repeated=True)
+	teacher = ndb.KeyProperty(kind= "teacher")
+	# user es el parent

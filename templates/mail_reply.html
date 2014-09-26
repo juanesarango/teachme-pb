@@ -32,7 +32,7 @@
 						Hola <strong>{{para.name}}</strong>!
 					</p>
 					<p class="text-justify">
-						Tienes una pregunta y/o solicitud de {{de.name}} {{de.lname}}:
+						La pregunta que le has hecho a {{de.name}} {{de.lname}} ha sido respondida:
 					</p>
 					<br>
 					<div class="row">
@@ -43,11 +43,10 @@
 								</div>
 								<div class="col-md-9">
 									<div class="row">
-										{{m.mensaje}}
-										<br>
-										<a href="http://teachmeapp.com/reply/?r={{m.key.urlsafe()}}&c={{chat}}" target="_blank">
-											<button class="btn btn-success">Responder Pregunta</button>
-										</a>
+										<p>Tu pregunta:</p>
+										<p>{{p.mensaje}}</p>
+										<p>Su respuesta:</p>
+										<p>{{m.mensaje}}</p>
 									</div>
 								</div>
 							</div>
