@@ -100,12 +100,12 @@
 											<div class ="col-md-10 col-md-offset-1">
 												<h6 id="error-tema" style="color: red" align="center"></h6>
 												<h6 id="error-hora" style="color: red" align="center"></h6>
-												{% if fechas|length ==0 %}
+												{% if fechas|length == 0 %}
 													<h5 align="center">El mentor no ha configurado horas disponibles&nbsp;<br>
-													<a href="#"><span class="glyphicon glyphicon-comment"></span> Envíale un mensaje</a> para proponerle una hora</h5>
+													<a href="#" data-toggle="modal" data-target="#modalMsg"><span class="glyphicon glyphicon-comment"></span> Envíale un mensaje</a> para proponerle una hora</h5>
 												{% else %}
 													<h5 align="center">Ninguna hora te satisface?&nbsp;
-													<a href="#"><span class="glyphicon glyphicon-comment"></span> Envíale un mensaje</a> para proponerle una hora</h5>
+													<a href="#" data-toggle="modal" data-target="#modalMsg"><span class="glyphicon glyphicon-comment"></span> Envíale un mensaje</a> para proponerle una hora</h5>
 												{% endif %}
 											</div>
 										</div>
@@ -113,16 +113,15 @@
 						      		<div class="modal-footer">
 										<button type="button" class="btn btn-default" data-dismiss="modal">Atrás</button>
 										{% if mentor.fee > 0 %}
-											<button class="btn btn-success" type="button" data-toggle="modal" data-target="#modalPayment" id="buttonSchedule" disabled="false"><span class="glyphicon glyphicon-calendar"></span>&nbsp;Agendar</button>
+											<button class="btn btn-success pull-right" type="button" data-toggle="modal" data-target="#modalPayment" id="buttonSchedule" disabled="false"><span class="glyphicon glyphicon-calendar"></span>&nbsp;Agendar</button>
 										{% else %}
 											<input type="hidden" name="metodo_pago" value="GRATIS">
-											<button class="btn btn-success center-block" type="submit" id="buttonSchedule" disabled="false"><span class="glyphicon glyphicon-calendar"></span>&nbsp;Agendar</button>
+											<button class="btn btn-success pull-right" type="submit" id="buttonSchedule" disabled="false"><span class="glyphicon glyphicon-calendar"></span>&nbsp;Agendar</button>
 										{% endif %}
 						      		</div>
 						    	</div>
 						  	</div>
 						</div>
-						<!-- End Booking Modal -->
 						<div class="col-md-7">
 							<h1>{{mentor.name}}&nbsp;<small>{{mentor.lname}}</small></h1>
 							<br>
@@ -150,6 +149,28 @@
 							{% endfor %}
 						</div>
 					</div>
+
+					<div class="modal fade" id="modalMsg">
+					  <div class="modal-dialog">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					        <h4 class="modal-title"><img class="img-circle img-60" {% if mentor.profile_pic_r %}src="{{mentor.profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}>&nbsp;&nbsp;&nbsp;&nbsp;Mensaje para {{mentor.name}} {{mentor.lname}}:</h4>
+					      </div>
+					      <div class="modal-body">
+					        <form method="post" action="/msg2mentor" role="form">
+								<textarea name="message" class="form-control" id="t-message" rows="3" placeholder="Solicítale una hora al tutor que se ajuste a tu horario, o pregúntale algo que quieras saber sobre él, antes de agendar." required></textarea>
+								<input type="hidden" name="teacher_key" value="{{mentor.key.urlsafe()}}">
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+					        <button type="submit" class="btn btn-success">Enviar mensaje</button>
+							</form>	
+					      </div>
+					    </div><!-- /.modal-content -->
+					  </div><!-- /.modal-dialog -->
+					</div><!-- /.modal -->
+
 					{% if mentor.fee > 0 %}
 					<!-- Modal Plataforma de pago-->
 					<div class="modal fade" id="modalPayment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

@@ -495,6 +495,30 @@ class editabout(Handler):
 
 		self.redirect("/profile/teacher/%s" % self.teacher.key.id())
 
+class msg2mentor(Handler):
+	def post(self):
+		if not self.user:
+			self.abort(403)
+		mensaje = self.request.get("message")
+		logging.error("MENSAJE")
+		logging.error(mensaje)
+		teacher_key = self.request.get("teacher_key")
+		logging.error("TEACHER")
+		logging.error(teacher_key)
+
+		if mensaje and teacher_key:
+			teacher = ndb.Key(urlsafe=str(teacher_key)).get()
+			logging.error(teacher)
+			logging.error(mensaje)
+			html_mail = render_str("mail_question.html", para=teacher, de=self.user, mensaje=mensaje)
+			logging.error("ok template")
+			mail.send_mail(sender=self.user.mail, to=teacher.mail, subject="Un usuario te ha hecho una pregunta", body="", html=html_mail)
+			logging.error("ok")
+			self.redirect("/profile/teacher/%s" % teacher.key.id())
+		else:
+			self.redirect("/")
+
+
 class addtags(Handler):
 	def post(self):
 		tags = teachme_db.tags.query().get()
@@ -697,6 +721,7 @@ app = webapp2.WSGIApplication([('/', MainPage),
 								('/aprende/([\w-]+)?', aprende),
 								('/profile/teacher/([0-9]+)?', profile_teacher),
 								('/editabout', editabout),
+								('/msg2mentor', msg2mentor),
 								('/addtags', addtags),
 								('/calendar/teacher/add', calendar_teacher_add),
 								('/terminos', terminos),
