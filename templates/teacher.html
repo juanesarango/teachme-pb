@@ -57,13 +57,13 @@
 						<!-- Start Booking Modal -->
 						<div class="modal fade" id="modalBooking" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 						  	<div class="modal-dialog modal-lg">
-						    	<div class="modal-content">
-						      		<div class="modal-header">
-						        		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span></button>
-						        		<h4 class="modal-title" id="myModalLabel">Horarios Disponibles</h4>
-						      		</div>
-						      		<div class="modal-body">
-							        	<form role="form" method="post" id="schedule-form">
+						  		<form role="form" method="post" id="schedule-form">
+							    	<div class="modal-content">
+							      		<div class="modal-header">
+							        		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span></button>
+							        		<h4 class="modal-title" id="myModalLabel">Horarios Disponibles</h4>
+							      		</div>
+							      		<div class="modal-body">  	
 											<div class="row">
 												<div class="col-md-4 col-md-offset-1" style="padding:0px;">
 													<label>Agenda libre</label>
@@ -95,31 +95,31 @@
 												</div>
 											</div>
 											<input type="hidden" name="timezoneOffset" id="timezoneOffset">
-										</form>
-										<div class="row">
-											<div class ="col-md-10 col-md-offset-1">
-												<h6 id="error-tema" style="color: red" align="center"></h6>
-												<h6 id="error-hora" style="color: red" align="center"></h6>
-												{% if fechas|length == 0 %}
-													<h5 align="center">El mentor no ha configurado horas disponibles&nbsp;<br>
-													<a href="#" data-toggle="modal" data-target="#modalMsg"><span class="glyphicon glyphicon-comment"></span> Envíale un mensaje</a> para proponerle una hora</h5>
-												{% else %}
-													<h5 align="center">Ninguna hora te satisface?&nbsp;
-													<a href="#" data-toggle="modal" data-target="#modalMsg"><span class="glyphicon glyphicon-comment"></span> Envíale un mensaje</a> para proponerle una hora</h5>
-												{% endif %}
+											<div class="row">
+												<div class ="col-md-10 col-md-offset-1">
+													<h6 id="error-tema" style="color: red" align="center"></h6>
+													<h6 id="error-hora" style="color: red" align="center"></h6>
+													{% if fechas|length == 0 %}
+														<h5 align="center">El mentor no ha configurado horas disponibles&nbsp;<br>
+														<a href="#" data-toggle="modal" data-target="#modalMsg"><span class="glyphicon glyphicon-comment"></span> Envíale un mensaje</a> para proponerle una hora</h5>
+													{% else %}
+														<h5 align="center">Ninguna hora te satisface?&nbsp;
+														<a href="#" data-toggle="modal" data-target="#modalMsg"><span class="glyphicon glyphicon-comment"></span> Envíale un mensaje</a> para proponerle una hora</h5>
+													{% endif %}
+												</div>
 											</div>
-										</div>
-						      		</div>
-						      		<div class="modal-footer">
-										<button type="button" class="btn btn-default" data-dismiss="modal">Atrás</button>
-										{% if mentor.fee > 0 %}
-											<button class="btn btn-success pull-right" type="button" data-toggle="modal" data-target="#modalPayment" id="buttonSchedule" disabled="false"><span class="glyphicon glyphicon-calendar"></span>&nbsp;Agendar</button>
-										{% else %}
-											<input type="hidden" name="metodo_pago" value="GRATIS">
-											<button class="btn btn-success pull-right" type="submit" id="buttonSchedule" disabled="false"><span class="glyphicon glyphicon-calendar"></span>&nbsp;Agendar</button>
-										{% endif %}
-						      		</div>
-						    	</div>
+							      		</div>
+							      		<div class="modal-footer">
+											<button type="button" class="btn btn-default" data-dismiss="modal">Atrás</button>
+											{% if mentor.fee > 0 %}
+												<button class="btn btn-success pull-right" type="button" data-toggle="modal" data-target="#modalPayment" id="buttonSchedule" disabled="false"><span class="glyphicon glyphicon-calendar"></span>&nbsp;Agendar</button>
+											{% else %}
+												<input type="hidden" name="metodo_pago" value="GRATIS">
+												<button class="btn btn-success pull-right" type="submit" id="buttonSchedule" disabled="false"><span class="glyphicon glyphicon-calendar"></span>&nbsp;Agendar</button>
+											{% endif %}
+							      		</div>
+							    	</div>
+						    	</form>
 						  	</div>
 						</div>
 						<div class="col-md-7">
@@ -265,7 +265,7 @@
 					{% for r in reviews%}
 						<div class="row">
 							<div class="col-md-2 col-md-offset-1">
-								<img class="img-circle img-40" {% if r.user.get().profile_pic_r.profile_pic_r %}src="{{r.user.get().profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}>
+								<img class="img-circle img-40" {% if r.user.get().profile_pic_r %}src="{{r.user.get().profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}>
 							</div>
 							<div class="col-md-8">
 								<span class="starReviews-gray"><span class="starReviews" style="width:{{r.rating*20}}%"></span></span> <span>{{r.date.strftime("%b %d, %Y")}}</span>

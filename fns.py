@@ -114,7 +114,9 @@ def normalise_unicode(word):
 		return None
 
 def alert(number):
-	alertas = {1 : ['alert-success', 'Se ha verificado tu cuenta exitosamente. Ahora a aprender!'],
-				2 : ['alert-success', 'Esta es un ensayo']}
+	alertas = { 1 : ['alert-success', u'Se ha verificado tu cuenta exitosamente. Ahora a aprender!'],
+				2 : ['alert-success', u'Tu información ha sido actualizada exitosamente'],
+				3 : ['alert-danger', u'Tu contraseña es inválida'],
+				4 : ['alert-warning', u'No realizaste ningun cambio']}
 
 	return alertas[number]

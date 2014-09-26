@@ -114,14 +114,19 @@
 							<li><a href="/teachouts">Tus Sesiones</a></li>
 						{% endif %}
 						{% if user %}
-							<li>
-								{% if teacher %}
-									<a href="/profile/teacher/{{teacher.key.id()}}">{{teacher.name}}</a>
-								{% else %}
-									<!-- realizar modulo de perfil de usuarios -->
-									<a href="/">{{user.name}}</a>
-								{% endif %}
-							</li>
+							{% if teacher %}
+								<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">{{teacher.name}}<b class="caret"></b></a>
+									<ul class="dropdown-menu">
+										<li><a href="/profile/teacher/{{teacher.key.id()}}"><span class="glyphicon glyphicon-user"></span> Perfil</a></li>
+										<li><a href="/account"><span class="glyphicon glyphicon-cog"></span> Cuenta</a></li>
+									</ul>
+								</li>
+							{% else %}
+								<!-- realizar modulo de perfil de usuarios -->
+								<li>
+									<a href="/account">{{user.name}}</a>
+								</li>
+							{% endif %}
 							<li><a href="/logout">Salir</a></li>
 						{% else %}
 							<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Ingresar<b class="caret"></b></a>

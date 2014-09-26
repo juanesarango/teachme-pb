@@ -305,27 +305,21 @@ a:visited{
   border: 0;
   }
 
-  .brow{
-  	background-color: rgba(255, 255, 255, 0.2);
-  	padding: 30px;
-  	width: 850px;
-  	position: relative;
-  	margin: 0 auto 0 auto;
+.brow{
+	background-color: rgba(255, 255, 255, 0.2);
+	padding: 30px;
+	width: 850px;
+	position: relative;
+	margin: 0 auto 0 auto;
   }
 
-  .cover{
-    background-image: url('/static/portada.jpg');
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-size: cover;
-    min-height: 350px;
-/*
-    -webkit-filter: blur(5px);
-    -moz-filter: blur(5px);
-    -o-filter: blur(5px);
-    -ms-filter: blur(5px);
-    filter: blur(5px);*/
-  }
+.cover{
+  background-image: url('/static/portada.jpg');
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 350px;
+}
 
 .form-background{
   background-image: url("/static/comparte2.jpg"); 
@@ -431,6 +425,11 @@ blockquote{
 .img-100{
   height: 100px;
   width: 100px;
+}
+
+.img-40{
+  height: 40px;
+  width: 40px;
 }
 
 .img-150{
