@@ -5,7 +5,7 @@ from google.appengine.api import mail
 import teachme_db
 import logging
 import main
-from libs.elibom import Client
+#from libs.elibom import Client
 
 def parse_24_12(hora, minuto):
 	if int(hora)<=12:

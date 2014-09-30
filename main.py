@@ -290,8 +290,8 @@ class teacher(Handler):
 					date_mentor = t.date - datetime.timedelta(minutes = teacher_key.timezoneOffset)
 					date_learner = t.date - datetime.timedelta(minutes = self.user.timezoneOffset)
 
-					booking.notify_sms(teacher_key, self.user, 0, 0, date_mentor) #SMS to mentor
-					booking.notify_sms(self.user, teacher_key, 0, 1, date_learner) #SMS to user
+					# booking.notify_sms(teacher_key, self.user, 0, 0, date_mentor) #SMS to mentor
+					# booking.notify_sms(self.user, teacher_key, 0, 1, date_learner) #SMS to user
 
 					html_user = render_str("mail_booking.html", sujeto = self.user.name, mentor = teacher_key, t = t, date = date_learner)
 					html_mentor = render_str("mail_booking_mentor.html", sujeto = teacher_key.name, u = self.user, t = t, date = date_mentor)
