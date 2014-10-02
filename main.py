@@ -429,7 +429,6 @@ class faq(Handler):
 		self.render("faq.html")
 
 class profile_teacher(Handler, blobstore_handlers.BlobstoreUploadHandler):
-
 	def get(self, te_id):
 		if not self.user:
 			self.abort(403)

@@ -5,29 +5,150 @@
 {% set shareHt = "faq" %}
 
 {% block body %}
-<script language="JavaScript">
-	function autoResize(id){
-	    var newheight;
-	    var newwidth;
-
-	    if(document.getElementById){
-
-	        newheight=document.getElementById(id).contentWindow.document.body.scrollHeight;
-	        newwidth=document.getElementById(id).contentWindow.document.body.scrollWidth;
-	    }
-	    document.getElementById(id).height= (newheight+20) + "px";
-	    document.getElementById(id).width= (newwidth) + "px";
-	}
-</script>
 
 <div class="backgnd" style="background-image: url('/static/signup.jpg')">
 	<br>
 	<br>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-8 col-md-offset-2 bckg-b-80">
+			<div class="col-md-8 col-md-offset-2 bckg-w-80" style="padding-left: 30px; padding-right: 30px;">
 				<br>
-				<iframe src="/static/legal/FAQ.htm" id="iframe1" style="width: 100%; padding:40px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" vspace="0" hspace="0" onLoad="autoResize('iframe1');">Tu navegador está desactualizado.</iframe>
+				<h1> Preguntas Frecuentes - FAQ</h1>
+				<h3> Acerca de Teachme</h3>
+				<div class="panel-group" id="accordion">
+					<div class="panel panel-default bckg-none">
+						<div class="panel-heading">
+						 	<h4 class="panel-title">
+						    	<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+						      	1. Qué es TeachMe?
+						    	</a>
+						  	</h4>
+						</div>
+						<div id="collapseOne" class="panel-collapse collapse in">
+						  	<div class="panel-body">
+						    	TeachMe es una plataforma global para compartir conocimientos en diversas áreas, ya sean académicas (Matemáticas, Química, Economía), profesionales (Contabilidad, Mercadeo, Análisis de Datos, Diseño gráfico), artísticas (Dibujo, Guitarra), y muchas otras más (Cocina, Alemán, Pintura, etc).<br>
+						    	<br>
+						    	TeachMe busca ser un lugar de encuentro entre personas que quieran aprender de un determinado tema, y expertos que quieran enseñarlo.<br> 
+						    	<br>
+						    	TeachMe cuenta con las herramientas necesarias para que las personas puedan conectarse con los expertos en un aula virtual. Herramientas de videollamada, tablero digital compartido en tiempo real, chat, compartimiento de pantalla y archivos, entre otros. Buscando generar una  experiencia cómoda y efectiva para una clase. 
+						  	</div>
+						</div>
+					</div>
+					<div class="panel panel-default bckg-none">
+						<div class="panel-heading">
+						 	<h4 class="panel-title">
+						    	<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+						      	2. Cómo funciona TeachMe?
+						    	</a>
+						  	</h4>
+						</div>
+						<div id="collapseTwo" class="panel-collapse collapse">
+							<div class="panel-body">
+						    	Es una plataforma en la cual los diferentes mentores están clasificados por áreas de conocimiento. Cada mentor tiene su perfil que detalla sus datos de experiencia y habilidades. Igualmente allí configuran su disponibilidad de horas para realizar las clases.<br>
+						    	<br>
+						    	El usuario cuando desee agendar una clase debe ir al perfil del mentor y seleccionar una hora apropiada. Si la clase tiene costo, debe pagarla mediante tarjeta de crédito a través de nuestra plataforma de pago segura.<br>
+						    	<br>
+						    	Cuando una sesión ha sido agendada con éxito, tanto el usuario como el mentor reciben un correo de confirmación de sesión agendada. Y pueden ver el evento en la pestaña "Tus Sesiones" de la barra superior del sitio web.<br>
+						    	<br>
+						    	Cuando llega la hora, desde 10 minutos antes de la sesión agendada, se activa el botón verde para que ambas personas se puedan unir a la sesión. Cuando ambos se han conectado pueden ahora realizar la clase, y compratir su conocimiento, haciendo uso de las características que TeachMe pone a su disposición.<br>    
+						  	</div>
+						</div>
+					</div>
+					<div class="panel panel-default bckg-none">
+						<div class="panel-heading">
+						 	<h4 class="panel-title">
+						    	<a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+						      	3. Quiénes se pueden registrar en TeachMe?
+						    	</a>
+						  	</h4>
+						</div>
+						<div id="collapseThree" class="panel-collapse collapse">
+							<div class="panel-body">
+						    	En TeachMe se puede registrar cualquier persona que desee aprender sobre algún tema específico. E igualmente, si alguién es experto en un tema y desea enseñarlo se puede regitrar para hacerlo.TeachMe es una plataforma abierta que busca ser un marketplace de expertos en diversos temas.<br> 
+						    	<br>
+						    	Para asegurar la calidad de los mentores, TeachMe cuenta con un sistema de calificación con el cual los aprendices valoran la calidad del mentor y de las clases recibidas, de este modo los mismos usuarios destacan a los mentores excelentes en su labor de enseñanza.<br> 
+						  	</div>
+						</div>
+					</div>
+					<div class="panel panel-default bckg-none">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+						    	<a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+						      	4. Si quiero recibir clases, cómo me registro?
+						    	</a>
+						  	</h4>
+						</div>
+						<div id="collapseFour" class="panel-collapse collapse">
+							<div class="panel-body">
+						    	En la barra superior de www.teachmeapp.com encuentras el botón para Registrarte gratis. Llena los datos con tu información real y responde al correo de confirmación para que podamos confirmar tu identidad. Y eso es todo! Puedes comenzar a disfrutar de TeachMe y agendar con un profesor!
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-default bckg-none">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+						    	<a data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
+						      	5. Si quiero enseñar clases, cómo me registro?
+						    	</a>
+						  	</h4>
+						</div>
+						<div id="collapseFive" class="panel-collapse collapse">
+							<div class="panel-body">
+						    	Primero te debes registrar como cualquier usuario desde el botón "Regístrate Gratis" de la barrra superior. Luego, debes ingresar a la pestaña "Enseña" y allí llenar los datos que brindarán mayor información sobre tu experiencia y conocimientos.<br>
+						    	<br>
+						    	Cuando termines, habrás realizado una postulación exitosa. El próximo paso, consiste en que nosotros estudiemos tu caso, para aprobarte como mentor de TeachMe. Este proceso no durará más de 48 horas, y básicamente buscamos que las personas que se postulen lo hagan con la seriedad del caso, con datos reales, y un perfil completo. Con el fin último de asegurar la calidad de quiénes ofrecen sus servicios en TeachMe. 
+							</div>
+						</div>
+					</div>
+				</div>
+				<h3> Requerimientos Técnicos</h3>
+				<div class="panel panel-default bckg-none">
+					<div class="panel-heading">
+					 	<h4 class="panel-title">
+					    	<a data-toggle="collapse" data-parent="#accordion" href="#collapseSix">
+					      	1. Qué necesito para que TeachMe funcione?
+					    	</a>
+					  	</h4>
+					</div>
+					<div id="collapseSix" class="panel-collapse collapse">
+					  	<div class="panel-body">
+					  		Para TeachMe se requiere:<br>
+					  		<ul>
+						  		<li>Un computador o dispositivo con acceso a internet</li>
+						  		<li>Navegador de internet Chrome</li>
+						  		<li>Una cámara web o dispositivo de entrada de video</li>
+						  		<li>Un micrófono o dispositivo de entrada de audio</li>
+						  		<li>Parlantes o dispositivos de salida de audio</li>
+					  		</ul>
+					  		
+					  		TeachMe es una aplicación web optimizada para escritorio y móviles. Sin embargo para la videollamada y algunas de las características del aula virtual hay ciertas restricciones. El navegador recomendado es <strong>Google Chrome</strong> (<a href="https://www.google.com/chrome/browser/" target="_blank">https://www.google.com/chrome/browser/</a>). Para poder disfrutar de cada una de las funcionalidades de Teachme.<br>
+					  		<br>
+					    	A continuación detallamos compatibilidad de algunas funcionalidades:<br>
+					    	<ul>
+						    	<li>Sitio web: Escritorio y Móvil</li>
+						    	<li>Videollamada: Escritorio, con navegadores Chrome, Mozilla, Safari y Opera. Móvil, tabletas con sistema operativo Android y sólo celulares de la línea Nexus.</li>
+						    	<li>Tablero Digital: Escritorio, con navegador Chrome.</li>
+					    	</ul>
+					  	</div>
+					</div>
+				</div>
+				<h3> Solucionar Problemas</h3>
+				<div class="panel panel-default bckg-none">
+					<div class="panel-heading">
+					 	<h4 class="panel-title">
+					    	<a data-toggle="collapse" data-parent="#accordion" href="#collapse7">
+					      	1. La videollamada no conecta?
+					    	</a>
+					  	</h4>
+					</div>
+					<div id="collapse7" class="panel-collapse collapse">
+					  	<div class="panel-body">
+					  		Puede suceder, que a veces no conecta en el primer intento y tampoco al refrescar la página. Aquí te sugerimos que cierres el navegador y vuelvas a abrirlo<br>
+					  		<br>
+					  		Si no sigue funcionando, comunícate con <a href="mailto:info@teachmeapp.com?Subject=Soluci&#243;n%20de%20problemas" target="_top">info@teachmeapp.com</a> y cuéntanos de tu caso para solucionarlo en el menor tiempo posible.
+					  	</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
