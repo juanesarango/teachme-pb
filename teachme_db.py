@@ -27,7 +27,9 @@ class user(ndb.Model):
 	timezoneOffset = ndb.IntegerProperty()
 	fbID = ndb.IntegerProperty()
 	gender = ndb.StringProperty()
+	movil = ndb.IntegerProperty()
 
+	verificate = ndb.BooleanProperty()
 
 	teachouts = ndb.KeyProperty(repeated = True, kind = "teachout")
 	teachouts_expired = ndb.KeyProperty(repeated = True, kind = "teachout")
@@ -75,6 +77,8 @@ class teacher(ndb.Model):
 	reviews = ndb.IntegerProperty()
 
 	aceptado = ndb.BooleanProperty()
+
+	movil = ndb.IntegerProperty()
 
 class areas(ndb.Model):
 	name = ndb.StringProperty(required = True)

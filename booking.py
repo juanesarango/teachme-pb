@@ -5,7 +5,8 @@ from google.appengine.api import mail
 import teachme_db
 import logging
 import main
-from libs.elibom import Client
+from lib.elibom import Client
+from lib.twilio.rest import TwilioRestClient
 
 def parse_24_12(hora, minuto):
 	if int(hora)<=12:
@@ -128,21 +129,23 @@ def notify_sms(user, user2, method, who, date):
 	#method 0 para enviar notificación de agendamiento y 1 para recordatorio.
 	#who 0 para mentor, 1 para user.
 
-	msgMentor = { 0 : [u'{user} ha agendado una sesión contigo en Teachme: {date}. Mira los detalles en tu correo',
-					   u'Has agendado una sesión con {user} en Teachme: {date}. Mira los detalles en tu correo'],
-				  1 : [u'Recuerda que en minutos tienes una sesión con {user} en Teachme. {date}',
-				  	   u'Recuerda que en minutos tienes una sesión con {user} en Teachme. {date}']}
+	msgUser = { 0 : [u'{user} agendo contigo en Teachme: {date}. Mira los detalles en tu correo',
+					   u'Has agendado con {user} en Teachme: {date}. Mira los detalles en tu correo'],
+				  1 : [u'Recuerda tu cita con {user} en Teachme. {date}',
+				  	   u'Recuerda tu cita con {user} en Teachme. {date}']}
 
 	elibom = Client.ElibomClient('info@teachmeapp.com', 'Xw1EqiL4q0')
+	twilio = TwilioRestClient('AC72f22161a9c99728f48fe1584fe9f59b', '6b7c664f6d0a5d9191bfb2d7d7e47f05')	
 
 	if user.movil:
-		try:
-			response = elibom.send_message(str(user.movil), msguser[method][who].format(user = user2.name, date = date.strftime('%I:%M %p, %d %b %Y')))
-			logging.info('Elibom %s, cel: %s' % (response, user.movil))
-		except Client.ElibomClientExeption, e:
-			logging.error(e)
+		# try:
+		# 	response = elibom.send_message(str(user.movil), msgUser[method][who].format(user = user2.name, date = date.strftime('%I:%M %p, %d %b %Y')))
+		# 	logging.info('Elibom %s, cel: %s' % (response, user.movil))
+		# except Client.ElibomClientException, e:
+		# 	logging.error(e)
+		message = twilio.messages.create(from_='+17248248188', to='+'+str(user.movil),body=msgUser[method][who].format(user = user2.name, date = date.strftime('%I:%M %p, %d %b %Y')))
+		logging.info('twilio %s, cel: %s' % (message.sid, user.movil))
 	return
-
 
 def teachouts_24():
 	dif26 = datetime.datetime.now() + datetime.timedelta(hours = 26)

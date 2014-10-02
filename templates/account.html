@@ -1,7 +1,8 @@
 {% extends "base_main.html" %}
 {% set title = "Cuenta de"+user.name %}
 {% block body %}
-
+<link rel="stylesheet" href="/static/css/intlTelInput.css">
+<script src="/static/js/intlTelInput.min.js"></script>
 <div class="backgnd" style="background-image: url('/static/profile.jpg')">
 	{% if alert %}   
 		<div class="alert {{alert[0]}} alert-dismissible text-center" role="alert" style="position: absolute; margin-left: 10%; width:80%;z-index: 2;">
@@ -52,6 +53,13 @@
 							</div>
 						{% endif %}
 						<div class="form-group">
+							<label for="name" class="col-sm-3 control-label">Movil</label>
+							<div class="col-sm-7">
+								<input type="tel" id="movil" class="form-control" value="{{user.movil}}" name="movil">
+								<p class="help-block">Tu número de celular solo se utilizará para enviarte notificaciones de tus sesiones.</p>
+							</div>
+						</div>
+						<div class="form-group">
 							<label for="update" class="col-sm-3 control-label">Actualizaciones</label>
 							<div class="col-sm-7">
 								<div class="checkbox">
@@ -66,6 +74,19 @@
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		$("#movil").intlTelInput({
+		//autoFormat: false,
+        //autoHideDialCode: false,
+        //defaultCountry: "jp",
+        //nationalMode: true,
+        //onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+        preferredCountries: ['co', 'us']
+        //responsiveDropdown: true,);
+        });
+	})
+	</script>
 </div>
 
 {% endblock %}

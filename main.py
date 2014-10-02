@@ -344,7 +344,8 @@ class comparte(Handler):
 
 		about = self.request.get("about")
 
-		t = teachme_db.teacher(name = name, lname=lname, mail = mail, fee = 0, ciudad = ciudad, pais = pais, linkedin = linkedin, areas = areas_in, about = about, aceptado = False, reviews=0, rating=0, timezoneOffset = self.user.timezoneOffset, parent = self.user.key)
+		t = teachme_db.teacher(name = name, lname=lname, mail = mail, fee = 0, profile_pic=self.user.profile_pic, profile_pic_r = self.user.profile_pic_r,
+							   ciudad = ciudad, pais = pais, linkedin = linkedin, areas = areas_in, about = about, aceptado = False, reviews=0, rating=0, timezoneOffset = self.user.timezoneOffset, parent = self.user.key)
 		t.put()
 		teachme_index.create_index(t)
 		self.login(self.user, t)
@@ -768,6 +769,7 @@ class account(Handler):
 		lname = self.request.get("lname")
 		oldpw = self.request.get("oldpw")
 		newpw = self.request.get("newpw")
+		movil = self.request.get("movil")
 		update = False
 		updatenpw = False
 
@@ -781,6 +783,12 @@ class account(Handler):
 			self.user.lname = lname
 			if self.teacher:
 				self.teacher.lname = lname
+			update = True
+			updatenpw = True
+		if self.user.movil != movil:
+			self.user.movil = int(movil)
+			if self.teacher:
+				self.teacher.movil = int(movil)
 			update = True
 			updatenpw = True
 		if newpw:
