@@ -1,36 +1,47 @@
 {% extends "base_main.html" %}
-{% block title %}
-	Términos de uso | Teachme
-{% endblock %}
-{% block description %}
-	<meta name="description" content="Términos de uso de esta gran aplicación.">
-{% endblock %}
+{% set shareImg = "https://www.teachmeapp.com/static/signup.jpg"%}
+{% set title = "Preguntas frecuentes | Teachme" %}
+{% set shareText = "Como funciona? como se realiza la asesoría? todas las preguntas que tengas, acá te las resolvemos" %}
+{% set shareHt = "faq" %}
+
 {% block body %}
-
-<script language="JavaScript">
-	function autoResize(id){
-	    var newheight;
-	    var newwidth;
-
-	    if(document.getElementById){
-
-	        newheight=document.getElementById(id).contentWindow.document.body.scrollHeight;
-	        newwidth=document.getElementById(id).contentWindow.document.body.scrollWidth;
-	    }
-	    document.getElementById(id).height= (newheight) + "px";
-	    document.getElementById(id).width= (newwidth) + "px";
-	}
-
-</script>
 
 <div class="backgnd" style="background-image: url('/static/signup.jpg')">
 	<br>
 	<br>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-8 col-md-offset-2 bckg-b-80">
+			<div class="col-md-8 col-md-offset-2 bckg-w-80" style="padding-left: 30px; padding-right: 30px;">
 				<br>
-				<iframe src="/static/legal/TERMINOS DE USO.htm" id="iframe1" style="width: 100%; padding:40px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" vspace="0" hspace="0" onLoad="autoResize('iframe1');">Tu navegador está desactualizado.</iframe>
+				<h3 align="center">T&Eacute;RMINOS DE USO</h3>
+				<br>
+				<ul>
+				<li><p align="justify">T&eacute;rminos aplicables. Mediante el uso de TEACHME usted acepta que quedar&aacute; vinculado a nuestros T&eacute;rminos de Servicio y en general a la pol&iacute;tica de privacidad de TEACHME, las Pol&iacute;ticas de producto y los t&eacute;rminos adicionales.</p></li>
+
+				<li><p align="justify">T&eacute;rminos adicionales: todos los cuales juntos se les conoce como las &quot;Condiciones&quot;. Prestaci&oacute;n del servicio (Mentor&iacute;as) como se describe en estos T&eacute;rminos es un &quot;servicio&quot; al utilizar nuestro Servicio, usted acepta estos T&eacute;rminos. Es importante que usted lea cada uno de estos t&eacute;rminos, ya que constituyen un acuerdo legal entre usted y TEACHME en relaci&oacute;n con su uso del Servicio.</p></li>
+
+				<li><p align="justify">Uso del servicio. Usted puede utilizar el Servicio para navegar, localizar y/o programar una Mentor&iacute;a. Todas las Mentor&iacute;as son dictadas por mentores inscritos a TEACHME, a estos se les refiere como proveedores.</p></li>
+
+				<li><p align="justify">Aviso legal importante. TEACHME NO PARTICIPA EN LA PRESTACI&Oacute;N DE LAS MENTOR&Iacute;AS O DE LA CREACI&Oacute;N DEL CONTENIDO DE CUALQUIER MENTOR&Iacute;A OFRECIDO POR UN PROVEEDOR Y NO REPRESENTA NI AVALA Y NO SER&Aacute; RESPONSABLE DE: (A) LA FIABILIDAD Y RENDIMIENTO DE CUALQUIER PROVEEDOR TERCERO ; (B) LA SEGURIDAD, CALIDAD, EXACTITUD, CONFIABILIDAD, INTEGRIDAD O LEGALIDAD DE CUALQUIER MENTOR&Iacute;A OFERTADOS O PRESTADOS POR UN PROVEEDOR; O (C) LA VERDAD O LA EXACTITUD DE LA DESCRIPCI&Oacute;N DE CUALQUIER MENTOR&Iacute;A OFRECIDOS O FACILITADOS POR un PROVEEDOR, O DE CUALQUIER CONSEJO, OPINI&Oacute;N, U OFERTAS, PROPUESTAS, LA DECLARACI&Oacute;N, DE DATOS O DE OTRA INFORMACI&Oacute;N SUMINISTRADA POR UN PROVEEDOR SE MUESTRA DISTRIBUIDO, O COMPRADO A TRAV&Eacute;S DEL SERVICIO.</p></li>
+
+				<p align="justify">TEACHME RENUNCIA A TODA RESPONSABILIDAD POR LAS ACCIONES, LOS ERRORES U OMISIONES DE PROVEEDORES.</p>
+
+				<li><p align="justify">Verificaci&oacute;n de Detalles de oferente. Aunque TEACHME puede en algunos casos tratar de verificar cierta informaci&oacute;n proporcionada por proveedores, TEACHME no tiene ninguna obligaci&oacute;n de hacerlo y no asume la responsabilidad sobre la exactitud de dicha verificaci&oacute;n. Es su responsabilidad de verificar la identidad, las calificaciones y la situaci&oacute;n de un proveedor.</p></li>
+
+				<li><p align="justify">Uso, Requisitos b&aacute;sicos. Para utilizar el Servicio, usted necesitar&aacute; un dispositivo con c&aacute;mara web, micr&oacute;fono y salida de audio. Deber&aacute; contar con los navegadores Chrome, Firefox u Opera en una versi&oacute;n actualizada que soporte el protocolo WRTC.</p></li>
+
+				<li><p align="justify">Restricciones de edad. Para utilizar el Servicio, usted debe tener 13 a&ntilde;os de edad o m&aacute;s. Si tienes entre 13 y 18 a&ntilde;os de edad, usted debe tener su permiso de padres o tutor legal para utilizar el Servicio. Usted no debe acceder al Servicio o aceptar estos T&eacute;rminos si usted es una persona que est&aacute; impedida legalmente. Para la recepci&oacute;n o uso del Servicio o de cualquier Mentor&iacute;as bajo las leyes del pa&iacute;s en que usted resida o desde el que usted est&eacute; intentando acceder o utilizar Servicio.</p></li>
+
+				<li><p align="justify">Compra de una Mentor&iacute;a. Con el fin de programar ciertas Mentor&iacute;as, se le puede pedir que proporcione informaci&oacute;n sobre usted, como su nombre, direcci&oacute;n y datos de costo de mentor&iacute;a disponibilidad en horas al d&iacute;a por 15 d&iacute;as. En nuestras Pol&iacute;ticas de privacidad se describe c&oacute;mo tratamos sus datos personales y protegemos su privacidad cuando utilice el Servicio. Usted acepta que cualquier informaci&oacute;n que usted proporciona a TEACHME ser&aacute; precisa, correcta y actualizada.</p>
+
+				<p align="justify">Cuando se programa una Mentor&iacute;a usted se est&aacute; comprometiendo a comprar dicha Mentor&iacute;a al proveedor, as&iacute; que por favor revise la descripci&oacute;n de la Mentor&iacute;a cuidadosamente antes de comprarla. Un proveedor puede cambiar los precios y la disponibilidad de una Mentor&iacute;a en cualquier momento antes de ser comprarlo. Un proveedor tambi&eacute;n puede publicar pol&iacute;ticas de reprogramaci&oacute;n y cancelaci&oacute;n en la descripci&oacute;n de la Mentor&iacute;a que pueden limitar su capacidad de reprogramar o cancelar la Mentor&iacute;a sin penalizaci&oacute;n.</p></li>
+
+				<li><p align="justify">Usted puede comprar una Mentor&iacute;a usando cualquier tarjeta de cr&eacute;dito o d&eacute;bito, pagando a trav&eacute;s de la plataforma de pagos (Stripe) integrada en nuestro sitio web.</p></li>
+
+				<p align="justify">El acceso a los datos en el Servicio: TEACHME o sus agentes pueden acceder y revisar las grabaciones de las Mentor&iacute;as, mensajes y otra informaci&oacute;n privada en el Servicio por cualquier raz&oacute;n, incluyendo para proporcionar un servicio al cliente y para examinar las alegaciones de abuso. Toda esa informaci&oacute;n ser&aacute; tratada de acuerdo con la Pol&iacute;tica de privacidad de TEACHME, a menos que se indique lo contrario.</p>
+				<br>
+				<br>
+				</ul>
 			</div>
 		</div>
 	</div>
