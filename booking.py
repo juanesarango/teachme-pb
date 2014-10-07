@@ -143,8 +143,11 @@ def notify_sms(user, user2, method, who, date):
 		# 	logging.info('Elibom %s, cel: %s' % (response, user.movil))
 		# except Client.ElibomClientException, e:
 		# 	logging.error(e)
-		message = twilio.messages.create(from_='+17248248188', to='+'+str(user.movil),body=msgUser[method][who].format(user = user2.name, date = date.strftime('%I:%M %p, %d %b %Y')))
-		logging.info('twilio %s, cel: %s' % (message.sid, user.movil))
+		try:
+			message = twilio.messages.create(from_='+17248248188', to='+'+str(user.movil),body=msgUser[method][who].format(user = user2.name, date = date.strftime('%I:%M %p, %d %b %Y')))
+			logging.info('twilio %s, cel: %s' % (message.sid, user.movil))
+		except e:
+			logging.error(e)
 	return
 
 def teachouts_24():
