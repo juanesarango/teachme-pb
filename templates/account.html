@@ -55,7 +55,7 @@
 						<div class="form-group">
 							<label for="name" class="col-sm-3 control-label">Móvil</label>
 							<div class="col-sm-7">
-								<input type="tel" id="movil" class="form-control" value="{{user.movil}}" name="movil">
+								<input type="tel" id="movil" class="form-control" {% if user.movil %}value="+{{user.movil}}"{% endif %} name="movil">
 								<p class="help-block">Tu número de celular sólo se utilizará para enviarte notificaciones de tus sesiones.</p>
 							</div>
 						</div>
