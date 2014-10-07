@@ -107,11 +107,12 @@ def parse_areas(a):
 	else:
 		return None
 
-def normalise_unicode(word):
+def normalise_unicode(word, lower=True):
 	if isinstance(word, unicode):
-		return unicodedata.normalize('NFKD',word).encode('ASCII','ignore').lower()
+		new_word = unicodedata.normalize('NFKD',word).encode('ASCII','ignore')
 	else:
-		return None
+		new_word = word
+	return new_word.lower() if lower else new_word
 
 def alert(number):
 	alertas = { 1 : ['alert-success', u'Se ha verificado tu cuenta exitosamente. Ahora a aprender!'],
