@@ -117,8 +117,9 @@
 							{% if teacher %}
 								<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">{{teacher.name}}<b class="caret"></b></a>
 									<ul class="dropdown-menu">
-										<li><a href="/profile/teacher/{{teacher.key.id()}}"><span class="glyphicon glyphicon-user"></span> Perfil</a></li>
-										<li><a href="/account"><span class="glyphicon glyphicon-cog"></span> Cuenta</a></li>
+										<li><a href="/profile/teacher/{{teacher.key.id()}}"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Perfil</a></li>
+										<li><a href="/account"><span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;Cuenta</a></li>
+										<li><a href="/account"><span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp;Mensajes</a></li>
 									</ul>
 								</li>
 							{% else %}

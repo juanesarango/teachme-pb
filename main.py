@@ -500,11 +500,7 @@ class msg2mentor(Handler):
 		if not self.user:
 			self.abort(403)
 		mensaje = self.request.get("message")
-		logging.error("MENSAJE")
-		logging.error(mensaje)
 		teacher_key = self.request.get("teacher_key")
-		logging.error("TEACHER")
-		logging.error(teacher_key)
 
 		if mensaje and teacher_key:
 			teacher = ndb.Key(urlsafe=str(teacher_key)).get()
@@ -513,9 +509,7 @@ class msg2mentor(Handler):
 			c = teachme_db.chat(parent=self.user.key, teacher=teacher.key, msgs=[m])
 			c.put()
 			html_mail = render_str("mail_question.html", para=teacher, de=self.user, m=m, chat=c.key.urlsafe())
-			logging.error("ok template")
 			mail.send_mail(sender="TeachMe <info@teachmeapp.com>", to=teacher.mail, subject="Un usuario de Teachme te ha hecho una pregunta", body="", html=html_mail)
-			logging.error("ok")
 			self.redirect("/teacher/%s" % teacher_key)
 		else:
 			self.redirect("/")
@@ -523,10 +517,8 @@ class msg2mentor(Handler):
 class reply(Handler):
 	def get(self):
 		r = self.request.get("r")
-		logging.error(r)
 		msg = ndb.Key(urlsafe=str(r)).get()
 		c = self.request.get("c")
-		logging.error(c)
 		chat = ndb.Key(urlsafe=str(c)).get()
 		learner = msg.mFrom.get()
 		teacher = msg.mTo.get()
@@ -537,9 +529,6 @@ class reply(Handler):
 		newMsg = self.request.get("replyMsg")
 		msgKey = self.request.get("msgKey")
 		chatKey = self.request.get("chatKey")
-		logging.error(newMsg)
-		logging.error(msgKey)
-		logging.error(chatKey)
 		msg = ndb.Key(urlsafe=str(msgKey)).get()
 		chat = ndb.Key(urlsafe=str(chatKey)).get()
 
@@ -553,9 +542,7 @@ class reply(Handler):
 			chat.msgs.append(m)
 			chat.put()
 			html_mail = render_str("mail_reply.html", para=msg.mFrom.get(), de=msg.mTo.get(), m=m, p=msg, chat=chat.key.urlsafe())
-			logging.error("ok template")
 			mail.send_mail(sender="TeachMe <info@teachmeapp.com>", to=msg.mFrom.get().mail, subject="El mentor de Teachme ha respondido tu pregunta", body="", html=html_mail)
-			logging.error("ok")
 			self.redirect("/")
 
 class addtags(Handler):
@@ -691,28 +678,6 @@ class servehandler(blobstore_handlers.BlobstoreDownloadHandler):
 
 class manualtask(Handler):
 	def get(self):
-		# mentors = teachme_db.teacher.query()
-		# for m in mentors:
-		# 	if m.profile_pic_r:
-		# 		images.delete_serving_url(m.profile_pic)
-		# 		m.profile_pic_r = images.get_serving_url(m.profile_pic, size = 140, secure_url=True)
-		# 		m.put()
-		# teachme_index.create_index()
-		unicodedata.normalize('NFKD',u'Matemáticas').encode('ASCII','ignore')
-		areas_dict={
-			4654112461291520: 'dibujo',
-			5144752345317376: 'biologia',
-			5153049148391424: 'idiomas',
-			5668600916475904: 'matematicas',
-			5692462144159744: 'musica',
-			5715999101812736: 'fisica',
-			5732568548769792: 'quimica' 		
-			}
-		areas = teachme_db.areas.query().fetch()
-		for a in areas:
-			a.url = 'clases-de-' + areas_dict[a.key.id()] + '-online'
-			a.put()
-
 		self.response.out.write("ok")
 
 class buscar(Handler):
@@ -725,7 +690,6 @@ class buscar(Handler):
 			for docs in results:
 				mentors.append(ndb.Key(urlsafe = docs.fields[5].value).get())
 			self.render("search_results.html", results=results, mentors= mentors, number_returned = number_returned, query_string=query_string)
-		# self.redirect("/")
 		
 	def post(self):
 		query_string = self.request.get("q")
@@ -818,6 +782,7 @@ app = webapp2.WSGIApplication([('/', MainPage),
 								('/aprende/([\w-]+)?', aprende),
 								('/profile/teacher/([0-9]+)?', profile_teacher),
 								('/account', account),
+								('/messages', messages),
 								('/editabout', editabout),
 								('/msg2mentor', msg2mentor),
 								('/reply/', reply),

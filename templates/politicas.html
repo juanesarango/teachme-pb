@@ -1,34 +1,26 @@
 {% extends "base_main.html" %}
 {% set shareImg = "https://www.teachmeapp.com/static/signup.jpg"%}
-{% set title = "Términos de uso | Teachme" %}
-{% set shareText = "Términos de uso de teachme" %}
-{% set shareHt = "terminos" %}
-
+{% set title = "Preguntas frecuentes | Teachme" %}
+{% set shareText = "Como funciona? como se realiza la asesoría? todas las preguntas que tengas, acá te las resolvemos" %}
+{% set shareHt = "faq" %}
 
 {% block body %}
-<script language="JavaScript">
-	function autoResize(id){
-	    var newheight;
-	    var newwidth;
-
-	    if(document.getElementById){
-
-	        newheight=document.getElementById(id).contentWindow.document.body.scrollHeight;
-	        newwidth=document.getElementById(id).contentWindow.document.body.scrollWidth;
-	    }
-	    document.getElementById(id).height= (newheight+20) + "px";
-	    document.getElementById(id).width= (newwidth) + "px";
-	}
-</script>
 
 <div class="backgnd" style="background-image: url('/static/signup.jpg')">
 	<br>
 	<br>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-8 col-md-offset-2 bckg-b-80">
+			<div class="col-md-8 col-md-offset-2 bckg-w-80" style="padding-left: 30px; padding-right: 30px;">
 				<br>
-				<iframe src="/static/legal/POLITICAS.htm" id="iframe1" style="width: 100%; padding:40px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" vspace="0" hspace="0" onLoad="autoResize('iframe1');">Tu navegador está desactualizado.</iframe>
+				<h3 align="center"> TÉRMINOS DE SERVICIO Y POLÍTICA DE PRIVACIDAD</h3>
+				<p align="justify">En su esencia, Teachme es una plataforma en la que personas instruyen a otras personas. Creemos que el acceso directo a la experiencia de otra persona, ser&aacute; m&aacute;s f&aacute;cil para las personas de todo el mundo puedan obtener ayuda para resolver sus problemas y alcanzar sus metas. Pero para que esto sea productivo, necesitamos que todas las personas que usan Teachme lo hagan con responsabilidad.</p>
+
+				<p align="justify">Por favor, sea un miembro responsable de la comunidad al tratar a otros con respeto, pres&eacute;ntese a s&iacute; mismo con honestidad, y trabaje para establecer confianza con los dem&aacute;s. Tambi&eacute;n pedimos que se familiarice con nuestras pol&iacute;ticas Teachme, para que usted sepa lo que se puede y no hacer.</p>
+
+				<p align="justify">Si alguna vez en una mentor&iacute;a observa algo que viola nuestras pol&iacute;ticas, por favor informe de ello. Necesitamos su ayuda para construir un ambiente seguro y de colaboraci&oacute;n para dar y recibir ayuda.</p>
+				<br>
+				<br>
 			</div>
 		</div>
 	</div>

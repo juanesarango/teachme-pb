@@ -35,21 +35,17 @@ def create_index(entity=None):
 		    search.TextField(name="Nombre", value=i.name+" "+i.lname),
 		    search.TextField(name="Ciudad", value=i.ciudad),
 		    search.TextField(name="Pais", value=i.pais),
-		    # search.TextField(name="Idiomas", value=list2string(i.idiomas)),
 		    search.TextField(name="Area", value=id2str_areas(i.areas)),
 		    search.TextField(name="Tags", value=list2string(i.tags)),
 		    search.TextField(name="key", value=i.key.urlsafe()),
 		    search.DateField(name="Updated", value=datetime.datetime.now().date()),
-		    
-		    # search.NumberField(name="Fee", value=i.fee),
-		    # search.NumberField(name="Rating", value=i.rating),
 		    ]
 
 		d = search.Document(doc_id = i.key.urlsafe(), fields=fields)
 
 		try:
 			index.put(d)
-			print 'Indice creado'
+			# print 'Indice creado'
 		except:
 			print 'No se pudo crear el indice'
 
@@ -64,17 +60,14 @@ def make_query(query_string, doc_limit=10):
           		limit=doc_limit))
   		search_results = index.search(search_query)
   		number_found = search_results.number_found
-  		if number_found ==1:
-  			print 'Se encontro ' +  str(number_found) + ' resultado'	
-  		else:
-  			print 'Se encontraron ' +  str(number_found) + ' resultados'
-		# for document in search_results:
-		# 	print u"Document_id: {doc_id}\n".format(doc_id=document.doc_id)
-		# 	for f in document.fields:
-		# 		print u"{nombre_campo}: {valor_campo}\n".format(nombre_campo=f.name,valor_campo=f.value)
+  		# if number_found ==1:
+  		# 	print 'Se encontro ' +  str(number_found) + ' resultado'	
+  		# else:
+  		# 	print 'Se encontraron ' +  str(number_found) + ' resultados'
 		return search_results
 	except search.Error:
 		print 'No se encontraron resultados'
+
 
 
 def delete_index(ids):
@@ -98,7 +91,7 @@ def update_index(entity, field_name, field_value, replace=False):
 		new_doc = search.Document(doc_id=entity.key.urlsafe(), fields=new_fields)
 		try:
 			index.put(new_doc)
-			print 'Documento actualizado: se actualizo el campo '+ field_name
+			# print 'Documento actualizado: se actualizo el campo '+ field_name
 		except:
 			print 'No se pudo crear el indice'
 	else:
