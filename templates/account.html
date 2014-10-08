@@ -1,5 +1,5 @@
 {% extends "base_main.html" %}
-{% set title = "Cuenta de"+user.name %}
+{% set title = "Cuenta de "+user.name %}
 {% block body %}
 <link rel="stylesheet" href="/static/css/intlTelInput.css">
 <script src="/static/js/intlTelInput.min.js"></script>
@@ -9,7 +9,7 @@
 			<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true" >&times;</span><span class="sr-only">Cerrar</span></button>
 			{{alert[1]}}
 		</div>
-	{%endif %}
+	{% endif %}
 	<div class="container">
 		<br>
 		<div class="row">

@@ -16,6 +16,38 @@ def valid_pw(name, password, h):
 	salt = h.split(',')[0]
 	return h == make_pw_hash(name, password, salt)
 
+class teacher(ndb.Model):
+	name = ndb.StringProperty()
+	lname = ndb.StringProperty()
+	mail = ndb.StringProperty()
+	about = ndb.TextProperty()
+	fee = ndb.IntegerProperty()
+	profile_pic = ndb.BlobKeyProperty()
+	profile_pic_r = ndb.StringProperty()
+	ciudad = ndb.StringProperty()
+	pais = ndb.StringProperty()
+	idiomas = ndb.StringProperty(repeated = True)
+	linkedin = ndb.StringProperty()
+	areas = ndb.IntegerProperty(repeated = True)
+	subareas = ndb.StringProperty(repeated = True)
+	date_created = ndb.DateTimeProperty(auto_now_add = True)
+	timezoneOffset = ndb.IntegerProperty()
+	tags = ndb.StringProperty(repeated = True)
+
+	date_available = ndb.DateTimeProperty(repeated = True)
+	date_reserved = ndb.DateTimeProperty(repeated = True)
+
+	teachouts = ndb.KeyProperty(repeated = True, kind = "teachout")
+	teachouts_expired = ndb.KeyProperty(repeated = True, kind = "teachout")
+
+	rating = ndb.FloatProperty()
+	reviews = ndb.IntegerProperty()
+
+	aceptado = ndb.BooleanProperty()
+
+	movil = ndb.IntegerProperty()
+
+
 class user(ndb.Model):
 	name = ndb.StringProperty(required = True)
 	lname = ndb.StringProperty(required = True)
@@ -49,36 +81,12 @@ class user(ndb.Model):
 		if u and valid_pw(mail, pw, u.pw_hash):
 			return u
 
-class teacher(ndb.Model):
-	name = ndb.StringProperty()
-	lname = ndb.StringProperty()
-	mail = ndb.StringProperty()
-	about = ndb.TextProperty()
-	fee = ndb.IntegerProperty()
-	profile_pic = ndb.BlobKeyProperty()
-	profile_pic_r = ndb.StringProperty()
-	ciudad = ndb.StringProperty()
-	pais = ndb.StringProperty()
-	idiomas = ndb.StringProperty(repeated = True)
-	linkedin = ndb.StringProperty()
-	areas = ndb.IntegerProperty(repeated = True)
-	subareas = ndb.StringProperty(repeated = True)
-	date_created = ndb.DateTimeProperty(auto_now_add = True)
-	timezoneOffset = ndb.IntegerProperty()
-	tags = ndb.StringProperty(repeated = True)
-
-	date_available = ndb.DateTimeProperty(repeated = True)
-	date_reserved = ndb.DateTimeProperty(repeated = True)
-
-	teachouts = ndb.KeyProperty(repeated = True, kind = "teachout")
-	teachouts_expired = ndb.KeyProperty(repeated = True, kind = "teachout")
-
-	rating = ndb.FloatProperty()
-	reviews = ndb.IntegerProperty()
-
-	aceptado = ndb.BooleanProperty()
-
-	movil = ndb.IntegerProperty()
+	def is_teacher(self):
+		t = teacher.query(ancestor=self.key).get()
+		if t:
+			return t
+		else:
+			return None
 
 class areas(ndb.Model):
 	name = ndb.StringProperty(required = True)

@@ -582,3 +582,71 @@ blockquote{
 #t-temas{
   resize: none;
 }
+
+.chatpreview{
+  border-bottom-color: rgb(232, 232, 232);
+  border-bottom-style: solid;
+  border-bottom-width: 1.11111116409302px;
+  border-left-color: rgb(232, 232, 232);
+  border-left-style: solid;
+  border-left-width: 0px;
+  border-right-color: rgb(232, 232, 232);
+  border-right-style: solid;
+  border-right-width: 0px;
+  border-top-color: rgb(232, 232, 232);
+  border-top-style: solid;
+  border-top-width: 0px;
+  margin: 10px;
+  font-size: 13px;
+}
+
+.chatpreview:hover, .chatpreview:focus {
+  background-color: rgb(220,220,220);
+}
+
+.chatlist{
+  margin-top: 10px;
+  max-height: 390px;
+  overflow-y: auto;
+}
+
+.chatwindow{
+  padding: 20px;
+  border-bottom-color: rgb(232, 232, 232);
+  border-bottom-style: solid;
+  border-bottom-width: 1.2px;
+  border-left-color: rgb(232, 232, 232);
+  border-left-style: solid;
+  border-left-width: 1.2px;
+  border-right-color: rgb(232, 232, 232);
+  border-right-style: solid;
+  border-right-width: 1.2px;
+  border-top-color: rgb(232, 232, 232);
+  border-top-style: solid;
+  border-top-width: 1.2px;
+  height: 340px;
+  background-color: white;
+  font-size: 12px;
+}
+
+#chatinputrow{
+  margin-top: 15px;
+}
+
+#chatinput{
+  padding: 0px;
+}
+
+#chatbox{
+  height: 400px;
+}
+
+.a_chats{
+    color: inherit;
+    text-decoration: none;
+}
+
+.a_chats:hover, .a_chats:focus {
+    color: inherit;
+    text-decoration: none;
+}

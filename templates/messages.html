@@ -1,0 +1,134 @@
+{% extends "base_main.html" %}
+{% set title = "Mensajes de "+user.name %}
+{% block body %}
+<link rel="stylesheet" href="/static/css/intlTelInput.css">
+<script src="/static/js/intlTelInput.min.js"></script>
+<div class="backgnd" style="background-image: url('/static/profile.jpg')">
+	{% if alert %}   
+		<div class="alert {{alert[0]}} alert-dismissible text-center" role="alert" style="position: absolute; margin-left: 10%; width:80%;z-index: 2;">
+			<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true" >&times;</span><span class="sr-only">Cerrar</span></button>
+			{{alert[1]}}
+		</div>
+	{%endif %}
+	<script>
+		var d = new Date()
+		var n = d.getTimezoneOffset();
+	</script>
+	<div class="container">
+		<br>
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1 bckg-w-80">
+				<div class="col-md-11">
+					<h1 class="text-center">Mis Mensajes</h1>
+					<br>
+					<div class="row">
+						<div class="col-md-5">
+							<h4>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Mis conversaciones</strong></h4>
+							<div class="chatlist">
+							{% if chats %}
+								{% for chat in chats %}
+									<div class="row chatpreview"><a class="a_chats" href="/messages?n={{loop.index}}">
+									{% if chat.teacher == user.key %} 
+										<div class="col-md-3" style="padding-right: 0px">
+											<img style= "" class="img-circle img-40" {% if chat.key.parent().get().profile_pic_r %} src="{{chat.key.parent().get().profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}>
+										</div>
+										<div class="col-md-9" style="padding-left: 0px; padding-right: 0px">
+											<div class="row">
+												<strong>{{chat.key.parent().get().name}} {{chat.key.parent().get().lname}}</strong>
+												<span class="pull-right"><small>{{chat.msgs[-1].created|datetimeformat()}}</small></span>
+											</div>
+											<div class="row">
+												<small>{{chat.msgs[-1].mensaje|truncate(30, True)}}</small>
+											</div>
+										</div>
+									{% else %}
+										<div class="col-md-3" style="padding-right: 0px">
+											<img style= "" class="img-40" {% if chat.teacher.get().profile_pic_r %} src="{{chat.teacher.get().profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}> 
+										</div>	
+										<div class="col-md-9" style="padding-left: 0px;">
+											<div class="row">
+												<strong>{{chat.teacher.get().name}} {{chat.teacher.get().lname}}</strong>
+												<span class="pull-right"><small>{{chat.msgs[-1].created|datetimeformat()}}</small></span>
+											</div>
+											<div class="row">
+												<small>{{chat.msgs[-1].mensaje|truncate(30, True)}}</small>
+											</div>
+										</div>
+									{% endif %}</a>
+									</div>
+								{% endfor %}
+							{% else %}
+								<div class="row chatpreview">
+									<p align="center">Aún no tienes conversaciones</p>
+								</div>
+							{% endif %}
+							</div>
+						</div>
+						<div class="col-md-6 col-md-offset-1">
+							<h4 align="center">&nbsp;&nbsp;&nbsp;&nbsp;<strong>Conversación</strong></h4>
+							<div id="chatbox">
+							{% if chats %}
+								<div class="row chatwindow">
+									{% for chat in chats[number-1].msgs %}
+										<strong>{{chat.mFrom.get().name}}:</strong>
+										<span class="pull-right"><small>{{chat.created|datetimeformatchat}}</small></span><br>
+										{{chat.mensaje}}<br>
+										<br>
+									{% endfor %}
+								</div>
+								<div class="row" id="chatinputrow">
+								    <form role="form" method="POST">
+										<div class="form-group">
+										    <div class="col-md-8" id="chatinput">
+										      	<textarea rows="1" class="form-control" style="resize:none" name="mensaje" placeholder="Redactar nuevo mensaje"></textarea>
+										      	<input type="hidden" name="chatkey" value={{chats[number-1].key.urlsafe()}}>
+										      	<input type="hidden" name="n" value={{number}}>
+										    </div>
+										    <div class="col-md-4">
+										      	<button type="submit" class="btn btn-info">Enviar Mensaje</button>
+										    </div>
+										</div>
+									</form>
+								</div>
+							{% else %}
+								<div class="row chatwindow">
+									
+								</div>
+								<div class="row" id="chatinputrow">
+								    <form role="form" method="POST">
+										<div class="form-group">
+										    <div class="col-md-8" id="chatinput">
+										      	<textarea disabled rows="1" class="form-control" style="resize:none" name="mensaje" placeholder="Redactar nuevo mensaje"></textarea>
+										    </div>
+										    <div class="col-md-4">
+										      	<button disabled type="submit" class="btn btn-info">Enviar Mensaje</button>
+										    </div>
+										</div>
+									</form>
+								</div>	
+							{% endif%}
+							</div>
+						</div>
+					</div>
+					<br>
+					<br>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		$("#movil").intlTelInput({
+		//autoFormat: false,
+        //autoHideDialCode: false,
+        //defaultCountry: "jp",
+        //nationalMode: true,
+        //onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+        preferredCountries: ['co', 'us']
+        //responsiveDropdown: true,);
+        });
+	})
+	</script>
+</div>
+
+{% endblock %}

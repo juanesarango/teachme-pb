@@ -26,6 +26,8 @@ import ssl
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape = True)
 jinja_env.filters['first_date'] = fns.first_date
+jinja_env.filters['datetimeformat'] = fns.datetimeformat
+jinja_env.filters['datetimeformatchat'] = fns.datetimeformatchat
 
 def render_str(template, **params):
 	j = jinja_env.get_template(template)
@@ -199,7 +201,13 @@ class teacher(Handler):
 			mentor = ndb.Key(urlsafe = str(id)).get()
 		except:
 			self.abort(404)
-		flag = self.request.get("t")
+		
+		al = self.request.get('m')
+		if al:
+			alert = fns.alert(int(al))
+		else:
+			alert = False
+
 		reviews = teachme_db.review.query(ancestor = mentor.key).order(-teachme_db.review.date)
 		t_areas = []
 		for a in mentor.areas:
@@ -207,7 +215,7 @@ class teacher(Handler):
 		fechas = json.dumps(booking.UTCfechas(mentor.date_available))
 		dates = json.dumps(fns.solo_dates(mentor.date_available))
 		hours = json.dumps(fns.solo_hours(mentor.date_available))
-		self.render("teacher.html", mentor = mentor, hours = hours, dates = dates, fechas = fechas, t_areas = t_areas, reviews = reviews, flag= flag)
+		self.render("teacher.html", mentor = mentor, hours = hours, dates = dates, fechas = fechas, t_areas = t_areas, reviews = reviews, alert= alert)
 
 	def post(self, id):
 		if not self.user:
@@ -300,17 +308,17 @@ class teacher(Handler):
 					mail.send_mail("TeachMe <info@teachmeapp.com>", teacher_key.mail, subject, "", html = html_mentor)
 
 					if metodo== "GRATIS":
-						self.redirect("/teachouts")
-					self.redirect("/teachouts?t=SUCCEED")
+						self.redirect("/teachouts?m=6")
+					self.redirect("/teachouts?m=5")
 					return
 				else:
-					self.redirect("/teacher/"+ str(teacher_key.key.urlsafe())+"?t=FAILED")
+					self.redirect("/teacher/"+ str(teacher_key.key.urlsafe())+"?m=7")
 					return
 			else:
-				self.redirect("/teacher/"+ str(teacher_key.key.urlsafe())+"?t=FAILED")
+				self.redirect("/teacher/"+ str(teacher_key.key.urlsafe())+"?m=8")
 				return
 		else:
-			self.redirect("/teacher/"+ str(teacher_key.key.urlsafe())+"?t=FAILED")
+			self.redirect("/teacher/"+ str(teacher_key.key.urlsafe())+"?m=9")
 			return
 
 class comparte(Handler):
@@ -354,8 +362,13 @@ class comparte(Handler):
 class teachouts(Handler):
 	def get(self):
 		#depurar_teachouts()
-		flag = self.request.get("t")
-		logging.info("FLAG: "+flag)
+
+		al = self.request.get('m')
+		if al:
+			alert = fns.alert(int(al))
+		else:
+			alert = False
+
 		if not self.user:
 			self.abort(403)
 			return
@@ -402,7 +415,7 @@ class teachouts(Handler):
 			etouts[t]= t.get()
 			ementor[t] = etouts[t].teacher.get()
 
-		self.render("/teachouts.html", touts = touts, mentor = mentor, disable = disable, faltan = faltan, m_touts = m_touts, learner = learner, m_disable = m_disable, m_faltan = m_faltan, etouts = etouts, ementor=ementor, m_etouts= m_etouts, elearner=elearner, flag=flag)
+		self.render("/teachouts.html", touts = touts, mentor = mentor, disable = disable, faltan = faltan, m_touts = m_touts, learner = learner, m_disable = m_disable, m_faltan = m_faltan, etouts = etouts, ementor=ementor, m_etouts= m_etouts, elearner=elearner, alert=alert)
 
 class aprende(Handler):
 	def get(self, ar):
@@ -769,6 +782,52 @@ class account(Handler):
 		else:
 			self.redirect('/account?m=4')
 
+class messages(Handler):
+	def get(self):
+		if not self.user:
+			self.abort(403)
+			return
+		al = self.request.get('m')
+		if al:
+			alert = fns.alert(int(al))
+		else:
+			alert = False
+
+		number_chat = self.request.get("n")
+		if not number_chat:
+			number_chat = 1
+		else:
+			number_chat = int(number_chat)
+		teacher = self.user.is_teacher()
+		chats = teachme_db.chat.query(ancestor=self.user.key).fetch()
+		if teacher:
+			chats2 = teachme_db.chat.query(teachme_db.chat.teacher==teacher.key).fetch()
+			for c in chats2:
+				if c not in chats:
+					chats.append(c)
+		# chats=[]	
+		self.render("messages.html", alert = alert, chats= chats, number=number_chat)
+
+	def post(self):
+		if not self.user:
+			self.abort(403)
+			return
+		chatkey = self.request.get("chatkey")
+		chat = ndb.Key(urlsafe=str(chatkey)).get()
+
+		mensaje = self.request.get("mensaje")
+		if mensaje:
+			if self.user.key == chat.teacher:
+				mTo = chat.key.parent()
+			elif self.user.key == chat.key.parent():
+				mTo = chat.teacher.parent()
+			m = teachme_db.msg(mFrom=self.user.key, mTo=mTo, mensaje=mensaje)
+			m.put()
+			chat.msgs.append(m)
+			chat.put()
+
+		number_chat = int(self.request.get("n"))
+		self.redirect('/messages?n='+ str(number_chat))
 
 app = webapp2.WSGIApplication([('/', MainPage),
 								('/signup', signup),
