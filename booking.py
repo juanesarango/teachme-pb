@@ -5,6 +5,7 @@ from google.appengine.api import mail
 import teachme_db
 import logging
 import main
+import fns
 from lib.elibom import Client
 from lib.twilio.rest import TwilioRestClient
 
@@ -129,7 +130,7 @@ def notify_sms(user, user2, method, who, date):
 	#method 0 para enviar notificación de agendamiento y 1 para recordatorio.
 	#who 0 para mentor, 1 para user.
 
-	msgUser = { 0 : [u'{user} agendo contigo en Teachme: {date}. Mira los detalles en tu correo',
+	msgUser = { 0 : [u'{user} ha agendado contigo en Teachme: {date}. Mira los detalles en tu correo',
 					   u'Has agendado con {user} en Teachme: {date}. Mira los detalles en tu correo'],
 				  1 : [u'Recuerda tu cita con {user} en Teachme. {date}',
 				  	   u'Recuerda tu cita con {user} en Teachme. {date}']}
@@ -144,7 +145,7 @@ def notify_sms(user, user2, method, who, date):
 		# except Client.ElibomClientException, e:
 		# 	logging.error(e)
 		try:
-			message = twilio.messages.create(from_='+17248248188', to='+'+str(user.movil),body=msgUser[method][who].format(user = user2.name, date = date.strftime('%I:%M %p, %d %b %Y')))
+			message = twilio.messages.create(from_='+17248248188', to='+'+str(user.movil),body=msgUser[method][who].format(user = fns.normalise_unicode(user2.name+' '+user2.lname, False), date = date.strftime('%I:%M %p, %d %b %Y')))
 			logging.info('twilio %s, cel: %s' % (message.sid, user.movil))
 		except e:
 			logging.error(e)
