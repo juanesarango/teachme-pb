@@ -761,7 +761,7 @@ class account(Handler):
 				self.teacher.lname = lname
 			update = True
 			updatenpw = True
-		if self.user.movil != movil:
+		if movil and self.user.movil != movil:
 			self.user.movil = int(movil)
 			if self.teacher:
 				self.teacher.movil = int(movil)
@@ -805,6 +805,7 @@ class messages(Handler):
 			for c in chats2:
 				if c not in chats:
 					chats.append(c)
+		chats.sort(key=lambda x: x.msgs[-1].created, reverse=True)
 		# chats=[]	
 		self.render("messages.html", alert = alert, chats= chats, number=number_chat)
 
@@ -817,7 +818,7 @@ class messages(Handler):
 
 		mensaje = self.request.get("mensaje")
 		if mensaje:
-			if self.user.key == chat.teacher:
+			if self.user.key == chat.teacher.parent():
 				mTo = chat.key.parent()
 			elif self.user.key == chat.key.parent():
 				mTo = chat.teacher.parent()

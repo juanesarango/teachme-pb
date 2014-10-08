@@ -27,12 +27,12 @@
 							<div class="chatlist">
 							{% if chats %}
 								{% for chat in chats %}
-									<div class="row chatpreview"><a class="a_chats" href="/messages?n={{loop.index}}">
-									{% if chat.teacher == user.key %} 
-										<div class="col-md-3" style="padding-right: 0px">
-											<img style= "" class="img-circle img-40" {% if chat.key.parent().get().profile_pic_r %} src="{{chat.key.parent().get().profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}>
+									<div class="row chatpreview {% if loop.index==number %} chat-active {% endif %}"><a class="a_chats" href="/messages?n={{loop.index}}">
+									{% if chat.teacher.parent() == user.key %} 
+										<div class="col-md-3" style="padding-left: 10px">
+											<img style= "" class="img-40" {% if chat.key.parent().get().profile_pic_r %} src="{{chat.key.parent().get().profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}>
 										</div>
-										<div class="col-md-9" style="padding-left: 0px; padding-right: 0px">
+										<div class="col-md-9" style="padding-left: 0px;">
 											<div class="row">
 												<strong>{{chat.key.parent().get().name}} {{chat.key.parent().get().lname}}</strong>
 												<span class="pull-right"><small>{{chat.msgs[-1].created|datetimeformat()}}</small></span>
@@ -42,7 +42,7 @@
 											</div>
 										</div>
 									{% else %}
-										<div class="col-md-3" style="padding-right: 0px">
+										<div class="col-md-3" style="padding-left: 10px">
 											<img style= "" class="img-40" {% if chat.teacher.get().profile_pic_r %} src="{{chat.teacher.get().profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}> 
 										</div>	
 										<div class="col-md-9" style="padding-left: 0px;">
@@ -68,7 +68,7 @@
 							<h4 align="center">&nbsp;&nbsp;&nbsp;&nbsp;<strong>Conversación</strong></h4>
 							<div id="chatbox">
 							{% if chats %}
-								<div class="row chatwindow">
+								<div class="row" id="chatwindow">
 									{% for chat in chats[number-1].msgs %}
 										<strong>{{chat.mFrom.get().name}}:</strong>
 										<span class="pull-right"><small>{{chat.created|datetimeformatchat}}</small></span><br>
@@ -85,14 +85,14 @@
 										      	<input type="hidden" name="n" value={{number}}>
 										    </div>
 										    <div class="col-md-4">
-										      	<button type="submit" class="btn btn-info">Enviar Mensaje</button>
+										      	<button type="submit" class="btn btn-primary">Enviar Mensaje</button>
 										    </div>
 										</div>
 									</form>
 								</div>
 							{% else %}
-								<div class="row chatwindow">
-									
+								<div class="row" id="chatwindow">
+
 								</div>
 								<div class="row" id="chatinputrow">
 								    <form role="form" method="POST">
@@ -116,19 +116,9 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript">
-	$(document).ready(function() {
-		$("#movil").intlTelInput({
-		//autoFormat: false,
-        //autoHideDialCode: false,
-        //defaultCountry: "jp",
-        //nationalMode: true,
-        //onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
-        preferredCountries: ['co', 'us']
-        //responsiveDropdown: true,);
-        });
-	})
-	</script>
 </div>
-
+<script>
+	var objDiv = document.getElementById("chatwindow");
+	objDiv.scrollTop = objDiv.scrollHeight;
+</script>
 {% endblock %}
