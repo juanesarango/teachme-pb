@@ -170,10 +170,10 @@ def reminder_mail(touts, rem):
 			subject = u'Recuerda tu sesión en 24 horas'
 		else:
 			falta = "minutos"
-			subject = u'Recuerda que tu sesión empezará pronto'
+			subject = u'Recuerda que tu sesión comenzará pronto'
 		date_user = t.date - datetime.timedelta(minutes = learner.timezoneOffset)
 		date_mentor = t.date - datetime.timedelta(minutes = mentor.timezoneOffset)
 		html_user = main.render_str("mail_reminder.html", para = learner, de = mentor, t = t, falta = falta, date = date_user)
 		html_mentor = main.render_str("mail_reminder.html", para = mentor, de = learner, t = t, falta = falta, date = date_mentor)
-		mail.send_mail("info@teachmeapp.com", learner.mail, subject, "", html = html_user)
-		mail.send_mail("info@teachmeapp.com", mentor.mail, subject, "", html = html_mentor)
+		mail.send_mail("TeachMe <info@teachmeapp.com>", learner.mail, subject, "", html = html_user)
+		mail.send_mail("TeachMe <info@teachmeapp.com>", mentor.mail, subject, "", html = html_mentor)
