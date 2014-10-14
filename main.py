@@ -522,7 +522,7 @@ class msg2mentor(Handler):
 			c = teachme_db.chat(parent=self.user.key, teacher=teacher.key, msgs=[m])
 			c.put()
 			html_mail = render_str("mail_question.html", para=teacher, de=self.user, m=m, chat=c.key.urlsafe())
-			mail.send_mail(sender="TeachMe <info@teachmeapp.com>", to=teacher.mail, subject="Un usuario de Teachme te ha hecho una pregunta", body="", html=html_mail)
+			mail.send_mail(sender="TeachMe Pregunta <info@teachmeapp.com>", to=teacher.mail, subject= self.user.name+" de Teachme te ha hecho una pregunta", body="", html=html_mail)
 			self.redirect("/teacher/%s" % teacher_key)
 		else:
 			self.redirect("/")
@@ -554,8 +554,10 @@ class reply(Handler):
 			m.put()
 			chat.msgs.append(m)
 			chat.put()
-			html_mail = render_str("mail_reply.html", para=msg.mFrom.get(), de=msg.mTo.get(), m=m, p=msg, chat=chat.key.urlsafe())
-			mail.send_mail(sender="TeachMe <info@teachmeapp.com>", to=msg.mFrom.get().mail, subject="El mentor de Teachme ha respondido tu pregunta", body="", html=html_mail)
+			mFrom = msg.mFrom.get()
+			mTo = msg.mTo.get()
+			html_mail = render_str("mail_reply.html", para=mFrom, de=mTo, m=m, p=msg, chat=chat.key.urlsafe())
+			mail.send_mail(sender="TeachMe Respuesta<info@teachmeapp.com>", to=mFrom.mail, subject= mTo.name + " de Teachme ha respondido tu pregunta", body="", html=html_mail)
 			self.redirect("/")
 
 class addtags(Handler):
