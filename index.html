@@ -2,58 +2,29 @@
 <html>
 <head>
 <title>Sesión Teachme</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1"/>
+    {{ meta_viewport }}
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+  <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
+  <script type="text/javascript" src="/static/js/bootstrap.js"></script>
 
-<meta http-equiv="X-UA-Compatible" content="chrome=1"/>
+  <link rel="canonical" href="{{ room_link }}"/>
+  <link rel="stylesheet" href="css/main.css"/>
 
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
-<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
-<script type="text/javascript" src="/static/js/bootstrap.js"></script>
-
-<link rel="canonical" href="{{ room_link }}"/>
-<link rel="stylesheet" href="css/main.css"/>
-
-<script type="text/javascript" src="/_ah/channel/jsapi"></script>
-<script src="/js/main.js"></script>
-<!-- Load the polyfill to switch-hit between Chrome and Firefox -->
-<script src="/js/adapter.js"></script>
-<script src="/js/drawing.js"></script>
-<link rel="stylesheet" type="text/css" href="css/flaticon.css">
+  <script type="text/javascript" src="/_ah/channel/jsapi"></script>
+  <script src="/js/main.js"></script>
+  {{ include_vr_js }}
+  <!-- Load the polyfill to switch-hit between Chrome and Firefox -->
+  <script src="/js/adapter.js"></script>
+  <script src="/js/drawing.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/flaticon.css">
 
 </head>
 <body>
-<script type="text/javascript">
-  var errorMessages = {{ error_messages }};
-  var channelToken = '{{ token }}';
-  var me = '{{ me }}';
-  var roomKey = '{{ room_key }}';
-  var roomLink = '{{ room_link }}';
-  var initiator = {{ initiator }};
-  var pcConfig = {{ pc_config|safe }};
-  var pcConstraints = {{ pc_constraints|safe }};
-  var offerConstraints = {{ offer_constraints | safe }};
-  var mediaConstraints = {{ media_constraints | safe }};
-  var turnUrl = '{{ turn_url }}';
-  var stereo = {{ stereo }};
-  var audio_send_codec = '{{ audio_send_codec }}';
-  var audio_receive_codec = '{{ audio_receive_codec }}';
-  var usuarioChat = '{{usuarioChat}}'
-  setTimeout(initialize, 1);
-  //Del chat 
-  // $(function() {
-  //   $( "#chatbox" ).resizable();
-  // });
-  // $('#chat').keypress(function(e) {
-  //   var code = (e.keyCode ? e.keyCode : e.which);
-  //   if (code == 13){
-  //     onChat();
-  //     return false;  // stop propagation of the keypress
-  //   }
-  //  return true;
-  // });
-</script>
-<div id="container" ondblclick="enterFullScreen()">
+<div id="container" ondblclick="enterFullScreen()" ontouchend="enterFullScreen()">
   <div id="logo_large" style="position: absolute; top: 10px; left: 10px; z-index: 1000; opacity: 0.8;">
       <img src="/static/logoVideo.png">
   </div>
@@ -146,6 +117,32 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">
+  var errorMessages = {{ error_messages }};
+  var channelToken = '{{ token }}';
+  var me = '{{ me }}';
+  var roomKey = '{{ room_key }}';
+  var roomLink = '{{ room_link }}';
+  var initiator = {{ initiator }};
+  var pcConfig = {{ pc_config | safe }};
+  var pcConstraints = {{ pc_constraints | safe }};
+  var offerConstraints = {{ offer_constraints | safe }};
+  var mediaConstraints = {{ media_constraints | safe }};
+  var turnUrl = '{{ turn_url }}';
+  var stereo = {{ stereo }};
+  var opusfec = {{ opusfec }};
+  var opusMaxPbr = '{{ opusmaxpbr }}';
+  var audioSendBitrate = '{{ asbr }}';
+  var audioRecvBitrate = '{{ arbr }}';
+  var videoSendBitrate = '{{ vsbr }}';
+  var videoRecvBitrate = '{{ vrbr }}';
+  var videoSendInitialBitrate = '{{ vsibr }}';
+  var stereoscopic = '{{ ssr }}';
+  var audioSendCodec = '{{ audio_send_codec }}';
+  var audioRecvCodec = '{{ audio_receive_codec }}';
+  var usuarioChat = '{{usuarioChat}}'
+  setTimeout(initialize, 1);
+</script>
 <script>
 $(function() {
     $( "#chatbox" ).draggable();
