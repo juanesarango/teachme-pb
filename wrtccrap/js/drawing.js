@@ -17,6 +17,9 @@ function drawConfi(){
 	defaultRad = 20;
 	interval = 1;
 
+	lastPointLocal = {"X":0, "Y":0};
+	lastPointRemote = {"X":0, "Y":0};
+
 	eraser =  document.getElementById('eraser');
 	iconEraser =  document.getElementById('erasericon');
 	eraser1 =  document.getElementById('eraser1');
@@ -120,13 +123,17 @@ function drawConfi(){
 
 var putPoint = function(e){
 	if (dragging){
+		context.beginPath();
+		context.moveTo(lastPointLocal.X, lastPointLocal.Y);
 		context.lineTo(e.offsetX, e.offsetY);
 		context.stroke();
 		context.beginPath();
 		context.arc(e.offsetX, e.offsetY, radius, 0, Math.PI*2);
 		context.fill();
 		context.beginPath();
-		context.moveTo(e.offsetX, e.offsetY);
+
+		lastPointLocal.X = e.offsetX;
+		lastPointLocal.Y = e.offsetY;
 		var sender = {"fn":"putPoint", "putPoint":true, "e":{"offsetX": e.offsetX, "offsetY": e.offsetY, "colorRemote": context.fillStyle, "widthRemote": context.lineWidth}};
 		sendData(JSON.stringify(sender));
 	}
@@ -136,6 +143,8 @@ var engage = function(e){
 	dragging = true;
 	var sender = {"fn":"engage", "engage": true, "e":{"offsetX": e.offsetX, "offsetY": e.offsetY, "colorRemote": context.fillStyle, "widthRemote": context.lineWidth}};
 	sendData(JSON.stringify(sender));
+	lastPointLocal.X = e.offsetX;
+	lastPointLocal.Y = e.offsetY;
 	putPoint(e);
 }
 
@@ -156,13 +165,16 @@ var putPointRemote = function(e){
 		context.lineWidth = e.widthRemote;
 		radius = e.widthRemote/2;
 
+		context.beginPath();
+		context.moveTo(lastPointRemote.X, lastPointRemote.Y);
 		context.lineTo(e.offsetX, e.offsetY);
 		context.stroke();
 		context.beginPath();
 		context.arc(e.offsetX, e.offsetY, radius, 0, Math.PI*2);
 		context.fill();
 		context.beginPath();
-		context.moveTo(e.offsetX, e.offsetY);
+		lastPointRemote.X = e.offsetX;
+		lastPointRemote.Y = e.offsetY;
 
 		context.fillStyle = colorBefore;
 		context.strokeStyle = colorBefore;
@@ -173,6 +185,8 @@ var putPointRemote = function(e){
 
 var engageRemote = function(e){
 	draggingRemote = true;
+	lastPointRemote.X = e.offsetX;
+	lastPointRemote.Y = e.offsetY;
 	putPointRemote(e);
 }
 

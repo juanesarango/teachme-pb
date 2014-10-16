@@ -428,7 +428,7 @@ class MainPage(webapp2.RequestHandler):
     # We will call the teachouts database to bring the participants and the date and time of the session
     val, merror = self.validation(room_key)
     logging.info(merror)
-    # val=True
+    #val=True
     if not val:
       self.abort(403)
     # End of validation
