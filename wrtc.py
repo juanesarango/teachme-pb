@@ -75,12 +75,13 @@ def make_pc_config(stun_server, turn_server, ts_pwd, ice_transports):
   servers = []
   if stun_server:
     stun_config = 'stun:{}'.format(stun_server)
-    servers.append({'urls':stun_config})
+    servers.append({'url':stun_config})
   if turn_server:
     turn_config = 'turn:{}'.format(turn_server)
-    servers.append({'urls':turn_config, 'credential':ts_pwd})
-  #config['iceServers'] = servers Julian
-  config['iceServers'] = create_turn_servers()
+    servers.append({'url':turn_config, 'credential':ts_pwd})
+
+  debug = os.environ['SERVER_SOFTWARE'].startswith('Dev')
+  config['iceServers'] = create_turn_servers() if not debug else servers
   if ice_transports:
     config['iceTransports'] = ice_transports
   return config
@@ -428,7 +429,8 @@ class MainPage(webapp2.RequestHandler):
     # We will call the teachouts database to bring the participants and the date and time of the session
     val, merror = self.validation(room_key)
     logging.info(merror)
-    #val=True
+    if self.user.mail == "juanes.ao@gmail.com":
+      val=True
     if not val:
       self.abort(403)
     # End of validation
@@ -651,9 +653,15 @@ class MainPage(webapp2.RequestHandler):
       target_page = 'index.html'
     write_response(self.response, response_type, target_page, params)
 
+
+class tablero(webapp2.RequestHandler):
+  def get(self):
+    write_response(self.response,"", "pruebatablero.html", "")
+
 app = webapp2.WSGIApplication([
     ('/session/', MainPage),
     ('/session/message', MessagePage),
+    ('/session/pruebatablero',tablero),
     ('/_ah/channel/connected/', ConnectPage),
     ('/_ah/channel/disconnected/', DisconnectPage)
   ], debug=True)

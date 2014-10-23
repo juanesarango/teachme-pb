@@ -195,6 +195,30 @@ footer {
 
 #canvas{
   cursor: pointer;
+  background-color: #000000;
+  background-size: 150px 150px, 150px 150px, 30px 30px, 30px 30px;
+  background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
+  background-image: -webkit-linear-gradient(rgba(255,255,255, 0.5) 2px, transparent 2px),
+                    -webkit-linear-gradient(0, rgba(255,255,255, 0.5) 2px, transparent 2px),
+                    -webkit-linear-gradient(rgba(255,255,255,.2) 1px, transparent 1px),
+                    -webkit-linear-gradient(0, rgba(255,255,255,.2) 1px, transparent 1px);
+  background-image: -moz-linear-gradient(white 2px, transparent 2px),
+                    -moz-linear-gradient(0, white 2px, transparent 2px),
+                    -moz-linear-gradient(rgba(255,255,255,.3) 1px, transparent 1px),
+                    -moz-linear-gradient(0, rgba(255,255,255,.3) 1px, transparent 1px);
+  background-image: linear-gradient(rgba(255,255,255, 0.5) 2px, transparent 2px),
+                    linear-gradient(90deg, rgba(255,255,255, 0.5) 2px, transparent 2px),
+                    linear-gradient(rgba(255,255,255,.2) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255,255,255,.2) 1px, transparent 1px);
+  -pie-background: linear-gradient(white 2px, transparent 2px) -2px -2px / 100px,
+                   linear-gradient(90deg, white 2px, transparent 2px) -2px -2px / 100px,
+                   linear-gradient(rgba(255,255,255,.3) 1px, transparent 1px) -1px -1px / 20px,
+                   linear-gradient(90deg, rgba(255,255,255,.3) 1px, transparent 1px) -1px -1px / 20px,
+                   #269;
+}
+
+#div-canvas{
+  overflow: auto;
 }
 
 #drawingapp{

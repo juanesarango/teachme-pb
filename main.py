@@ -726,6 +726,7 @@ class user_verify(Handler):
 			user.verificate = True
 			user.put()
 			self.redirect('/?m=1')
+		
 
 class account(Handler):
 	def get(self):
@@ -844,7 +845,7 @@ app = webapp2.WSGIApplication([('/', MainPage),
 								('/aprende/([\w-]+)?', aprende),
 								('/profile/teacher/([0-9]+)?', profile_teacher),
 								('/account', account),
-								 ('/messages', messages),
+								('/messages', messages),
 								('/editabout', editabout),
 								('/msg2mentor', msg2mentor),
 								('/reply/', reply),

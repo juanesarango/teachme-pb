@@ -1,4 +1,5 @@
-function drawConfi(){	
+function drawConfi(){
+	divcanvas = document.getElementById('div-canvas');	
 	canvas = document.getElementById('canvas');
 	context = canvas.getContext('2d');
 
@@ -7,8 +8,10 @@ function drawConfi(){
 	pencilcolor = "white";
 	dragging = false;
 
-	canvas.width = window.innerWidth;
-	canvas.height = window.innerHeight*0.7;
+	divcanvas.style.height = window.innerHeight*0.8 + "px";
+	divcanvas.style.width = window.innerWidth + "px";
+	canvas.height = window.innerHeight*8;
+	canvas.width = window.innerWidth-20;
 
 	context.lineWidth = radius*2;
 
@@ -33,6 +36,7 @@ function drawConfi(){
 	undo =  document.getElementById('undo');
 	redo =  document.getElementById('redo');
 	clean =  document.getElementById('clean');
+	image =  document.getElementById('image');
 	save = document.getElementById('save')
 
 	cPushArray = new Array();
@@ -93,13 +97,15 @@ function drawConfi(){
 		sendData(JSON.stringify(sender));
 	});
 
-	undo.addEventListener('click',function(){
+	image.addEventListener('click', newImage);
+	
+	undo.addEventListener('click', function(){
 		cUndo();
 		var sender = {"fn":"undo"};
 		sendData(JSON.stringify(sender));
 	})
 
-	redo.addEventListener('click',function(){
+	redo.addEventListener('click', function(){
 		cRedo();
 		var sender = {"fn":"redo"};
 		sendData(JSON.stringify(sender));
@@ -284,4 +290,23 @@ function download() {
     this.href = imageData;
     // var dt = canvas.toDataURL('image/jpg');
     // this.href = dt;
+};
+
+function newImage(){	
+	fcanvas = new fabric.StaticCanvas('canvas');
+	imgElement = document.getElementById('my-image');
+	imgInstance = new fabric.Image(imgElement, {
+	  left: 100,
+	  top: 100,
+	  angle: 30,
+	  opacity: 0.85
+	});
+	fcanvas.add(imgInstance);
+	// obs = fcanvas.getObjects();
+	// for (var i = obs.length - 1; i >= 0; i--) {
+	//   	obs[i].set('selectable', false);
+	// };
+	// imgInstance.set('selectable', false);
+	// scanvas = new fabric.StaticCanvas('canvas');
+
 };
