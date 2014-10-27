@@ -5,6 +5,9 @@
 {% block description %}
 	<meta name="description" content="Encuentra las próximas sesiones que tendrás en Teachme, y las pasadas.">
 {% endblock %}
+{% block head %}
+	<link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/ajhifddimkapgcifgcodmmfdlknahffk">
+{% endblock %}
 {% block body %}
 
 	<div class="backgnd" style="background-image: url('/static/teachouts.jpg')">
@@ -17,302 +20,337 @@
 		<br>
 		<br>
 		<div class="container">
-			{% if teacher.teachouts %}
-				<div class="row">
-					<div class="col-md-5 col-md-offset-1">
-						<h2 class="font-w">Próximas sesiones a dar</h2>
-					</div>
-				</div>
-			{% endif %}
-			{% for t in teacher.teachouts %}
-				<div class="row">
-					<div class="col-md-6 col-md-offset-3 bckg-b-80" title="Faltan {{m_faltan[t]}} para que empieze la mentoria">	
-						<div class="row">
-							<div class="col-md-3">
-								<img {% if learner[t].profile_pic_r %} src="{{learner[t].profile_pic_r}}" {% else %} src="/static/avatar.png"{% endif %} class="img-circle img-100">
-							</div>
-							<div class="col-md-9">
-								<div class="row">
-									<div class="col-md-6">
-										<h4>{{m_touts[t].area}} - Sin costo</h4>
-									</div>
-									<div class="col-md-6">
-										<script type="text/javascript">
-											$(document).ready(function(){
-												date = new Date();
-												date.setTime(Date.parse("{{m_touts[t].date.strftime("%Y-%m-%dT%H:%MZ")}}"));
-												console.log(date);
-												$('#{{m_touts[t].key.id()}}').text(date.toDateString()+' at '+ date.toLocaleTimeString());
-											})
-										</script>
-										<p id="{{m_touts[t].key.id()}}"></p>
-									</div>
-								</div>
-								<hr class="hr">
-								<div class="row">
-									<div class="col-md-8">
-										<h4><strong>{{learner[t].name}}</strong> {{learner[t].lname}}</h4>
-									</div>
-									<div class="col-md-4">
-										<div class="row">
-											<a href="/session/?r={{m_touts[t].key.id()}}" target="_blank"> 
-												<button class="btn btn-success" {% if m_disable[t] == True %} disabled="disabled"{% endif %}><span class="glyphicon glyphicon-facetime-video"></span> Únete ahora</button>
-											</a>
-										</div>
-										<div class="row">
-											<a target="_blank" href="/teachout/cancel/{{m_touts[t].key.urlsafe()}}">
-												<button class="btn btn-danger" disabled="disabled" style="margin-top:6px;">Cancelar</button>
-											</a>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<br>
-					</div>
-				</div>
-				<br>
-				<br>
-			{% endfor %}
 			<div class="row">
-				<div class="col-md-5 col-md-offset-1">
-					<h2 class="font-w">Próximas sesiones a recibir</h2>
-				</div>
-			</div>
-			{% for t in user.teachouts %}
-				<div class="row">
-					<div class="col-md-6 col-md-offset-3 bckg-b-80" title="Faltan {{faltan[t]}} para que empieze la mentoria">	
+				<div class="col-md-9">
+					{% if teacher.teachouts %}
 						<div class="row">
-							<div class="col-md-3">
-								<img {% if mentor[t].profile_pic_r %}src="{{mentor[t].profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %} class="img-circle img-100">
-							</div>
-							<div class="col-md-9">
-								<div class="row">
-									<div class="col-md-6">
-										<h4>{{touts[t].area}} - Sin costo</h4>
-									</div>
-									<div class="col-md-6">
-										<script type="text/javascript">
-											$(document).ready(function(){
-												date = new Date();
-												date.setTime(Date.parse("{{touts[t].date.strftime("%Y-%m-%dT%H:%MZ")}}"));
-												console.log(date);
-												$('#{{touts[t].key.id()}}').text(date.toDateString()+' at '+ date.toLocaleTimeString());
-											})
-										</script>
-										<p id="{{touts[t].key.id()}}"></p>
-									</div>
-								</div>
-								<hr class="hr">
-								<div class="row">
-									<div class="col-md-8">
-										<h4><strong>{{mentor[t].name}}</strong> {{mentor[t].lname}}</h4>
-									</div>
-									<div class="col-md-4">
-										<div class="row">
-										{% if disable[t] == True %}
-											<a href="/teachouts" target="_blank"> 
-												<button class="btn btn-success" disabled="disabled">Únete ahora</button>
-											</a>
-										{% else %}
-											<a href="/session/?r={{touts[t].key.id()}}" target="_blank"> 
-												<button class="btn btn-success"><span class="glyphicon glyphicon-facetime-video"></span> Únete ahora</button>
-											</a>
-										{% endif %}
-										</div>
-										<div class="row">
-											<a href="/teachout/cancel/{{touts[t].key.urlsafe()}}">
-												<button class="btn btn-danger" disabled="disabled" style="margin-top:6px;">Cancelar</button>
-											</a>
-										</div>
-									</div>
-								</div>
+							<div class="col-md-offset-1">
+								<h2 class="font-w">Próximas sesiones a dar</h2>
 							</div>
 						</div>
-						<br>
-					</div>
-				</div>
-				<br>
-				<br>
-			{% else %}
-				<div class="row">
-					<div class="col-md-6 col-md-offset-3 bckg-b-80">
-						<h3><span class="glyphicon glyphicon-info-sign"></span> No has agendado ninguna sesión.</h3>
-					</div>
-				</div>
-			{% endfor %}
-			{% if teacher %}
-				{% if teacher.teachouts_expired %}
-					<div class="row">
-						<div class="col-md-5 col-md-offset-1">
-							<h2 class="font-w">Sesiones dadas</h2>
-						</div>
-					</div>
-				{% endif %}
-				{% for t in teacher.teachouts_expired|reverse() %}
-					<div class="row">
-						<div class="col-md-6 col-md-offset-3 bckg-b-80">	
-							<div class="row">
-								<div class="col-md-3">
-									<img {% if elearner[t].profile_pic_r %} src="{{elearner[t].profile_pic_r}}" {% else %} src="/static/avatar.png"{% endif %} class="img-circle img-100">
-								</div>
-								<div class="col-md-9">
-									<div class="row">
-										<div class="col-md-6">
-											<h4>{{m_etouts[t].area}} - Sin costo</h4>
-										</div>
-										<div class="col-md-6">
-											<script type="text/javascript">
-												$(document).ready(function(){
-													date = new Date();
-													date.setTime(Date.parse("{{m_etouts[t].date.strftime("%Y-%m-%dT%H:%MZ")}}"));
-													console.log(date);
-													$('#{{m_etouts[t].key.id()}}').text(date.toDateString()+' at '+ date.toLocaleTimeString());
-												})
-											</script>
-											<p id="{{m_etouts[t].key.id()}}"></p>
-										</div>
+					{% endif %}
+
+					{% for t in teacher.teachouts %}
+						<div class="row">
+							<div class="col-md-9 col-md-offset-2 bckg-b-80" title="Faltan {{m_faltan[t]}} para que empieze la mentoria">	
+								<div class="row">
+									<div class="col-md-3">
+										<br>
+										<img {% if learner[t].profile_pic_r %} src="{{learner[t].profile_pic_r}}" {% else %} src="/static/avatar.png"{% endif %} class="img-circle img-100">
 									</div>
-									<hr class="hr">
-									<div class="row">
-										<div class="col-md-8">
-											<h4><strong>{{elearner[t].name}}</strong> {{elearner[t].lname}}</h4>
+									<div class="col-md-9">
+										<div class="row">
+											<div class="col-md-6">
+												<h4>{{m_touts[t].area}} - Sin costo</h4>
+											</div>
+											<div class="col-md-6">
+												<script type="text/javascript">
+													$(document).ready(function(){
+														date = new Date();
+														date.setTime(Date.parse("{{m_touts[t].date.strftime("%Y-%m-%dT%H:%MZ")}}"));
+														console.log(date);
+														$('#{{m_touts[t].key.id()}}').text(date.toDateString()+' at '+ date.toLocaleTimeString());
+													})
+												</script>
+												<p id="{{m_touts[t].key.id()}}"></p>
+											</div>
 										</div>
-										<div class="col-md-4">
-											<div class="row">
-												<button {% if m_etouts[t].status=="ok" %} class="btn btn-success" {% else %} class="btn btn-danger" {%endif %} disabled="disabled">{% if m_etouts[t].status=="ok" %} Realizada {% else %} No realizada {%endif %}</button> 
+										<hr class="hr">
+										<div class="row">
+											<div class="col-md-8">
+												<h4><strong>{{learner[t].name}}</strong> {{learner[t].lname}}</h4>
+											</div>
+											<div class="col-md-4">
+												<div class="row">
+													<a href="/session/?r={{m_touts[t].key.id()}}" target="_blank"> 
+														<button class="btn btn-success" {% if m_disable[t] == True %} disabled="disabled"{% endif %}><span class="glyphicon glyphicon-facetime-video"></span> Únete ahora</button>
+													</a>
+												</div>
+												<div class="row">
+													<a target="_blank" href="/teachout/cancel/{{m_touts[t].key.urlsafe()}}">
+														<button class="btn btn-danger" disabled="disabled" style="margin-top:6px;">Cancelar</button>
+													</a>
+												</div>
 											</div>
 										</div>
 									</div>
+								</div>
+								<br>
+							</div>
+						</div>
+						<br>
+						<br>
+					{% endfor %}
+					<div class="row">
+						<div class="col-md-offset-1">
+							<h2 class="font-w">Próximas sesiones a recibir</h2>
+						</div>
+					</div>
+					{% for t in user.teachouts %}
+						<div class="row">
+							<div class="col-md-9 col-md-offset-2 bckg-b-80" title="Faltan {{faltan[t]}} para que empieze la mentoria">	
+								<div class="row">
+									<div class="col-md-3">
+									<br>
+										<img {% if mentor[t].profile_pic_r %}src="{{mentor[t].profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %} class="img-circle img-100">
+									</div>
+									<div class="col-md-9">
+										<div class="row">
+											<div class="col-md-6">
+												<h4>{{touts[t].area}} - Sin costo</h4>
+											</div>
+											<div class="col-md-6">
+												<script type="text/javascript">
+													$(document).ready(function(){
+														date = new Date();
+														date.setTime(Date.parse("{{touts[t].date.strftime("%Y-%m-%dT%H:%MZ")}}"));
+														console.log(date);
+														$('#{{touts[t].key.id()}}').text(date.toDateString()+' at '+ date.toLocaleTimeString());
+													})
+												</script>
+												<p id="{{touts[t].key.id()}}"></p>
+											</div>
+										</div>
+										<hr class="hr">
+										<div class="row">
+											<div class="col-md-8">
+												<h4><strong>{{mentor[t].name}}</strong> {{mentor[t].lname}}</h4>
+											</div>
+											<div class="col-md-4">
+												<div class="row">
+												{% if disable[t] == True %}
+													<a href="/teachouts" target="_blank"> 
+														<button class="btn btn-success" disabled="disabled">Únete ahora</button>
+													</a>
+												{% else %}
+													<a href="/session/?r={{touts[t].key.id()}}" target="_blank"> 
+														<button class="btn btn-success"><span class="glyphicon glyphicon-facetime-video"></span> Únete ahora</button>
+													</a>
+												{% endif %}
+												</div>
+												<div class="row">
+													<a href="/teachout/cancel/{{touts[t].key.urlsafe()}}">
+														<button class="btn btn-danger" disabled="disabled" style="margin-top:6px;">Cancelar</button>
+													</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<br>
+							</div>
+						</div>
+						<br>
+						<br>
+					{% else %}
+						<div class="row">
+							<div class="col-md-9 col-md-offset-2 bckg-b-80">
+								<h3><span class="glyphicon glyphicon-info-sign"></span> No has agendado ninguna sesión.</h3>
+							</div>
+						</div>
+					{% endfor %}
+					{% if teacher %}
+						{% if teacher.teachouts_expired %}
+							<div class="row">
+								<div class="col-md-9 col-md-offset-1">
+									<h2 class="font-w">Sesiones dadas</h2>
+								</div>
+							</div>
+						{% endif %}
+						{% for t in teacher.teachouts_expired|reverse() %}
+							<div class="row">
+								<div class="col-md-9 col-md-offset-2 bckg-b-80">	
+									<div class="row">
+										<div class="col-md-3">
+											<br>
+											<img {% if elearner[t].profile_pic_r %} src="{{elearner[t].profile_pic_r}}" {% else %} src="/static/avatar.png"{% endif %} class="img-circle img-100">
+										</div>
+										<div class="col-md-9">
+											<div class="row">
+												<div class="col-md-6">
+													<h4>{{m_etouts[t].area}} - Sin costo</h4>
+												</div>
+												<div class="col-md-6">
+													<script type="text/javascript">
+														$(document).ready(function(){
+															date = new Date();
+															date.setTime(Date.parse("{{m_etouts[t].date.strftime("%Y-%m-%dT%H:%MZ")}}"));
+															console.log(date);
+															$('#{{m_etouts[t].key.id()}}').text(date.toDateString()+' at '+ date.toLocaleTimeString());
+														})
+													</script>
+													<p id="{{m_etouts[t].key.id()}}"></p>
+												</div>
+											</div>
+											<hr class="hr">
+											<div class="row">
+												<div class="col-md-8">
+													<h4><strong>{{elearner[t].name}}</strong> {{elearner[t].lname}}</h4>
+												</div>
+												<div class="col-md-4">
+													<div class="row">
+														<button {% if m_etouts[t].status=="ok" %} class="btn btn-success" {% else %} class="btn btn-danger" {%endif %} disabled="disabled">{% if m_etouts[t].status=="ok" %} Realizada {% else %} No realizada {%endif %}</button> 
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<br>
 								</div>
 							</div>
 							<br>
+							<br>
+						{% endfor %}
+					{% endif %}
+					<div class="row">
+						<div class="col-md-10 col-md-offset-1">
+							<h2 class="font-w">Sesiones recibidas</h2>
 						</div>
 					</div>
-					<br>
-					<br>
-				{% endfor %}
-			{% endif %}
-			<div class="row">
-				<div class="col-md-5 col-md-offset-1">
-					<h2 class="font-w">Sesiones recibidas</h2>
-				</div>
-			</div>
-			{% for t in user.teachouts_expired|reverse() %}
-				<div class="row">
-					<div class="col-md-6 col-md-offset-3 bckg-b-80">	
+					{% for t in user.teachouts_expired|reverse() %}
 						<div class="row">
-							<div class="col-md-3">
-								<img {% if ementor[t].profile_pic_r %}src="{{ementor[t].profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %} class="img-circle img-100">
-							</div>
-							<div class="col-md-9">
+							<div class="col-md-9 col-md-offset-2 bckg-b-80">	
 								<div class="row">
-									<div class="col-md-6">
-										<h4>{{etouts[t].area}} - Sin costo</h4>
+									<div class="col-md-3">
+									<br>
+										<img {% if ementor[t].profile_pic_r %}src="{{ementor[t].profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %} class="img-circle img-100">
 									</div>
-									<div class="col-md-6">
-										<script type="text/javascript">
-											$(document).ready(function(){
-												date = new Date();
-												date.setTime(Date.parse("{{etouts[t].date.strftime("%Y-%m-%dT%H:%MZ")}}"));
-												console.log(date);
-												$('#{{etouts[t].key.id()}}').text(date.toDateString()+' at '+ date.toLocaleTimeString());
-											})
-										</script>
-										<p id="{{etouts[t].key.id()}}"></p>
-									</div>
-								</div>
-								<hr class="hr">
-								<div class="row">
-									<div class="col-md-8">
-										<h4><strong>{{ementor[t].name}}</strong> {{ementor[t].lname}}</h4>
-									</div>
-									<div class="col-md-4">
+									<div class="col-md-9">
 										<div class="row">
-											<button {% if etouts[t].status=="ok" %} class="btn btn-success" {% else %} class="btn btn-danger" {%endif %} disabled="disabled">{% if etouts[t].status=="ok" %} Realizada {% else %} No realizada {%endif %}</button> 
+											<div class="col-md-6">
+												<h4>{{etouts[t].area}} - Sin costo</h4>
+											</div>
+											<div class="col-md-6">
+												<script type="text/javascript">
+													$(document).ready(function(){
+														date = new Date();
+														date.setTime(Date.parse("{{etouts[t].date.strftime("%Y-%m-%dT%H:%MZ")}}"));
+														console.log(date);
+														$('#{{etouts[t].key.id()}}').text(date.toDateString()+' at '+ date.toLocaleTimeString());
+													})
+												</script>
+												<p id="{{etouts[t].key.id()}}"></p>
+											</div>
+										</div>
+										<hr class="hr">
+										<div class="row">
+											<div class="col-md-8">
+												<h4><strong>{{ementor[t].name}}</strong> {{ementor[t].lname}}</h4>
+											</div>
+											<div class="col-md-4">
+												<div class="row">
+													<button {% if etouts[t].status=="ok" %} class="btn btn-success" {% else %} class="btn btn-danger" {%endif %} disabled="disabled">{% if etouts[t].status=="ok" %} Realizada {% else %} No realizada {%endif %}</button> 
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											{% if etouts[t].status=="ok" %}
+												{% if etouts[t].rating %}
+													<div class="col-md-5">
+													<span class="starReviews-gray">
+														<span class="starReviews" style="width:{{etouts[t].rating*20}}%"></span>
+													</span>
+													</div>
+												{% else %}
+													<div class="col-md-5">
+														<p><button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#review{{t.id()}}"><span class="glyphicon glyphicon-star"></span> Califica este mentor</button></p>
+													</div>
+
+													<!-- Modal para calificación -->
+													<div class="modal fade" id="review{{t.id()}}" tabindex="-1" role="dialog" aria-labelledby="review{{t.id()}}Label" aria-hidden="true">
+														<div class="modal-dialog">
+														    <div class="modal-content">
+															    <div class="modal-header">
+															    	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+															    	<h4 class="modal-title font-b" id="review{{t.id()}}label">Califica a {{ementor[t].name}}</h4>
+															    </div>
+															    <form role="form" action="/calificar" method="post">
+															      	<div class="modal-body">
+															        	<div class="row">
+															        		<div class="col-md-3 col-md-offset-1">
+															        			<img {% if ementor[t].profile_pic_r %}src="{{ementor[t].profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %} class="img-circle img-100">
+															        		</div>
+															        		<div class="col-md-7">
+															        			<div class="form-group">
+															        				<h4 class="text-primary">
+																        				<span class="glyphicon glyphicon-star-empty star1"></span>
+																        				<span class="glyphicon glyphicon-star-empty star2"></span>
+																        				<span class="glyphicon glyphicon-star-empty star3"></span>
+																        				<span class="glyphicon glyphicon-star-empty star4"></span>
+																        				<span class="glyphicon glyphicon-star-empty star5"></span>
+															        				</h4>
+															        				<input type="hidden" name="reviewRating" class="reviewStar">
+															        				<p class="help-block">Califica de 1 a 5 tu experiencia con {{ementor[t].name}} </p>
+															        				<p class="help-block has-error">{{msg}}</p>
+															        			</div>
+															        		</div>
+															        	</div>
+															        	<hr>
+															        	<div class="row">
+															        		<div class="col-md-10 col-md-offset-1">
+															        			<div class="form-group">
+															        				<textarea class="form-control" rows="5" name="reviewComment" placeholder="Escribe un comentario acerca de tu experiencia con {{ementor[t].name}}"></textarea>
+															        				<p class="help-block">Tu comentario podra ser visto por los usuarios de Teachme</p>
+															        			</div>
+															        		</div>
+															        	</div>
+															      	</div>
+															      	<div class="modal-footer">
+															      		<input type="hidden" name="reviewMentor" value="{{ementor[t].key.urlsafe()}}">
+															      		<input type="hidden" name="reviewTout" value="{{t.urlsafe()}}">
+															        	<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+															        	<button type="submit" class="btn btn-primary">Calificar</button>
+															      	</div>
+														      	</form>
+														    </div>
+														</div>
+													</div>
+													<!-- Termina modal para calificación-->
+												{% endif %}
+											{% endif %}
 										</div>
 									</div>
 								</div>
-								<div class="row">
-									{% if etouts[t].status=="ok" %}
-										{% if etouts[t].rating %}
-											<div class="col-md-5">
-											<span class="starReviews-gray">
-												<span class="starReviews" style="width:{{etouts[t].rating*20}}%"></span>
-											</span>
-											</div>
-										{% else %}
-											<div class="col-md-5">
-												<p><button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#review{{t.id()}}"><span class="glyphicon glyphicon-star"></span> Califica este mentor</button></p>
-											</div>
-
-											<!-- Modal para calificación -->
-											<div class="modal fade" id="review{{t.id()}}" tabindex="-1" role="dialog" aria-labelledby="review{{t.id()}}Label" aria-hidden="true">
-												<div class="modal-dialog">
-												    <div class="modal-content">
-													    <div class="modal-header">
-													    	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-													    	<h4 class="modal-title font-b" id="review{{t.id()}}label">Califica a {{ementor[t].name}}</h4>
-													    </div>
-													    <form role="form" action="/calificar" method="post">
-													      	<div class="modal-body">
-													        	<div class="row">
-													        		<div class="col-md-3 col-md-offset-1">
-													        			<img {% if ementor[t].profile_pic_r %}src="{{ementor[t].profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %} class="img-circle img-100">
-													        		</div>
-													        		<div class="col-md-7">
-													        			<div class="form-group">
-													        				<h4 class="text-primary">
-														        				<span class="glyphicon glyphicon-star-empty star1"></span>
-														        				<span class="glyphicon glyphicon-star-empty star2"></span>
-														        				<span class="glyphicon glyphicon-star-empty star3"></span>
-														        				<span class="glyphicon glyphicon-star-empty star4"></span>
-														        				<span class="glyphicon glyphicon-star-empty star5"></span>
-													        				</h4>
-													        				<input type="hidden" name="reviewRating" class="reviewStar">
-													        				<p class="help-block">Califica de 1 a 5 tu experiencia con {{ementor[t].name}} </p>
-													        				<p class="help-block has-error">{{msg}}</p>
-													        			</div>
-													        		</div>
-													        	</div>
-													        	<hr>
-													        	<div class="row">
-													        		<div class="col-md-10 col-md-offset-1">
-													        			<div class="form-group">
-													        				<textarea class="form-control" rows="5" name="reviewComment" placeholder="Escribe un comentario acerca de tu experiencia con {{ementor[t].name}}"></textarea>
-													        				<p class="help-block">Tu comentario podra ser visto por los usuarios de Teachme</p>
-													        			</div>
-													        		</div>
-													        	</div>
-													      	</div>
-													      	<div class="modal-footer">
-													      		<input type="hidden" name="reviewMentor" value="{{ementor[t].key.urlsafe()}}">
-													      		<input type="hidden" name="reviewTout" value="{{t.urlsafe()}}">
-													        	<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-													        	<button type="submit" class="btn btn-primary">Calificar</button>
-													      	</div>
-												      	</form>
-												    </div>
-												</div>
-											</div>
-											<!-- Termina modal para calificación-->
-										{% endif %}
-									{% endif %}
-								</div>
+								<br>
 							</div>
 						</div>
 						<br>
-					</div>
+						<br>
+					{% else %}
+						<div class="row">
+							<div class="col-md-9 col-md-offset-2 bckg-b-80">
+								<h3><span class="glyphicon glyphicon-info-sign"></span> No has agendado ninguna sesión.</h3>
+							</div>
+						</div>
+					{% endfor %}
 				</div>
-				<br>
-				<br>
-			{% else %}
-				<div class="row">
-					<div class="col-md-6 col-md-offset-3 bckg-b-80">
-						<h3><span class="glyphicon glyphicon-info-sign"></span> No has agendado ninguna sesión.</h3>
+				<div class="col-md-3 bckg-b-80">
+					<h3>Tu primera sesión?</h3>
+<!-- 					<ul class="list-unstyled">
+						<li><a class="font-w" href="https://www.google.com/chrome/browser/" target="_blank"><span style="font-size:20px" class="flaticon-chrome3"></span></a><a class="font-w" href="/faq#collapse1b" target="_blank"><small class="font-w"> Ya tienes Chrome?</small></a></li>
+						<li><a class="font-w" href=""><span style="font-size:20px" class="glyphicon glyphicon-facetime-video"></span></a><a class="font-w" href="/faq" target="_blank"><small class="font-w"> Que tal funciona tu cámara?</small></a></li>
+						<li><a class="font-w" href="https://chrome.google.com/webstore/detail/ajhifddimkapgcifgcodmmfdlknahffk" target="_blank"><span style="font-size:20px" class="flaticon-online"></span></a><a class="font-w" href="/faq#collapse2b" target="_blank"><small class="font-w"> Quieres compartir tu pantalla?</small></a></li>
+						<li><a class="font-w" href=""><span style="font-size:20px" class="glyphicon glyphicon-lock"></span></a><a class="font-w" href="/faq" target="_blank"><small class="font-w"> Compra con seguridad. Teachme es 100% garantizado</small></a></li>
+					</ul> -->
+					<div class="row">
+						<div class="col-xs-1"><a class="font-w" href="https://www.google.com/chrome/browser/" target="_blank"><span style="font-size:20px" class="flaticon-chrome3"></span></a></div>
+						<div class="col-xs-10"><a class="font-w" href="/faq#collapse1b" target="_blank"><small class="font-w">Ya tienes Chrome?</small></a></div>
 					</div>
+					<div class="row">
+						<div class="col-xs-1"><a class="font-w" href=""><span style="font-size:20px" class="glyphicon glyphicon-facetime-video"></span></a></div>
+						<div class="col-xs-10"><a class="font-w" href="/faq#collapse1b" target="_blank"><small class="font-w"> Que tal funciona tu cámara?</small></a></div>
+					</div>
+					<div class="row">
+						<div class="col-xs-1"><a class="font-w" href="https://chrome.google.com/webstore/detail/ajhifddimkapgcifgcodmmfdlknahffk" target="_blank"><span style="font-size:20px" class="flaticon-online"></span></a></div>
+						<div class="col-xs-10"><a class="font-w" href="/faq#collapse2b" target="_blank"><small class="font-w"> Quieres compartir tu pantalla?</small></a></div>
+					</div>
+					<div class="row">
+						<div class="col-xs-1"><a class="font-w" href=""><span style="font-size:20px" class="glyphicon glyphicon-lock"></span></a></div>
+						<div class="col-xs-10"><a class="font-w" href="/faq#collapse4d" target="_blank"><small class="font-w"> Compra con seguridad. Teachme es 100% garantizado</small></a></div>
+					</div>
+					<br>
 				</div>
-			{% endfor %}
+			</div>
 		</div>
 	</div>
 <script type="text/javascript">

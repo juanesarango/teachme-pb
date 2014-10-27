@@ -256,6 +256,10 @@ a:visited{
   color: white;
 }
 
+.font-w:hover{
+  text-decoration: none;
+}
+
 .font-primary{
   color: #46a8bf;
 }

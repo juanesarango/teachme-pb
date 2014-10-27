@@ -70,34 +70,51 @@ def get_hd_default(user_agent):
     return 'false'
   return 'true'
 
-def make_pc_config(stun_server, turn_server, ts_pwd, ice_transports):
+def make_pc_config(stun_server, turn_server, ts_pwd, ice_transports, room):
   config = {}
   servers = []
   if stun_server:
     stun_config = 'stun:{}'.format(stun_server)
-    servers.append({'urls':stun_config})
+    servers.append({'url':stun_config})
   if turn_server:
     turn_config = 'turn:{}'.format(turn_server)
-    servers.append({'urls':turn_config, 'credential':ts_pwd})
+    servers.append({'url':turn_config, 'credential':ts_pwd})
   #config['iceServers'] = servers Julian
-  config['iceServers'] = create_turn_servers()
+  create_room_xir(room)
+  #servers.append(create_turn_servers(room))
+  config['iceServers'] = create_turn_servers(room)
   if ice_transports:
     config['iceTransports'] = ice_transports
   return config
 
-#Turn as a service xirsys
-def create_turn_servers():
+#Julian Modification
+
+#Make room in xirsys
+def create_room_xir(room):
   tok = {'ident':'teachme',
          'secret':'82643c69-1891-41ec-aade-a24a484f9689',
          'domain':'www.teachmeapp.com',
          'application':'session',
-         'room':'room',
+         'room':room,}
+  url = 'https://api.xirsys.com/addRoom'
+  r = requests.post(url, data = tok)
+  return
+
+#Turn as a service xirsys
+def create_turn_servers(room):
+  tok = {'ident':'teachme',
+         'secret':'82643c69-1891-41ec-aade-a24a484f9689',
+         'domain':'www.teachmeapp.com',
+         'application':'session',
+         'room':room,
          'secure':1}
   url = 'https://api.xirsys.com/getIceServers'
   r = requests.post(url, data = tok)
   serv = json.loads(r.content)
   return serv['d']['iceServers']
 #end Turn as a service
+
+#end Julian modification
 
 def create_channel(room, user, duration_minutes):
   client_id = make_client_id(room, user)
@@ -428,7 +445,7 @@ class MainPage(webapp2.RequestHandler):
     # We will call the teachouts database to bring the participants and the date and time of the session
     val, merror = self.validation(room_key)
     logging.info(merror)
-    #val=True
+    val=True
     if not val:
       self.abort(403)
     # End of validation
@@ -611,7 +628,7 @@ class MainPage(webapp2.RequestHandler):
     room_link = base_url + '?r=' + room_key
     room_link = append_url_arguments(self.request, room_link)
     token = create_channel(room, user, token_timeout)
-    pc_config = make_pc_config(stun_server, turn_server, ts_pwd, ice_transports)
+    pc_config = make_pc_config(stun_server, turn_server, ts_pwd, ice_transports, room=room_key) # Julian: I've added room
     pc_constraints = make_pc_constraints(dtls, dscp, ipv6)
     offer_constraints = make_offer_constraints()
     media_constraints = make_media_stream_constraints(audio, video,

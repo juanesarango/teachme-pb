@@ -3,7 +3,9 @@
 {% set title = "Preguntas frecuentes | Teachme" %}
 {% set shareText = "Como funciona? como se realiza la asesoría? todas las preguntas que tengas, acá te las resolvemos" %}
 {% set shareHt = "faq" %}
-
+{% block head %}
+	<link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/ajhifddimkapgcifgcodmmfdlknahffk">
+{% endblock %}
 {% block body %}
 
 <div class="backgnd" style="background-image: url('/static/signup.jpg')">
@@ -158,6 +160,21 @@
 						  	</div>
 						</div>
 					</div>
+					<div class="panel panel-default bckg-none">
+						<div class="panel-heading">
+						 	<h4 class="panel-title">
+						    	<a data-toggle="collapse" data-parent="#accordion" href="#collapse2b">
+						      	2. Quiero compartir mi pantalla en la sesión. ¿Que debo de hacer?
+						    	</a>
+						  	</h4>
+						</div>
+						<div id="collapse2b" class="panel-collapse collapse">
+						  	<div class="panel-body">
+						  		Para poder compartir tu pantalla dentro de la sesión, necesitas instalar una pequeña extensión antes de entrar. Da click <a href="https://chrome.google.com/webstore/detail/ajhifddimkapgcifgcodmmfdlknahffk" target="_blank">aquí</a> para instalarlo, y estarás listo para compartir tu pantalla.
+
+						  	</div>
+						</div>
+					</div>
 					<h3> Solucionar Problemas</h3>
 					<div class="panel panel-default bckg-none">
 						<div class="panel-heading">
@@ -251,5 +268,13 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+	$(document).ready( function (){
+		var url = document.location.toString();
+		if ( url.match('#') ) {
+		    $('#'+url.split('#')[1]).addClass('in');
+		}
+	});
+</script>
 
 {% endblock %}

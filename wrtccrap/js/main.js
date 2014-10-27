@@ -520,8 +520,8 @@ function onUserMediaSuccess(stream) {
 }
 
 function onUserMediaError(error) {
-  var errorMessage = 'Failed to get access to local media. Error name was ' +
-      error.name + '. Continuing without sending a stream.';
+  var errorMessage = 'Hubo un error al tratar de acceder a tu cámara o microfono. ' +
+      error.name + '. Se continuará sin enviar video';
   messageError(errorMessage);
   alert(errorMessage);
 
@@ -719,7 +719,8 @@ function transitionToActive() {
   // Prepare the remote video and PIP elements.
   if (stereoscopic) {
     setupStereoscopic(remoteVideo, document.getElementById('remoteCanvas'));
-  } else {
+  } else if (screenSharing){}
+    else{
     reattachMediaStream(miniVideo, localVideo);
   }
   miniVideo.style.opacity = 1;
@@ -731,9 +732,9 @@ function transitionToActive() {
     localVideo.src = '';
   }, 800);
   // Reset window display according to the aspect ratio of remote video.
-  window.onresize();
   videoChat = true;
   displayButtons(videoChat);
+  window.onresize();
 }
 
 function transitionToWaiting() {
@@ -1339,43 +1340,4 @@ function offTablero(s){
     var sender = '{"fn": "offTablero", "offTablero":true}';
     sendData(sender);
   }
-}
-
-function onScreenSharing(){
-  navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.getUserMedia;
-  navigator.getUserMedia({
-    video: {
-      mandatory: {
-        chromeMediaSource: 'screen',
-         maxWidth: 1280,
-         maxHeight: 720
-      }
-    }
-  }, function(stream) {
-    screenSharing = true;
-    displayButtons(videoChat);
-    sendData('{"fn": "onScreenSharing"}');
-    attachMediaStream(miniVideo, stream);
-    pc.addStream(stream);
-    localScreenStream = stream;
-    doCall();
-   }, function() {
-      console.log('Hay error');
-   }
-  )
-}
-
-function offScreenSharing(){
-  pc.removeStream(localScreenStream);
-  attachMediaStream(miniVideo, localStream);
-  sendData('{"fn": "offScreenSharing"}');
-  screenSharing = false;
-  displayButtons(videoChat);
-  localScreenStream.stop();
-}
-
-function offRemoteScreenSharing(){
-  attachMediaStream(remoteVideo, remoteStream);
-  attachMediaStream(miniVideo, localStream);
-  miniVideo.muted = true;
 }
