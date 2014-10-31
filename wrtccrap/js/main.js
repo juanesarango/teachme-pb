@@ -254,7 +254,6 @@ function sendData(d){
   var data = d;
   if(initiator) sendChannel.send(data);
   else receiveChannel.send(data);
-  trace('send data: ' + data);
 }
 var rec;
 

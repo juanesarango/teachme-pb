@@ -81,8 +81,11 @@ def make_pc_config(stun_server, turn_server, ts_pwd, ice_transports, room):
     servers.append({'url':turn_config, 'credential':ts_pwd})
   #config['iceServers'] = servers Julian
   create_room_xir(room)
-  #servers.append(create_turn_servers(room))
-  config['iceServers'] = create_turn_servers(room)
+  xirSysServers = create_turn_servers(room)
+  for i in xirSysServers:
+    servers.append(i)
+
+  config['iceServers'] = servers
   if ice_transports:
     config['iceTransports'] = ice_transports
   return config
@@ -280,9 +283,9 @@ class Room(db.Model):
 
   def get_occupancy(self):
     occupancy = 0
-    if self.user1:
+    if self.user1 and self.user1_connected:
       occupancy += 1
-    if self.user2:
+    if self.user2 and self.user2_connected:
       occupancy += 1
     return occupancy
 
@@ -298,9 +301,9 @@ class Room(db.Model):
     return (user and (user == self.user1 or user == self.user2))
 
   def add_user(self, user):
-    if not self.user1:
+    if not self.user1 or self.user1 == user:
       self.user1 = user
-    elif not self.user2:
+    elif not self.user2 or self.user2 == user:
       self.user2 = user
     else:
       raise RuntimeError('La sala está llena')
@@ -445,7 +448,7 @@ class MainPage(webapp2.RequestHandler):
     # We will call the teachouts database to bring the participants and the date and time of the session
     val, merror = self.validation(room_key)
     logging.info(merror)
-    val=True
+    #val=True
     if not val:
       self.abort(403)
     # End of validation
@@ -569,7 +572,7 @@ class MainPage(webapp2.RequestHandler):
     token_timeout = self.request.get_range('tt',
                                            min_value = 3,
                                            max_value = 1440,
-                                           default = 30)
+                                           default = 60)
 
     unittest = self.request.get('unittest')
     if unittest:
@@ -585,13 +588,41 @@ class MainPage(webapp2.RequestHandler):
       return
 
     logging.info('Preparing to add user to room ' + room_key)
-    user = None
+
+    # room = Room.get_by_key_name(room_key)
+    # if not room:
+    #   room = Room(key_name = room_key)
+    # user = str(self.user.key.id())
+    # if not room.user1:
+    #   room.user1 = user
+    #   room.user1_connected = True
+    #   room.put()
+    #   initiator = 0
+    # elif room.user1 != user and not room.user2:
+    #   room.user2 = user
+    #   room.user2_connected = True
+    #   room.put()
+    #   initiator = 1
+    # elif room.user2 != user and room.user1 != user:
+    #   raise RuntimeError('La sala está llena')
+
+    # if user == room.user1:
+    #   room.user1_connected = True
+    #   initiator = 0
+    #   room.put()
+    # elif user == room.user2:
+    #   room.user2_connected = True
+    #   initiator = 1
+    #   room.put()
+    # else:
+    #   raise RuntimeError('La sala está llena')
+    user = str(self.user.key.id())
     initiator = 0
     with LOCK:
       room = Room.get_by_key_name(room_key)
       if not room and debug != "full":
         # New room.
-        user = generate_random(8)
+        #user = generate_random(8)
         room = Room(key_name = room_key)
         room.add_user(user)
         if debug != 'loopback':
@@ -601,7 +632,7 @@ class MainPage(webapp2.RequestHandler):
           initiator = 1
       elif room and room.get_occupancy() == 1 and debug != 'full':
         # 1 occupant.
-        user = generate_random(8)
+        #user = generate_random(8)
         room.add_user(user)
         initiator = 1
       else:

@@ -227,16 +227,13 @@ function clearRemote(){
 }
 
 function cPush() {
-	console.log("PUSH");
     cStep++;
-    console.log(cStep);
     if (cStep < cPushArray.length) { cPushArray.length = cStep; }
     cPushArray.push(context.getImageData(0,0,canvas.width,canvas.height));
 }
 
 function cUndo() {
     if (cStep > 0) {
-    	console.log("UNDO");
         cStep--;
         context.putImageData(cPushArray[cStep],0,0);
     }
@@ -244,7 +241,6 @@ function cUndo() {
 
 function cRedo() {
     if (cStep < cPushArray.length-1) {
-        console.log("REDO");
         cStep++;
         context.putImageData(cPushArray[cStep],0,0);
     }
