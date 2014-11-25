@@ -153,7 +153,6 @@ class signup(Handler):
 					profile_pic_r = "https://graph.facebook.com/v2.1/"+str(self.fbID)+"/picture"
 					u = teachme_db.user(name = self.name, lname = self.lname, mail = self.mail, fbID = int(self.fbID), gender = self.gender, timezoneOffset = self.tzo, profile_pic_r = profile_pic_r)
 				u.put()
-				# teachme_index.update_index(index)
 				subject = u.name + u", Bienvenido a Teachme"
 				enlace = "https://www.teachmeapp.com/user/verify/?r=" + u.key.urlsafe()
 				html = render_str("mail_template.html", sujeto = u.name, enlace = enlace)
