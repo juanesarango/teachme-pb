@@ -1,0 +1,180 @@
+# Spanish (Spain) translations for PROJECT.
+# Copyright (C) 2014 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2014-12-16 17:20-0500\n"
+"PO-Revision-Date: 2014-12-16 13:03-0500\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: es_ES <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 1.3\n"
+
+#: templates/base_main.html:88
+msgid "Aprende"
+msgstr "Aprende"
+
+#: templates/base_main.html:102
+msgid "Ensena"
+msgstr "Quieres Enseñar?"
+
+#: templates/base_main.html:108
+msgid "Quiero"
+msgstr "Quiero aprender..."
+
+#: templates/base_main.html:115
+msgid "Sesiones"
+msgstr "Tus Sesiones"
+
+#: templates/base_main.html:121
+msgid "Perfil"
+msgstr "Perfil"
+
+#: templates/base_main.html:122
+msgid "Cuenta"
+msgstr "Cuenta"
+
+#: templates/base_main.html:123
+msgid "Mensajes"
+msgstr "Mensajes"
+
+#: templates/base_main.html:132
+msgid "Salir"
+msgstr "Salir"
+
+#: templates/base_main.html:134
+msgid "Ingresar"
+msgstr "Ingresar"
+
+#: templates/base_main.html:139
+msgid "Ingresa fb"
+msgstr "Ingresa con facebook:"
+
+#: templates/base_main.html:143
+msgid "Ingresa correo"
+msgstr "O ingresa con tu correo:"
+
+#: templates/base_main.html:158
+msgid "Recuerda"
+msgstr "Recuérdame"
+
+#: templates/base_main.html:160
+msgid "Ingresa"
+msgstr "Ingresa"
+
+#: templates/base_main.html:167
+msgid "Registrate"
+msgstr "Regístrate gratis!"
+
+#: templates/base_main.html:171 templates/main_page.html:79
+msgid "Comparte"
+msgstr "Te gusta? Compártenos con "
+
+#: templates/base_main.html:187
+msgid "Espanol"
+msgstr "Español"
+
+#: templates/base_main.html:188
+msgid "Ingles"
+msgstr "Inglés"
+
+#: templates/base_main.html:197
+msgid "Cerrar"
+msgstr "Cerrar"
+
+#: templates/base_main.html:210
+msgid "Terminos"
+msgstr "Términos de uso"
+
+#: templates/base_main.html:213
+msgid "Politicas"
+msgstr "Política de privacidad"
+
+#: templates/base_main.html:216
+msgid "FAQ"
+msgstr "Preguntas frecuentes"
+
+#: templates/base_main.html:219
+msgid "Contacto"
+msgstr "Contacto"
+
+#: templates/main_page.html:16
+msgid "Encuentra"
+msgstr "Encuentra <strong>Tutores</strong> en el tema que necesitas"
+
+#: templates/main_page.html:17
+msgid "Permite"
+msgstr "<strong>Teachme</strong> te permite contactar a los expertos online que necesitas en cualquier momento"
+
+#: templates/main_page.html:23
+msgid "Buscar"
+msgstr "Buscar"
+
+#: templates/main_page.html:24
+msgid "NAyuda"
+msgstr "En que necesitas ayuda? Trata con 'Cálculo diferencial'"
+
+#: templates/main_page.html:57
+msgid "Facil"
+msgstr "Es muy fácil, mira cómo funciona"
+
+#: templates/main_page.html:63
+msgid "B1"
+msgstr "Busca por temas lo que deseas aprender"
+
+#: templates/main_page.html:67
+msgid "B2"
+msgstr "Explora entre los tutores cuál te gusta más"
+
+#: templates/main_page.html:71
+msgid "B3"
+msgstr "Conéctate con el tutor en nuestra aula virtual"
+
+#: templates/main_page.html:100
+msgid "Encuentra-a"
+msgstr "Encuentra mentores por áreas"
+
+#: templates/main_page.html:138
+msgid "Tasa"
+msgstr "USD por hora"
+
+#: templates/main_page.html:144
+msgid "Lo siento-areas"
+msgstr "Lo sentimos. Estamos trabajando para traerte a los mejores mentores en esta área."
+
+#: templates/main_page.html:161
+msgid "Que-dicen"
+msgstr "Qué están diciendo los aprendices de <strong>Teachme"
+
+#: templates/main_page.html:189
+msgid "Testimonio-1"
+msgstr ""Casi que no tenemos una alternativa cómoda para estudiar. Gracias! ""
+
+#: templates/main_page.html:206
+msgid "Testimonio-2"
+msgstr ""Muy Bacano, esto era lo que necesitaba. Gracias totales...""
+
+#: templates/main_page.html:223
+msgid "Testimonio-3"
+msgstr ""UuuuFF, muy bacana ésta página, la recomiendo para todos, estas son las herramientas que necesitamos los estudiantes.""
+
+#: templates/main_page.html:240
+msgid "Testimonio-4"
+msgstr ""Ey muchachos, muchas gracias, doy clases de música y fotografía.""
+
+#: templates/main_page.html:257
+msgid "Testimonio-5"
+msgstr ""Síii. Por fin entendí factorización, buenísima esta página. Graciaaaassss...""
+
+#: templates/main_page.html:274
+msgid "Testimonio-6"
+msgstr ""Excelente, no tengo que moverme de mi casa para encontrarme con un profesor. Muchas graciaaas!!""
+

@@ -13,15 +13,15 @@
 	<div class="container-fluid">
 		<div class="row" style="margin: 120px 0 0 0;">
 			<div class="col-md-7 col-md-offset-1 font-w bckg-b-40">
-				<h1 style="font-size: 30px;">Encuentra <strong>Tutores</strong> en el tema que necesitas</h1>
-				<h4 style="font-size: 18px;"><strong>Teachme</strong> te permite contactar a los expertos online que necesitas en cualquier momento</h4>
+				<h1 style="font-size: 30px;">{% trans %}Encuentra{% endtrans %}</h1>
+				<h4 style="font-size: 18px;">{% trans %}Permite{% endtrans %}</h4>
 				<br>
 				<form class="form" role="form" action="/buscar/" method="get">
 					<div class="row">
 						<div class="col-md-10">
 							<div class="form-group">
-								<label class="sr-only" for="search_query">Buscar</label>
-								<input type="text" placeholder="En que necesitas ayuda? Trata con 'Cálculo diferencial'" class="form-control input-lg" id="search_query" name="q">
+								<label class="sr-only" for="search_query">{% trans %}Buscar{% endtrans %}</label>
+								<input type="text" placeholder="{% trans %}NAyuda{% endtrans %}" class="form-control input-lg" id="search_query" name="q">
 							</div>
 						</div>
 						<div class="col-md-2">
@@ -54,21 +54,21 @@
 	<div class="row bckg-blue">
 		<div class="col-md-8 col-md-offset-2">
 			<div class="row" style="height: 50px;">
-				<h3 class="text-center">Es muy fácil, mira como funciona</h3>
+				<h3 class="text-center">{% trans %}Facil{% endtrans %}</h3>
 			<br>
 			</div>
 			<div class="row">
 				<div class="col-md-4 text-center">
 					<h1><span style="font-size:80px" class="flaticon-educational18"></span></h1>
-					<h3>Busca por temas lo que deseas aprender</h3>
+					<h3>{% trans %}B1{% endtrans %}</h3>
 				</div>
 				<div class="col-md-4 text-center">
 					<h1><span style="font-size:80px" class="flaticon-communities"></span></h1>
-					<h3>Explora entre los tutores cuál te gusta más</h3>
+					<h3>{% trans %}B2{% endtrans %}</h3>
 				</div>
 				<div class="col-md-4 text-center">
 					<h1><span style="font-size:80px" class="flaticon-online"></span></h1>
-					<h3>Conéctate con el tutor en nuestra aula virtual</h3>
+					<h3>{% trans %}B3{% endtrans %}</h3>
 				</div>
 			</div>
 			<br>
@@ -76,7 +76,7 @@
 	</div>
 	<br>
 	<div class="row">
-		<p class="text-center font-w">Te gusta? Compártenos con <span class="flaticon-heart15"></span> &nbsp; &nbsp; &nbsp; <br>
+		<p class="text-center font-w">{% trans %}Comparte{% endtrans %} <span class="flaticon-heart15"></span> &nbsp; &nbsp; &nbsp; <br>
 			<a style="font-size:27px"  href="https://www.facebook.com/dialog/share?app_id=1519397808297922&display=popup&href={{shareUrl}}&redirect_uri={{shareUrl}}" class="black-hover share-fb" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
 				<span class="flaticon-facebook29"></span>
 			</a>
@@ -97,7 +97,7 @@
 		<br>
 		<br>
 		<div class="row">
-			<div class="col-md-12"><h2 class="text-center">Encuentra mentores por áreas</h2></div>
+			<div class="col-md-12"><h2 class="text-center">{% trans %}Encuentra-a{% endtrans %}</h2></div>
 		</div>
 		<div class="row">
 			<br>
@@ -135,13 +135,13 @@
 								<div class="col-md-8">
 									<a href="/teacher/{{t.key.urlsafe()}}"><h3>{{t.name}} {{t.lname}}</h3></a>
 									<p>{{t.about|truncate(120, True)}}</p>
-									<p class="pull-left"><span class="glyphicon glyphicon-credit-card"></span> {{t.fee}} USD por hora</p>
+									<p class="pull-left"><span class="glyphicon glyphicon-credit-card"></span> {{t.fee}} {% trans %}Tasa{% endtrans %}</p>
 									<p class="pull-right">{% if t.date_available|first_date %}<span class="glyphicon glyphicon-calendar"></span> {{t.date_available|first_date}}{% endif %}</p>
 								</div>
 							</div>
 							<hr>
 						{% else %}
-							<h3><span class="glyphicon glyphicon-info-sign"></span> Lo sentimos. Estamos trabajando para traerte a los mejores mentores en esta área.</h3>
+							<h3><span class="glyphicon glyphicon-info-sign"></span> {% trans %}Lo siento-areas{% endtrans %}</h3>
 						{% endfor %}
 					</div>
 					{% endfor %}
@@ -158,7 +158,7 @@
 	<br>
 	<br>
 		<h2 class="text-center">
-			Que están diciendo los aprendices de <strong>Teachme</strong>?
+			{% trans %}Que-dicen{% endtrans %}</strong>?
 		</h2>
 	</div>
 	<div class="row">
@@ -186,7 +186,7 @@
 							</a>
 							<div class="media-body">
 						    	<blockquote>
-									<h4 class="media-heading">" Casi que no tenemos una alternativa cómoda para estudiar. Gracias! "</h4>
+									<h4 class="media-heading">{% trans %}Testimonio-1{% endtrans %}</h4>
 									<footer>Alejandro Jaramillo</footer>
 								</blockquote>
 						  	</div>
@@ -203,7 +203,7 @@
 							</a>
 							<div class="media-body">
 						 		<blockquote>
-									<h4 class="media-heading">" Muy Bacano, esto era lo que necesitaba. Gracias totales.. "</h4>
+									<h4 class="media-heading">{% trans %}Testimonio-2{% endtrans %}</h4>
 									<footer>Alejandro Arabia</footer>
 								</blockquote>
 						  	</div>
@@ -220,7 +220,7 @@
 							</a>
 							<div class="media-body">
 						 		<blockquote>
-									<h4 class="media-heading">" UuuuFF, muy bacana ésta página, la recomiendo para todos, estas son las herramientas que necesitamos los estudiantes.  "</h4>
+									<h4 class="media-heading">{% trans %}Testimonio-3{% endtrans %}</h4>
 									<footer>Alejandro Pérez</footer>
 								</blockquote>
 						  	</div>
@@ -237,7 +237,7 @@
 							</a>
 							<div class="media-body">
 						    	<blockquote>
-									<h4 class="media-heading">" Ey muchachos, muchas gracias, doy clases de música y fotografía. "</h4>
+									<h4 class="media-heading">{% trans %}Testimonio-4{% endtrans %}</h4>
 									<footer>Santiago Henao</footer>
 								</blockquote>
 						  	</div>
@@ -254,7 +254,7 @@
 							</a>
 							<div class="media-body">
 						 		<blockquote>
-									<h4 class="media-heading">" Síii. Por fin entendí factorización, buenísima esta página. Graciaaaassss.. "</h4>
+									<h4 class="media-heading">{% trans %}Testimonio-5{% endtrans %}</h4>
 									<footer>Maria Paulina</footer>
 								</blockquote>
 						  	</div>
@@ -271,7 +271,7 @@
 							</a>
 							<div class="media-body">
 						 		<blockquote>
-									<h4 class="media-heading">" Excelente, no tengo que moverme de mi casa para encontrarme con un profesor. Muchas graciaaas!! "</h4>
+									<h4 class="media-heading">{% trans %}Testimonio-6{% endtrans %}</h4>
 									<footer>Luisa Londoño</footer>
 								</blockquote>
 						  	</div>

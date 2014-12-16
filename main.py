@@ -5,6 +5,7 @@ import jinja2
 import urllib
 import datetime
 import json
+
 from google.appengine.ext import ndb
 from google.appengine.ext import blobstore
 from google.appengine.ext.webapp import blobstore_handlers
@@ -17,13 +18,22 @@ import booking
 import logging
 import stripe
 
+from webapp2_extras import i18n
+from webapp2_extras.i18n import gettext as _
+from google.appengine.ext.webapp.util import run_wsgi_app
+
 ########################################################################
 #Definiciones de Jinja2 para los templates
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
-jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir), autoescape=True)
+jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir), extensions=['jinja2.ext.i18n'], autoescape=True)
+jinja_env.install_gettext_translations(i18n)
 jinja_env.filters['first_date'] = fns.first_date
 jinja_env.filters['datetimeformat'] = fns.datetimeformat
 jinja_env.filters['datetimeformatchat'] = fns.datetimeformatchat
+
+# jinja2 config with i18n enabled
+config = {'webapp2_extras.jinja2': {'template_path': 'templates', 'environment_args': {'extensions': ['jinja2.ext.i18n']}}}
+AVAILABLE_LOCALES = ['es_ES', 'en_US']
 
 
 def render_str(template, **params):
@@ -36,6 +46,28 @@ def render_str(template, **params):
 
 class Handler(webapp2.RequestHandler):
 
+    def __init__(self, request, response):
+        self.initialize(request, response)
+        # first, try and set locale from cookie
+        locale = request.cookies.get('locale')
+        if locale in AVAILABLE_LOCALES:
+            i18n.get_i18n().set_locale(locale)
+        else:
+            # if that failed, try and set locale from accept language header
+            header = request.headers.get('Accept-Language', '')  # e.g. en-gb,en;q=0.8,es-es;q=0.5,eu;q=0.3
+            locales = [locale.split(';')[0] for locale in header.split(',')]
+            for locale in locales:
+                if locale in AVAILABLE_LOCALES:
+                    i18n.get_i18n().set_locale(locale)
+                    break
+            else:
+                # if still no locale set, use the first available one
+                i18n.get_i18n().set_locale(AVAILABLE_LOCALES[0])
+
+    @webapp2.cached_property
+    def jinja2(self):
+        return jinja2.get_jinja2(app=self.app)
+
     def write(self, *a, **kw):
         self.response.out.write(*a, **kw)
 
@@ -47,10 +79,9 @@ class Handler(webapp2.RequestHandler):
         teachers = teachme_db.teacher.query().order(teachme_db.teacher.name)
         for l in teachers:
             suggestions.append(l.name+" "+l.lname)
-        tags = teachme_db.tags.query().get().name
+        tags = teachme_db.tags.query().get().name if teachme_db.tags.query().get() else []
         for l in tags:
             suggestions.append(l)
-
         params['user'] = self.user
         params['teacher'] = self.teacher
         params['areas'] = self.areas
@@ -96,6 +127,21 @@ class Handler(webapp2.RequestHandler):
 
 class MainPage(Handler):
     def get(self):
+        l_index = self.request.get('l')
+        logging.error(l_index)
+        if l_index == '1':
+            logging.error('LOCALE es_ES')
+            language = u"Español"
+            locale = 'es_ES'
+        elif l_index == '2':
+            logging.error('LOCALE en_US')
+            language = u"English"
+            locale = 'en_US'
+        else:
+            locale = 'es_ES'
+            language = u"Español"
+        i18n.get_i18n().set_locale(locale)
+        logging.error(locale)
         al = self.request.get('m')
         if al:
             alert = fns.alert(int(al))
@@ -105,7 +151,7 @@ class MainPage(Handler):
         mentors = {}
         for a in areas:
             mentors[a.key.id()] = teachme_db.teacher.query(ndb.AND(teachme_db.teacher.areas == a.key.id(), teachme_db.teacher.aceptado == True)).order(-teachme_db.teacher.rating).fetch(3)
-        self.render("main_page.html", mentors=mentors, alert=alert)
+        self.render("main_page.html", mentors=mentors, alert=alert, language=language)
 
 
 class signup(Handler):
@@ -737,6 +783,17 @@ class user_verify(Handler):
             self.redirect('/?m=1')
 
 
+class language(Handler):
+    def post(self):
+        locale = self.request.get('locale')
+        if locale in self.AVAILABLE_LOCALES:
+            self.response.set_cookie('locale', locale, max_age=15724800)  # 26 weeks' worth of seconds
+
+        # redirect to referrer or root
+        url = self.request.headers.get('Referer', '/')
+        self.redirect(url)
+
+
 class account(Handler):
     def get(self):
         if not self.user:
@@ -843,7 +900,9 @@ class messages(Handler):
         number_chat = int(self.request.get("n"))
         self.redirect('/messages?n=' + str(number_chat))
 
+
 app = webapp2.WSGIApplication([('/', MainPage),
+                               ('/language', language),
                                ('/signup', signup),
                                ('/login', login),
                                ('/logout', logout),
@@ -873,4 +932,11 @@ app = webapp2.WSGIApplication([('/', MainPage),
                                ('/tasks/remindermailing15', reminder_mailing_15),
                                ('/sitemap.xml', sitemap),
                                ('/serve/([^/]+)?', servehandler)
-                               ], debug=True)
+                               ], debug=True, config=config)
+
+
+def main():
+    run_wsgi_app(app)
+
+if __name__ == "__main__":
+    main()

@@ -91,7 +91,11 @@ a:visited{
   padding-top: 0px;
 }
 
-
+.unstyled-btn{
+  background-color: transparent;
+  border-width: 0px;
+  margin: 0px;
+}
 /*input[type=checkbox]:checked + label{
   background-color: green;
   color: white;

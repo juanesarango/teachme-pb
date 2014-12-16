@@ -1,0 +1,179 @@
+# Translations template for PROJECT.
+# Copyright (C) 2014 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2014-12-16 17:20-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 1.3\n"
+
+#: templates/base_main.html:88
+msgid "Aprende"
+msgstr ""
+
+#: templates/base_main.html:102
+msgid "Ensena"
+msgstr ""
+
+#: templates/base_main.html:108
+msgid "Quiero"
+msgstr ""
+
+#: templates/base_main.html:115
+msgid "Sesiones"
+msgstr ""
+
+#: templates/base_main.html:121
+msgid "Perfil"
+msgstr ""
+
+#: templates/base_main.html:122
+msgid "Cuenta"
+msgstr ""
+
+#: templates/base_main.html:123
+msgid "Mensajes"
+msgstr ""
+
+#: templates/base_main.html:132
+msgid "Salir"
+msgstr ""
+
+#: templates/base_main.html:134
+msgid "Ingresar"
+msgstr ""
+
+#: templates/base_main.html:139
+msgid "Ingresa fb"
+msgstr ""
+
+#: templates/base_main.html:143
+msgid "Ingresa correo"
+msgstr ""
+
+#: templates/base_main.html:158
+msgid "Recuerda"
+msgstr ""
+
+#: templates/base_main.html:160
+msgid "Ingresa"
+msgstr ""
+
+#: templates/base_main.html:167
+msgid "Registrate"
+msgstr ""
+
+#: templates/base_main.html:171 templates/main_page.html:79
+msgid "Comparte"
+msgstr ""
+
+#: templates/base_main.html:187
+msgid "Espanol"
+msgstr ""
+
+#: templates/base_main.html:188
+msgid "Ingles"
+msgstr ""
+
+#: templates/base_main.html:197
+msgid "Cerrar"
+msgstr ""
+
+#: templates/base_main.html:210
+msgid "Terminos"
+msgstr ""
+
+#: templates/base_main.html:213
+msgid "Politicas"
+msgstr ""
+
+#: templates/base_main.html:216
+msgid "FAQ"
+msgstr ""
+
+#: templates/base_main.html:219
+msgid "Contacto"
+msgstr ""
+
+#: templates/main_page.html:16
+msgid "Encuentra"
+msgstr ""
+
+#: templates/main_page.html:17
+msgid "Permite"
+msgstr ""
+
+#: templates/main_page.html:23
+msgid "Buscar"
+msgstr ""
+
+#: templates/main_page.html:24
+msgid "NAyuda"
+msgstr ""
+
+#: templates/main_page.html:57
+msgid "Facil"
+msgstr ""
+
+#: templates/main_page.html:63
+msgid "B1"
+msgstr ""
+
+#: templates/main_page.html:67
+msgid "B2"
+msgstr ""
+
+#: templates/main_page.html:71
+msgid "B3"
+msgstr ""
+
+#: templates/main_page.html:100
+msgid "Encuentra-a"
+msgstr ""
+
+#: templates/main_page.html:138
+msgid "Tasa"
+msgstr ""
+
+#: templates/main_page.html:144
+msgid "Lo siento-areas"
+msgstr ""
+
+#: templates/main_page.html:161
+msgid "Que-dicen"
+msgstr ""
+
+#: templates/main_page.html:189
+msgid "Testimonio-1"
+msgstr ""
+
+#: templates/main_page.html:206
+msgid "Testimonio-2"
+msgstr ""
+
+#: templates/main_page.html:223
+msgid "Testimonio-3"
+msgstr ""
+
+#: templates/main_page.html:240
+msgid "Testimonio-4"
+msgstr ""
+
+#: templates/main_page.html:257
+msgid "Testimonio-5"
+msgstr ""
+
+#: templates/main_page.html:274
+msgid "Testimonio-6"
+msgstr ""
+

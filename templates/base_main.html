@@ -43,6 +43,7 @@
 		<meta property="og:description" content="{{shareText}}">
 		<meta property="og:type" content="website">
 		{% block head %}{% endblock %}
+
 		<script>
 		(function(i,s,o,g,r,a,m){
 			i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -84,7 +85,7 @@
 				<!-- Opciones de la barra del navegador -->
 				<div class="collapse navbar-collapse" id="teachme-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Aprende<b class="caret"></b></a>
+						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">{% trans %}Aprende{% endtrans %}<b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								{% for a in areas %}
 									<li>
@@ -98,28 +99,28 @@
 							</ul>
 						</li>
 						{% if not teacher %}
-							<li><a href="/comparte">Enseña</a></li>
+							<li><a href="/comparte">{% trans %}Ensena{% endtrans %}</a></li>
 						{% endif %}
 					</ul>
 					{% if active_page != "main_page" %}
 						<form class="navbar-form navbar-left" role="search" action="/buscar/" method="get">
 							<div class="form-group">
-								<input id="search_query" name="q" type="text" class="form-control" placeholder="Quiero aprender...">
+								<input id="search_query" name="q" type="text" class="form-control" placeholder="{% trans %}Quiero{% endtrans %}">
 							</div>
 							<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
 						</form>
 					{% endif %}
 					<ul class="nav navbar-nav navbar-right">
 						{% if user %}
-							<li><a href="/teachouts">Tus Sesiones</a></li>
+							<li><a href="/teachouts">{% trans %}Sesiones{% endtrans %}</a></li>
 						{% endif %}
 						{% if user %}
 							{% if teacher %}
 								<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">{{teacher.name}}<b class="caret"></b></a>
 									<ul class="dropdown-menu">
-										<li><a href="/profile/teacher/{{teacher.key.id()}}"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Perfil</a></li>
-										<li><a href="/account"><span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;Cuenta</a></li>
-										<li><a href="/messages"><span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp;Mensajes</a></li>
+										<li><a href="/profile/teacher/{{teacher.key.id()}}"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;{% trans %}Perfil{% endtrans %}</a></li>
+										<li><a href="/account"><span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;{% trans %}Cuenta{% endtrans %}</a></li>
+										<li><a href="/messages"><span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp;{% trans %}Mensajes{% endtrans %}</a></li>
 									</ul>
 								</li>
 							{% else %}
@@ -128,18 +129,18 @@
 									<a href="/account">{{user.name}}</a>
 								</li>
 							{% endif %}
-							<li><a href="/logout">Salir</a></li>
+							<li><a href="/logout">{% trans %}Salir{% endtrans %}</a></li>
 						{% else %}
-							<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Ingresar<b class="caret"></b></a>
+							<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">{% trans %}Ingresar{% endtrans %}<b class="caret"></b></a>
 								<ul class="dropdown-menu min-width-200">
 									<li>
 										<a>
 											<form method="post" action="/login" role="form" id="loginForm">
-												Ingresa con facebook:
+												{% trans %}Ingresa fb{% endtrans %}
 												<div class="center-block"><fb:login-button scope="public_profile,email" onlogin="checkLoginState();" class="center-block text-center">
 												</fb:login-button></div>
 												<hr>
-												O ingresa con tu correo:
+												{% trans %}Ingresa correo{% endtrans %}
 												<div class="form-group">
 													<div class="input-group">
 														<div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
@@ -154,40 +155,54 @@
 													</div>
 												</div>
 												<div class="checkbox">
-													<input name="remember" type="checkbox" value="yes"> Recuérdame
+													<input name="remember" type="checkbox" value="yes"> {% trans %}Recuerda{% endtrans %}
 												</div>	
-												<button type="submit" class="btn btn-success">Ingresa</button><br>
+												<button type="submit" class="btn btn-success">{% trans %}Ingresa{% endtrans %}</button><br>
 												<input type="hidden" name="fbID" id="fbIDLogin">
 											</form>
 										</a>
 									</li>
 								</ul>
 							</li>
-							<li><div id="register"><a href="/signup" id="aregister">Regístrate gratis!</a></div></li>
+							<li><div id="register"><a href="/signup" id="aregister">{% trans %}Registrate{% endtrans %}</a></div></li>
 						{% endif %}
-							<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="flaticon-share11" style="font-size:25px"></span></a>
-								<ul class="dropdown-menu" style="font-size:30px;">
-									<li class="dropdown-header text-center">Te gusta? Compartenos con <span class="flaticon-heart15"></span></li>
-									<li class="text-center">
-										<a style="display: inline-block; padding: 0px;"  href="https://www.facebook.com/dialog/share?app_id=1519397808297922&display=popup&href={{shareUrl}}&redirect_uri={{shareUrl}}" id="share-fb" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
-											<span class="flaticon-facebook29"></span>
-										</a>
-										<a style="display: inline-block; padding: 0px;"  href="https://twitter.com/share?url={{shareUrl}}&via=teachme_app&text={{shareText|replace(' ','+')}}&hashtags={{shareHt}}" id="share-tw" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
-											<span class="flaticon-social38"></span>
-										</a>
-										<a style="display: inline-block; padding: 0px;"  href="https://plus.google.com/share?url={{shareUrl}}" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" id="share-gplus">
-											<span class="flaticon-social5"></span>
-										</a>
-									</li>
-								</ul>
-							</li>
+						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="flaticon-share11" style="font-size:25px"></span></a>
+							<ul class="dropdown-menu" style="font-size:30px;">
+								<li class="dropdown-header text-center">{% trans %}Comparte{% endtrans %}<span class="flaticon-heart15"></span></li>
+								<li class="text-center">
+									<a style="display: inline-block; padding: 0px;"  href="https://www.facebook.com/dialog/share?app_id=1519397808297922&display=popup&href={{shareUrl}}&redirect_uri={{shareUrl}}" id="share-fb" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
+										<span class="flaticon-facebook29"></span>
+									</a>
+									<a style="display: inline-block; padding: 0px;"  href="https://twitter.com/share?url={{shareUrl}}&via=teachme_app&text={{shareText|replace(' ','+')}}&hashtags={{shareHt}}" id="share-tw" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
+										<span class="flaticon-social38"></span>
+									</a>
+									<a style="display: inline-block; padding: 0px;"  href="https://plus.google.com/share?url={{shareUrl}}" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" id="share-gplus">
+										<span class="flaticon-social5"></span>
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><small>{{language}}</small></a>
+							<ul class="dropdown-menu">
+								<!-- <li><form method="post" action="/language" role="form">
+									<input type="hidden" name="locale" value="es_ES">
+									<button type="submit" class="btn unstyled-btn">{% trans %}Espanol{% endtrans %}</button>
+								</form></li>
+								<li><form method="post" action="/language" role="form">
+									<input type="hidden" name="locale" value="en_US">
+									<button type="submit" class="btn unstyled-btn">{% trans %}Ingles{% endtrans %}</button>
+								</form></li> -->
+								<li><a href="/?l=1">{% trans %}Espanol{% endtrans %}</a></li>
+								<li><a href="/?l=2">{% trans %}Ingles{% endtrans %}</a></li>
+							</ul>
+						</li>
 					</ul>
 				</div>
 			</div>
 		</nav>
 		{% if alert %}   
 			<div class="alert {{alert[0]}} alert-dismissible text-center" role="alert" style="position: absolute; margin-left: 10%; width:80%;z-index: 2; top: 55px">
-				<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true" >&times;</span><span class="sr-only">Cerrar</span></button>
+				<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true" >&times;</span><span class="sr-only">{% trans %}Cerrar{% endtrans %}</span></button>
 				{{alert[1]}}
 			</div>
 		{% endif %}
@@ -200,16 +215,16 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-3 text-center">
-						<a href="/terminos"><h4>Términos de uso</h4></a>
+						<a href="/terminos"><h4>{% trans %}Terminos{% endtrans %}</h4></a>
 					</div>
 					<div class="col-md-3 text-center">
-						<a href="/politicas"><h4>Política de privacidad</h4></a>
+						<a href="/politicas"><h4>{% trans %}Politicas{% endtrans %}</h4></a>
 					</div>
 					<div class="col-md-3 text-center">
-						<a href="/faq"><h4>Preguntas frecuentes</h4></a>
+						<a href="/faq"><h4>{% trans %}FAQ{% endtrans %}</h4></a>
 					</div>
 					<div class="col-md-3 text-center">
-						<h4><a href="/contacto">Contacto</a></h4>
+						<h4><a href="/contacto">{% trans %}Contacto{% endtrans %}</a></h4>
 					</div>
 				</div>
 				<div class="row">
