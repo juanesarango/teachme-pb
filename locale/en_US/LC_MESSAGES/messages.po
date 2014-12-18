@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-12-16 17:20-0500\n"
+"POT-Creation-Date: 2014-12-18 16:06-0500\n"
 "PO-Revision-Date: 2014-12-16 13:03-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en_US <LL@li.org>\n"
@@ -17,6 +17,10 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
+
+#: main.py:134
+msgid "language"
+msgstr "English"
 
 #: templates/base_main.html:88
 msgid "Aprende"
@@ -78,33 +82,130 @@ msgstr "Sign up for free!"
 msgid "Comparte"
 msgstr "You like us? Share us with "
 
-#: templates/base_main.html:187
-msgid "Espanol"
-msgstr "Spanish"
-
-#: templates/base_main.html:188
+#: templates/base_main.html:189
 msgid "Ingles"
 msgstr "English"
 
-#: templates/base_main.html:197
+#: templates/base_main.html:193
+msgid "Espanol"
+msgstr "Español"
+
+#: templates/base_main.html:203
 msgid "Cerrar"
 msgstr "Close"
 
-#: templates/base_main.html:210
+#: templates/base_main.html:216
 msgid "Terminos"
 msgstr "Terms of service"
 
-#: templates/base_main.html:213
+#: templates/base_main.html:219
 msgid "Politicas"
 msgstr "Privacy policy"
 
-#: templates/base_main.html:216
+#: templates/base_main.html:222
 msgid "FAQ"
 msgstr "Frequently Asked Questions"
 
-#: templates/base_main.html:219
+#: templates/base_main.html:225
 msgid "Contacto"
 msgstr "Contact"
+
+#: templates/comparte.html:20
+msgid "Comparte tu conocimiento convirtiéndote en Asesor"
+msgstr "Share your knowledge by becoming an Expert"
+
+#: templates/comparte.html:23
+msgid ""
+"Teachme es una nueva manera de compartir tus conocimientos de la academia"
+" por medio de una videollamada y herramientas virtuales para una mejor "
+"mentoría."
+msgstr "Teachme is a new way to share your general and professional knowledge through a videocall and virtual tools for better mentoring."
+
+#: templates/comparte.html:26
+msgid ""
+"Con Teachme podrás dictar mentorías de matemáticas, física, química, "
+"ciencias sociales, música y muchas otras áreas en las que tengas dominio."
+" Sólo necesitas un computador de escritorio con webcam, o una laptop y "
+"con sólo unos clicks podrás empezar a compartir tus conocimientos."
+msgstr "With Teachme you can teach classes of math, physics, chemistry, social sciences, music and many other areas in which you have expertise. You only need a laptop or a desktop computer with webcam, and with only a few clicks you can start sharing your knowledge."
+
+#: templates/comparte.html:32
+msgid "Por qué deberías compartir tu conocimiento en <strong>Teachme</strong>?"
+msgstr "Why you should share your knowledge in <strong>Teachme</strong>?"
+
+#: templates/comparte.html:40
+msgid "Alcance global"
+msgstr "Global Reach"
+
+#: templates/comparte.html:42
+msgid ""
+"Con Teachme tienes mayor visibilidad. Puedes alcanzar estudiantes en "
+"donde llegue una conexión a internet."
+msgstr "With Teachme you have more visibility. You can reach students wherever an internet connection is available"
+
+#: templates/comparte.html:47
+msgid "Fácil y flexible"
+msgstr "Easy and flexible"
+
+#: templates/comparte.html:49
+msgid ""
+"Arma tu horario disponible, en tus horas libres, sin moverte de tu casa u"
+" oficina. En tu laptop y próximamente en tus dispositivos móviles."
+msgstr "Arrange your free schedule, in your spare time, without moving from your home or office. From your laptop and your mobile devices."
+
+#: templates/comparte.html:54
+msgid "Recibe tu dinero"
+msgstr "Receive your money"
+
+#: templates/comparte.html:56
+msgid ""
+"Escoge tu tarifa por hora. Recibe tu pago fácilmente en tu cuenta "
+"bancaria o billetera virtual preferida."
+msgstr "Choose your fee per hour. Get your payments easily in your bank account or your favorite virtual wallet."
+
+#: templates/comparte.html:67
+msgid "Llena el siguiente formulario para que apliques para mentor en Teachme!"
+msgstr "Fill out the form below to apply to be a mentor in Teachme!"
+
+#: templates/comparte.html:75
+msgid "Ciudad"
+msgstr "City"
+
+#: templates/comparte.html:79
+msgid "País"
+msgstr "Country"
+
+#: templates/comparte.html:88
+msgid "Áreas que dominas"
+msgstr "Topics that you master"
+
+#: templates/comparte.html:101
+msgid "Acerca de ti"
+msgstr "About you"
+
+#: templates/comparte.html:109
+msgid "Aplica ya!"
+msgstr "Apply Now!"
+
+#: templates/comparte.html:117
+msgid ""
+"Inicia sesión o regístrate <strong>gratis</strong> para poder aplicar a "
+"ser mentor en Teachme"
+msgstr ""
+"Log in or sign up for <strong>free</strong> for you can apply to "
+"be a mentor in Teachme"
+
+#: templates/comparte.html:123
+msgid "Comienza a Enseñar!"
+msgstr "Start to Teach!"
+
+#: templates/comparte.html:126
+msgid " o si ya estás registrado como mentor "
+msgstr "or if you're already signed as a mentor"
+
+#: templates/comparte.html:129
+msgid "Inicia Sesión"
+msgstr "Log In"
 
 #: templates/main_page.html:16
 msgid "Encuentra"
@@ -112,7 +213,9 @@ msgstr "Find <strong>Tutors</strong> in the topics you need"
 
 #: templates/main_page.html:17
 msgid "Permite"
-msgstr "<strong>Teachme</strong> allows you to connect online in any moment with the experts you need"
+msgstr ""
+"<strong>Teachme</strong> allows you to connect online in any moment with "
+"the experts you need"
 
 #: templates/main_page.html:23
 msgid "Buscar"
@@ -148,7 +251,9 @@ msgstr "USD per hour"
 
 #: templates/main_page.html:144
 msgid "Lo siento-areas"
-msgstr "We're sorry. We're working for bringing you the best experts in this category"
+msgstr ""
+"We're sorry. We're working for bringing you the best experts in this "
+"category"
 
 #: templates/main_page.html:161
 msgid "Que-dicen"
@@ -156,25 +261,33 @@ msgstr "What our learners are saying about <strong>Teachme</strong>"
 
 #: templates/main_page.html:189
 msgid "Testimonio-1"
-msgstr ""We were waiting for a comfortable solution like this for studying. Thanks!""
+msgstr ""
+"\"We were waiting for a comfortable solution like this for studying. "
+"Thanks!\""
 
 #: templates/main_page.html:206
 msgid "Testimonio-2"
-msgstr ""Very cool, this was what I needed. Total Thanks...""
+msgstr "\"Very cool, this was what I needed. Total Thanks...\""
 
 #: templates/main_page.html:223
 msgid "Testimonio-3"
-msgstr ""UuuuuFF, very cool this website, I recommend it to everyone, these are the tools we the students need.""
+msgstr ""
+"\"UuuuuFF, very cool this website, I recommend it to everyone, these are "
+"the tools we the students need.\""
 
 #: templates/main_page.html:240
 msgid "Testimonio-4"
-msgstr ""Hey guys, thank you very much, I teach music and photography.""
+msgstr "\"Hey guys, thank you very much, I teach music and photography.\""
 
 #: templates/main_page.html:257
 msgid "Testimonio-5"
-msgstr ""Yeah. I finally understood factorization, very good this solution. Thaaaaaaanksss ...""
+msgstr ""
+"\"Yeah. I finally understood factorization, very good this solution. "
+"Thaaaaaaanksss ...\""
 
 #: templates/main_page.html:274
 msgid "Testimonio-6"
-msgstr ""Excellent, I don't need to move from my house to meet up with a teacher. Thank you very much!!""
+msgstr ""
+"\"Excellent, I don't need to move from my house to meet up with a "
+"teacher. Thank you very much!!\""
 

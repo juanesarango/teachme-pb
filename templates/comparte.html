@@ -17,19 +17,19 @@
 			<div class="col-md-10 col-md-offset-1 bckg-w-80">
 				<div class="row">
 					<div class="col-md-10 col-md-offset-1 text-justify">
-						<h2><strong>Comparte tu conocimiento convirtiéndote en Asesor</strong></h2>
+						<h2><strong>{% trans %}Comparte tu conocimiento convirtiéndote en Asesor{% endtrans %}</strong></h2>
 						<br>
 						<p class="lead">
-							Teachme es una nueva manera de compartir tus conocimientos de la academia por medio de una videollamada y herramientas virtuales para una mejor mentoría.
+							{% trans %}Teachme es una nueva manera de compartir tus conocimientos de la academia por medio de una videollamada y herramientas virtuales para una mejor mentoría.{% endtrans %}
 						</p>
 						<p class="lead">
-							Con Teachme podrás dictar mentorías de matemáticas, física, química, ciencias sociales, música y muchas otras áreas en las que tengas dominio. Sólo necesitas un computador de escritorio con webcam, o una laptop y con sólo unos clicks podrás empezar a compartir tus conocimientos.
+							{% trans %}Con Teachme podrás dictar mentorías de matemáticas, física, química, ciencias sociales, música y muchas otras áreas en las que tengas dominio. Sólo necesitas un computador de escritorio con webcam, o una laptop y con sólo unos clicks podrás empezar a compartir tus conocimientos.{% endtrans %}
 						</p>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-10 col-md-offset-1 text-justify">
-						<h2>Por qué deberías compartir tu conocimiento en <strong>Teachme</strong>?</h2>
+						<h2>{% trans %}Por qué deberías compartir tu conocimiento en <strong>Teachme</strong>?{% endtrans %}</h2>
 					</div>
 				</div>
 				<div class="row text-center">
@@ -37,23 +37,23 @@
 						<div class="row">
 							<div class="col-md-4">
 								<h1><span class="glyphicon glyphicon-globe"></span></h1>
-								<h3>Alcance global</h3>
+								<h3>{% trans %}Alcance global{% endtrans %}</h3>
 								<p class="text-center">
-									Con Teachme tienes mayor visibilidad. Puedes alcanzar estudiantes en donde llegue una conexión a internet.
+									{% trans %}Con Teachme tienes mayor visibilidad. Puedes alcanzar estudiantes en donde llegue una conexión a internet.{% endtrans %}
 								</p>
 							</div>
 							<div class="col-md-4">
 								<h1><span class="glyphicon glyphicon-phone"></span></h1>
-								<h3>Fácil y flexible</h3>
+								<h3>{% trans %}Fácil y flexible{% endtrans %}</h3>
 								<p class="text-center">
-									Arma tu horario disponible, en tus horas libres, sin moverte de tu casa u oficina. En tu laptop y próximamente en tus dispositivos móviles.
+									{% trans %}Arma tu horario disponible, en tus horas libres, sin moverte de tu casa u oficina. En tu laptop y próximamente en tus dispositivos móviles.{% endtrans %}
 								</p>
 							</div>
 							<div class="col-md-4">
 								<h1><span class="glyphicon glyphicon-usd"></span></h1>
-								<h3>Recibe tu dinero</h3>
+								<h3>{% trans %}Recibe tu dinero{% endtrans %}</h3>
 								<p class="text-center">
-									Escoge tu tarifa por hora. Recibe tu pago fácilmente en tu cuenta bancaria o billetera virtual preferida.
+									{% trans %}Escoge tu tarifa por hora. Recibe tu pago fácilmente en tu cuenta bancaria o billetera virtual preferida.{% endtrans %}
 								</p>
 							</div>
 						</div>
@@ -64,7 +64,7 @@
 					<form role="form" method="post">
 						<div class="row">
 							<div class="col-md-10 col-md-offset-1">
-								<h3>Llena el siguiente formulario para que apliques para mentor en Teachme!</h3>
+								<h3>{% trans %}Llena el siguiente formulario para que apliques para mentor en Teachme!{% endtrans %}</h3>
 							</div>
 						</div>	
 						<br>
@@ -72,11 +72,11 @@
 						<div class="row">
 							<div class="col-md-3 col-md-offset-1">
 								<div class="form-group">
-									<label for="t-ciudad">Ciudad</label>
+									<label for="t-ciudad">{% trans %}Ciudad{% endtrans %}</label>
 									<input class="form-control" type="text" name="ciudad" value="{{ciudad}}"  id="t-ciudad" placeholder="Ingrese su ciudad actual">
 								</div>
 								<div class="form-group">
-									<label for="t-pais">País</label>
+									<label for="t-pais">{% trans %}País{% endtrans %}</label>
 									<input type="text" name="pais" value="{{pais}}" class="form-control" id="t-pais" placeholder="Ingrese el pais actual" >
 								</div>
 								<div class="form-group">
@@ -85,7 +85,7 @@
 								</div>
 							</div>
 							<div class="col-md-3 col-md-offset-1">
-								<h3>Áreas que dominas</h3>
+								<h3>{% trans %}Áreas que dominas{% endtrans %}</h3>
 								{% for a in areas%}
 									<div class="checkbox">
 										<label>
@@ -98,7 +98,7 @@
 							</div>
 							<div class="col-md-3">
 								<div class="form-group">
-									<label for="about">Acerca de ti</label>
+									<label for="about">{% trans %}Acerca de ti{% endtrans %}</label>
 									<textarea name="about" class="form-control" id="t-about" rows="6" placeholder="Cuéntanos un poco acerca de ti"></textarea>
 								</div>
 							</div>
@@ -106,7 +106,7 @@
 						<div class="row">
 							<div class="row">
 								<div class="col-md-2 col-md-offset-5">
-									<button type="submit" class="btn btn-success">Aplica ya!</button>
+									<button type="submit" class="btn btn-success">{% trans %}Aplica ya!{% endtrans %}</button>
 								</div>
 							</div>
 						</div>
@@ -114,19 +114,19 @@
 				{% else %}
 					<div class="row">
 						<div class="col-md-10 col-md-offset-1">
-							<h3>Inicia sesión o regístrate <strong>gratis</strong> para poder aplicar a ser mentor en Teachme</h3>
+							<h3>{% trans %}Inicia sesión o regístrate <strong>gratis</strong> para poder aplicar a ser mentor en Teachme{% endtrans %}</h3>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-4 col-md-offset-4 text-center">
 							<br>
-							<a href="/signup?redirect=/comparte"><button class="btn btn-success" style="font-size:24px;">Comienza a Enseñar!</button></a>
+							<a href="/signup?redirect=/comparte"><button class="btn btn-success" style="font-size:24px;">{% trans %}Comienza a Enseñar!{% endtrans %}</button></a>
 							<br>
 							<br>
-							<span> o si ya estás registrado como mentor </span>
+							<span>{% trans %} o si ya estás registrado como mentor {% endtrans %}</span>
 							<br>
 							<br>
-							<a href="/login?redirect=/comparte"><button class="btn btn-success"  style="font-size:12px;">Inicia Sesión</button></a>
+							<a href="/login?redirect=/comparte"><button class="btn btn-success"  style="font-size:12px;">{% trans %}Inicia Sesión{% endtrans %}</button></a>
 						</div>
 					</div>
 				{% endif %}

@@ -50,8 +50,11 @@ class Handler(webapp2.RequestHandler):
         self.initialize(request, response)
         # first, try and set locale from cookie
         locale = request.cookies.get('locale')
+        logging.error('COOKIES_LOCALE')
+        logging.error(locale)
         if locale in AVAILABLE_LOCALES:
             i18n.get_i18n().set_locale(locale)
+            logging.error('PUT LOCALE FROM COOKIES')
         else:
             # if that failed, try and set locale from accept language header
             header = request.headers.get('Accept-Language', '')  # e.g. en-gb,en;q=0.8,es-es;q=0.5,eu;q=0.3
@@ -59,6 +62,7 @@ class Handler(webapp2.RequestHandler):
             for locale in locales:
                 if locale in AVAILABLE_LOCALES:
                     i18n.get_i18n().set_locale(locale)
+                    logging.error('PUT LOCALE FROM HEADER')
                     break
             else:
                 # if still no locale set, use the first available one
@@ -127,21 +131,7 @@ class Handler(webapp2.RequestHandler):
 
 class MainPage(Handler):
     def get(self):
-        l_index = self.request.get('l')
-        logging.error(l_index)
-        if l_index == '1':
-            logging.error('LOCALE es_ES')
-            language = u"Español"
-            locale = 'es_ES'
-        elif l_index == '2':
-            logging.error('LOCALE en_US')
-            language = u"English"
-            locale = 'en_US'
-        else:
-            locale = 'es_ES'
-            language = u"Español"
-        i18n.get_i18n().set_locale(locale)
-        logging.error(locale)
+        language = _('language')
         al = self.request.get('m')
         if al:
             alert = fns.alert(int(al))
@@ -786,9 +776,13 @@ class user_verify(Handler):
 class language(Handler):
     def post(self):
         locale = self.request.get('locale')
-        if locale in self.AVAILABLE_LOCALES:
+        logging.error('LOCALE')
+        logging.error(locale)
+        logging.error('AVAILABLE_LOCALES')
+        logging.error(AVAILABLE_LOCALES)
+        if locale in AVAILABLE_LOCALES:
+            logging.error('TRUE')
             self.response.set_cookie('locale', locale, max_age=15724800)  # 26 weeks' worth of seconds
-
         # redirect to referrer or root
         url = self.request.headers.get('Referer', '/')
         self.redirect(url)
@@ -876,7 +870,6 @@ class messages(Handler):
                 if c not in chats:
                     chats.append(c)
         chats.sort(key=lambda x: x.msgs[-1].created, reverse=True)
-        # chats=[]
         self.render("messages.html", alert=alert, chats=chats, number=number_chat)
 
     def post(self):

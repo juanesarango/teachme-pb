@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-12-16 17:20-0500\n"
+"POT-Creation-Date: 2014-12-18 16:06-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,10 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
+
+#: main.py:134
+msgid "language"
+msgstr ""
 
 #: templates/base_main.html:88
 msgid "Aprende"
@@ -77,32 +81,127 @@ msgstr ""
 msgid "Comparte"
 msgstr ""
 
-#: templates/base_main.html:187
-msgid "Espanol"
-msgstr ""
-
-#: templates/base_main.html:188
+#: templates/base_main.html:189
 msgid "Ingles"
 msgstr ""
 
-#: templates/base_main.html:197
+#: templates/base_main.html:193
+msgid "Espanol"
+msgstr ""
+
+#: templates/base_main.html:203
 msgid "Cerrar"
 msgstr ""
 
-#: templates/base_main.html:210
+#: templates/base_main.html:216
 msgid "Terminos"
 msgstr ""
 
-#: templates/base_main.html:213
+#: templates/base_main.html:219
 msgid "Politicas"
 msgstr ""
 
-#: templates/base_main.html:216
+#: templates/base_main.html:222
 msgid "FAQ"
 msgstr ""
 
-#: templates/base_main.html:219
+#: templates/base_main.html:225
 msgid "Contacto"
+msgstr ""
+
+#: templates/comparte.html:20
+msgid "Comparte tu conocimiento convirtiéndote en Asesor"
+msgstr ""
+
+#: templates/comparte.html:23
+msgid ""
+"Teachme es una nueva manera de compartir tus conocimientos de la academia"
+" por medio de una videollamada y herramientas virtuales para una mejor "
+"mentoría."
+msgstr ""
+
+#: templates/comparte.html:26
+msgid ""
+"Con Teachme podrás dictar mentorías de matemáticas, física, química, "
+"ciencias sociales, música y muchas otras áreas en las que tengas dominio."
+" Sólo necesitas un computador de escritorio con webcam, o una laptop y "
+"con sólo unos clicks podrás empezar a compartir tus conocimientos."
+msgstr ""
+
+#: templates/comparte.html:32
+msgid "Por qué deberías compartir tu conocimiento en <strong>Teachme</strong>?"
+msgstr ""
+
+#: templates/comparte.html:40
+msgid "Alcance global"
+msgstr ""
+
+#: templates/comparte.html:42
+msgid ""
+"Con Teachme tienes mayor visibilidad. Puedes alcanzar estudiantes en "
+"donde llegue una conexión a internet."
+msgstr ""
+
+#: templates/comparte.html:47
+msgid "Fácil y flexible"
+msgstr ""
+
+#: templates/comparte.html:49
+msgid ""
+"Arma tu horario disponible, en tus horas libres, sin moverte de tu casa u"
+" oficina. En tu laptop y próximamente en tus dispositivos móviles."
+msgstr ""
+
+#: templates/comparte.html:54
+msgid "Recibe tu dinero"
+msgstr ""
+
+#: templates/comparte.html:56
+msgid ""
+"Escoge tu tarifa por hora. Recibe tu pago fácilmente en tu cuenta "
+"bancaria o billetera virtual preferida."
+msgstr ""
+
+#: templates/comparte.html:67
+msgid "Llena el siguiente formulario para que apliques para mentor en Teachme!"
+msgstr ""
+
+#: templates/comparte.html:75
+msgid "Ciudad"
+msgstr ""
+
+#: templates/comparte.html:79
+msgid "País"
+msgstr ""
+
+#: templates/comparte.html:88
+msgid "Áreas que dominas"
+msgstr ""
+
+#: templates/comparte.html:101
+msgid "Acerca de ti"
+msgstr ""
+
+#: templates/comparte.html:109
+msgid "Aplica ya!"
+msgstr ""
+
+#: templates/comparte.html:117
+msgid ""
+"Inicia sesión o regístrate <strong>gratis</strong> para poder aplicar a "
+"ser mentor en Teachme"
+msgstr ""
+
+#: templates/comparte.html:123
+msgid "Comienza a Enseñar!"
+msgstr ""
+
+#: templates/comparte.html:126
+msgid " o si ya estás registrado como mentor "
+msgstr ""
+
+#: templates/comparte.html:129
+msgid "Inicia Sesión"
 msgstr ""
 
 #: templates/main_page.html:16
