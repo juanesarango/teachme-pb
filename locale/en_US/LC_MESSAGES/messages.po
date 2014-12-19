@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-12-19 16:31-0500\n"
+"POT-Creation-Date: 2014-12-19 16:42-0500\n"
 "PO-Revision-Date: 2014-12-16 13:03-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en_US <LL@li.org>\n"
@@ -180,9 +180,8 @@ msgid "Perfil"
 msgstr "Profile"
 
 #: templates/base_main.html:127
-#, fuzzy
 msgid "Cuenta"
-msgstr "Find <strong>Tutors</strong> in the topics you need"
+msgstr "Account"
 
 #: templates/base_main.html:128
 msgid "Mensajes"
@@ -867,15 +866,15 @@ msgstr ""
 
 #: templates/profile_teacher.html:57
 msgid "Editar tarifa"
-msgstr ""
+msgstr "Edit fee"
 
 #: templates/profile_teacher.html:79
 msgid "Perfil de linkedin"
-msgstr ""
+msgstr "LinkedIn Profile"
 
 #: templates/profile_teacher.html:84 templates/teacher.html:146
 msgid "Áreas del conocimiento"
-msgstr ""
+msgstr "Areas of knowledge"
 
 #: templates/profile_teacher.html:84
 #, fuzzy
@@ -884,7 +883,7 @@ msgstr "Update your account"
 
 #: templates/profile_teacher.html:103
 msgid "Conocimientos y habilidades:"
-msgstr ""
+msgstr "Skills and knowledges"
 
 #: templates/profile_teacher.html:105
 msgid "Agregar temas que dominas para visualizar mejor tu conocimiento"
@@ -947,17 +946,17 @@ msgstr "Topics:"
 
 #: templates/search_results.html:49
 msgid "Conocimientos:"
-msgstr "knowledges"
+msgstr "knowledges:"
 
 #: templates/search_results.html:50 templates/teacher.html:141
 #, fuzzy
 msgid "Ciudad:"
-msgstr "City"
+msgstr "City:"
 
 #: templates/search_results.html:51 templates/teacher.html:142
 #, fuzzy
 msgid "País:"
-msgstr "Country"
+msgstr "Country:"
 
 #: templates/search_results.html:64
 msgid ""
@@ -970,7 +969,7 @@ msgstr ""
 
 #: templates/search_results.html:64
 msgid "también"
-msgstr "users to"
+msgstr "users too"
 
 #: templates/signup.html:15
 msgid "Regístrate desde ya en Teachme y llénate de conocimiento"
@@ -1155,7 +1154,7 @@ msgstr ""
 
 #: templates/teacher.html:246
 msgid "Horas:"
-msgstr "Hours"
+msgstr "Hours:"
 
 #: templates/teacher.html:255
 msgid "Procesar Pago"

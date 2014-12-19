@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-12-19 16:31-0500\n"
+"POT-Creation-Date: 2014-12-19 16:42-0500\n"
 "PO-Revision-Date: 2014-12-16 13:03-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: es_ES <LL@li.org>\n"
@@ -170,9 +170,8 @@ msgid "Perfil"
 msgstr ""
 
 #: templates/base_main.html:127
-#, fuzzy
 msgid "Cuenta"
-msgstr "Encuentra <strong>Tutores</strong> en el tema que necesitas"
+msgstr ""
 
 #: templates/base_main.html:128
 msgid "Mensajes"
