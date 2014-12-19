@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-12-19 16:03-0500\n"
+"POT-Creation-Date: 2014-12-19 16:31-0500\n"
 "PO-Revision-Date: 2014-12-16 13:03-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en_US <LL@li.org>\n"
@@ -161,23 +161,23 @@ msgstr "We're sorry. We're working to get you the best people in this topic"
 
 #: templates/base_main.html:88
 msgid "Aprende"
-msgstr ""
+msgstr "Learn"
 
 #: templates/base_main.html:107
 msgid "Ensena"
-msgstr ""
+msgstr "Want to teach?"
 
 #: templates/base_main.html:113
 msgid "Quiero"
-msgstr ""
+msgstr "I want to learn..."
 
 #: templates/base_main.html:120
 msgid "Sesiones"
-msgstr ""
+msgstr "Your sessions"
 
 #: templates/base_main.html:126
 msgid "Perfil"
-msgstr ""
+msgstr "Profile"
 
 #: templates/base_main.html:127
 #, fuzzy
@@ -186,35 +186,35 @@ msgstr "Find <strong>Tutors</strong> in the topics you need"
 
 #: templates/base_main.html:128
 msgid "Mensajes"
-msgstr ""
+msgstr "Messages"
 
 #: templates/base_main.html:137
 msgid "Salir"
-msgstr ""
+msgstr "Log out"
 
 #: templates/base_main.html:139
 msgid "Ingresar"
-msgstr ""
+msgstr "Log In"
 
 #: templates/base_main.html:144
 msgid "Ingresa fb"
-msgstr ""
+msgstr "Log in with facebook"
 
 #: templates/base_main.html:148
 msgid "Ingresa correo"
-msgstr ""
+msgstr "Or log in with your email"
 
 #: templates/base_main.html:163
 msgid "Recuerda"
-msgstr ""
+msgstr "Remember me"
 
 #: templates/base_main.html:165 templates/login.html:18 templates/login.html:42
 msgid "Ingresa"
-msgstr ""
+msgstr "Log in"
 
 #: templates/base_main.html:172 templates/signup.html:60
 msgid "Registrate"
-msgstr ""
+msgstr "Sign up for free!"
 
 #: templates/base_main.html:176 templates/main_page.html:79
 msgid "Comparte"
@@ -222,32 +222,32 @@ msgstr "You like us? Share us with "
 
 #: templates/base_main.html:194
 msgid "Ingles"
-msgstr ""
+msgstr "English"
 
 #: templates/base_main.html:198
 msgid "Espanol"
-msgstr ""
+msgstr "Español"
 
 #: templates/base_main.html:208 templates/teacher.html:63
 #: templates/teacher.html:254 templates/teachouts.html:301
 msgid "Cerrar"
-msgstr ""
+msgstr "Close"
 
 #: templates/base_main.html:221
 msgid "Terminos"
-msgstr ""
+msgstr "Terms of service"
 
 #: templates/base_main.html:224
 msgid "Politicas"
-msgstr ""
+msgstr "Privacy policy"
 
 #: templates/base_main.html:227
 msgid "FAQ"
-msgstr ""
+msgstr "Frequently Asked Questions"
 
 #: templates/base_main.html:230
 msgid "Contacto"
-msgstr ""
+msgstr "Contact"
 
 #: templates/comparte.html:20
 msgid "Comparte tu conocimiento convirtiéndote en Asesor"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-12-19 16:03-0500\n"
+"POT-Creation-Date: 2014-12-19 16:31-0500\n"
 "PO-Revision-Date: 2014-12-16 13:03-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: es_ES <LL@li.org>\n"
@@ -155,11 +155,11 @@ msgstr ""
 
 #: templates/base_main.html:107
 msgid "Ensena"
-msgstr ""
+msgstr "Quieres Enseñar?"
 
 #: templates/base_main.html:113
 msgid "Quiero"
-msgstr ""
+msgstr "Quiero aprender..."
 
 #: templates/base_main.html:120
 msgid "Sesiones"
@@ -184,27 +184,27 @@ msgstr ""
 
 #: templates/base_main.html:139
 msgid "Ingresar"
-msgstr ""
+msgstr "Ingresar"
 
 #: templates/base_main.html:144
 msgid "Ingresa fb"
-msgstr ""
+msgstr "Ingresa con facebook"
 
 #: templates/base_main.html:148
 msgid "Ingresa correo"
-msgstr ""
+msgstr "O ingresa con tu correo:"
 
 #: templates/base_main.html:163
 msgid "Recuerda"
-msgstr ""
+msgstr "Recuérdame"
 
 #: templates/base_main.html:165 templates/login.html:18 templates/login.html:42
 msgid "Ingresa"
-msgstr ""
+msgstr "Ingresa"
 
 #: templates/base_main.html:172 templates/signup.html:60
 msgid "Registrate"
-msgstr ""
+msgstr "Regístrate gratis"
 
 #: templates/base_main.html:176 templates/main_page.html:79
 msgid "Comparte"
@@ -212,11 +212,11 @@ msgstr "Te gusta? Compártenos con "
 
 #: templates/base_main.html:194
 msgid "Ingles"
-msgstr ""
+msgstr "English"
 
 #: templates/base_main.html:198
 msgid "Espanol"
-msgstr ""
+msgstr "Español"
 
 #: templates/base_main.html:208 templates/teacher.html:63
 #: templates/teacher.html:254 templates/teachouts.html:301
@@ -225,15 +225,15 @@ msgstr ""
 
 #: templates/base_main.html:221
 msgid "Terminos"
-msgstr ""
+msgstr "Términos de uso"
 
 #: templates/base_main.html:224
 msgid "Politicas"
-msgstr ""
+msgstr "Políticas de privacidad"
 
 #: templates/base_main.html:227
 msgid "FAQ"
-msgstr ""
+msgstr "Preguntas Frecuentes"
 
 #: templates/base_main.html:230
 msgid "Contacto"
