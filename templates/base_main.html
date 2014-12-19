@@ -94,7 +94,12 @@
 									{% else %}
 										<a href="/aprende/{{a.key.id()}}">
 									{% endif %}
-									{{a.name}}</a></li>
+									{% if language == 'Español' %}
+										{{a.name}}
+									{% else %}
+										{{a.namet}}
+									{% endif %}
+									</a></li>
 								{% endfor %}
 							</ul>
 						</li>

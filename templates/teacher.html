@@ -81,7 +81,13 @@
 															<label for="t-select-area">Área</label>
 															<select name ="select-area" class="form-control" id="t-select-area" required>
 																{% for a in t_areas %}
-																	<option value= "{{a.name}}">{{a.name}}</option>
+																	<option value= "{{a.name}}">
+																	{% if language == 'Español' %}
+																		{{a.name}}
+																	{% else %}
+																		{{a.namet}}
+																	{% endif %}	
+																	</option>
 																{% endfor %}
 															</select>
 														</div>
@@ -139,7 +145,13 @@
 						<div class="col-md-3">
 							<h4><small>Áreas del conocimiento</small></h4>
 							{% for a in t_areas %}
-								<h4>{{a.name}}</h4>
+								<h4>
+								{% if language == 'Español' %}
+									{{a.name}}
+								{% else %}
+									{{a.namet}}
+								{% endif %}
+								</h4>
 							{% endfor %}
 						</div>
 						<div class="col-md-4">

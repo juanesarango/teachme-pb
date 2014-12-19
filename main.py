@@ -20,7 +20,7 @@ import stripe
 
 from webapp2_extras import i18n
 from webapp2_extras.i18n import gettext as _
-from google.appengine.ext.webapp.util import run_wsgi_app
+# from google.appengine.ext.webapp.util import run_wsgi_app
 
 ########################################################################
 #Definiciones de Jinja2 para los templates
@@ -928,8 +928,8 @@ app = webapp2.WSGIApplication([('/', MainPage),
                                ], debug=True, config=config)
 
 
-def main():
-    run_wsgi_app(app)
+# def main():
+#     run_wsgi_app(app)
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()

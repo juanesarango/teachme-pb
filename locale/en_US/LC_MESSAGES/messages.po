@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-12-18 16:06-0500\n"
+"POT-Creation-Date: 2014-12-18 18:57-0500\n"
 "PO-Revision-Date: 2014-12-16 13:03-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en_US <LL@li.org>\n"
@@ -18,65 +18,122 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
+#: admin.py:102 admin.py:103
+msgid "No ingresaste nada"
+msgstr "You didn't enter any character"
+
+#: fns.py:135
+msgid "Se ha verificado tu cuenta exitosamente. Ahora a aprender!"
+msgstr "Your account has been successfully verified. Now let's learn!"
+
+#: fns.py:136
+msgid "Tu información ha sido actualizada exitósamente."
+msgstr "Your information has been successfully updated"
+
+#: fns.py:137
+msgid "Tu contraseña es inválida."
+msgstr "Your password is not valid."
+
+#: fns.py:138
+msgid "No realizaste ningun cambio."
+msgstr "You didn't make any change."
+
+#: fns.py:139
+msgid ""
+"Tu pago ha sido procesado correctamente. Has agendado con éxito la sesión"
+" de clase."
+msgstr ""
+"Your payment has been successfully processed. Your session class is now "
+"scheduled."
+
+#: fns.py:140
+msgid "Has agendado con éxito la sesión de clase."
+msgstr "You have scheduled your session class successfully."
+
+#: fns.py:141
+msgid ""
+"Lo sentimos. El pago ha sido rechazado. Corrige los datos de pago, o "
+"comúnicate con tu entidad financiera."
+msgstr ""
+"We're sorry. Your payment has been rejected. Check again your payment "
+"information, or call your bank for support."
+
+#: fns.py:142
+msgid ""
+"Lo sentimos, el mentor ya no cuenta con disponibilidad en esa hora. "
+"Intenta elegir una hora nueva."
+msgstr ""
+"We're sorry. This mentor is no longer available in this specific time. "
+"Try a different hour."
+
+#: fns.py:143
+msgid ""
+"Lo sentimos, la reserva no se pudo completar de manera exitosa. Inténtalo"
+" nuevamente."
+msgstr ""
+"We're sorry, the reservation has not been successfully completed. Please,"
+" try again."
+
 #: main.py:134
 msgid "language"
 msgstr "English"
 
 #: templates/base_main.html:88
 msgid "Aprende"
-msgstr "Learn"
+msgstr ""
 
 #: templates/base_main.html:102
 msgid "Ensena"
-msgstr "Want to teach?"
+msgstr ""
 
 #: templates/base_main.html:108
 msgid "Quiero"
-msgstr "I want to learn..."
+msgstr ""
 
 #: templates/base_main.html:115
 msgid "Sesiones"
-msgstr "Your sessions"
+msgstr ""
 
 #: templates/base_main.html:121
 msgid "Perfil"
-msgstr "Profile"
+msgstr ""
 
 #: templates/base_main.html:122
+#, fuzzy
 msgid "Cuenta"
-msgstr "Account"
+msgstr "Find <strong>Tutors</strong> in the topics you need"
 
 #: templates/base_main.html:123
 msgid "Mensajes"
-msgstr "Messages"
+msgstr ""
 
 #: templates/base_main.html:132
 msgid "Salir"
-msgstr "Log out"
+msgstr ""
 
 #: templates/base_main.html:134
 msgid "Ingresar"
-msgstr "Log in"
+msgstr ""
 
 #: templates/base_main.html:139
 msgid "Ingresa fb"
-msgstr "Log in with facebook"
+msgstr ""
 
 #: templates/base_main.html:143
 msgid "Ingresa correo"
-msgstr "Login with your email"
+msgstr ""
 
 #: templates/base_main.html:158
 msgid "Recuerda"
-msgstr "Remember me"
+msgstr ""
 
 #: templates/base_main.html:160
 msgid "Ingresa"
-msgstr "Log in"
+msgstr ""
 
 #: templates/base_main.html:167
 msgid "Registrate"
-msgstr "Sign up for free!"
+msgstr ""
 
 #: templates/base_main.html:171 templates/main_page.html:79
 msgid "Comparte"
@@ -84,31 +141,31 @@ msgstr "You like us? Share us with "
 
 #: templates/base_main.html:189
 msgid "Ingles"
-msgstr "English"
+msgstr ""
 
 #: templates/base_main.html:193
 msgid "Espanol"
-msgstr "Español"
+msgstr ""
 
 #: templates/base_main.html:203
 msgid "Cerrar"
-msgstr "Close"
+msgstr ""
 
 #: templates/base_main.html:216
 msgid "Terminos"
-msgstr "Terms of service"
+msgstr ""
 
 #: templates/base_main.html:219
 msgid "Politicas"
-msgstr "Privacy policy"
+msgstr ""
 
 #: templates/base_main.html:222
 msgid "FAQ"
-msgstr "Frequently Asked Questions"
+msgstr ""
 
 #: templates/base_main.html:225
 msgid "Contacto"
-msgstr "Contact"
+msgstr ""
 
 #: templates/comparte.html:20
 msgid "Comparte tu conocimiento convirtiéndote en Asesor"
@@ -119,7 +176,9 @@ msgid ""
 "Teachme es una nueva manera de compartir tus conocimientos de la academia"
 " por medio de una videollamada y herramientas virtuales para una mejor "
 "mentoría."
-msgstr "Teachme is a new way to share your general and professional knowledge through a videocall and virtual tools for better mentoring."
+msgstr ""
+"Teachme is a new way to share your general and professional knowledge "
+"through a videocall and virtual tools for better mentoring."
 
 #: templates/comparte.html:26
 msgid ""
@@ -127,7 +186,11 @@ msgid ""
 "ciencias sociales, música y muchas otras áreas en las que tengas dominio."
 " Sólo necesitas un computador de escritorio con webcam, o una laptop y "
 "con sólo unos clicks podrás empezar a compartir tus conocimientos."
-msgstr "With Teachme you can teach classes of math, physics, chemistry, social sciences, music and many other areas in which you have expertise. You only need a laptop or a desktop computer with webcam, and with only a few clicks you can start sharing your knowledge."
+msgstr ""
+"With Teachme you can teach classes of math, physics, chemistry, social "
+"sciences, music and many other areas in which you have expertise. You "
+"only need a laptop or a desktop computer with webcam, and with only a few"
+" clicks you can start sharing your knowledge."
 
 #: templates/comparte.html:32
 msgid "Por qué deberías compartir tu conocimiento en <strong>Teachme</strong>?"
@@ -141,7 +204,9 @@ msgstr "Global Reach"
 msgid ""
 "Con Teachme tienes mayor visibilidad. Puedes alcanzar estudiantes en "
 "donde llegue una conexión a internet."
-msgstr "With Teachme you have more visibility. You can reach students wherever an internet connection is available"
+msgstr ""
+"With Teachme you have more visibility. You can reach students wherever an"
+" internet connection is available"
 
 #: templates/comparte.html:47
 msgid "Fácil y flexible"
@@ -151,7 +216,9 @@ msgstr "Easy and flexible"
 msgid ""
 "Arma tu horario disponible, en tus horas libres, sin moverte de tu casa u"
 " oficina. En tu laptop y próximamente en tus dispositivos móviles."
-msgstr "Arrange your free schedule, in your spare time, without moving from your home or office. From your laptop and your mobile devices."
+msgstr ""
+"Arrange your free schedule, in your spare time, without moving from your "
+"home or office. From your laptop and your mobile devices."
 
 #: templates/comparte.html:54
 msgid "Recibe tu dinero"
@@ -161,7 +228,9 @@ msgstr "Receive your money"
 msgid ""
 "Escoge tu tarifa por hora. Recibe tu pago fácilmente en tu cuenta "
 "bancaria o billetera virtual preferida."
-msgstr "Choose your fee per hour. Get your payments easily in your bank account or your favorite virtual wallet."
+msgstr ""
+"Choose your fee per hour. Get your payments easily in your bank account "
+"or your favorite virtual wallet."
 
 #: templates/comparte.html:67
 msgid "Llena el siguiente formulario para que apliques para mentor en Teachme!"
@@ -192,8 +261,8 @@ msgid ""
 "Inicia sesión o regístrate <strong>gratis</strong> para poder aplicar a "
 "ser mentor en Teachme"
 msgstr ""
-"Log in or sign up for <strong>free</strong> for you can apply to "
-"be a mentor in Teachme"
+"Log in or sign up for <strong>free</strong> for you can apply to be a "
+"mentor in Teachme"
 
 #: templates/comparte.html:123
 msgid "Comienza a Enseñar!"
@@ -290,4 +359,67 @@ msgid "Testimonio-6"
 msgstr ""
 "\"Excellent, I don't need to move from my house to meet up with a "
 "teacher. Thank you very much!!\""
+
+#~ msgid "Aprende"
+#~ msgstr "Learn"
+
+#~ msgid "Ensena"
+#~ msgstr "Want to teach?"
+
+#~ msgid "Quiero"
+#~ msgstr "I want to learn..."
+
+#~ msgid "Sesiones"
+#~ msgstr "Your sessions"
+
+#~ msgid "Perfil"
+#~ msgstr "Profile"
+
+#~ msgid "Cuenta"
+#~ msgstr "Account"
+
+#~ msgid "Mensajes"
+#~ msgstr "Messages"
+
+#~ msgid "Salir"
+#~ msgstr "Log out"
+
+#~ msgid "Ingresar"
+#~ msgstr "Log in"
+
+#~ msgid "Ingresa fb"
+#~ msgstr "Log in with facebook"
+
+#~ msgid "Ingresa correo"
+#~ msgstr "Login with your email"
+
+#~ msgid "Recuerda"
+#~ msgstr "Remember me"
+
+#~ msgid "Ingresa"
+#~ msgstr "Log in"
+
+#~ msgid "Registrate"
+#~ msgstr "Sign up for free!"
+
+#~ msgid "Ingles"
+#~ msgstr "English"
+
+#~ msgid "Espanol"
+#~ msgstr "Español"
+
+#~ msgid "Cerrar"
+#~ msgstr "Close"
+
+#~ msgid "Terminos"
+#~ msgstr "Terms of service"
+
+#~ msgid "Politicas"
+#~ msgstr "Privacy policy"
+
+#~ msgid "FAQ"
+#~ msgstr "Frequently Asked Questions"
+
+#~ msgid "Contacto"
+#~ msgstr "Contact"
 

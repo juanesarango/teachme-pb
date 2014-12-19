@@ -90,7 +90,11 @@
 									<div class="checkbox">
 										<label>
 											<input type="checkbox" name="{{a.key.id()}}" value="{{a.key.id()}}">
-											{{a.name}}
+											{% if language == 'Español' %}
+												{{a.name}}
+											{% else %}
+												{{a.namet}}
+											{% endif %}	
 										</label>
 										
 									</div>
