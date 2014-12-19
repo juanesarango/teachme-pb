@@ -25,43 +25,43 @@
 									<form role="form" method="post" action="{{upload_url}}" enctype="multipart/form-data">
 										<div class="form-group">
 											<input type="hidden" name="te_id" value="{{teacher.key.id()}}">
-											<label for="t-profile_pic">Foto de perfil</label>
+											<label for="t-profile_pic">{% trans %}Foto de perfil{% endtrans %}</label>
 											<input type="file" name="profile_pic" accept="image/*" id="t-profile_pic">
-											<p class="help-block">Te recomendamos una foto de 140x140 píxeles</p>
+											<p class="help-block">{% trans %}Te recomendamos una foto de 140x140 píxeles{% endtrans %}</p>
 										</div>
-										<button type="submit" class="btn btn-success">Actualizar foto</button>
+										<button type="submit" class="btn btn-success">{% trans %}Actualizar foto{% endtrans %}</button>
 									</form>
 								</div>
 							</div>
 						</div>
 						<div class="col-md-6 col-md-offset-1">
 							<br>
-							<h2>Acerca de ti</h2>
+							<h2>{% trans %}Acerca de ti{% endtrans %}</h2>
 							<p>{{teacher.about}}</p>
-							<div class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Editar<b class="caret"></b></a>
+							<div class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">{% trans %}Editar{% endtrans %}<b class="caret"></b></a>
 								<ul class="dropdown-menu" style="min-width: 600px;">
 									<li>
 										<a>
 											<form method="post" action="/editabout" role="form">
-												<label for="t-editabout">Acerca de ti:</label>
+												<label for="t-editabout">{% trans %}Acerca de ti:{% endtrans %}</label>
 												<textarea name="editabout" class="form-control" id="t-editabout" rows="6" placeholder="Edita la información sobre tu perfil, intereses y motivaciones" required></textarea>
-												<button type="submit" class="btn btn-success" style="margin-top: 10px;">Actualizar</button>
+												<button type="submit" class="btn btn-success" style="margin-top: 10px;">{% trans %}Actualizar{% endtrans %}</button>
 											</form>
 										</a>
 									</li>
 								</ul>
 							</div>
 							<br>
-							<p><strong>Tarifa por hora: </strong>{{teacher.fee}} USD</p>
-							<p class="help-block">Tu tarifa por hora y en dólares. Recuerda que Teachme cobra una comisión en base a esta tarifa.</p>
-							<div class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Editar tarifa<b class="caret"></b></a>
+							<p><strong>{% trans %}Tarifa por hora:{% endtrans %} </strong>{{teacher.fee}} USD</p>
+							<p class="help-block">{% trans %}Tu tarifa por hora en dólares. Recuerda que Teachme cobra una comisión en base a esta tarifa.{% endtrans %}</p>
+							<div class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">{% trans %}Editar tarifa{% endtrans %}<b class="caret"></b></a>
 								<ul class="dropdown-menu" style="max-width: 250px;">
 									<li>
 										<a>
 											<form method="post" action="/editabout" role="form">
-												<label for="t-fee">Tarifa por hora:</label>
+												<label for="t-fee">{% trans %}Tarifa por hora:{% endtrans %}</label>
 												<input type="number" name="fee" min=0 max=100 class="form-control" id="t-fee" placeholder="USD" required>
-												<button type="submit" class="btn btn-success" style="margin-top: 10px;">Actualizar</button>
+												<button type="submit" class="btn btn-success" style="margin-top: 10px;">{% trans %}Actualizar{% endtrans %}</button>
 											</form>
 										</a>
 									</li>
@@ -72,16 +72,16 @@
 					<hr>
 					<div class="row">
 						<div class="col-md-3 col-md-offset-1">
-							<h3>Ciudad</h3>
+							<h3>{% trans %}Ciudad{% endtrans %}</h3>
 							<p>{{teacher.ciudad}}</p>
-							<h3>País</h3>
+							<h3>{% trans %}País{% endtrans %}</h3>
 							<p>{{teacher.pais}}</p>
-							<h3>Perfil de linkedin</h3>
+							<h3>{% trans %}Perfil de linkedin{% endtrans %}</h3>
 							<p><a href="{{teacher.linkedin}}" target="_blank">{{teacher.linkedin}}</a></p>
 						</div>
 						<div class="col-md-7 col-md-offset-1">
 							<form role="form" method="post" action="/editabout">
-								<h3 style="display: inline-block">Áreas del conocimiento&nbsp;&nbsp;&nbsp;&nbsp;</h3><button class="btn btn-success center-block" style="display: inline-block" type="submit">Actualizar áreas</button>
+								<h3 style="display: inline-block">{% trans %}Áreas del conocimiento{% endtrans %}&nbsp;&nbsp;&nbsp;&nbsp;</h3><button class="btn btn-success center-block" style="display: inline-block" type="submit">{% trans %}Actualizar áreas{% endtrans %}</button>
 								<input type="hidden" name="fn" value="editAreas">
 							{% for a in areas %}
 								<div class="checkbox"><input type="checkbox" name="{{a.key.id()}}" value="{{a.key.id()}}" id="cb{{a.name}}" {% if a.key.id() in teacher.areas %} checked="true"{% endif %}><label for="cb{{a.name}}">
@@ -100,11 +100,11 @@
 						<div class="col-md-3 col-md-offset-1">
 							<div class="form-group">
 								<form method="post" action="/addtags" role="form">
-									<h3 for="tags">Conocimientos y habilidades: </h3>
+									<h3 for="tags">{% trans %}Conocimientos y habilidades:{% endtrans %}</h3>
 									<input type="text" name="new_tags" class="form-control" id="t-tags" placeholder="Ingrese temas que domina" >
-									<p class="help-block">Agrega temas que dominas para visibilizar mejor tu conocimiento</p>
+									<p class="help-block">{% trans %}Agregar temas que dominas para visualizar mejor tu conocimiento{% endtrans %}</p>
 									<input type="hidden" name="te_id" value="{{teacher.key.id()}}">	
-									<button class="btn btn-success" type="submit">Agregar</button>
+									<button class="btn btn-success" type="submit">{% trans %}Agregar{% endtrans %}</button>
 								</form>
 							</div>
 						</div>
@@ -126,13 +126,13 @@
 					<form role="form" method="post" action="/calendar/teacher/add">
 						<div class="row">
 							<div class="col-md-5 col-md-offset-1">
-								<h3>Agenda libre</h3>
+								<h3>{% trans %}Agenda libre{% endtrans %}</h3>
 								<div id="calendarioIn">
 									
 								</div>
 							</div>
 							<div class="col-md-5 col-md-offset-1">
-								<h3>Horas disponibles</h3>
+								<h3>{% trans %}Horas disponibles{% endtrans %}</h3>
 								<div id="horasIn" class="horas">
 								<h3 id="fechaString" style=" margin-top: 10px;margin-left: 6px;"></h3>
 										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="0" value="00:00" id="0"><label for="0"> 0:00 AM</label></div>
@@ -165,7 +165,7 @@
 							</div>
 						</div>
 						<br>
-						<button class="btn btn-success center-block" type="submit">Estoy disponible</button>
+						<button class="btn btn-success center-block" type="submit">{% trans %}Estoy disponible{% endtrans %}</button>
 						<br>
 					</form>
 				</div>
@@ -175,7 +175,7 @@
 				<div class="col-md-5 col-md-offset-1 bckg-w-80">
 					<div class="row">
 						<div class="col-md-10 col-md-offset-1">
-							<h3>Que piensan los usuarios de ti</h3>
+							<h3>{% trans %}Que piensan los usuarios de ti{% endtrans %}</h3>
 							<span class="starReviews-gray"><span class="starReviews" style="width:{{teacher.rating*20}}%"></span></span><span> </span><span class="glyphicon glyphicon-comment"></span><span> {{teacher.reviews}}</span>
 						</div>
 					</div>

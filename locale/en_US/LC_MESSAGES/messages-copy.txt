@@ -1,4 +1,4 @@
-# Translations template for PROJECT.
+# English (United States) translations for PROJECT.
 # Copyright (C) 2014 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
@@ -8,10 +8,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-12-19 16:03-0500\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+<<<<<<< HEAD
+"POT-Creation-Date: 2014-12-18 18:57-0500\n"
+=======
+"POT-Creation-Date: 2014-12-19 15:32-0500\n"
+>>>>>>> 05d28ce898eb9653ef7c7db28270f109622c2722
+"PO-Revision-Date: 2014-12-16 13:03-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language-Team: en_US <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,225 +24,238 @@ msgstr ""
 
 #: admin.py:102 admin.py:103
 msgid "No ingresaste nada"
-msgstr ""
+msgstr "You didn't enter any character"
 
 #: fns.py:135
 msgid "Se ha verificado tu cuenta exitosamente. Ahora a aprender!"
-msgstr ""
+msgstr "Your account has been successfully verified. Now let's learn!"
 
 #: fns.py:136
 msgid "Tu información ha sido actualizada exitósamente."
-msgstr ""
+msgstr "Your information has been successfully updated"
 
 #: fns.py:137
 msgid "Tu contraseña es inválida."
-msgstr ""
+msgstr "Your password is not valid."
 
 #: fns.py:138
 msgid "No realizaste ningun cambio."
-msgstr ""
+msgstr "You didn't make any change."
 
 #: fns.py:139
 msgid ""
 "Tu pago ha sido procesado correctamente. Has agendado con éxito la sesión"
 " de clase."
 msgstr ""
+"Your payment has been successfully processed. Your session class is now "
+"scheduled."
 
 #: fns.py:140
 msgid "Has agendado con éxito la sesión de clase."
-msgstr ""
+msgstr "You have scheduled your session class successfully."
 
 #: fns.py:141
 msgid ""
 "Lo sentimos. El pago ha sido rechazado. Corrige los datos de pago, o "
 "comúnicate con tu entidad financiera."
 msgstr ""
+"We're sorry. Your payment has been rejected. Check again your payment "
+"information, or call your bank for support."
 
 #: fns.py:142
 msgid ""
 "Lo sentimos, el mentor ya no cuenta con disponibilidad en esa hora. "
 "Intenta elegir una hora nueva."
 msgstr ""
+"We're sorry. This mentor is no longer available in this specific time. "
+"Try a different hour."
 
 #: fns.py:143
 msgid ""
 "Lo sentimos, la reserva no se pudo completar de manera exitosa. Inténtalo"
 " nuevamente."
 msgstr ""
+"We're sorry, the reservation has not been successfully completed. Please,"
+" try again."
 
-#: main.py:94
+#: main.py:134
 msgid "language"
-msgstr ""
+msgstr "English"
 
 #: templates/account.html:16
+#, fuzzy
 msgid "Mi Cuenta"
-msgstr ""
+msgstr "My account"
 
 #: templates/account.html:20 templates/contacto.html:23
 #: templates/signup.html:21
 msgid "Nombre"
-msgstr ""
+msgstr "Name"
 
 #: templates/account.html:26 templates/signup.html:29
 msgid "Apellidos"
-msgstr ""
+msgstr "Last name"
 
 #: templates/account.html:32 templates/contacto.html:30
+#, fuzzy
 msgid "Correo"
-msgstr ""
+msgstr "Email"
 
 #: templates/account.html:39
 msgid "Contraseña anterior"
-msgstr ""
+msgstr "Old password"
 
 #: templates/account.html:45
 msgid "Nueva contraseña"
-msgstr ""
+msgstr "New password"
 
 #: templates/account.html:52
 msgid "Móvil"
-msgstr ""
+msgstr "Mobile"
 
 #: templates/account.html:55
 msgid ""
 "Tu número de celular sólo se utilizará para enviarte notificaciones de "
 "tus sesiones."
 msgstr ""
+"Your mobile phone number will only be used to send you notifications of "
+"your sessions."
 
 #: templates/account.html:59
 msgid "Actualizaciones"
-msgstr ""
+msgstr "Updates"
 
 #: templates/account.html:62
 msgid "Envíame actualizaciones ocasionales de Teachme"
-msgstr ""
+msgstr "Send me occasional updates from Teachme"
 
 #: templates/account.html:66
 msgid "Actualizar datos"
-msgstr ""
+msgstr "Update your account"
 
 #: templates/aprende.html:11
 msgid "Conéctate online con tutores en"
-msgstr ""
+msgstr "Meet with online experts in"
 
 #: templates/aprende.html:11
 msgid "y recibe ayuda instantánea. Tu primera clase a 1 dólar"
-msgstr ""
+msgstr "and get instant help. Your first class at just 1 USD"
 
-#: templates/aprende.html:31
+#: templates/aprende.html:25
 msgid "Estás buscando tutores en línea en"
-msgstr ""
+msgstr "You're looking for experts in"
 
-#: templates/aprende.html:37
+#: templates/aprende.html:25
 msgid "o estás buscando tutorías semanales en"
-msgstr ""
+msgstr "or you're looking for weekly tutoring in"
 
-#: templates/aprende.html:43
+#: templates/aprende.html:25
 msgid "es la solución para ti"
-msgstr ""
+msgstr "is the solution for you"
 
-#: templates/aprende.html:90
+#: templates/aprende.html:67
 msgid "por hora"
-msgstr ""
+msgstr "by hour"
 
-#: templates/aprende.html:98
+#: templates/aprende.html:75
 msgid ""
 "Lo sentimos. Estamos trabajando para traerte a los mejores mentores en "
 "esta área"
-msgstr ""
+msgstr "We're sorry. We're working to get you the best people in this topic"
 
 #: templates/base_main.html:88
 msgid "Aprende"
 msgstr ""
 
-#: templates/base_main.html:107
+#: templates/base_main.html:102
 msgid "Ensena"
 msgstr ""
 
-#: templates/base_main.html:113
+#: templates/base_main.html:108
 msgid "Quiero"
 msgstr ""
 
-#: templates/base_main.html:120
+#: templates/base_main.html:115
 msgid "Sesiones"
 msgstr ""
 
-#: templates/base_main.html:126
+#: templates/base_main.html:121
 msgid "Perfil"
 msgstr ""
 
-#: templates/base_main.html:127
+#: templates/base_main.html:122
+#, fuzzy
 msgid "Cuenta"
-msgstr ""
+msgstr "Find <strong>Tutors</strong> in the topics you need"
 
-#: templates/base_main.html:128
+#: templates/base_main.html:123
 msgid "Mensajes"
 msgstr ""
 
-#: templates/base_main.html:137
+#: templates/base_main.html:132
 msgid "Salir"
 msgstr ""
 
-#: templates/base_main.html:139
+#: templates/base_main.html:134
 msgid "Ingresar"
 msgstr ""
 
-#: templates/base_main.html:144
+#: templates/base_main.html:139
 msgid "Ingresa fb"
 msgstr ""
 
-#: templates/base_main.html:148
+#: templates/base_main.html:143
 msgid "Ingresa correo"
 msgstr ""
 
-#: templates/base_main.html:163
+#: templates/base_main.html:158
 msgid "Recuerda"
 msgstr ""
 
-#: templates/base_main.html:165 templates/login.html:18 templates/login.html:42
+#: templates/base_main.html:160 templates/login.html:18 templates/login.html:42
 msgid "Ingresa"
 msgstr ""
 
-#: templates/base_main.html:172 templates/signup.html:60
+#: templates/base_main.html:167 templates/signup.html:60
 msgid "Registrate"
 msgstr ""
 
-#: templates/base_main.html:176 templates/main_page.html:79
+#: templates/base_main.html:171 templates/main_page.html:79
 msgid "Comparte"
-msgstr ""
+msgstr "You like us? Share us with "
 
-#: templates/base_main.html:194
+#: templates/base_main.html:189
 msgid "Ingles"
 msgstr ""
 
-#: templates/base_main.html:198
+#: templates/base_main.html:193
 msgid "Espanol"
 msgstr ""
 
-#: templates/base_main.html:208 templates/teacher.html:63
-#: templates/teacher.html:254 templates/teachouts.html:301
+#: templates/base_main.html:203 templates/teacher.html:63
+#: templates/teacher.html:242 templates/teachouts.html:301
 msgid "Cerrar"
 msgstr ""
 
-#: templates/base_main.html:221
+#: templates/base_main.html:216
 msgid "Terminos"
 msgstr ""
 
-#: templates/base_main.html:224
+#: templates/base_main.html:219
 msgid "Politicas"
 msgstr ""
 
-#: templates/base_main.html:227
+#: templates/base_main.html:222
 msgid "FAQ"
 msgstr ""
 
-#: templates/base_main.html:230
+#: templates/base_main.html:225
 msgid "Contacto"
 msgstr ""
 
 #: templates/comparte.html:20
 msgid "Comparte tu conocimiento convirtiéndote en Asesor"
-msgstr ""
+msgstr "Share your knowledge by becoming an Expert"
 
 #: templates/comparte.html:23
 msgid ""
@@ -245,6 +263,8 @@ msgid ""
 " por medio de una videollamada y herramientas virtuales para una mejor "
 "mentoría."
 msgstr ""
+"Teachme is a new way to share your general and professional knowledge "
+"through a videocall and virtual tools for better mentoring."
 
 #: templates/comparte.html:26
 msgid ""
@@ -253,117 +273,132 @@ msgid ""
 " Sólo necesitas un computador de escritorio con webcam, o una laptop y "
 "con sólo unos clicks podrás empezar a compartir tus conocimientos."
 msgstr ""
+"With Teachme you can teach classes of math, physics, chemistry, social "
+"sciences, music and many other areas in which you have expertise. You "
+"only need a laptop or a desktop computer with webcam, and with only a few"
+" clicks you can start sharing your knowledge."
 
 #: templates/comparte.html:32
 msgid "Por qué deberías compartir tu conocimiento en <strong>Teachme</strong>?"
-msgstr ""
+msgstr "Why you should share your knowledge in <strong>Teachme</strong>?"
 
 #: templates/comparte.html:40
 msgid "Alcance global"
-msgstr ""
+msgstr "Global Reach"
 
 #: templates/comparte.html:42
 msgid ""
 "Con Teachme tienes mayor visibilidad. Puedes alcanzar estudiantes en "
 "donde llegue una conexión a internet."
 msgstr ""
+"With Teachme you have more visibility. You can reach students wherever an"
+" internet connection is available"
 
 #: templates/comparte.html:47
 msgid "Fácil y flexible"
-msgstr ""
+msgstr "Easy and flexible"
 
 #: templates/comparte.html:49
 msgid ""
 "Arma tu horario disponible, en tus horas libres, sin moverte de tu casa u"
 " oficina. En tu laptop y próximamente en tus dispositivos móviles."
 msgstr ""
+"Arrange your free schedule, in your spare time, without moving from your "
+"home or office. From your laptop and your mobile devices."
 
 #: templates/comparte.html:54
 msgid "Recibe tu dinero"
-msgstr ""
+msgstr "Receive your money"
 
 #: templates/comparte.html:56
 msgid ""
 "Escoge tu tarifa por hora. Recibe tu pago fácilmente en tu cuenta "
 "bancaria o billetera virtual preferida."
 msgstr ""
+"Choose your fee per hour. Get your payments easily in your bank account "
+"or your favorite virtual wallet."
 
 #: templates/comparte.html:67
 msgid "Llena el siguiente formulario para que apliques para mentor en Teachme!"
-msgstr ""
+msgstr "Fill out the form below to apply to be a mentor in Teachme!"
 
 #: templates/comparte.html:75 templates/profile_teacher.html:75
 msgid "Ciudad"
-msgstr ""
+msgstr "City"
 
 #: templates/comparte.html:79 templates/profile_teacher.html:77
 msgid "País"
-msgstr ""
+msgstr "Country"
 
 #: templates/comparte.html:88
 msgid "Áreas que dominas"
-msgstr ""
+msgstr "Topics that you master"
 
-#: templates/comparte.html:105 templates/profile_teacher.html:39
+#: templates/comparte.html:101 templates/profile_teacher.html:39
 msgid "Acerca de ti"
-msgstr ""
+msgstr "About you"
 
-#: templates/comparte.html:113
+#: templates/comparte.html:109
 msgid "Aplica ya!"
-msgstr ""
+msgstr "Apply Now!"
 
-#: templates/comparte.html:121
+#: templates/comparte.html:117
 msgid ""
 "Inicia sesión o regístrate <strong>gratis</strong> para poder aplicar a "
 "ser mentor en Teachme"
 msgstr ""
+"Log in or sign up for <strong>free</strong> for you can apply to be a "
+"mentor in Teachme"
 
-#: templates/comparte.html:127
+#: templates/comparte.html:123
 msgid "Comienza a Enseñar!"
-msgstr ""
+msgstr "Start teaching!"
 
-#: templates/comparte.html:130
+#: templates/comparte.html:126
 msgid " o si ya estás registrado como mentor "
-msgstr ""
+msgstr "or if you're already signed as a mentor"
 
-#: templates/comparte.html:133
+#: templates/comparte.html:129
 msgid "Inicia Sesión"
-msgstr ""
+msgstr "Log In"
 
 #: templates/contacto.html:17
 msgid "Queremos que nos compartas tus opiniones sobre tu experiencia en Teachme."
-msgstr ""
+msgstr "We want to hear about your experience with Teachme"
 
 #: templates/contacto.html:18
 msgid ""
 "Queremos mejorar para ti. Escríbenos tus preguntas, peticiones, "
 "felicitaciones o reclamos: "
 msgstr ""
+"We want to improve for you. Write us your questions, requests, "
+"compliments or complaints:"
 
 #: templates/contacto.html:31 templates/signup.html:40
 msgid "correo@dominio.com"
-msgstr ""
+msgstr "email@domain.com"
 
 #: templates/contacto.html:32
 msgid "Opcional"
-msgstr ""
+msgstr "Optional"
 
 #: templates/contacto.html:37
 msgid "Comentarios"
-msgstr ""
+msgstr "Comments"
 
 #: templates/contacto.html:42 templates/messages.html:88
 #: templates/messages.html:104
 msgid "Enviar"
-msgstr ""
+msgstr "Send"
 
 #: templates/faq.html:18
 msgid "Preguntas Frecuentes"
 msgstr ""
 
 #: templates/faq.html:20
+#, fuzzy
 msgid "Acerca de Teachme"
-msgstr ""
+msgstr "About you"
 
 #: templates/faq.html:25
 msgid "Qué es TeachMe"
@@ -587,8 +622,9 @@ msgid ""
 msgstr ""
 
 #: templates/faq.html:195
+#, fuzzy
 msgid "Aprendices"
-msgstr ""
+msgstr "Learn"
 
 #: templates/faq.html:200
 msgid "¿Cómo encuentro un mentor?"
@@ -681,134 +717,221 @@ msgid ""
 msgstr ""
 
 #: templates/login.html:8
+#, fuzzy
 msgid "Igresa o registrate para obtener tu primera clase a 1 dólar"
-msgstr ""
+msgstr "Signin or signup right now"
 
 #: templates/login.html:24 templates/signup.html:37
+#, fuzzy
 msgid "Email"
 msgstr ""
 
 #: templates/login.html:32 templates/signup.html:45
+#, fuzzy
 msgid "Contraseña"
-msgstr ""
+msgstr "Password"
 
 #: templates/login.html:39
+#, fuzzy
 msgid "Recuérdame"
-msgstr ""
+msgstr "Remember me"
 
 #: templates/main_page.html:16
 msgid "Encuentra"
-msgstr ""
+msgstr "Find <strong>Tutors</strong> in the topics you need"
 
 #: templates/main_page.html:17
 msgid "Permite"
 msgstr ""
+"<strong>Teachme</strong> allows you to connect online in any moment with "
+"the experts you need"
 
 #: templates/main_page.html:23
 msgid "Buscar"
-msgstr ""
+msgstr "Search"
 
 #: templates/main_page.html:24
 msgid "NAyuda"
-msgstr ""
+msgstr "What do you need help for? Try 'differential calculus'"
 
 #: templates/main_page.html:57
 msgid "Facil"
-msgstr ""
+msgstr "It's very easy, look how it works"
 
 #: templates/main_page.html:63
 msgid "B1"
-msgstr ""
+msgstr "Search by the topics you want to learn"
 
 #: templates/main_page.html:67
 msgid "B2"
-msgstr ""
+msgstr "Browse between tutors and select the one you prefer"
 
 #: templates/main_page.html:71
 msgid "B3"
-msgstr ""
+msgstr "Connect with the tutor on our virtual classroom"
 
 #: templates/main_page.html:100
 msgid "Encuentra-a"
-msgstr ""
+msgstr "Find tutors by category"
+
+#: templates/main_page.html:138
+msgid "Tasa"
+msgstr "USD per hour"
 
 #: templates/main_page.html:144
-msgid "Tasa"
-msgstr ""
-
-#: templates/main_page.html:150
 msgid "Lo siento-areas"
 msgstr ""
+"We're sorry. We're working for bringing you the best experts in this "
+"category"
 
-#: templates/main_page.html:167
+#: templates/main_page.html:161
 msgid "Que-dicen"
-msgstr ""
+msgstr "What our learners are saying about <strong>Teachme</strong>"
 
-#: templates/main_page.html:195
+#: templates/main_page.html:189
 msgid "Testimonio-1"
 msgstr ""
+"\"We were waiting for a comfortable solution like this for studying. "
+"Thanks!\""
 
-#: templates/main_page.html:212
+#: templates/main_page.html:206
 msgid "Testimonio-2"
-msgstr ""
+msgstr "\"Very cool, this was what I needed. Total Thanks...\""
 
-#: templates/main_page.html:229
+#: templates/main_page.html:223
 msgid "Testimonio-3"
 msgstr ""
+"\"UuuuuFF, very cool this website, I recommend it to everyone, these are "
+"the tools we the students need.\""
 
-#: templates/main_page.html:246
+#: templates/main_page.html:240
 msgid "Testimonio-4"
-msgstr ""
+msgstr "\"Hey guys, thank you very much, I teach music and photography.\""
 
-#: templates/main_page.html:263
+#: templates/main_page.html:257
 msgid "Testimonio-5"
 msgstr ""
+"\"Yeah. I finally understood factorization, very good this solution. "
+"Thaaaaaaanksss ...\""
 
-#: templates/main_page.html:280
+#: templates/main_page.html:274
 msgid "Testimonio-6"
 msgstr ""
+"\"Excellent, I don't need to move from my house to meet up with a "
+"teacher. Thank you very much!!\""
 
+<<<<<<< HEAD
+#~ msgid "Aprende"
+#~ msgstr "Learn"
+
+#~ msgid "Ensena"
+#~ msgstr "Want to teach?"
+
+#~ msgid "Quiero"
+#~ msgstr "I want to learn..."
+
+#~ msgid "Sesiones"
+#~ msgstr "Your sessions"
+
+#~ msgid "Perfil"
+#~ msgstr "Profile"
+
+#~ msgid "Cuenta"
+#~ msgstr "Account"
+
+#~ msgid "Mensajes"
+#~ msgstr "Messages"
+
+#~ msgid "Salir"
+#~ msgstr "Log out"
+
+#~ msgid "Ingresar"
+#~ msgstr "Log in"
+
+#~ msgid "Ingresa fb"
+#~ msgstr "Log in with facebook"
+
+#~ msgid "Ingresa correo"
+#~ msgstr "Login with your email"
+
+#~ msgid "Recuerda"
+#~ msgstr "Remember me"
+
+#~ msgid "Ingresa"
+#~ msgstr "Log in"
+
+#~ msgid "Registrate"
+#~ msgstr "Sign up for free!"
+
+#~ msgid "Ingles"
+#~ msgstr "English"
+
+#~ msgid "Espanol"
+#~ msgstr "Español"
+
+#~ msgid "Cerrar"
+#~ msgstr "Close"
+
+#~ msgid "Terminos"
+#~ msgstr "Terms of service"
+
+#~ msgid "Politicas"
+#~ msgstr "Privacy policy"
+
+#~ msgid "FAQ"
+#~ msgstr "Frequently Asked Questions"
+
+#~ msgid "Contacto"
+#~ msgstr "Contact"
+=======
 #: templates/messages.html:62
 msgid "Aún no tienes conversaciones"
-msgstr ""
+msgstr "You don't have any messages yet"
 
 #: templates/messages.html:68
 msgid "Conversación"
-msgstr ""
+msgstr "Conversation"
 
 #: templates/profile_teacher.html:28
 msgid "Foto de perfil"
-msgstr ""
+msgstr "Profile picture"
 
 #: templates/profile_teacher.html:30
 msgid "Te recomendamos una foto de 140x140 píxeles"
-msgstr ""
+msgstr "We recommend a picture of 140x140 pixels"
 
 #: templates/profile_teacher.html:32
+#, fuzzy
 msgid "Actualizar foto"
-msgstr ""
+msgstr "Update your pic"
 
 #: templates/profile_teacher.html:41
 msgid "Editar"
-msgstr ""
+msgstr "Edit"
 
 #: templates/profile_teacher.html:46
+#, fuzzy
 msgid "Acerca de ti:"
-msgstr ""
+msgstr "About you"
 
 #: templates/profile_teacher.html:48 templates/profile_teacher.html:64
+#, fuzzy
 msgid "Actualizar"
-msgstr ""
+msgstr "Update"
 
 #: templates/profile_teacher.html:55 templates/profile_teacher.html:62
+#, fuzzy
 msgid "Tarifa por hora:"
-msgstr ""
+msgstr "Fee by hour"
 
 #: templates/profile_teacher.html:56
+#, fuzzy
 msgid ""
 "Tu tarifa por hora en dólares. Recuerda que Teachme cobra una comisión en"
 " base a esta tarifa."
 msgstr ""
+"Your hourly rate in dollars. Remember Teachme charges a fee based on this"
+" rate."
 
 #: templates/profile_teacher.html:57
 msgid "Editar tarifa"
@@ -818,85 +941,91 @@ msgstr ""
 msgid "Perfil de linkedin"
 msgstr ""
 
-#: templates/profile_teacher.html:84 templates/teacher.html:146
+#: templates/profile_teacher.html:84 templates/teacher.html:140
 msgid "Áreas del conocimiento"
 msgstr ""
 
 #: templates/profile_teacher.html:84
+#, fuzzy
 msgid "Actualizar áreas"
-msgstr ""
+msgstr "Update your account"
 
-#: templates/profile_teacher.html:103
+#: templates/profile_teacher.html:97
 msgid "Conocimientos y habilidades:"
 msgstr ""
 
-#: templates/profile_teacher.html:105
+#: templates/profile_teacher.html:99
 msgid "Agregar temas que dominas para visualizar mejor tu conocimiento"
-msgstr ""
+msgstr "Add topics to display better your knowledge"
 
-#: templates/profile_teacher.html:107
+#: templates/profile_teacher.html:101
+#, fuzzy
 msgid "Agregar"
-msgstr ""
+msgstr "Add"
 
-#: templates/profile_teacher.html:129 templates/teacher.html:69
+#: templates/profile_teacher.html:123 templates/teacher.html:69
 msgid "Agenda libre"
-msgstr ""
+msgstr "free Agenda"
 
-#: templates/profile_teacher.html:135 templates/teacher.html:74
+#: templates/profile_teacher.html:129 templates/teacher.html:74
 msgid "Horas disponibles"
-msgstr ""
+msgstr "Hours available"
 
-#: templates/profile_teacher.html:168
+#: templates/profile_teacher.html:162
 msgid "Estoy disponible"
-msgstr ""
+msgstr "I'm available"
 
-#: templates/profile_teacher.html:178
+#: templates/profile_teacher.html:172
 msgid "Que piensan los usuarios de ti"
-msgstr ""
+msgstr "What your customers are saying about you"
 
 #: templates/search_results.html:14
+#, fuzzy
 msgid "Conéctate online con los mejores tutores en"
-msgstr ""
+msgstr "Meet with online experts in"
 
 #: templates/search_results.html:14
+#, fuzzy
 msgid "y recibe ayuda instantánea"
-msgstr ""
+msgstr "and get instant help."
 
 #: templates/search_results.html:26
 msgid "Se muestra"
-msgstr ""
+msgstr "You see"
 
 #: templates/search_results.html:26
 msgid "de 1 mentor encontrado"
-msgstr ""
+msgstr "from 1 expert found"
 
 #: templates/search_results.html:28
 msgid "Se muestran"
-msgstr ""
+msgstr "You see"
 
 #: templates/search_results.html:28
 msgid "de"
-msgstr ""
+msgstr "from"
 
 #: templates/search_results.html:28
 msgid "mentores encontrados"
-msgstr ""
+msgstr "experts found"
 
 #: templates/search_results.html:48
 msgid "Áreas:"
-msgstr ""
+msgstr "Topics:"
 
 #: templates/search_results.html:49
 msgid "Conocimientos:"
-msgstr ""
+msgstr "knowledges"
 
-#: templates/search_results.html:50 templates/teacher.html:141
+#: templates/search_results.html:50 templates/teacher.html:135
+#, fuzzy
 msgid "Ciudad:"
-msgstr ""
+msgstr "City"
 
-#: templates/search_results.html:51 templates/teacher.html:142
+#: templates/search_results.html:51 templates/teacher.html:136
+#, fuzzy
 msgid "País:"
-msgstr ""
+msgstr "Country"
 
 #: templates/search_results.html:64
 msgid ""
@@ -904,259 +1033,280 @@ msgid ""
 "compartiendo lo siguiente en tus redes sociales. Te lo sabremos agradecer"
 " y los usuarios de"
 msgstr ""
+"Oops, sorry. Help us find people with this knowledge by sharing the "
+"following on your social networks. We'll thank you and the"
 
 #: templates/search_results.html:64
 msgid "también"
-msgstr ""
+msgstr "users to"
 
 #: templates/signup.html:15
 msgid "Regístrate desde ya en Teachme y llénate de conocimiento"
-msgstr ""
+msgstr "Signup right now in teachme and fill your mind with knowledge"
 
 #: templates/signup.html:19
 msgid "O tambien puedes registrarte con tu correo:"
-msgstr ""
+msgstr "Or you can signup with you email to"
 
 #: templates/signup.html:24
+#, fuzzy
 msgid "Ingresa tu nombre"
-msgstr ""
+msgstr "Your name"
 
 #: templates/signup.html:32
 msgid "Ingresa tus apellidos"
-msgstr ""
+msgstr "Your lastname"
 
 #: templates/signup.html:48
+#, fuzzy
 msgid "Ingresa tu contraseña"
-msgstr ""
+msgstr "Password"
 
 #: templates/signup.html:53
+#, fuzzy
 msgid "Confirmar contraseña"
-msgstr ""
+msgstr "Confirm your password"
 
 #: templates/signup.html:56
+#, fuzzy
 msgid "Confirma tu contraseña"
-msgstr ""
+msgstr "Confirm your password"
 
 #: templates/teacher.html:8
 msgid "te puede ayudar en temas como"
-msgstr ""
+msgstr "can help you with"
 
 #: templates/teacher.html:16
 msgid "Transacción fallida!"
-msgstr ""
+msgstr "Your transaction failed!"
 
 #: templates/teacher.html:16
 msgid "Tus datos de pago no fueron procesados con éxito. Inténtalo nuevamente."
-msgstr ""
+msgstr "Your payment details were not processed successfully. Please try again."
 
 #: templates/teacher.html:24
+#, fuzzy
 msgid "Compárteme"
-msgstr ""
+msgstr "Share me"
 
 #: templates/teacher.html:53
 msgid "Agenda una hora"
-msgstr ""
+msgstr "Schedule"
 
 #: templates/teacher.html:55
+#, fuzzy
 msgid "USD por hora"
-msgstr ""
+msgstr "USD by hour"
 
 #: templates/teacher.html:64
 msgid "Horarios Disponibles"
-msgstr ""
+msgstr "Free Agenda"
 
 #: templates/teacher.html:81
 msgid "Área"
-msgstr ""
+msgstr "Area"
 
-#: templates/teacher.html:97
+#: templates/teacher.html:91
 msgid "Temas de la sesión"
-msgstr ""
+msgstr "Session topics"
 
-#: templates/teacher.html:98
+#: templates/teacher.html:92
 msgid ""
 "Aprovecha este espacio para comunicarle al mentor los temas que quisieras"
 " abordar durante la sesión."
 msgstr ""
+"Take this opportunity to inform the expert the topics you would like "
+"addressed during the session."
 
-#: templates/teacher.html:109
+#: templates/teacher.html:103
 msgid "El mentor no ha configurado horas disponibles"
-msgstr ""
+msgstr "The expert have no hours available"
 
-#: templates/teacher.html:110 templates/teacher.html:113
+#: templates/teacher.html:104 templates/teacher.html:107
 msgid "Envíale un mensaje"
-msgstr ""
+msgstr "Send a message"
 
-#: templates/teacher.html:110 templates/teacher.html:113
+#: templates/teacher.html:104 templates/teacher.html:107
 msgid "para proponerle una hora"
-msgstr ""
+msgstr "to request a time"
 
-#: templates/teacher.html:112
+#: templates/teacher.html:106
 msgid "Ninguna hora te satisface?"
-msgstr ""
+msgstr "Don't see a time that works?"
 
-#: templates/teacher.html:119
+#: templates/teacher.html:113
 msgid "Atrás"
-msgstr ""
+msgstr "Back"
 
-#: templates/teacher.html:121 templates/teacher.html:124
+#: templates/teacher.html:115 templates/teacher.html:118
 msgid "Agendar"
-msgstr ""
+msgstr "Schedule"
 
-#: templates/teacher.html:134
+#: templates/teacher.html:128
 msgid "Acerca"
-msgstr ""
+msgstr "About"
 
-#: templates/teacher.html:143
+#: templates/teacher.html:137
 msgid "Redes Sociales:"
-msgstr ""
+msgstr "Social networks"
 
-#: templates/teacher.html:158
+#: templates/teacher.html:146
 msgid "Conocimientos y habilidades"
 msgstr ""
 
-#: templates/teacher.html:170
+#: templates/teacher.html:158
+#, fuzzy
 msgid "Mensaje para"
-msgstr ""
+msgstr "Message to"
 
-#: templates/teacher.html:174
+#: templates/teacher.html:162
 msgid ""
 "Solicítale una hora al tutor que se ajuste a tu horario, o pregúntale "
 "algo que quieras saber sobre él, antes de agendar."
 msgstr ""
+"Request an hour that fits your schedule, or ask anything you want to know"
+" before schedule."
 
-#: templates/teacher.html:178 templates/teachouts.html:71
+#: templates/teacher.html:166 templates/teachouts.html:71
 #: templates/teachouts.html:133
+#, fuzzy
 msgid "Cancelar"
-msgstr ""
+msgstr "Cancel"
 
-#: templates/teacher.html:179
+#: templates/teacher.html:167
 msgid "Enviar mensaje"
-msgstr ""
+msgstr "Send message"
 
-#: templates/teacher.html:194
+#: templates/teacher.html:182
 msgid "Recibimos todas las tarjetas de crédito"
-msgstr ""
+msgstr "We receive all credit cards"
 
-#: templates/teacher.html:202
+#: templates/teacher.html:190
 msgid "Número de tarjeta"
-msgstr ""
+msgstr "Credit card number"
 
-#: templates/teacher.html:236
+#: templates/teacher.html:224
 msgid ""
 "En Teachme trabajamos con las mejores tecnologías de pagos por internet. "
 "Nuestro proveedor de pagos es"
 msgstr ""
+"In Teachme we work with the best online payment technologies. Our payment"
+" provider is"
 
-#: templates/teacher.html:236
+#: templates/teacher.html:224
 msgid "compañía en la cual inversores como"
-msgstr ""
+msgstr "company in which investors like"
 
-#: templates/teacher.html:236
+#: templates/teacher.html:224
 msgid "Son los inversores de grandes empresas como Apple, Google..."
-msgstr ""
+msgstr "Investors in large companies like Apple, Google .."
 
-#: templates/teacher.html:236
+#: templates/teacher.html:224
 msgid ""
 "han puesto su confianza. Puedes estar tranquilo al realizar tu pago con "
 "nosotros por medio de Stripe."
 msgstr ""
+"have put their trust. You can rest assured to make your payment to us "
+"through Stripe."
 
-#: templates/teacher.html:243
+#: templates/teacher.html:231
 msgid "Experto:"
-msgstr ""
+msgstr "Expert"
 
-#: templates/teacher.html:244
+#: templates/teacher.html:232
 msgid "Detalle: Una sesión de"
-msgstr ""
+msgstr "Concept: Session with"
 
-#: templates/teacher.html:245
+#: templates/teacher.html:233
 msgid "Total:"
 msgstr ""
 
-#: templates/teacher.html:246
+#: templates/teacher.html:234
 msgid "Horas:"
-msgstr ""
+msgstr "Hours"
 
-#: templates/teacher.html:255
+#: templates/teacher.html:243
 msgid "Procesar Pago"
-msgstr ""
+msgstr "Pay"
 
-#: templates/teacher.html:272
+#: templates/teacher.html:260
 msgid "Qué piensan los usuarios de"
-msgstr ""
+msgstr "What users think about"
 
 #: templates/teachouts.html:28
 msgid "Próximas sesiones a dar"
-msgstr ""
+msgstr "Upcoming sessions to give"
 
 #: templates/teachouts.html:66 templates/teachouts.html:123
 #: templates/teachouts.html:127
 msgid "Únete ahora"
-msgstr ""
+msgstr "Join now"
 
 #: templates/teachouts.html:86
 msgid "Próximas sesiones a recibir"
-msgstr ""
+msgstr "Upcoming sessions to receive"
 
 #: templates/teachouts.html:148 templates/teachouts.html:322
 msgid "No has agendado ninguna sesión."
-msgstr ""
+msgstr "You don't have any session scheduled."
 
 #: templates/teachouts.html:156
+#, fuzzy
 msgid "Sesiones dadas"
-msgstr ""
+msgstr "Given sessions"
 
 #: templates/teachouts.html:192 templates/teachouts.html:242
 msgid "Realizada"
-msgstr ""
+msgstr "Given"
 
 #: templates/teachouts.html:192 templates/teachouts.html:242
 msgid "No realizada"
-msgstr ""
+msgstr "Not given"
 
 #: templates/teachouts.html:207
 msgid "Sesiones recibidas"
-msgstr ""
+msgstr "Received sessions"
 
 #: templates/teachouts.html:256
 msgid "Califica este mentor"
-msgstr ""
+msgstr "Rate this expert"
 
 #: templates/teachouts.html:265
+#, fuzzy
 msgid "Califica a"
-msgstr ""
+msgstr "Rate"
 
 #: templates/teachouts.html:283
 msgid "Califica de 1 a 5 tu experiencia con"
-msgstr ""
+msgstr "Rate from 1-5 your experience with"
 
 #: templates/teachouts.html:292
 msgid "Escribe un comentario acerca de tu experiencia con"
-msgstr ""
+msgstr "Write a review about your experience with"
 
 #: templates/teachouts.html:293
 msgid "Tu comentario podra ser visto por los usuarios de Teachme"
-msgstr ""
+msgstr "Your review may be seen by users Teachme"
 
 #: templates/teachouts.html:328
 msgid "Tu primera sesión?"
-msgstr ""
+msgstr "New in Teachme?"
 
 #: templates/teachouts.html:331
 msgid "Ya tienes Chrome?"
-msgstr ""
+msgstr "Do you have Chrome?"
 
 #: templates/teachouts.html:335
 msgid "Que tal funciona tu cámara?"
-msgstr ""
+msgstr "Are your webcam working?"
 
 #: templates/teachouts.html:339
 msgid "Quieres compartir tu pantalla?"
-msgstr ""
+msgstr "Do you want to share your screen?"
 
 #: templates/teachouts.html:343
 #, python-format
 msgid "Compra con seguridad. Teachme es 100% garantizado"
-msgstr ""
+msgstr "Buy with confidence. Teachme is 100% guaranteed"
+>>>>>>> 05d28ce898eb9653ef7c7db28270f109622c2722
 

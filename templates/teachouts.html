@@ -25,7 +25,7 @@
 					{% if teacher.teachouts %}
 						<div class="row">
 							<div class="col-md-offset-1">
-								<h2 class="font-w">Próximas sesiones a dar</h2>
+								<h2 class="font-w">{% trans %}Próximas sesiones a dar{% endtrans %}</h2>
 							</div>
 						</div>
 					{% endif %}
@@ -41,7 +41,7 @@
 									<div class="col-md-9">
 										<div class="row">
 											<div class="col-md-6">
-												<h4>{{m_touts[t].area}} - Sin costo</h4>
+												<h4>{{m_touts[t].area}} - {m_touts[t].cost}}</h4>
 											</div>
 											<div class="col-md-6">
 												<script type="text/javascript">
@@ -63,12 +63,12 @@
 											<div class="col-md-4">
 												<div class="row">
 													<a href="/session/?r={{m_touts[t].key.id()}}" target="_blank"> 
-														<button class="btn btn-success" {% if m_disable[t] == True %} disabled="disabled"{% endif %}><span class="glyphicon glyphicon-facetime-video"></span> Únete ahora</button>
+														<button class="btn btn-success" {% if m_disable[t] == True %} disabled="disabled"{% endif %}><span class="glyphicon glyphicon-facetime-video"></span> {% trans %}Únete ahora{% endtrans %}</button>
 													</a>
 												</div>
 												<div class="row">
 													<a target="_blank" href="/teachout/cancel/{{m_touts[t].key.urlsafe()}}">
-														<button class="btn btn-danger" disabled="disabled" style="margin-top:6px;">Cancelar</button>
+														<button class="btn btn-danger" disabled="disabled" style="margin-top:6px;">{% trans %}Cancelar{% endtrans %}</button>
 													</a>
 												</div>
 											</div>
@@ -83,7 +83,7 @@
 					{% endfor %}
 					<div class="row">
 						<div class="col-md-offset-1">
-							<h2 class="font-w">Próximas sesiones a recibir</h2>
+							<h2 class="font-w">{% trans %}Próximas sesiones a recibir{% endtrans %}</h2>
 						</div>
 					</div>
 					{% for t in user.teachouts %}
@@ -97,7 +97,7 @@
 									<div class="col-md-9">
 										<div class="row">
 											<div class="col-md-6">
-												<h4>{{touts[t].area}} - Sin costo</h4>
+												<h4>{{touts[t].area}} - {touts[t].cost}}</h4>
 											</div>
 											<div class="col-md-6">
 												<script type="text/javascript">
@@ -120,17 +120,17 @@
 												<div class="row">
 												{% if disable[t] == True %}
 													<a href="/teachouts" target="_blank"> 
-														<button class="btn btn-success" disabled="disabled">Únete ahora</button>
+														<button class="btn btn-success" disabled="disabled">{% trans %}Únete ahora{% endtrans %}</button>
 													</a>
 												{% else %}
 													<a href="/session/?r={{touts[t].key.id()}}" target="_blank"> 
-														<button class="btn btn-success"><span class="glyphicon glyphicon-facetime-video"></span> Únete ahora</button>
+														<button class="btn btn-success"><span class="glyphicon glyphicon-facetime-video"></span> {% trans %}Únete ahora{% endtrans %}</button>
 													</a>
 												{% endif %}
 												</div>
 												<div class="row">
 													<a href="/teachout/cancel/{{touts[t].key.urlsafe()}}">
-														<button class="btn btn-danger" disabled="disabled" style="margin-top:6px;">Cancelar</button>
+														<button class="btn btn-danger" disabled="disabled" style="margin-top:6px;">{% trans %}Cancelar{% endtrans %}</button>
 													</a>
 												</div>
 											</div>
@@ -145,7 +145,7 @@
 					{% else %}
 						<div class="row">
 							<div class="col-md-9 col-md-offset-2 bckg-b-80">
-								<h3><span class="glyphicon glyphicon-info-sign"></span> No has agendado ninguna sesión.</h3>
+								<h3><span class="glyphicon glyphicon-info-sign"></span> {% trans %}No has agendado ninguna sesión.{% endtrans %}</h3>
 							</div>
 						</div>
 					{% endfor %}
@@ -153,7 +153,7 @@
 						{% if teacher.teachouts_expired %}
 							<div class="row">
 								<div class="col-md-9 col-md-offset-1">
-									<h2 class="font-w">Sesiones dadas</h2>
+									<h2 class="font-w">{% trans %}Sesiones dadas{% endtrans %}</h2>
 								</div>
 							</div>
 						{% endif %}
@@ -168,7 +168,7 @@
 										<div class="col-md-9">
 											<div class="row">
 												<div class="col-md-6">
-													<h4>{{m_etouts[t].area}} - Sin costo</h4>
+													<h4>{{m_etouts[t].area}} - {{m_etouts[t].cost}}</h4>
 												</div>
 												<div class="col-md-6">
 													<script type="text/javascript">
@@ -189,7 +189,7 @@
 												</div>
 												<div class="col-md-4">
 													<div class="row">
-														<button {% if m_etouts[t].status=="ok" %} class="btn btn-success" {% else %} class="btn btn-danger" {%endif %} disabled="disabled">{% if m_etouts[t].status=="ok" %} Realizada {% else %} No realizada {%endif %}</button> 
+														<button {% if m_etouts[t].status=="ok" %} class="btn btn-success" {% else %} class="btn btn-danger" {%endif %} disabled="disabled">{% if m_etouts[t].status=="ok" %} {% trans %}Realizada{% endtrans %} {% else %} {% trans %}No realizada{% endtrans %} {%endif %}</button> 
 													</div>
 												</div>
 											</div>
@@ -204,7 +204,7 @@
 					{% endif %}
 					<div class="row">
 						<div class="col-md-10 col-md-offset-1">
-							<h2 class="font-w">Sesiones recibidas</h2>
+							<h2 class="font-w">{% trans %}Sesiones recibidas{% endtrans %}</h2>
 						</div>
 					</div>
 					{% for t in user.teachouts_expired|reverse() %}
@@ -218,7 +218,7 @@
 									<div class="col-md-9">
 										<div class="row">
 											<div class="col-md-6">
-												<h4>{{etouts[t].area}} - Sin costo</h4>
+												<h4>{{etouts[t].area}} - {{etouts[t].cost}}</h4>
 											</div>
 											<div class="col-md-6">
 												<script type="text/javascript">
@@ -239,7 +239,7 @@
 											</div>
 											<div class="col-md-4">
 												<div class="row">
-													<button {% if etouts[t].status=="ok" %} class="btn btn-success" {% else %} class="btn btn-danger" {%endif %} disabled="disabled">{% if etouts[t].status=="ok" %} Realizada {% else %} No realizada {%endif %}</button> 
+													<button {% if etouts[t].status=="ok" %} class="btn btn-success" {% else %} class="btn btn-danger" {%endif %} disabled="disabled">{% if etouts[t].status=="ok" %} {% trans %}Realizada{% endtrans %} {% else %} {% trans %}No realizada{% endtrans %} {%endif %}</button> 
 												</div>
 											</div>
 										</div>
@@ -253,7 +253,7 @@
 													</div>
 												{% else %}
 													<div class="col-md-5">
-														<p><button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#review{{t.id()}}"><span class="glyphicon glyphicon-star"></span> Califica este mentor</button></p>
+														<p><button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#review{{t.id()}}"><span class="glyphicon glyphicon-star"></span> {% trans %}Califica este mentor{% endtrans %}</button></p>
 													</div>
 
 													<!-- Modal para calificación -->
@@ -262,7 +262,7 @@
 														    <div class="modal-content">
 															    <div class="modal-header">
 															    	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-															    	<h4 class="modal-title font-b" id="review{{t.id()}}label">Califica a {{ementor[t].name}}</h4>
+															    	<h4 class="modal-title font-b" id="review{{t.id()}}label">{% trans %}Califica a{% endtrans %} {{ementor[t].name}}</h4>
 															    </div>
 															    <form role="form" action="/calificar" method="post">
 															      	<div class="modal-body">
@@ -280,7 +280,7 @@
 																        				<span class="glyphicon glyphicon-star-empty star5"></span>
 															        				</h4>
 															        				<input type="hidden" name="reviewRating" class="reviewStar">
-															        				<p class="help-block">Califica de 1 a 5 tu experiencia con {{ementor[t].name}} </p>
+															        				<p class="help-block">{% trans %}Califica de 1 a 5 tu experiencia con{% endtrans %} {{ementor[t].name}} </p>
 															        				<p class="help-block has-error">{{msg}}</p>
 															        			</div>
 															        		</div>
@@ -289,8 +289,8 @@
 															        	<div class="row">
 															        		<div class="col-md-10 col-md-offset-1">
 															        			<div class="form-group">
-															        				<textarea class="form-control" rows="5" name="reviewComment" placeholder="Escribe un comentario acerca de tu experiencia con {{ementor[t].name}}"></textarea>
-															        				<p class="help-block">Tu comentario podra ser visto por los usuarios de Teachme</p>
+															        				<textarea class="form-control" rows="5" name="reviewComment" placeholder="{% trans %}Escribe un comentario acerca de tu experiencia con{% endtrans %} {{ementor[t].name}}"></textarea>
+															        				<p class="help-block">{% trans %}Tu comentario podra ser visto por los usuarios de Teachme{% endtrans %}</p>
 															        			</div>
 															        		</div>
 															        	</div>
@@ -298,7 +298,7 @@
 															      	<div class="modal-footer">
 															      		<input type="hidden" name="reviewMentor" value="{{ementor[t].key.urlsafe()}}">
 															      		<input type="hidden" name="reviewTout" value="{{t.urlsafe()}}">
-															        	<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+															        	<button type="button" class="btn btn-default" data-dismiss="modal">{% trans %}Cerrar{% endtrans %}</button>
 															        	<button type="submit" class="btn btn-primary">Calificar</button>
 															      	</div>
 														      	</form>
@@ -319,34 +319,28 @@
 					{% else %}
 						<div class="row">
 							<div class="col-md-9 col-md-offset-2 bckg-b-80">
-								<h3><span class="glyphicon glyphicon-info-sign"></span> No has agendado ninguna sesión.</h3>
+								<h3><span class="glyphicon glyphicon-info-sign"></span> {% trans %}No has agendado ninguna sesión.{% endtrans %}</h3>
 							</div>
 						</div>
 					{% endfor %}
 				</div>
 				<div class="col-md-3 bckg-b-80">
-					<h3>Tu primera sesión?</h3>
-<!-- 					<ul class="list-unstyled">
-						<li><a class="font-w" href="https://www.google.com/chrome/browser/" target="_blank"><span style="font-size:20px" class="flaticon-chrome3"></span></a><a class="font-w" href="/faq#collapse1b" target="_blank"><small class="font-w"> Ya tienes Chrome?</small></a></li>
-						<li><a class="font-w" href=""><span style="font-size:20px" class="glyphicon glyphicon-facetime-video"></span></a><a class="font-w" href="/faq" target="_blank"><small class="font-w"> Que tal funciona tu cámara?</small></a></li>
-						<li><a class="font-w" href="https://chrome.google.com/webstore/detail/ajhifddimkapgcifgcodmmfdlknahffk" target="_blank"><span style="font-size:20px" class="flaticon-online"></span></a><a class="font-w" href="/faq#collapse2b" target="_blank"><small class="font-w"> Quieres compartir tu pantalla?</small></a></li>
-						<li><a class="font-w" href=""><span style="font-size:20px" class="glyphicon glyphicon-lock"></span></a><a class="font-w" href="/faq" target="_blank"><small class="font-w"> Compra con seguridad. Teachme es 100% garantizado</small></a></li>
-					</ul> -->
+					<h3>{% trans %}Tu primera sesión?{% endtrans %}</h3>
 					<div class="row">
 						<div class="col-xs-1"><a class="font-w" href="https://www.google.com/chrome/browser/" target="_blank"><span style="font-size:20px" class="flaticon-chrome3"></span></a></div>
-						<div class="col-xs-10"><a class="font-w" href="/faq#collapse1b" target="_blank"><small class="font-w">Ya tienes Chrome?</small></a></div>
+						<div class="col-xs-10"><a class="font-w" href="/faq#collapse1b" target="_blank"><small class="font-w">{% trans %}Ya tienes Chrome?{% endtrans %}</small></a></div>
 					</div>
 					<div class="row">
 						<div class="col-xs-1"><a class="font-w" href=""><span style="font-size:20px" class="glyphicon glyphicon-facetime-video"></span></a></div>
-						<div class="col-xs-10"><a class="font-w" href="/faq#collapse1b" target="_blank"><small class="font-w"> Que tal funciona tu cámara?</small></a></div>
+						<div class="col-xs-10"><a class="font-w" href="/faq#collapse1b" target="_blank"><small class="font-w"> {% trans %}Que tal funciona tu cámara?{% endtrans %}</small></a></div>
 					</div>
 					<div class="row">
 						<div class="col-xs-1"><a class="font-w" href="https://chrome.google.com/webstore/detail/ajhifddimkapgcifgcodmmfdlknahffk" target="_blank"><span style="font-size:20px" class="flaticon-online"></span></a></div>
-						<div class="col-xs-10"><a class="font-w" href="/faq#collapse2b" target="_blank"><small class="font-w"> Quieres compartir tu pantalla?</small></a></div>
+						<div class="col-xs-10"><a class="font-w" href="/faq#collapse2b" target="_blank"><small class="font-w"> {% trans %}Quieres compartir tu pantalla?{% endtrans %}</small></a></div>
 					</div>
 					<div class="row">
 						<div class="col-xs-1"><a class="font-w" href=""><span style="font-size:20px" class="glyphicon glyphicon-lock"></span></a></div>
-						<div class="col-xs-10"><a class="font-w" href="/faq#collapse4d" target="_blank"><small class="font-w"> Compra con seguridad. Teachme es 100% garantizado</small></a></div>
+						<div class="col-xs-10"><a class="font-w" href="/faq#collapse4d" target="_blank"><small class="font-w"> {% trans %}Compra con seguridad. Teachme es 100% garantizado{% endtrans %}</small></a></div>
 					</div>
 					<br>
 				</div>

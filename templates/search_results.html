@@ -11,7 +11,7 @@
 	{% set shareHt = "sihaytrabajo" %}
 {% endif %}
 {% block description %}
-	<meta name="description" content="Conéctate online con los mejores tutores en {{query_string}} y recibe ayuda instantánea">
+	<meta name="description" content="{% trans %}Conéctate online con los mejores tutores en{% endtrans %} {{query_string}} {% trans %}y recibe ayuda instantánea{% endtrans %}">
 {% endblock %}
 {% block body %}
 <div class="backgnd" style="background-image: url('/static/signup.jpg')">
@@ -23,9 +23,9 @@
 				<h1>{{query_string}}</h1>
 				<br>
 				{% if results.number_found == 1 %}
-					Se muestra {{number_returned}} de 1 mentor encontrado
+					{% trans %}Se muestra{% endtrans %} {{number_returned}} {% trans %}de 1 mentor encontrado{% endtrans %}
 				{% else %}
-					Se muestran {{number_returned}} de {{results.number_found}} mentores encontrados
+					{% trans %}Se muestran{% endtrans %} {{number_returned}} {% trans %}de{% endtrans %} {{results.number_found}} {% trans %}mentores encontrados{% endtrans %}
 			    {% endif %}
 			    <br>
 			    <br>
@@ -45,10 +45,10 @@
 								<div class="col-md-7">
 									<a href="/teacher/{{t.key.urlsafe()}}" style="text-decoration:none;"><h3>{{t.name}} {{t.lname}}</h3>
 									<span style="color: white;">
-									<strong>Áreas:</strong> {%for area in areas %}{%for t_area in t.areas %}{%if area.key.id()==t_area %}{{area.name}}&nbsp;{% endif %}{% endfor %}{% endfor %}<br>
-									<strong>Conocimientos:</strong> {%for tag in t.tags[:8] %}{{tag}}{% if not loop.last %},&nbsp;{% endif %}{% endfor %}<br>
-				    				<strong>Ciudad:</strong> {{t.ciudad}}<br>
-				    				<strong>País:</strong> {{t.pais}}<br>
+									<strong>{% trans %}Áreas:{% endtrans %}</strong> {%for area in areas %}{%for t_area in t.areas %}{%if area.key.id()==t_area %}{{area.name}}&nbsp;{% endif %}{% endfor %}{% endfor %}<br>
+									<strong>{% trans %}Conocimientos:{% endtrans %}</strong> {%for tag in t.tags[:8] %}{{tag}}{% if not loop.last %},&nbsp;{% endif %}{% endfor %}<br>
+				    				<strong>{% trans %}Ciudad:{% endtrans %}</strong> {{t.ciudad}}<br>
+				    				<strong>{% trans %}País:{% endtrans %}</strong> {{t.pais}}<br>
 				    				<span class="glyphicon glyphicon-credit-card"></span> USD {{t.fee}}<br>
 				    				<p class="pull-left"><span class="starReviews-gray"><span class="starReviews" style="width:{{t.rating*20}}%"></span></span></p></span>
 									<p class="pull-right">{% if t.date_available|first_date %}<span class="glyphicon glyphicon-calendar"></span> {{t.date_available|first_date}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{% endif %}</p>
@@ -61,7 +61,7 @@
 				{% else %}
 					<div class="row">
 						<div class="col-md-11 col-md-offset-1">
-							<span class="glyphicon glyphicon-info-sign"></span> Opps, lo sentimos. Ayudanos a encontrar personas con este conocimiento compartiendo lo siguiente en tus redes sociales. Te lo sabremos agradecer y los usuarios de <strong>Teachme</strong> también <span class="flaticon-heart15"></span>
+							<span class="glyphicon glyphicon-info-sign"></span> {% trans %}Opps, lo sentimos. Ayudanos a encontrar personas con este conocimiento compartiendo lo siguiente en tus redes sociales. Te lo sabremos agradecer y los usuarios de{% endtrans %} <strong>Teachme</strong> {% trans %}también{% endtrans %} <span class="flaticon-heart15"></span>
 							<p class="text-center font-w">
 								<a style="font-size:37px"  href="https://www.facebook.com/dialog/share?app_id=1519397808297922&display=popup&href={{shareUrl}}&redirect_uri={{shareUrl}}" class="share-fb" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
 									<span class="flaticon-facebook29"></span>

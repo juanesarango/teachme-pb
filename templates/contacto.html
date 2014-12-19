@@ -14,32 +14,32 @@
 		<br>
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3 bckg-b-80">
-				<h3>Queremos que nos compartas tus opiniones sobre tu experiencia en Teachme. </h3> 
-				<p>Queremos mejorar para ti. Escríbenos tus preguntas, peticiones, felicitaciones o reclamos:</p>
+				<h3>{% trans %}Queremos que nos compartas tus opiniones sobre tu experiencia en Teachme.{% endtrans %}</h3> 
+				<p>{% trans %}Queremos mejorar para ti. Escríbenos tus preguntas, peticiones, felicitaciones o reclamos: {% endtrans %}</p>
 				<br>
 				<form role="form" method="post">
 					<div class="form-group">
 						<label>
-							Nombre:
+							{% trans %}Nombre{% endtrans %}:
 							<input type="text" name="name" value="{{name}}" class="form-control">
 							<p class="help-block">{{e_name}}</p>
 						</label>
 					</div>
 					<div class="form-group">
 						<label>
-							Correo:
-							<input type="email" name="email" class="form-control" value="{{email}}" placeholder="correo@dominio.com">
-							<p class="help-block">*Opcional</p>
+							{% trans %}Correo{% endtrans %}:
+							<input type="email" name="email" class="form-control" value="{{email}}" placeholder="{% trans %}correo@dominio.com{% endtrans %}">
+							<p class="help-block">*{% trans %}Opcional{% endtrans %}</p>
 						</label>
 					</div>
 					<div class="form-group">
 						<label>
-							Comentarios:
+							{% trans %}Comentarios{% endtrans %}:
 							<textarea name="text" class="form-control" rows="5">{{text}}</textarea>
 							<p class="help-block">{{e_text}}</p>
 						</label>
 					</div>
-					<button type="submit" class="btn btn-success">Enviar</button>
+					<button type="submit" class="btn btn-success">{% trans %}Enviar{% endtrans %}</button>
 					<br>
 					<br>
 				</form>
