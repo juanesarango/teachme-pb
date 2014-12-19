@@ -5,7 +5,7 @@
 {% set shareHt = "teachme" %}
 
 {% block description %}
-	<meta name="description" content="Igresa o registrate para obtener tu primera clase a 1 dólar">
+	<meta name="description" content="{% trans %}Igresa o registrate para obtener tu primera clase a 1 dólar{% endtrans %}">
 {% endblock %}
 {% block body %}
 
@@ -15,13 +15,13 @@
 		<br>
 		<div class="row">
 			<div class="col-md-4 col-md-offset-4 bckg-b-80">
-				<h3>Ingresa</h3>
+				<h3>{% trans %}Ingresa{% endtrans %}</h3>
 				<form role="form" method="post" id="login">
 					<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
 					</fb:login-button>
 					<hr>
 					<div class="form-group">
-						<label class="sr-only" for="mail">E-Mail</label>
+						<label class="sr-only" for="mail">{% trans %}Email{% endtrans %}</label>
 						<div class="input-group">
 							<div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
 							<input type="email" name="mail" value="{{mail}}" class="form-control" placeholder="email@domain.com" id="mail">
@@ -29,17 +29,17 @@
 						<p class="help-block">{{error}}</p>
 					</div>
 					<div class="form-group">
-						<label class="sr-only" for="pw">Contraseña</label>
+						<label class="sr-only" for="pw">{% trans %}Contraseña{% endtrans %}</label>
 						<div class="input-group">
 							<div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
 							<input type="password" name="pw" class="form-control" id="pw" placeholder="Password">
 						</div>
 					</div>
 					<div class="checkbox">
-						<input name="remember" type="checkbox" value="yes"> Recuérdame
+						<input name="remember" type="checkbox" value="yes">{% trans %}Recuérdame{% endtrans %}
 					</div>	
 					<input type="hidden" name="fbID" id="fbID">
-					<button type="submit" class="btn btn-success">Ingresa</button>
+					<button type="submit" class="btn btn-success">{% trans %}Ingresa{% endtrans %}</button>
 					<input type="hidden" name="redirect" value={{redirect}}>
 					<br>
 					<br>

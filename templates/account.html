@@ -1,6 +1,6 @@
 {% extends "base_main.html" %}
 
-{% set title = "Cuenta de " + user.name %}
+{% set title = user.name %}
 
 {% block body %}
 <link rel="stylesheet" href="/static/css/intlTelInput.css">
@@ -13,57 +13,57 @@
 				<div class="col-md-10 col-md-offset-1">
 					<br>
 					<img style= "" class="img-circle img-100 center-block" {% if user.profile_pic_r %}src="{{user.profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}>
-					<h1 class="text-center">Mi Cuenta</h1>
+					<h1 class="text-center">{% trans %}Mi Cuenta{% endtrans %}</h1>
 					<br>
 					<form role="form" method="post" class="form-horizontal">
 						<div class="form-group">
-							<label for="name" class="col-sm-3 control-label">Nombre</label>
+							<label for="name" class="col-sm-3 control-label">{% trans %}Nombre{% endtrans %}</label>
 							<div class="col-sm-7">
 								<input type="text" id="name" class="form-control" value="{{user.name}}" name="name">
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="lname" class="col-sm-3 control-label">Apellidos</label>
+							<label for="lname" class="col-sm-3 control-label">{% trans %}Apellidos{% endtrans %}</label>
 							<div class="col-sm-7">
 								<input type="text" id="lname" class="form-control" value="{{user.lname}}" name="lname">
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="name" class="col-sm-3 control-label">Correo</label>
+							<label for="name" class="col-sm-3 control-label">{% trans %}Correo{% endtrans %}</label>
 							<div class="col-sm-7">
 								<input type="email" id="mail" class="form-control" value="{{user.mail}}" disabled name="mail">
 							</div>
 						</div>
 						{% if not user.fbID %}
 							<div class="form-group">
-								<label for="oldpw" class="col-sm-3 control-label">Contraseña anterior</label>
+								<label for="oldpw" class="col-sm-3 control-label">{% trans %}Contraseña anterior{% endtrans %}</label>
 								<div class="col-sm-7">
 									<input type="password" id="oldpw" class="form-control" name="oldpw">
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="newpw" class="col-sm-3 control-label">Nueva contraseña</label>
+								<label for="newpw" class="col-sm-3 control-label">{% trans %}Nueva contraseña{% endtrans %}</label>
 								<div class="col-sm-7">
 									<input type="password" id="newpw" class="form-control" name="newpw">
 								</div>
 							</div>
 						{% endif %}
 						<div class="form-group">
-							<label for="name" class="col-sm-3 control-label">Móvil</label>
+							<label for="name" class="col-sm-3 control-label">{% trans %}Móvil{% endtrans %}</label>
 							<div class="col-sm-7">
 								<input type="tel" id="movil" class="form-control" {% if user.movil %}value="+{{user.movil}}"{% endif %} name="movil">
-								<p class="help-block">Tu número de celular sólo se utilizará para enviarte notificaciones de tus sesiones.</p>
+								<p class="help-block">{% trans %}Tu número de celular sólo se utilizará para enviarte notificaciones de tus sesiones.{% endtrans %}</p>
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="update" class="col-sm-3 control-label">Actualizaciones</label>
+							<label for="update" class="col-sm-3 control-label">{% trans %}Actualizaciones{% endtrans %}</label>
 							<div class="col-sm-7">
 								<div class="checkbox">
-									<input type="checkbox" id="update" value="update" checked="true" name="update"> Envíame actualizaciones ocasionales de Teachme
+									<input type="checkbox" id="update" value="update" checked="true" name="update">{% trans %}Envíame actualizaciones ocasionales de Teachme{% endtrans %}
 								</div>
 							</div>
 						</div>
-						<button type="submit" class="btn btn-success center-block"><span class="glyphicon glyphicon-floppy-disk"></span> Actualizar datos</button>
+						<button type="submit" class="btn btn-success center-block"><span class="glyphicon glyphicon-floppy-disk"></span> {% trans %}Actualizar datos{% endtrans %}</button>
 						<br>
 					</form>
 				</div>

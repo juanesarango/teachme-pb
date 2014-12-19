@@ -59,13 +59,13 @@
 								{% endfor %}
 							{% else %}
 								<div class="row chatpreview">
-									<p align="center">Aún no tienes conversaciones</p>
+									<p align="center">{% trans %}Aún no tienes conversaciones{% endtrans %}</p>
 								</div>
 							{% endif %}
 							</div>
 						</div>
 						<div class="col-md-6 col-md-offset-1">
-							<h4 align="center">&nbsp;&nbsp;&nbsp;&nbsp;<strong>Conversación</strong></h4>
+							<h4 align="center">&nbsp;&nbsp;&nbsp;&nbsp;<strong>{% trans %}Conversación{% endtrans %}</strong></h4>
 							<div id="chatbox">
 							{% if chats %}
 								<div class="row" id="chatwindow">
@@ -85,7 +85,7 @@
 										      	<input type="hidden" name="n" value={{number}}>
 										    </div>
 										    <div class="col-md-4">
-										      	<button type="submit" class="btn btn-primary">Enviar Mensaje</button>
+										      	<button type="submit" class="btn btn-primary">{% trans %}Enviar{% endtrans %}</button>
 										    </div>
 										</div>
 									</form>
@@ -101,7 +101,7 @@
 										      	<textarea disabled rows="1" class="form-control" style="resize:none" name="mensaje" placeholder="Redactar nuevo mensaje"></textarea>
 										    </div>
 										    <div class="col-md-4">
-										      	<button disabled type="submit" class="btn btn-info">Enviar Mensaje</button>
+										      	<button disabled type="submit" class="btn btn-info">{% trans %}Enviar{% endtrans %}</button>
 										    </div>
 										</div>
 									</form>

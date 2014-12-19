@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block description %}
-	<meta name="description" content="Conéctate online con tutores en {{area.name}} y recibe ayuda instantánea. Tu primera clase a 1 dólar!">
+	<meta name="description" content="{% trans %}Conéctate online con tutores en{% endtrans %} {{area.name}} {% trans %}y recibe ayuda instantánea. Tu primera clase a 1 dólar{% endtrans %}!">
 {% endblock %}
 
 {% block body %}
@@ -22,7 +22,7 @@
 					<div class="row">
 						<div class="col-md-12" style="padding:20px;">
 							<h1>{{area.name}}</h1>
-							<h2 style="font-size: 16px; color: white;">Estás buscando tutores en línea en {{area.name}}? o estás buscando tutorías semanales en {{area.name}}? <strong>Teachme</strong> es la solución para ti.</h2>
+							<h2 style="font-size: 16px; color: white;">{% trans %}Estás buscando tutores en línea en{% endtrans %} {{area.name}}? {% trans %}o estás buscando tutorías semanales en{% endtrans %} {{area.name}}? <strong>Teachme</strong> {% trans %}es la solución para ti{% endtrans %}.</h2>
 						</div>
 					</div>
 					<br>
@@ -64,7 +64,7 @@
 								<div class="col-md-8">
 									<a href="/teacher/{{t.key.urlsafe()}}"><h3>{{t.name}} {{t.lname}}</h3></a>
 									<p>{{t.about|truncate(170, True)}}</p>
-									<p class="pull-left"><span class="glyphicon glyphicon-credit-card"></span> {{t.fee}} USD por hora</p>
+									<p class="pull-left"><span class="glyphicon glyphicon-credit-card"></span> {{t.fee}} USD {% trans %}por hora{% endtrans %}</p>
 									<p class="pull-right">{% if t.date_available|first_date %}<span class="glyphicon glyphicon-calendar"></span> {{t.date_available|first_date}}{% endif %}</p>
 								</div>
 							</div>
@@ -72,7 +72,7 @@
 						{% else %}
 							<div class="row">
 								<div class="col-md-6 col-md-offset-3 bckg-b-80">
-									<h3><span class="glyphicon glyphicon-info-sign"></span> Lo sentimos. Estamos trabajando para traerte a los mejores mentores en esta área.</h3>
+									<h3><span class="glyphicon glyphicon-info-sign"></span> {% trans %}Lo sentimos. Estamos trabajando para traerte a los mejores mentores en esta área{% endtrans %}.</h3>
 								</div>
 							</div>
 						{% endfor %}

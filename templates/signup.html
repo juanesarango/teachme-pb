@@ -12,52 +12,52 @@
 		<br>
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3 bckg-b-80">
-				<h3>Regístrate desde ya en Teachme y llénate de conocimiento</h3>
+				<h3>{% trans %}Regístrate desde ya en Teachme y llénate de conocimiento{% endtrans %}</h3>
 				<form role="form" method="post" id="signupForm">
 					<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
 					</fb:login-button>
-					<h5>O tambien puedes registrarte con tu correo:</h5>
+					<h5>{% trans %}O tambien puedes registrarte con tu correo:{% endtrans %}</h5>
 					<div class="form-group">
-						<label class="sr-only" for="name">Nombre</label>
+						<label class="sr-only" for="name">{% trans %}Nombre{% endtrans %}</label>
 						<div class="input-group">
 							<div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-							<input type="text" name="name" value="{{name}}" class="form-control" placeholder="Ingresa tu nombre" id="name">
+							<input type="text" name="name" value="{{name}}" class="form-control" placeholder="{% trans %}Ingresa tu nombre{% endtrans %}" id="name">
 						</div>
 						<p class="help-block">{{error_name}}</p>
 					</div>
 					<div class="form-group">
-						<label class="sr-only" for="lname">Apellidos</label>
+						<label class="sr-only" for="lname">{% trans %}Apellidos{% endtrans %}</label>
 						<div class="input-group">
 							<div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-							<input type="text" name="lname" value="{{lname}}" class="form-control" placeholder="Ingresa tus apellidos" id="lname">
+							<input type="text" name="lname" value="{{lname}}" class="form-control" placeholder="{% trans %}Ingresa tus apellidos{% endtrans %}" id="lname">
 						</div>
 						<p class="help-block">{{error_lame}}</p>
 					</div>
 					<div class="form-group">
-						<label class="sr-only" for="mail">E-Mail</label>
+						<label class="sr-only" for="mail">{% trans %}Email{% endtrans %}</label>
 						<div class="input-group">
 							<div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
-							<input type="email" name="mail" value="{{mail}}" class="form-control" placeholder="email@domain.com" id="mail">
+							<input type="email" name="mail" value="{{mail}}" class="form-control" placeholder="{% trans %}correo@dominio.com{% endtrans %}" id="mail">
 						</div>
 						<p class="help-block">{{error_mail}}</p>
 					</div>
 					<div class="form-group">
-						<label class="sr-only" for="pw">Contraseña</label>
+						<label class="sr-only" for="pw">{% trans %}Contraseña{% endtrans %}</label>
 						<div class="input-group">
 							<div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
-							<input type="password" name="pw" class="form-control" id="pw" placeholder="Ingresa tu password">
+							<input type="password" name="pw" class="form-control" id="pw" placeholder="{% trans %}Ingresa tu contraseña{% endtrans %}">
 						</div>
 						<p class="help-block">{{error_pw}}</p>
 					</div>
 					<div class="form-group">
-						<label class="sr-only" for="pwcon">Confirmar contraseña</label>
+						<label class="sr-only" for="pwcon">{% trans %}Confirmar contraseña{% endtrans %}</label>
 						<div class="input-group">
 							<div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
-							<input type="password" name="pwcon" class="form-control" id="pwcon" placeholder="Confirma tu password">
+							<input type="password" name="pwcon" class="form-control" id="pwcon" placeholder="{% trans %}Confirma tu contraseña{% endtrans %}">
 						</div>
 						<p class="help-block">{{error_pwcon}}</p>
 					</div>
-					<button type="submit" class="btn btn-success">Registrate</button>
+					<button type="submit" class="btn btn-success">{% trans %}Registrate{% endtrans %}</button>
 					<input type="hidden" name="redirect" value={{redirect}}>
 					<input type="hidden" name="timezoneOffset" id="timezoneOffset">
 					<input type="hidden" name="gender" id="gender">

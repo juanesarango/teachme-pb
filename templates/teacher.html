@@ -5,7 +5,7 @@
 {% set shareHt = "teachme" %}
 
 {% block description %}
-	<meta name="description" content="{{mentor.name}} {{mentor.lname}} te puede ayudar en temas como {% for a in t_areas %}{{a.name}}{% if not loop.last %}, {% else %}.{% endif %}{% endfor %}">
+	<meta name="description" content="{{mentor.name}} {{mentor.lname}} {% trans %}te puede ayudar en temas como{% endtrans %} {% for a in t_areas %}{{a.name}}{% if not loop.last %}, {% else %}.{% endif %}{% endfor %}">
 {% endblock %}
 {% block body %}
 
@@ -13,7 +13,7 @@
 		{% if flag == "FAILED" %}   
 			<div class="alert alert-danger alert-dismissible" role="alert" style="position: absolute; margin-left: 10%; width:80%;z-index: 2;">
 				<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true" >&times;</span><span class="sr-only">Cerrar</span></button>
-				<strong>Transacción fallida!</strong> Tus datos de pago no fueron procesados con éxito. Inténtalo nuevamente.
+				<strong>{% trans %}Transacción fallida!{% endtrans %}</strong> {% trans %}Tus datos de pago no fueron procesados con éxito. Inténtalo nuevamente.{% endtrans %}
 			</div>
 		{%endif %}
 		<div class="container">
@@ -21,7 +21,7 @@
 				<br>
 				<div class="col-md-10 col-md-offset-1 bckg-w-80">
 					<div class="share-mentor">
-						<p class="text-center">Compárteme <!-- <span class="flaticon-heart15"></span> -->
+						<p class="text-center">{% trans %}Compárteme{% endtrans %} 
 							<a style="font-size:27px"  href="https://www.facebook.com/dialog/share?app_id=1519397808297922&display=popup&href={{shareUrl}}&redirect_uri={{shareUrl}}" class="share-fb" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
 								<span class="flaticon-facebook29"></span>
 							</a>
@@ -50,9 +50,9 @@
 								</div>
 							</div>
 							<div class="row">
-								<button class="btn btn-success" type="button" id="buttonBooking" data-toggle="modal" data-target="#modalBooking"><span class="glyphicon glyphicon-calendar"></span>&nbsp;Agenda una hora</button>
+								<button class="btn btn-success" type="button" id="buttonBooking" data-toggle="modal" data-target="#modalBooking"><span class="glyphicon glyphicon-calendar"></span> {% trans %}Agenda una hora{% endtrans %}</button>
 							</div>
-							<p><span class="glyphicon glyphicon-credit-card"></span> {{mentor.fee}} USD por hora</p>
+							<p><span class="glyphicon glyphicon-credit-card"></span> {{mentor.fee}} {% trans %}USD por hora{% endtrans %}</p>
 						</div>
 						<!-- Start Booking Modal -->
 						<div class="modal fade" id="modalBooking" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -60,25 +60,25 @@
 						  		<form role="form" method="post" id="schedule-form">
 							    	<div class="modal-content">
 							      		<div class="modal-header">
-							        		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span></button>
-							        		<h4 class="modal-title" id="myModalLabel">Horarios Disponibles</h4>
+							        		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{% trans %}Cerrar{% endtrans %}</span></button>
+							        		<h4 class="modal-title" id="myModalLabel">{% trans %}Horarios Disponibles{% endtrans %}</h4>
 							      		</div>
 							      		<div class="modal-body">  	
 											<div class="row">
 												<div class="col-md-4 col-md-offset-1" style="padding:0px;">
-													<label>Agenda libre</label>
+													<label>{% trans %}Agenda libre{% endtrans %}</label>
 													<div class="calendario">
 													</div>
 												</div>
 												<div class="col-md-3" style="padding-left:0px;">
-													<label>Horas disponibles</label>
+													<label>{% trans %}Horas disponibles{% endtrans %}</label>
 													<div id="horas">
 													</div>
 												</div>
 												<div class="col-md-3">
 													<div class="row">
 														<div class="form-group">
-															<label for="t-select-area">Área</label>
+															<label for="t-select-area">{% trans %}Área{% endtrans %}</label>
 															<select name ="select-area" class="form-control" id="t-select-area" required>
 																{% for a in t_areas %}
 																	<option value= "{{a.name}}">{{a.name}}</option>
@@ -88,8 +88,8 @@
 													</div>
 													<div class="row">
 														<div class="form-group">
-															<label for="t-temas">Temas de la sesión</label>
-															<textarea name="tema" class="form-control" id="t-temas" rows="7" placeholder="Aprovecha este espacio para comunicarle al mentor los temas que quisieras abordar durante la sesión." required></textarea>
+															<label for="t-temas">{% trans %}Temas de la sesión{% endtrans %}</label>
+															<textarea name="tema" class="form-control" id="t-temas" rows="7" placeholder="{% trans %}Aprovecha este espacio para comunicarle al mentor los temas que quisieras abordar durante la sesión.{% endtrans %}" required></textarea>
 														</div>
 													</div>
 												</div>
@@ -100,22 +100,22 @@
 													<h6 id="error-tema" style="color: red" align="center"></h6>
 													<h6 id="error-hora" style="color: red" align="center"></h6>
 													{% if fechas|length == 0 %}
-														<h5 align="center">El mentor no ha configurado horas disponibles&nbsp;<br>
-														<a href="#" data-toggle="modal" data-target="#modalMsg"><span class="glyphicon glyphicon-comment"></span> Envíale un mensaje</a> para proponerle una hora</h5>
+														<h5 align="center">{% trans %}El mentor no ha configurado horas disponibles{% endtrans %}<br>
+														<a href="#" data-toggle="modal" data-target="#modalMsg"><span class="glyphicon glyphicon-comment"></span> {% trans %}Envíale un mensaje{% endtrans %}</a> {% trans %}para proponerle una hora{% endtrans %}</h5>
 													{% else %}
-														<h5 align="center">Ninguna hora te satisface?&nbsp;
-														<a href="#" data-toggle="modal" data-target="#modalMsg"><span class="glyphicon glyphicon-comment"></span> Envíale un mensaje</a> para proponerle una hora</h5>
+														<h5 align="center">{% trans %}Ninguna hora te satisface?{% endtrans %}
+														<a href="#" data-toggle="modal" data-target="#modalMsg"><span class="glyphicon glyphicon-comment"></span> {% trans %}Envíale un mensaje{% endtrans %}</a> {% trans %}para proponerle una hora{% endtrans %}</h5>
 													{% endif %}
 												</div>
 											</div>
 							      		</div>
 							      		<div class="modal-footer">
-											<button type="button" class="btn btn-default" data-dismiss="modal">Atrás</button>
+											<button type="button" class="btn btn-default" data-dismiss="modal">{% trans %}Atrás{% endtrans %}</button>
 											{% if mentor.fee > 0 %}
-												<button class="btn btn-success pull-right" type="button" data-toggle="modal" data-target="#modalPayment" id="buttonSchedule" disabled="false"><span class="glyphicon glyphicon-calendar"></span>&nbsp;Agendar</button>
+												<button class="btn btn-success pull-right" type="button" data-toggle="modal" data-target="#modalPayment" id="buttonSchedule" disabled="false"><span class="glyphicon glyphicon-calendar"></span> {% trans %}Agendar{% endtrans %}</button>
 											{% else %}
 												<input type="hidden" name="metodo_pago" value="GRATIS">
-												<button class="btn btn-success pull-right" type="submit" id="buttonSchedule" disabled="false"><span class="glyphicon glyphicon-calendar"></span>&nbsp;Agendar</button>
+												<button class="btn btn-success pull-right" type="submit" id="buttonSchedule" disabled="false"><span class="glyphicon glyphicon-calendar"></span>{% trans %}Agendar{% endtrans %}</button>
 											{% endif %}
 							      		</div>
 							    	</div>
@@ -125,25 +125,25 @@
 						<div class="col-md-7">
 							<h1>{{mentor.name}}&nbsp;<small>{{mentor.lname}}</small></h1>
 							<br>
-							<h4><small>Acerca</small></h4>
+							<h4><small>{% trans %}Acerca{% endtrans %}</small></h4>
 							<p class="text-justify">{{mentor.about}}</p>
 						</div>
 					</div>
 					<hr style="margin-top:0px;">
 					<div class="row">
 						<div class="col-md-3 col-md-offset-1" id="teacher-data">
-							<h4><small>Ciudad:</small> {{mentor.ciudad}}</h4>
-							<h4><small>País:</small> {{mentor.pais}}</h4>
-							<h4><small>Redes Sociales:   </small>{% if mentor.linkedin %}<a href="{{mentor.linkedin}}" target="_blank"><span class="flaticon-linkedin7" style="color: #4875B4; font-size:25px;"></span></a>{% endif %}</h4>
+							<h4><small>{% trans %}Ciudad:{% endtrans %}</small> {{mentor.ciudad}}</h4>
+							<h4><small>{% trans %}País:{% endtrans %}</small> {{mentor.pais}}</h4>
+							<h4><small>{% trans %}Redes Sociales:{% endtrans %}   </small>{% if mentor.linkedin %}<a href="{{mentor.linkedin}}" target="_blank"><span class="flaticon-linkedin7" style="color: #4875B4; font-size:25px;"></span></a>{% endif %}</h4>
 						</div>
 						<div class="col-md-3">
-							<h4><small>Áreas del conocimiento</small></h4>
+							<h4><small>{% trans %}Áreas del conocimiento{% endtrans %}</small></h4>
 							{% for a in t_areas %}
 								<h4>{{a.name}}</h4>
 							{% endfor %}
 						</div>
 						<div class="col-md-4">
-							<h4 for="tags"><small>Conocimientos y habilidades</small></h4>
+							<h4 for="tags"><small>{% trans %}Conocimientos y habilidades{% endtrans %}</small></h4>
 							{% for a in mentor.tags %}
 								<div class="tagbox">{{a}}</div>
 							{% endfor %}
@@ -155,16 +155,16 @@
 					    <div class="modal-content">
 					      <div class="modal-header">
 					        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-					        <h4 class="modal-title"><img class="img-circle img-60" {% if mentor.profile_pic_r %}src="{{mentor.profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}>&nbsp;&nbsp;&nbsp;&nbsp;Mensaje para {{mentor.name}} {{mentor.lname}}:</h4>
+					        <h4 class="modal-title"><img class="img-circle img-60" {% if mentor.profile_pic_r %}src="{{mentor.profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}>&nbsp;&nbsp;&nbsp;{% trans %}Mensaje para{% endtrans %} {{mentor.name}} {{mentor.lname}}:</h4>
 					      </div>
 					      <div class="modal-body">
 					        <form method="post" action="/msg2mentor" role="form">
-								<textarea name="message" class="form-control" id="t-message" rows="3" placeholder="Solicítale una hora al tutor que se ajuste a tu horario, o pregúntale algo que quieras saber sobre él, antes de agendar." required></textarea>
+								<textarea name="message" class="form-control" id="t-message" rows="3" placeholder="{% trans %}Solicítale una hora al tutor que se ajuste a tu horario, o pregúntale algo que quieras saber sobre él, antes de agendar.{% endtrans %}" required></textarea>
 								<input type="hidden" name="teacher_key" value="{{mentor.key.urlsafe()}}">
 					      </div>
 					      <div class="modal-footer">
-					        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-					        <button type="submit" class="btn btn-success">Enviar mensaje</button>
+					        <button type="button" class="btn btn-default" data-dismiss="modal">{% trans %}Cancelar{% endtrans %}</button>
+					        <button type="submit" class="btn btn-success">{% trans %}Enviar mensaje{% endtrans %}</button>
 							</form>	
 					      </div>
 					    </div><!-- /.modal-content -->
@@ -179,7 +179,7 @@
 								<form role="form" method="post" id="payment-form">
 							  		<div class="modal-header">
 										<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-										<h4 class="modal-title font-b inline" id="myModalLabel" >Recibimos todas las tarjetas de crédito</h4>
+										<h4 class="modal-title font-b inline" id="myModalLabel" >{% trans %}Recibimos todas las tarjetas de crédito{% endtrans %}</h4>
 										<img src="/static/img/creditcards.png" class="img-responsive inline">
 							  		</div>
 									<div class="modal-body font-b">
@@ -187,7 +187,7 @@
 										<div class="form-group">
 											<div class="input-group">
 												<div class="input-group-addon"><span class="glyphicon glyphicon-credit-card"></span></div>
-												<input type="text" data-stripe="number" class="form-control" id="paymentCard" placeholder="Número de tarjeta">
+												<input type="text" data-stripe="number" class="form-control" id="paymentCard" placeholder="{% trans %}Número de tarjeta{% endtrans %}">
 												<div class="input-group-addon"><span id="cardType"></span></div>
 											</div>
 										</div>
@@ -221,17 +221,17 @@
 										<div class="row">
 											<div class="col-md-10 col-md-offset-1">
 												<p class="text-justify">
-													En Teachme trabajamos con las mejores tecnologías de pagos por internet. Nuestro proveedor de pagos es <a href="https://stripe.com/" target="_blank">Stripe</a>, compañía en la cual inversores como <a href="http://es.wikipedia.org/wiki/Sequoia_Capital" title="Son los inversores de grandes empresas como Apple, Google..." target="_blank">Sequoia Capital</a> han puesto su confianza. Puedes estar tranquilo al realizar tu pago con nosotros por medio de Stripe.
+													{% trans %}En Teachme trabajamos con las mejores tecnologías de pagos por internet. Nuestro proveedor de pagos es{% endtrans %} <a href="https://stripe.com/" target="_blank">Stripe</a>, {% trans %}compañía en la cual inversores como{% endtrans %} <a href="http://es.wikipedia.org/wiki/Sequoia_Capital" title="{% trans %}Son los inversores de grandes empresas como Apple, Google...{% endtrans %}" target="_blank">Sequoia Capital</a> {% trans %}han puesto su confianza. Puedes estar tranquilo al realizar tu pago con nosotros por medio de Stripe.{% endtrans %}
 												</p>
 												<a href="https://stripe.com/" target="_blank"><img src="/static/img/poweredStripe.png"></a>
 											</div>
 										</div>
 										<div class="row">
 											<div class="col-md-10 col-md-offset-1">
-												<h5>Profesor: {{mentor.name}}&nbsp;{{mentor.lname}}</h5>
-												<h5>Detalle: Una sesión de <span id="tema-factura"></span> en TeachMe</h5>
-												<h5>Pago:{{mentor.fee}} USD</h5>
-												<h5>Horas: 1</h5>
+												<h5>{% trans %}Experto:{% endtrans %} {{mentor.name}}&nbsp;{{mentor.lname}}</h5>
+												<h5>{% trans %}Detalle: Una sesión de{% endtrans %} <span id="tema-factura"></span></h5>
+												<h5>{% trans %}Total:{% endtrans %}{{mentor.fee}} USD</h5>
+												<h5>{% trans %}Horas:{% endtrans %} 1</h5>
 											</div>
 										</div>
 									</div>
@@ -239,8 +239,8 @@
 									<br>
 									<br>
 									<div class="modal-footer">
-										<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-										<button type="submit" class="btn btn-primary" value="Submit">Procesar Pago</button>
+										<button type="button" class="btn btn-default" data-dismiss="modal">{% trans %}Cerrar{% endtrans %}</button>
+										<button type="submit" class="btn btn-primary" value="Submit">{% trans %}Procesar Pago{% endtrans %}</button>
 									</div>
 								</form>
 							</div>
@@ -257,7 +257,7 @@
 				<div class="col-md-5 col-md-offset-1 bckg-w-80">
 					<div class="row">
 						<div class="col-md-10 col-md-offset-1">
-							<h4>Qué piensan los usuarios de {{mentor.name}}</h4>
+							<h4>{% trans %}Qué piensan los usuarios de{% endtrans %} {{mentor.name}}</h4>
 							<span class="starReviews-gray"><span class="starReviews" style="width:{{mentor.rating*20}}%"></span></span><span> </span><span class="glyphicon glyphicon-comment"></span><span> {{mentor.reviews}}</span>
 						</div>
 					</div>
