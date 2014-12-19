@@ -91,6 +91,7 @@ class Handler(webapp2.RequestHandler):
         params['areas'] = self.areas
         params['suggestions'] = json.dumps(suggestions)
         params['shareUrl'] = self.request.url
+        params['language'] = _('language')
         return render_str(template, **params)
 
     def render(self, template, **kw):
@@ -131,7 +132,6 @@ class Handler(webapp2.RequestHandler):
 
 class MainPage(Handler):
     def get(self):
-        language = _('language')
         al = self.request.get('m')
         if al:
             alert = fns.alert(int(al))
@@ -141,7 +141,7 @@ class MainPage(Handler):
         mentors = {}
         for a in areas:
             mentors[a.key.id()] = teachme_db.teacher.query(ndb.AND(teachme_db.teacher.areas == a.key.id(), teachme_db.teacher.aceptado == True)).order(-teachme_db.teacher.rating).fetch(3)
-        self.render("main_page.html", mentors=mentors, alert=alert, language=language)
+        self.render("main_page.html", mentors=mentors, alert=alert)
 
 
 class signup(Handler):

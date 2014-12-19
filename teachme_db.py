@@ -46,6 +46,7 @@ class teacher(ndb.Model):
 
     rating = ndb.FloatProperty()
     reviews = ndb.IntegerProperty()
+    score = ndb.FloatProperty()
 
     aceptado = ndb.BooleanProperty()
 
