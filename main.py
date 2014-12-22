@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
 import webapp2
-import jinja2
 import urllib
 import datetime
 import json
@@ -11,126 +10,22 @@ from google.appengine.ext import blobstore
 from google.appengine.ext.webapp import blobstore_handlers
 from google.appengine.api import mail
 from google.appengine.api import images
+
 import teachme_db
 import teachme_index
 import fns
 import booking
 import logging
 import stripe
+import jinja_fns
 
-from webapp2_extras import i18n
-from webapp2_extras.i18n import gettext as _
-# from google.appengine.ext.webapp.util import run_wsgi_app
-
-########################################################################
-#Definiciones de Jinja2 para los templates
-template_dir = os.path.join(os.path.dirname(__file__), 'templates')
-jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir), extensions=['jinja2.ext.i18n'], autoescape=True)
-jinja_env.install_gettext_translations(i18n)
-jinja_env.filters['first_date'] = fns.first_date
-jinja_env.filters['datetimeformat'] = fns.datetimeformat
-jinja_env.filters['datetimeformatchat'] = fns.datetimeformatchat
-
-# jinja2 config with i18n enabled
-config = {'webapp2_extras.jinja2': {'template_path': 'templates', 'environment_args': {'extensions': ['jinja2.ext.i18n']}}}
-AVAILABLE_LOCALES = ['es_ES', 'en_US']
+from helpers import MentorHelper
+from controllers import BaseController
+from controllers import SuraController
+from random import shuffle
 
 
-def render_str(template, **params):
-    j = jinja_env.get_template(template)
-    return j.render(params)
-
-#########################################################################
-# Handler Principal
-
-
-class Handler(webapp2.RequestHandler):
-
-    def __init__(self, request, response):
-        self.initialize(request, response)
-        # first, try and set locale from cookie
-        locale = request.cookies.get('locale')
-        logging.error('COOKIES_LOCALE')
-        logging.error(locale)
-        if locale in AVAILABLE_LOCALES:
-            i18n.get_i18n().set_locale(locale)
-            logging.error('PUT LOCALE FROM COOKIES')
-        else:
-            # if that failed, try and set locale from accept language header
-            header = request.headers.get('Accept-Language', '')  # e.g. en-gb,en;q=0.8,es-es;q=0.5,eu;q=0.3
-            locales = [locale.split(';')[0] for locale in header.split(',')]
-            for locale in locales:
-                if locale in AVAILABLE_LOCALES:
-                    i18n.get_i18n().set_locale(locale)
-                    logging.error('PUT LOCALE FROM HEADER')
-                    break
-            else:
-                # if still no locale set, use the first available one
-                i18n.get_i18n().set_locale(AVAILABLE_LOCALES[0])
-
-    @webapp2.cached_property
-    def jinja2(self):
-        return jinja2.get_jinja2(app=self.app)
-
-    def write(self, *a, **kw):
-        self.response.out.write(*a, **kw)
-
-    def render_str(self, template, **params):
-        suggestions = []
-        self.areas = teachme_db.areas.query().order(teachme_db.areas.name)
-        for l in self.areas:
-            suggestions.append(l.name)
-        teachers = teachme_db.teacher.query().order(teachme_db.teacher.name)
-        for l in teachers:
-            suggestions.append(l.name+" "+l.lname)
-        tags = teachme_db.tags.query().get().name if teachme_db.tags.query().get() else []
-        for l in tags:
-            suggestions.append(l)
-        params['user'] = self.user
-        params['teacher'] = self.teacher
-        params['areas'] = self.areas
-        params['suggestions'] = json.dumps(suggestions)
-        params['shareUrl'] = self.request.url
-        params['language'] = _('language')
-        return render_str(template, **params)
-
-    def render(self, template, **kw):
-        self.write(self.render_str(template, **kw))
-
-    def set_secure_cookie(self, name, val):
-        cookie_val = fns.make_secure_val(val)
-        if self.request.get("remember") == "yes":
-            next_month = (datetime.datetime.now() + datetime.timedelta(days=30)).strftime('%a, %d %b %Y %H:%M:%S GMT')
-            self.response.headers.add_header('Set-Cookie', '%s=%s; Path=/; expires= %s' % (name, cookie_val, next_month))
-        else:
-            tomorrow = (datetime.datetime.now() + datetime.timedelta(days=1)).strftime('%a, %d %b %Y %H:%M:%S GMT')
-            self.response.headers.add_header('Set-Cookie', '%s=%s; Path=/; expires= %s' % (name, cookie_val, tomorrow))
-
-    def read_secure_cookie(self, name):
-        cookie_val = self.request.cookies.get(name)
-        return cookie_val and fns.check_secure_val(cookie_val)
-
-    def login(self, user, teacher):
-        self.set_secure_cookie('usi', str(user.key.urlsafe()))
-        if teacher:
-            self.set_secure_cookie('tei', str(teacher.key.urlsafe()))
-
-    def logout(self):
-        self.response.headers.add_header("Set-Cookie", "usi=; Path=/")
-        self.response.headers.add_header("Set-Cookie", "tei=; Path=/")
-
-    def initialize(self, *a, **kw):
-        webapp2.RequestHandler.initialize(self, *a, **kw)
-        ukey = self.read_secure_cookie("usi")
-        tkey = self.read_secure_cookie("tei")
-        self.user = ukey and ndb.Key(urlsafe=ukey).get()
-        self.teacher = tkey and ndb.Key(urlsafe=tkey).get()
-
-#########################################################################
-#Pagina principal
-
-
-class MainPage(Handler):
+class MainPage(BaseController):
     def get(self):
         al = self.request.get('m')
         if al:
@@ -140,11 +35,13 @@ class MainPage(Handler):
         areas = teachme_db.areas.query().order(teachme_db.areas.name)
         mentors = {}
         for a in areas:
-            mentors[a.key.id()] = teachme_db.teacher.query(ndb.AND(teachme_db.teacher.areas == a.key.id(), teachme_db.teacher.aceptado == True)).order(-teachme_db.teacher.rating).fetch(3)
+            mentors[a.key.id()] = teachme_db.teacher.query(ndb.AND(teachme_db.teacher.areas == a.key.id(), teachme_db.teacher.aceptado == True, teachme_db.teacher.profile_pic != None)).fetch()
+            # MentorHelper.sort_mentors(mentors[a.key.id()])
+            shuffle(mentors[a.key.id()])
         self.render("main_page.html", mentors=mentors, alert=alert)
 
 
-class signup(Handler):
+class signup(BaseController):
     def get(self):
         redirect = self.request.get('redirect')
         if not redirect:
@@ -186,7 +83,7 @@ class signup(Handler):
                 u.put()
                 subject = u.name + u", Bienvenido a Teachme"
                 enlace = "https://www.teachmeapp.com/user/verify/?r=" + u.key.urlsafe()
-                html = render_str("mail_template.html", sujeto=u.name, enlace=enlace)
+                html = self.render_str("mail_template.html", sujeto=u.name, enlace=enlace)
                 mail.send_mail("TeachMe <info@teachmeapp.com>", u.mail, subject, "", html=html)
                 self.login(u, None)
                 if not redirect:
@@ -194,7 +91,7 @@ class signup(Handler):
                 self.redirect(redirect)
 
 
-class login(Handler):
+class login(BaseController):
     def get(self):
         redirect = self.request.get('redirect')
         if not redirect:
@@ -222,13 +119,13 @@ class login(Handler):
             self.render("login.html", error=msg, redirect=redirect)
 
 
-class logout(Handler):
+class logout(BaseController):
     def get(self):
         self.logout()
         self.redirect('/')
 
 
-class teacher(Handler):
+class teacher(BaseController):
     def get(self, id):
         try:
             mentor = ndb.Key(urlsafe=str(id)).get()
@@ -280,7 +177,7 @@ class teacher(Handler):
                     # Set your secret key: remember to change this to your live secret key in production: https://dashboard.stripe.com/account
                     stripe.api_key = "sk_live_4UNYyvnaDMGTjlidSqmDbuVm"
                     token = self.request.get("stripeToken")
-                    logging.info(token)
+                    # logging.info(token)
                     # Create the charge on Stripe's servers - this will charge the user's card
                     try:
                         amount = teacher_key.fee*100
@@ -332,8 +229,8 @@ class teacher(Handler):
                     booking.notify_sms(teacher_key, self.user, 0, 0, date_mentor)  # SMS to mentor
                     booking.notify_sms(self.user, teacher_key, 0, 1, date_learner)  # SMS to user
 
-                    html_user = render_str("mail_booking.html", sujeto=self.user.name, mentor=teacher_key, t=t, date=date_learner)
-                    html_mentor = render_str("mail_booking_mentor.html", sujeto=teacher_key.name, u=self.user, t=t, date=date_mentor)
+                    html_user = self.render_str("mail_booking.html", sujeto=self.user.name, mentor=teacher_key, t=t, date=date_learner)
+                    html_mentor = self.render_str("mail_booking_mentor.html", sujeto=teacher_key.name, u=self.user, t=t, date=date_mentor)
                     subject = "Confirmación de sesión agendada"
                     mail.send_mail("TeachMe <info@teachmeapp.com>", self.user.mail, subject, "", html=html_user)
                     mail.send_mail("TeachMe <info@teachmeapp.com>", teacher_key.mail, subject, "", html=html_mentor)
@@ -353,7 +250,7 @@ class teacher(Handler):
             return
 
 
-class comparte(Handler):
+class comparte(BaseController):
     def get(self):
 
         if self.teacher:
@@ -393,7 +290,7 @@ class comparte(Handler):
         self.redirect("/profile/teacher/%s" % str(t.key.id()))
 
 
-class teachouts(Handler):
+class teachouts(BaseController):
     def get(self):
         #depurar_teachouts()
 
@@ -452,35 +349,35 @@ class teachouts(Handler):
                     learner=learner, m_disable=m_disable, m_faltan=m_faltan, etouts=etouts, ementor=ementor, m_etouts=m_etouts, elearner=elearner, alert=alert)
 
 
-class aprende(Handler):
+class aprende(BaseController):
     def get(self, ar):
         area = teachme_db.areas.query(teachme_db.areas.url == ar).get()
         if not area:
             area = teachme_db.areas.get_by_id(int(ar))
-            logging.warning(area)
         if area:
-            mentors = teachme_db.teacher.query(ndb.AND(teachme_db.teacher.areas == area.key.id(), teachme_db.teacher.aceptado == True)).order(-teachme_db.teacher.rating)
+            mentors = teachme_db.teacher.query(ndb.AND(teachme_db.teacher.areas == area.key.id(), teachme_db.teacher.aceptado == True)).fetch()
+            MentorHelper.sort_mentors(mentors)
             self.render("aprende.html", mentors=mentors, area=area)
             return
         self.abort(500)
 
 
-class terminos(Handler):
+class terminos(BaseController):
     def get(self):
         self.render("terminos.html")
 
 
-class politicas(Handler):
+class politicas(BaseController):
     def get(self):
         self.render("politicas.html")
 
 
-class faq(Handler):
+class faq(BaseController):
     def get(self):
         self.render("faq.html")
 
 
-class profile_teacher(Handler, blobstore_handlers.BlobstoreUploadHandler):
+class profile_teacher(BaseController, blobstore_handlers.BlobstoreUploadHandler):
     def get(self, te_id):
         if not self.user:
             self.abort(403)
@@ -516,7 +413,7 @@ class profile_teacher(Handler, blobstore_handlers.BlobstoreUploadHandler):
         self.redirect("/profile/teacher/%s" % str(teacher.key.id()))
 
 
-class editabout(Handler):
+class editabout(BaseController):
     def post(self):
         if not self.user and not self.teacher:
             self.abort(403)
@@ -544,7 +441,7 @@ class editabout(Handler):
         self.redirect("/profile/teacher/%s" % self.teacher.key.id())
 
 
-class msg2mentor(Handler):
+class msg2mentor(BaseController):
     def post(self):
         if not self.user:
             self.abort(403)
@@ -557,14 +454,14 @@ class msg2mentor(Handler):
             m.put()
             c = teachme_db.chat(parent=self.user.key, teacher=teacher.key, msgs=[m])
             c.put()
-            html_mail = render_str("mail_question.html", para=teacher, de=self.user, m=m, chat=c.key.urlsafe())
+            html_mail = self.render_str("mail_question.html", para=teacher, de=self.user, m=m, chat=c.key.urlsafe())
             mail.send_mail(sender="TeachMe Pregunta <info@teachmeapp.com>", to=teacher.mail, subject=self.user.name+" de Teachme te ha hecho una pregunta", body="", html=html_mail)
             self.redirect("/teacher/%s" % teacher_key)
         else:
             self.redirect("/")
 
 
-class reply(Handler):
+class reply(BaseController):
     def get(self):
         r = self.request.get("r")
         msg = ndb.Key(urlsafe=str(r)).get()
@@ -594,12 +491,12 @@ class reply(Handler):
             chat.put()
             mFrom = msg.mFrom.get()
             mTo = msg.mTo.get()
-            html_mail = render_str("mail_reply.html", para=mFrom, de=mTo, m=m, p=msg, chat=chat.key.urlsafe())
+            html_mail = self.render_str("mail_reply.html", para=mFrom, de=mTo, m=m, p=msg, chat=chat.key.urlsafe())
             mail.send_mail(sender="TeachMe Respuesta<info@teachmeapp.com>", to=mFrom.mail, subject=mTo.name + " de Teachme ha respondido tu pregunta", body="", html=html_mail)
             self.redirect("/")
 
 
-class addtags(Handler):
+class addtags(BaseController):
     def post(self):
         tags = teachme_db.tags.query().get()
         te_id = self.request.get("te_id")
@@ -612,7 +509,6 @@ class addtags(Handler):
                     teacher.put()
                     teachme_index.create_index(teacher)
                     if new_tag not in tags.name:
-                        logging.info(new_tag)
                         tags.name.append(new_tag)
                         tags.put()
         else:
@@ -628,7 +524,7 @@ class addtags(Handler):
         self.redirect("/profile/teacher/%s" % te_id)
 
 
-class calendar_teacher_add(Handler):
+class calendar_teacher_add(BaseController):
     def post(self):
         if not self.user:
             self.abort(403)
@@ -654,7 +550,7 @@ class calendar_teacher_add(Handler):
         self.redirect("/profile/teacher/" + str(teacher.key.id()))
 
 
-class calificar(Handler):
+class calificar(BaseController):
     def post(self):
         if not self.user:
             self.abort(403)
@@ -679,7 +575,7 @@ class calificar(Handler):
             self.render("/teachouts.html", msg=msg)
 
 
-class contacto(Handler):
+class contacto(BaseController):
     def get(self):
         self.render("contacto.html")
 
@@ -704,25 +600,25 @@ class contacto(Handler):
             self.render("contacto.html", e_text=e_text, name=name, email=email, text=text)
 
 
-class teachouts_sta(Handler):
+class teachouts_sta(BaseController):
     def get(self):
         t = booking.teachouts_past()
         booking.teachouts_status(t)
 
 
-class reminder_mailing_24(Handler):
+class reminder_mailing_24(BaseController):
     def get(self):
         t24 = booking.teachouts_24()
         booking.reminder_mail(t24, 24)
 
 
-class reminder_mailing_15(Handler):
+class reminder_mailing_15(BaseController):
     def get(self):
         t15 = booking.teachouts_15()
         booking.reminder_mail(t15, 15)
 
 
-class sitemap(Handler):
+class sitemap(BaseController):
     def get(self):
         self.render("sitemap.xml")
 
@@ -734,12 +630,12 @@ class servehandler(blobstore_handlers.BlobstoreDownloadHandler):
         self.send_blob(blob_info)
 
 
-class manualtask(Handler):
+class manualtask(BaseController):
     def get(self):
         self.response.out.write("ok")
 
 
-class buscar(Handler):
+class buscar(BaseController):
     def get(self):
         query_string = self.request.get("q")
         results = teachme_index.make_query(fns.normalise_unicode(query_string))
@@ -763,7 +659,7 @@ class buscar(Handler):
             self.redirect("/")
 
 
-class user_verify(Handler):
+class user_verify(BaseController):
     def get(self):
         ukey = self.request.get('r')
         user = ndb.Key(urlsafe=str(ukey)).get()
@@ -773,22 +669,17 @@ class user_verify(Handler):
             self.redirect('/?m=1')
 
 
-class language(Handler):
+class language(BaseController):
     def post(self):
         locale = self.request.get('locale')
-        logging.error('LOCALE')
-        logging.error(locale)
-        logging.error('AVAILABLE_LOCALES')
-        logging.error(AVAILABLE_LOCALES)
         if locale in AVAILABLE_LOCALES:
-            logging.error('TRUE')
             self.response.set_cookie('locale', locale, max_age=15724800)  # 26 weeks' worth of seconds
         # redirect to referrer or root
         url = self.request.headers.get('Referer', '/')
         self.redirect(url)
 
 
-class account(Handler):
+class account(BaseController):
     def get(self):
         if not self.user:
             self.abort(403)
@@ -846,7 +737,7 @@ class account(Handler):
             self.redirect('/account?m=4')
 
 
-class messages(Handler):
+class messages(BaseController):
     def get(self):
         if not self.user:
             self.abort(403)
@@ -924,12 +815,6 @@ app = webapp2.WSGIApplication([('/', MainPage),
                                ('/tasks/remindermailing24', reminder_mailing_24),
                                ('/tasks/remindermailing15', reminder_mailing_15),
                                ('/sitemap.xml', sitemap),
-                               ('/serve/([^/]+)?', servehandler)
-                               ], debug=True, config=config)
-
-
-# def main():
-#     run_wsgi_app(app)
-
-# if __name__ == "__main__":
-#     main()
+                               ('/serve/([^/]+)?', servehandler),
+                               ('/sura/([\w-]+)?', SuraController)
+                               ], debug=True, config=jinja_fns.config)

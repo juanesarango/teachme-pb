@@ -31,6 +31,12 @@ indexes:
   properties:
   - name: aceptado
   - name: areas
+  - name: profile_pic
+
+- kind: teacher
+  properties:
+  - name: aceptado
+  - name: areas
   - name: rating
 
 - kind: teacher

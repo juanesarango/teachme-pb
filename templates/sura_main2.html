@@ -1,0 +1,189 @@
+{% extends "base_main.html" %}
+{% set shareImg = "https://www.teachmeapp.com/static/comparte2.jpg"%}
+{% set title = "Tutores online de "+area.name+" | Recibe ayuda online en Teachme" %}
+{% set shareText = "Estás buscando tutores en línea en "+area.name+"? en Teachme podrás encontrarlos" %}
+{% set shareHt = "elearning" %}
+{% block title %}
+	
+{% endblock %}
+
+{% block description %}
+	<meta name="description" content="{% trans %}Conéctate online con tutores en{% endtrans %} {{area.name}} {% trans %}y recibe ayuda instantánea. Tu primera clase a 1 dólar{% endtrans %}!">
+{% endblock %}
+
+{% block body %}
+
+<div class="backgnd" style="background-image: url('/static/comparte2.jpg')">
+	<br>
+	<br>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2 bckg-b-80">
+				<!-- <div class="row">
+					<div class="col-md-12" style="padding:20px;">
+						<h1>
+						{% if language == 'Español' %}
+							{{area.name}}
+						{% else %}
+							{{area.namet}}
+						{% endif %}	
+						</h1>
+						<h2 style="font-size: 16px; color: white;">{% trans %}Estás buscando tutores en línea en{% endtrans %} 
+						{% if language == 'Español' %}
+							{{area.name}}
+						{% else %}
+							{{area.namet}}
+						{% endif %}	
+						? {% trans %}o estás buscando tutorías semanales en{% endtrans %} 
+						{% if language == 'Español' %}
+							{{area.name}}
+						{% else %}
+							{{area.namet}}
+						{% endif %}	
+						? <strong>Teachme</strong> {% trans %}es la solución para ti{% endtrans %}.</h2>
+					</div>
+				</div>
+				<br> -->
+				<div class="row">
+					<div class="col-md-4" style="padding:20px;">
+						<!-- <ul class="nav nav-pills nav-stacked">
+						{% for a in areas %}
+							<li style="font-size:16px;" {% if a.name==area.name %}class="active"{% endif %}>
+							{% if a.url %}
+								<a href="/aprende/{{a.url}}">
+							{% else %}
+								<a href="/aprende/{{a.key.id()}}">
+							{% endif %}
+							{% if language == 'Español' %}
+								{{a.name}}
+							{% else %}
+								{{a.namet}}
+							{% endif %}	
+							</a></li>
+						{% endfor %}
+						</ul> -->
+						<ul class="nav nav-pills nav-stacked">
+							{% for a in areas %}
+								<li {% if loop.first %}class="active"{% endif %}><a href="#{{a.name}}" data-toggle="pill">
+								{% if language == 'Español' %}
+									{{a.name}}
+								{% else %}
+									{{a.namet}}
+								{% endif %}					
+								</a></li>
+							{% endfor %}
+						</ul>
+					</div>
+					<div class="col-md-8">
+						<hr>
+						{% for t in mentors[a.key.id()] %}
+						<div class="row">
+							<div class="col-md-4">
+								<a href="/teacher/{{t.key.urlsafe()}}">
+									<img class="img-circle img-100" {% if t.profile_pic_r %}src="{{t.profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}>
+								</a>
+								<div class="row">
+									<div class="col-md-12">
+									<br>
+										<span class="starReviews-gray">
+											<span class="starReviews" style="width:{{t.rating*20}}%"></span>
+										</span>
+										<br>
+										<span class="glyphicon glyphicon-comment"></span>
+										<span> {{t.reviews}}</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-8">
+								<a href="/teacher/{{t.key.urlsafe()}}"><h3>{{t.name}} {{t.lname}}</h3></a>
+								<p>{{t.about|truncate(170, True)}}</p>
+								<p class="pull-left"><span class="glyphicon glyphicon-credit-card"></span> {{t.fee}} USD {% trans %}por hora{% endtrans %}</p>
+								<p class="pull-right">{% if t.date_available|first_date %}<span class="glyphicon glyphicon-calendar"></span> {{t.date_available|first_date}}{% endif %}</p>
+							</div>
+						</div>
+						<hr>
+					{% else %}
+						<div class="row">
+							<div class="col-md-6 col-md-offset-3 bckg-b-80">
+								<h3><span class="glyphicon glyphicon-info-sign"></span> {% trans %}Lo sentimos. Estamos trabajando para traerte a los mejores mentores en esta área{% endtrans %}.</h3>
+							</div>
+						</div>
+					{% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="bckg-b-80">
+	<div class="container">
+		<br>
+		<br>
+		<div class="row">
+			<div class="col-md-12"><h2 class="text-center">{% trans %}Encuentra-a{% endtrans %}</h2></div>
+		</div>
+		<div class="row">
+			<br>
+			<br>
+			<div class="col-md-2 col-md-offset-2 ">
+				<ul class="nav nav-pills nav-stacked">
+					{% for a in areas %}
+						<li {% if loop.first %}class="active"{% endif %}><a href="#{{a.name}}" data-toggle="pill">
+						{% if language == 'Español' %}
+							{{a.name}}
+						{% else %}
+							{{a.namet}}
+						{% endif %}					
+						</a></li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="col-md-6">
+				<hr>
+				<div class="tab-content">
+					{% for a in areas %}
+						<div class="tab-pane fade {% if loop.first %}in active{% endif %}" id="{{a.name}}">
+						{% for t in mentors[a.key.id()][:3] %}
+							<div class="row">
+								<div class="col-md-4">
+									<a href="/teacher/{{t.key.urlsafe()}}">
+										<img class="img-circle img-100" {% if t.profile_pic_r %}src="{{t.profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}>
+									</a>
+									<div class="row">
+										<div class="col-md-12">
+										<br>
+											<span class="starReviews-gray">
+												<span class="starReviews" style="width:{{t.rating*20}}%"></span>
+											</span>
+											<br>
+											<span class="glyphicon glyphicon-comment"></span>
+											<span> {{t.reviews}}</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-8">
+									<a href="/teacher/{{t.key.urlsafe()}}"><h3>{{t.name}} {{t.lname}}</h3></a>
+									<p>{{t.about|truncate(120, True)}}</p>
+									<p class="pull-left"><span class="glyphicon glyphicon-credit-card"></span> {{t.fee}} {% trans %}Tasa{% endtrans %}</p>
+									<p class="pull-right">{% if t.date_available|first_date %}<span class="glyphicon glyphicon-calendar"></span> {{t.date_available|first_date}}{% endif %}</p>
+								</div>
+							</div>
+							<hr>
+						{% else %}
+							<h3><span class="glyphicon glyphicon-info-sign"></span> {% trans %}Lo siento-areas{% endtrans %}</h3>
+						{% endfor %}
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+	<br>
+	<br>
+	<br>
+</div>
+
+
+
+{% endblock %}
