@@ -105,7 +105,13 @@
 			<div class="col-md-2 col-md-offset-2 ">
 				<ul class="nav nav-pills nav-stacked">
 					{% for a in areas %}
-						<li {% if loop.first %}class="active"{% endif %}><a href="#{{a.name}}" data-toggle="pill">{{a.name}}</a></li>
+						<li {% if loop.first %}class="active"{% endif %}><a href="#{{a.name}}" data-toggle="pill">
+						{% if language == 'Español' %}
+							{{a.name}}
+						{% else %}
+							{{a.namet}}
+						{% endif %}					
+						</a></li>
 					{% endfor %}
 				</ul>
 			</div>

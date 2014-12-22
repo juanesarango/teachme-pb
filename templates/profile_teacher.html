@@ -84,7 +84,13 @@
 								<h3 style="display: inline-block">{% trans %}Áreas del conocimiento{% endtrans %}&nbsp;&nbsp;&nbsp;&nbsp;</h3><button class="btn btn-success center-block" style="display: inline-block" type="submit">{% trans %}Actualizar áreas{% endtrans %}</button>
 								<input type="hidden" name="fn" value="editAreas">
 							{% for a in areas %}
-								<div class="checkbox"><input type="checkbox" name="{{a.key.id()}}" value="{{a.key.id()}}" id="cb{{a.name}}" {% if a.key.id() in teacher.areas %} checked="true"{% endif %}><label for="cb{{a.name}}">{{a.name}}</label></div>
+								<div class="checkbox"><input type="checkbox" name="{{a.key.id()}}" value="{{a.key.id()}}" id="cb{{a.name}}" {% if a.key.id() in teacher.areas %} checked="true"{% endif %}><label for="cb{{a.name}}">
+								{% if language == 'Español' %}
+									{{a.name}}
+								{% else %}
+									{{a.namet}}
+								{% endif %}	
+								</label></div>
 							{% endfor %}
 							</form>
 						</div>

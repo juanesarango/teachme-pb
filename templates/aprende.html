@@ -21,8 +21,26 @@
 				<div class="col-md-8 col-md-offset-2 bckg-b-80">
 					<div class="row">
 						<div class="col-md-12" style="padding:20px;">
-							<h1>{{area.name}}</h1>
-							<h2 style="font-size: 16px; color: white;">{% trans %}Estás buscando tutores en línea en{% endtrans %} {{area.name}}? {% trans %}o estás buscando tutorías semanales en{% endtrans %} {{area.name}}? <strong>Teachme</strong> {% trans %}es la solución para ti{% endtrans %}.</h2>
+							<h1>
+							{% if language == 'Español' %}
+								{{area.name}}
+							{% else %}
+								{{area.namet}}
+							{% endif %}	
+							</h1>
+							<h2 style="font-size: 16px; color: white;">{% trans %}Estás buscando tutores en línea en{% endtrans %} 
+							{% if language == 'Español' %}
+								{{area.name}}
+							{% else %}
+								{{area.namet}}
+							{% endif %}	
+							? {% trans %}o estás buscando tutorías semanales en{% endtrans %} 
+							{% if language == 'Español' %}
+								{{area.name}}
+							{% else %}
+								{{area.namet}}
+							{% endif %}	
+							? <strong>Teachme</strong> {% trans %}es la solución para ti{% endtrans %}.</h2>
 						</div>
 					</div>
 					<br>
@@ -36,7 +54,12 @@
 									{% else %}
 										<a href="/aprende/{{a.key.id()}}">
 									{% endif %}
-									{{a.name}}</a></li>
+									{% if language == 'Español' %}
+										{{a.name}}
+									{% else %}
+										{{a.namet}}
+									{% endif %}	
+									</a></li>
 								{% endfor %}
 								</ul>
 						
