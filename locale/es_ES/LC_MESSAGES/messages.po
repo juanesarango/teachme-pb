@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-12-19 15:32-0500\n"
+"POT-Creation-Date: 2014-12-22 16:09-0500\n"
 "PO-Revision-Date: 2014-12-16 13:03-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: es_ES <LL@li.org>\n"
@@ -643,7 +643,7 @@ msgstr ""
 #: templates/login.html:24 templates/signup.html:37
 #, fuzzy
 msgid "Email"
-msgstr "Es muy fácil, mira cómo funciona"
+msgstr ""
 
 #: templates/login.html:32 templates/signup.html:45
 msgid "Contraseña"
@@ -652,7 +652,7 @@ msgstr ""
 #: templates/login.html:39
 #, fuzzy
 msgid "Recuérdame"
-msgstr "Recuérdame"
+msgstr ""
 
 #: templates/main_page.html:16
 msgid "Encuentra"
@@ -889,7 +889,7 @@ msgstr ""
 #: templates/signup.html:24
 #, fuzzy
 msgid "Ingresa tu nombre"
-msgstr "O ingresa con tu correo:"
+msgstr ""
 
 #: templates/signup.html:32
 msgid "Ingresa tus apellidos"
@@ -898,7 +898,7 @@ msgstr ""
 #: templates/signup.html:48
 #, fuzzy
 msgid "Ingresa tu contraseña"
-msgstr "O ingresa con tu correo:"
+msgstr ""
 
 #: templates/signup.html:53
 msgid "Confirmar contraseña"
