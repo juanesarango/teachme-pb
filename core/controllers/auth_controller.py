@@ -31,8 +31,10 @@ class ResetPasswordController(BaseController):
             reset_user = token.user.get()
             self.render('reset_password.html', reset_user=reset_user)
         else:
-            sweetAlert = ['error', 'El token ya expiro o no existe']
-            self.render('reset_password.html', sweetAlert=sweetAlert)
+            redirect = '/'
+            sweetAlert = ['error', u'El token ya expiró o no existe']
+            self.render('reset_password.html', sweetAlert=sweetAlert,
+                        redirect=redirect)
 
     def post(self):
         if self.user:
@@ -46,14 +48,19 @@ class ResetPasswordController(BaseController):
             if password and password == password_con:
                 reset_user.pw_hash = teachme_db.make_pw_hash(reset_user.mail,
                                                              password)
+                token.recovered = True
+                token.put()
                 reset_user.put()
-                redirect = "https://www.teachmeapp.com/login"
-                sweetAlert = ['success', u'Has cambiado tu contraseña con exito! :)']
+                redirect = "/login"
+                sweetAlert = ['success', u'Has cambiado tu contraseña con éxito! :)']
                 self.render('reset_password.html', sweetAlert=sweetAlert,
                             redirect=redirect, reset_user=reset_user)
             else:
                 sweetAlert = ['error', u'Las contraseñas no concuerdan']
-                self.render('reset_password.html', sweetAlert=sweetAlert)
+                self.render('reset_password.html', sweetAlert=sweetAlert,
+                            reset_user=reset_user)
         else:
-            sweetAlert = ['error', u'El token ya expiro o no existe']
-            self.render('reset_password.html', sweetAlert=sweetAlert)
+            redirect = '/'
+            sweetAlert = ['error', u'El token ya expiró o no existe']
+            self.render('reset_password.html', sweetAlert=sweetAlert,
+                        redirect=redirect)
