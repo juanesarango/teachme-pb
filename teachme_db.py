@@ -93,6 +93,11 @@ class user(ndb.Model):
         else:
             return None
 
+    @classmethod
+    def get_by_email(cls, email=None):
+        if email:
+            return cls.query(cls.mail == email).get()
+
 
 class areas(ndb.Model):
     name = ndb.StringProperty(required=True)

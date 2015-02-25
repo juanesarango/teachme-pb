@@ -19,9 +19,12 @@ import logging
 import stripe
 import jinja_fns
 
-from helpers import MentorHelper
-from controllers import BaseController
-from controllers import SuraController
+from core.helpers import MentorHelper
+from core.controllers import BaseController
+from core.controllers import SuraController
+
+from core.controllers import ForgotPasswordController
+from core.controllers import ResetPasswordController
 from random import shuffle
 
 
@@ -790,6 +793,8 @@ app = webapp2.WSGIApplication([('/', MainPage),
                                ('/signup', signup),
                                ('/login', login),
                                ('/logout', logout),
+                               ('/account/recover', ForgotPasswordController),
+                               ('/account/reset', ResetPasswordController),
                                ('/buscar/', buscar),
                                ('/teacher/([^/]+)?', teacher),
                                ('/user/verify/', user_verify),

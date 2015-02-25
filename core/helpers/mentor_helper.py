@@ -1,4 +1,4 @@
-from helpers import BaseHelper
+from core.helpers import BaseHelper
 
 import datetime
 import logging
