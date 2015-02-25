@@ -41,6 +41,9 @@ handlers:
   script: wrtc.app
   secure: always
 
+- url: /_ah/spi/.*
+  script: services.APPLICATION
+
 - url: /.*
   script: main.app
   secure: always
@@ -59,6 +62,8 @@ libraries:
   version: latest
 - name: ssl
   version: latest
+- name: endpoints
+  version: 1.0
 
 
 
