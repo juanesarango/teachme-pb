@@ -22,7 +22,7 @@ class ForgotPasswordHelper(BaseHelper):
                 Hola {nombre};
 
                 Parece que has olvidado tu contraseña. En el siguiente link la podrás reestablecerla:
-                {link}.
+                {link}
 
                 Este link solo estará activo por las siguientes 24 horas.
 
@@ -46,11 +46,14 @@ class ResetPasswordHelper(BaseHelper):
     @classmethod
     def valid_token(cls, token_key=None):
         if token_key:
-            token = ndb.Key(urlsafe=token_key).get()
+            try:
+                token = ndb.Key(urlsafe=token_key).get()
+            except:
+                token = False
             if token:
                 yesterday = datetime.datetime.now() -\
-                    datetime.deltatime(days=1)
-                if token.created > yesterday:
+                    datetime.timedelta(days=1)
+                if token.created > yesterday and token.recovered == False:
                     return token
                 else:
                     return False
