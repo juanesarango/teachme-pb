@@ -74,6 +74,8 @@ class Areas(Handler):
         if self.user:
             if self.user.mail in admins:
                 areas = teachme_db.areas.query().order(teachme_db.areas.name)
+                if not areas:
+                    areas = []
                 self.render("admin_areas.html", areas=areas)
                 return
         self.abort(403)
