@@ -672,7 +672,7 @@ class user_verify(BaseController):
 class language(BaseController):
     def post(self):
         locale = self.request.get('locale')
-        if locale in AVAILABLE_LOCALES:
+        if locale in jinja_fns.AVAILABLE_LOCALES:
             self.response.set_cookie('locale', locale, max_age=15724800)  # 26 weeks' worth of seconds
         # redirect to referrer or root
         url = self.request.headers.get('Referer', '/')
