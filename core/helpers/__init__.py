@@ -1,3 +1,4 @@
 from base_helper import BaseHelper
 from mentor_helper import MentorHelper
 from auth_helper import ForgotPasswordHelper
+from auth_helper import ResetPasswordHelper
