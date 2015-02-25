@@ -1,4 +1,0 @@
-
-
-class BaseHelper(object):
-    pass

@@ -1,5 +1,5 @@
-from controllers import BaseController
-from helpers import MentorHelper
+from core.controllers import BaseController
+from core.helpers import MentorHelper
 
 from teachme_db import areas, teacher
 

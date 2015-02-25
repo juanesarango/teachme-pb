@@ -23,6 +23,11 @@
 		<style type="text/css"></style>
 		<link rel="stylesheet" type="text/css" href="/static/style.css">
 		<script type="text/javascript" src="/static/js/moment.js"></script>
+
+		<!-- Sweet alert -->
+		<script src="/static/js/sweet-alert.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="/static/css/sweet-alert.css">
+
 		<!-- Mobile Optimisation for iOS -->
 		<link rel="apple-touch-icon" sizes="60x60" href="/static/rsz_icon.png">
 		<link rel="apple-touch-icon" sizes="76x76" href="/static/rsz_1icon.png">
@@ -208,6 +213,13 @@
 				<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true" >&times;</span><span class="sr-only">{% trans %}Cerrar{% endtrans %}</span></button>
 				{{alert[1]}}
 			</div>
+		{% endif %}
+		{% if sweetAlert %}
+			<script type="text/javascript">
+				swal({
+					title: "{{sweetAlert[1]}}",
+					type: "{{sweetAlert[0]}}"});
+			</script>
 		{% endif %}
 
 		{% block body %}
