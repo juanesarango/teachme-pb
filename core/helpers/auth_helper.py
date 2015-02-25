@@ -49,7 +49,7 @@ class ResetPasswordHelper(BaseHelper):
             token = ndb.Key(urlsafe=token_key).get()
             if token:
                 yesterday = datetime.datetime.now() -\
-                    datetime.deltatime(days=1)
+                    datetime.timedelta(days=1)
                 if token.created > yesterday:
                     return token
                 else:

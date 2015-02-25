@@ -218,8 +218,8 @@
 			<script type="text/javascript">
 				swal({
 					title: "{{sweetAlert[1]}}",
-					type: "{{sweetAlert[0]}}"},
-					{% if redirect %}
+					type: "{{sweetAlert[0]}}"}
+					{% if redirect %},
 						function(){window.location.assign("{{redirect}}");}
 					{% endif %}
 					);
