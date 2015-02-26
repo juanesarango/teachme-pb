@@ -1,4 +1,5 @@
 from protorpc import messages
+from protorpc import message_types
 
 
 class ReviewResponse(messages.Message):
@@ -25,7 +26,7 @@ class TeacherResponse(messages.Message):
     subareas = messages.StringField(13, repeated=True)
     timezoneOffset = messages.IntegerField(14)
     tags = messages.StringField(15, repeated=True)
-    dateAvailable = messages.IntegerField(16, repeated=True)
+    dateAvailable = message_types.DateTimeField(16, repeated=True)
     dateReserved = messages.IntegerField(17, repeated=True)
     teachouts = messages.IntegerField(18, repeated=True)
     teachoutsExpired = messages.IntegerField(19, repeated=True)

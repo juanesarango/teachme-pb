@@ -5,19 +5,27 @@ import jinja2
 from google.appengine.ext import ndb
 import teachme_db
 import fns
+import time
+import logging
 
 from webapp2_extras import i18n
 from webapp2_extras.i18n import gettext as _
 # from google.appengine.ext.webapp.util import run_wsgi_app
 
 
-########################################################################
-#Definiciones de Jinja2 para los templates
+# Definiciones de Jinja2 para los templates
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
-jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir), extensions=['jinja2.ext.i18n'], autoescape=True)
+jinja_env = jinja2.Environment(
+    loader=jinja2.FileSystemLoader(template_dir),
+    extensions=['jinja2.ext.i18n'],
+    autoescape=True)
 jinja_env.install_gettext_translations(i18n)
+
 # jinja2 config with i18n enabled
-config = {'webapp2_extras.jinja2': {'template_path': 'templates', 'environment_args': {'extensions': ['jinja2.ext.i18n']}}}
+config = {'webapp2_extras.jinja2': {
+    'template_path': 'templates',
+    'environment_args': {'extensions': ['jinja2.ext.i18n']}
+    }}
 
 
 def render_str(template, **params):
@@ -73,7 +81,8 @@ class Areas(Handler):
     def get(self):
         if self.user:
             if self.user.mail in admins:
-                areas = teachme_db.areas.query().order(teachme_db.areas.name)
+                areas = teachme_db.areas.query().order(teachme_db.areas.name).fetch()
+                logging.error(areas)
                 if not areas:
                     areas = []
                 self.render("admin_areas.html", areas=areas)
@@ -82,7 +91,7 @@ class Areas(Handler):
         return
 
     def post(self):
-        if not self.user.mail in admins:
+        if self.user.mail not in admins:
             self.abort(403)
             return
         area = self.request.get("area")
@@ -92,6 +101,7 @@ class Areas(Handler):
         if area:
             a = teachme_db.areas(name=format(area))
             a.put()
+            time.sleep(1)
             self.redirect("/admin/areas")
             return
         elif subarea and sid:
