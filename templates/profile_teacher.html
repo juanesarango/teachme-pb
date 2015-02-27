@@ -203,8 +203,8 @@
 			$('#timezoneOffset').val(new Date().getTimezoneOffset());
 			$.datepicker.regional['es'] = {
 		        closeText: 'Cerrar',
-		        prevText: '<Ant',
-		        nextText: 'Sig>',
+		        prevText: 'Mes Anterior',
+		        nextText: 'Mes Siguiente',
 		        currentText: 'Hoy',
 		        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
 		        monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
@@ -227,18 +227,13 @@
 		    var dates_local = [];
 		    var hours_local = {};
 		    for (var f = 0; f < fechas.length; f++){
-
-		    	//var dt = new Date(fechas[f]);
 		    	var dt = new Date(fechas[f])
-		    	//var str_dt = dt.getFullYear().toString()+'-'+(dt.getMonth()+1).toString()+'-'+dt.getDate().toString();
 		    	var str_dt = moment(dt).format("YYYY-MM-DD")
 
 		    	if (dates_local.indexOf(str_dt)>=0){}
 		    	else{
 		    		dates_local.push(str_dt);
-		    	}
-		    	
-		    	
+		    	}		    	
 		    	if (hours_local.hasOwnProperty(str_dt)){
 		    		hours_local[str_dt].push(dt);
 		    	} else {
@@ -249,19 +244,7 @@
 		    var dates = dates_local;
 		    var hours = hours_local;
 		    var today = new Date();
-		 //   var cd = today.getFullYear().toString()+'-'+(today.getMonth()+1).toString()+'-'+today.getDate().toString();
 		    var cd = moment(today).format("YYYY-MM-DD");
-		 //    $("#horas").replaceWith( function(){
-		 //    	var s = "<div id='horas' class='horas'> <h3>"+ cd +"</h3>";
-		 //    	if(cd in hours){
-		 //    		for (var h = 0; h < hours[cd].length; h++) {
-		 //    		s = s+"<p class='lead'>"+hours[cd][h].toLocaleTimeString()+"</p class='lead'>";
-		 //    		};
-		 //   		};
-		    	
-		 //    	s = s+"</div";
-		 //    	return s;
-		 //    });
 			document.getElementById("fechaString").innerHTML = moment().lang('es').format("dddd D, MMMM");
      		var d = new Date(cd+"T12:00");
 			for (var h = 0; h<24; h++) {
@@ -277,37 +260,9 @@
 	     	};
 		    	
 
-			 $.datepicker.setDefaults( $.datepicker.regional[ "es" ] );
-			// $('#calendario').datepicker({
-			// 	beforeShowDay : function(date){
-			// 		var y = date.getFullYear().toString(); // get full year
-			// 		var m = (date.getMonth() + 1).toString(); // get month.
-			// 		var d = date.getDate().toString(); // get Day
-			// 		var currDate = y+'-'+m+'-'+d;
-			// 		if(dates.indexOf(currDate) >= 0){
-			// 			return [true,"ui-highlight", ""];	
-			// 		}else{
-			// 			return [false];
-			// 		}					
-			// 	},
-			// 	onSelect : function(date){
-			// 		$("#horas").replaceWith( function(){
-		 //    			var s = "<div id='horas' class='horas'> <h3>"+date+"</h3>";
-		 //    			for (var h = 0; h < hours[date].length; h++) {
-		 //    				s = s+"<p class='lead'>"+hours[date][h].toLocaleTimeString()+"</p class='lead'>";
-		 //    			};
-		 //    			s = s+"</div";
-		 //    			return s;
-			// 		});
-			// 	},
-
-			// });
+			$.datepicker.setDefaults( $.datepicker.regional[ "es" ] );
 			$('#calendarioIn').datepicker({
 				beforeShowDay : function(date){
-					// var y = date.getFullYear().toString(); // get full year
-					// var m = (date.getMonth() + 1).toString(); // get month.
-					// var d = date.getDate().toString(); // get Day
-					// var currDate = y+'-'+m+'-'+d;
 					currDate = moment(date).format("YYYY-MM-DD")
 					if(dates.indexOf(currDate) >= 0){
 						return [true,"ui-highlight", ""];	

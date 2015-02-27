@@ -395,7 +395,7 @@ class profile_teacher(BaseController, blobstore_handlers.BlobstoreUploadHandler)
         dates = json.dumps(fns.solo_dates(teacher.date_available))
         hours = json.dumps(fns.solo_hours(teacher.date_available))
         upload_url = blobstore.create_upload_url('/upload')
-        taglist = json.dumps(teachme_db.tags.query().get().name)
+        taglist = json.dumps(teachme_db.tags.query().get().name) if teachme_db.tags.query().get() else []
         self.render("profile_teacher.html", teacher=teacher, upload_url=upload_url, dates=dates, hours=hours, fechas=fechas, taglist=taglist, reviews=reviews)
 
     def post(self):
@@ -512,9 +512,12 @@ class addtags(BaseController):
                     teacher.tags.append(new_tag)
                     teacher.put()
                     teachme_index.create_index(teacher)
-                    if new_tag not in tags.name:
-                        tags.name.append(new_tag)
-                        tags.put()
+                    if tags:
+                        if new_tag not in tags.name:
+                            tags.name.append(new_tag)
+                            tags.put()
+                    else:
+                        teachme_db.tags(name=[new_tag]).put()
         else:
             re_id = self.request.get("re_id")
             if re_id:
