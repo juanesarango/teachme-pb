@@ -89,9 +89,10 @@ class signup(BaseController):
                 html = self.render_str("mail_template.html", sujeto=u.name, enlace=enlace)
                 mail.send_mail("TeachMe <info@teachmeapp.com>", u.mail, subject, "", html=html)
                 self.login(u, None)
+                sweetAlert = ['success', 'Tu registro ha sido exitoso, Bienvenido :)']
                 if not redirect:
                     redirect = '/'
-                self.redirect(redirect)
+                self.render('signup.html', sweetAlert=sweetAlert, redirect=redirect)
 
 
 class login(BaseController):
