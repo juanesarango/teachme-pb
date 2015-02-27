@@ -71,8 +71,9 @@ class signup(BaseController):
             u = teachme_db.user.query(teachme_db.user.mail == self.mail).get()
             if u:
                 if not self.fbID:
-                    msg = "Ese e-mail ya se ecuentra registrado."
-                    self.render("signup.html", error_mail=msg)
+                    # msg = "Ese e-mail ya se ecuentra registrado."
+                    sweetAlert = ['warning', 'Ese e-mail ya se ecuentra registrado.']
+                    self.render("signup.html", sweetAlert=sweetAlert)
                 elif self.fbID == u.fbID:
                     t = teachme_db.teacher.query(ancestor=u.key).get()
                     self.login(u, t)
@@ -381,7 +382,7 @@ class faq(BaseController):
         self.render("faq.html")
 
 
-class profile_teacher(BaseController, blobstore_handlers.BlobstoreUploadHandler):
+class profile_teacher(blobstore_handlers.BlobstoreUploadHandler, BaseController):
     def get(self, te_id):
         if not self.user:
             self.abort(403)
