@@ -1,5 +1,6 @@
 from protorpc import messages
 from protorpc import message_types
+from api.messages import AreaResponse
 
 
 class ReviewResponse(messages.Message):
@@ -22,19 +23,18 @@ class TeacherResponse(messages.Message):
     pais = messages.StringField(9)
     idiomas = messages.StringField(10, repeated=True)
     linkedin = messages.StringField(11)
-    areas = messages.IntegerField(12, repeated=True)
-    subareas = messages.StringField(13, repeated=True)
-    timezoneOffset = messages.IntegerField(14)
-    tags = messages.StringField(15, repeated=True)
-    dateAvailable = message_types.DateTimeField(16, repeated=True)
-    dateReserved = messages.IntegerField(17, repeated=True)
-    teachouts = messages.IntegerField(18, repeated=True)
-    teachoutsExpired = messages.IntegerField(19, repeated=True)
-    rating = messages.FloatField(20)
-    reviews = messages.MessageField(ReviewResponse, 21, repeated=True)
-    score = messages.IntegerField(22)
-    aceptado = messages.BooleanField(23)
-    movil = messages.IntegerField(24)
+    areas = messages.MessageField(AreaResponse, 12, repeated=True)
+    timezoneOffset = messages.IntegerField(13)
+    tags = messages.StringField(14, repeated=True)
+    dateAvailable = message_types.DateTimeField(15, repeated=True)
+    dateReserved = messages.IntegerField(16, repeated=True)
+    teachouts = messages.IntegerField(17, repeated=True)
+    teachoutsExpired = messages.IntegerField(18, repeated=True)
+    rating = messages.FloatField(19)
+    reviews = messages.MessageField(ReviewResponse, 20, repeated=True)
+    score = messages.IntegerField(21)
+    aceptado = messages.BooleanField(22)
+    movil = messages.IntegerField(23)
 
 
 class TeacherListResponse(messages.Message):
@@ -54,16 +54,14 @@ class TeacherRequest(messages.Message):
     idiomas = messages.StringField(9, repeated=True)
     linkedin = messages.StringField(10)
     areas = messages.IntegerField(11, repeated=True)
-    subareas = messages.StringField(12, repeated=True)
-    timezoneOffset = messages.IntegerField(13)
-    tags = messages.StringField(14, repeated=True)
-    dateAvailable = messages.StringField(15, repeated=True)
-    dateReserved = messages.IntegerField(16, repeated=True)
-    teachouts = messages.IntegerField(17, repeated=True)
-    teachoutsExpired = messages.IntegerField(18, repeated=True)
-    rating = messages.FloatField(19)
-    reviews = messages.StringField(20, repeated=True)
-    score = messages.IntegerField(21)
-    aceptado = messages.BooleanField(22)
-    movil = messages.IntegerField(23)
-
+    timezoneOffset = messages.IntegerField(12)
+    tags = messages.StringField(13, repeated=True)
+    dateAvailable = messages.StringField(14, repeated=True)
+    dateReserved = messages.IntegerField(15, repeated=True)
+    teachouts = messages.IntegerField(16, repeated=True)
+    teachoutsExpired = messages.IntegerField(17, repeated=True)
+    rating = messages.FloatField(18)
+    reviews = messages.StringField(19, repeated=True)
+    score = messages.IntegerField(20)
+    aceptado = messages.BooleanField(21)
+    movil = messages.IntegerField(22)

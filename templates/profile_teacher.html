@@ -113,8 +113,7 @@
 							<br>
 							{% for a in teacher.tags %}
 								<form method="post" action="/addtags"  role="form">
-									<div class="tagbox"><button type="submit" class="button-tag" >
-									×&nbsp;&nbsp;&nbsp;</button>{{a}}</div>
+									
 									<input type="hidden" name="re_id" value="{{teacher.key.id()}}">
 									<input type="hidden" name="tag_r" value="{{a}}">
 								</form>

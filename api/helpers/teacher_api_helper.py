@@ -1,9 +1,11 @@
 from api.helpers import BaseApiHelper
 from api.messages import TeacherResponse
 from api.messages import ReviewResponse
+from api.helpers import AreaApiHelper
 
 from teachme_db import teacher as Teacher
 from teachme_db import review as Review
+from teachme_db import areas as Area
 
 
 class TeacherApiHelper(BaseApiHelper):
@@ -11,6 +13,7 @@ class TeacherApiHelper(BaseApiHelper):
     _model = Teacher
 
     def to_message(self, entity):
+        areas = Area.query().fetch()
         return TeacherResponse(
             id=entity.key.id(),
             name=entity.name,
@@ -23,8 +26,7 @@ class TeacherApiHelper(BaseApiHelper):
             pais=entity.pais,
             idiomas=entity.idiomas,
             linkedin=entity.linkedin,
-            areas=entity.areas,
-            subareas=entity.subareas,
+            areas=[AreaApiHelper().to_message(entity.areas, area) for area in areas],
             timezoneOffset=entity.timezoneOffset,
             tags=entity.tags,
             dateAvailable=entity.date_available,

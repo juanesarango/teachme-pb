@@ -1,0 +1,9 @@
+ {{#if isEditable}}
+ 	{{#if link}}
+		<a {{bind-attr href=content}} target="_blank">{{content}}</a>
+	{{else}}
+		{{content}}
+	{{/if}}
+ {{else}}
+    {{input class="form-control" value=content}}
+ {{/if}}

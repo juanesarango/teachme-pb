@@ -1,0 +1,704 @@
+.navpos{
+	position: relative;
+	top: -10px;
+}
+
+
+header{
+	background-color: transparent;
+	width: 100%;
+	display: block;
+	height: 90px;
+}
+
+img{
+	max-width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+nav{
+	background-color: transparent;
+}
+
+label{
+  display: block;
+}
+
+a{
+  text-decoration: none;
+}
+
+a:visited{
+  text-decoration: none;
+}
+/* Formatos Predefinidos****************************************** */
+.w-80{
+  width: 80%;
+}
+
+.bg-w{
+  background-color: white;
+}
+
+.starReviews-gray{
+  display: inline-block;
+  height: 20px;
+  width: 100px;
+  vertical-align: top;
+  background: url('/static/img/star-gray.svg') repeat-x;
+  background-size: auto 100%;
+}
+.starReviews{
+  display: block;
+  background: url('/static/img/star.svg') repeat-x;
+  background-size: auto 100%;
+  height: 100%;
+}
+
+.ui-highlight .ui-state-default{
+  background-color : green;
+  background-image :none;
+  color: white;
+  font-weight:bold;
+  font-size: 12pt;
+}
+
+.ui-highlight .ui-state-active{
+  background-color : #428bca;
+}
+
+.ui-datepicker-current-day .ui-state-active{
+  background-color : #428bca;
+  background-image :none;
+  color: white;
+  font-weight:bold;
+  font-size: 12pt;
+}
+
+.horas{
+  height: 234px;
+  width: 260px;
+  overflow: auto;
+  background-color: rgba(255, 255, 255, 0.4);
+  color: black;
+  border: solid 1px #cacaca
+}
+
+#horas{
+  height: 234px;
+  width: 200px;
+  overflow: auto;
+  background-color: rgba(255, 255, 255, 0.4);
+  color: black;
+  border: solid 1px #cacaca;
+  padding: 10px;
+  padding-top: 0px;
+}
+
+.unstyled-btn{
+  background-color: transparent;
+  border-width: 0px;
+  margin: 0px;
+}
+/*input[type=checkbox]:checked + label{
+  background-color: green;
+  color: white;
+  padding: 2px 5px;
+}*/
+
+.green-checkbox{
+  display: none;
+}
+
+.green-checkbox:checked + label{
+  background-color: green;
+  color: white;
+  padding: 2px 5px;
+}
+
+/* imagen de fondo */
+.backgnd{
+  background-size: cover;
+  min-height: 700px;
+  padding: 50px 0 50px 0;
+  background-attachment: fixed;
+}
+
+.fondo-w{
+  background-color: rgba(255,255,255,0.8);
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+  min-height: 440px;
+  padding: 50px 100px;
+}
+
+.tabla-modo{
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.fila-modo{
+  display: table-row;
+  margin: 20px 0px
+}
+
+.celda-modo{
+  display: table-cell;
+  padding: 20px 25px;
+  width: 50%;
+  vertical-align: top;
+  text-align: justify;
+}
+
+
+.redondo-profile{
+  border-radius: 150px;
+  height: 150px;
+  width: 150px;
+  background-color: white;
+  overflow: hidden;
+  margin: 0px 25px;
+}
+/* Centrar algo */
+.centrado{
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+/* Bloque en la misma linea */
+.inline{
+  display: inline-block;
+}
+
+.no-padding{
+  padding: 0px;
+}
+
+.share-mentor{
+  position: absolute;
+  right: 8px;
+  top: 4px;
+  z-index: 1;
+}
+/*Botón comparte*/
+#share-fb:hover{
+  text-decoration: none;
+  color: #425f9c;
+  background-color: transparent;
+}
+
+#share-tw:hover{
+  text-decoration: none;
+  color: #00aced;
+  background-color: transparent;
+}
+
+#share-gplus:hover{
+  text-decoration: none;
+  color: #C7382E;
+  background-color: transparent;
+}
+
+/*Comparte en mentores y pagina principal hover*/
+.share-fb:hover{
+  text-decoration: none;
+  color: #425f9c;
+  background-color: transparent;
+}
+
+.share-tw:hover{
+  text-decoration: none;
+  color: #00aced;
+  background-color: transparent;
+}
+
+.share-gplus:hover{
+  text-decoration: none;
+  color: #C7382E;
+  background-color: transparent;
+}
+/*Comparte en mentores, pagina principal*/
+.share-fb{
+  color: inherit;
+  background-color: transparent;
+}
+
+.share-tw{
+  color: inherit;
+  background-color: transparent;
+}
+
+.share-gplus{
+  color: inherit;
+  background-color: transparent;
+}
+/*Para el comparte, hover negro*/
+
+.black-hover:hover{
+  color: black;
+}
+
+.boton-verde{
+  background-color: green;
+  border: 0px;
+  padding: 10px 15px;
+  font-size: 18px;
+  font-family: "wf_SegoeUILight","Segoe UI Light","Segoe Light","Segoe WP Light","Tahoma","Verdana","Arial","sans-serif";
+  cursor: pointer;
+}
+
+.boton-verde:hover{
+  background-color: rgb(0, 100, 50);
+}
+
+/* Fuente Negra */
+.font-b{
+  color: black;
+}
+
+/* Fuente balnca */
+.font-w{
+  color: white;
+}
+
+.font-w:hover{
+  text-decoration: none;
+}
+
+.font-primary{
+  color: #46a8bf;
+}
+
+.grid-container{
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/* Acá terminan los formatos predefinidos  */
+#super-header-text{
+  position: relative;
+  top: -600px
+}
+
+
+.rslides {
+  position: relative;
+  list-style: none;
+  overflow: hidden;
+  width: 100%;
+  padding: 0;
+  margin: 0 auto 0 auto;
+  }
+
+.rslides li {
+  -webkit-backface-visibility: hidden;
+  position: absolute;
+  display: none;
+  width: 100%;
+  left: 0;
+  top: 0;
+  min-height: 631px;
+  }
+
+.rslides li:first-child {
+  position: relative;
+  display: block;
+  float: left;
+  }
+
+.rslides img {
+  display: block;
+  height: auto;
+  float: left;
+  width: 100%;
+  border: 0;
+  }
+
+.brow{
+	background-color: rgba(255, 255, 255, 0.2);
+	padding: 30px;
+	width: 850px;
+	position: relative;
+	margin: 0 auto 0 auto;
+  }
+
+.cover{
+  background-image: url('/static/portada.jpg');
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 350px;
+}
+
+.form-background{
+  background-image: url("/static/comparte2.jpg"); 
+  background-size: cover;
+  min-height: 1000px;
+  padding: 50px 0 50px 0;
+}
+
+/* Estilos hechos */
+
+blockquote{
+  border-left: 5px solid #428bca;
+}
+
+.carousel-indicators li{
+  border-color: #428bca;
+}
+
+.carousel-indicators .active{
+  border-color: #428bca;
+  background-color: #428bca;
+}
+
+.gly-big{
+  font-size: 65px;
+}
+
+.bckg-none{
+  background-color: transparent;
+  color: black;
+}
+
+.bckg-blue{
+  background-color: rgba(66,139,202,0.8);
+  color: white;
+}
+
+.bckg-blue2{
+  background-color: #1c758a;
+  color: white;
+}
+
+.bckg-w{
+  background-color: white;
+  color: black;
+}
+
+.bckg-w-80{
+  background-color: rgba(255,255,255,0.8);
+}
+
+.bckg-w-50{
+  background-color: rgba(255,255,255,0.5);
+}
+
+.bckg-w-30{
+  background-color: rgba(255,255,255,0.3);
+  color: black;
+}
+
+.bckg-b-30{
+  background-color: rgba(0,0,0,0.7);
+  color: white;
+}
+
+.bckg-b-40{
+  background-color: rgba(0,0,0,0.4);
+  color: white;
+}
+
+.bckg-b-50{
+  background-color: rgba(0,0,0,0.5);
+  color: white;
+}
+
+.bckg-b-80{
+  background-color: rgba(0,0,0,0.8);
+  color: white;
+}
+
+.bckg-o{
+  background-color: #e65a4c;
+  color: white;
+}
+
+.bckg-o2{
+  background-color: #cf5044;
+  color: white;
+}
+
+.min-width-200{
+  min-width: 250px;
+}
+/* BootStrap modifications*/
+
+.navbar-default {
+  background-color: transparent;
+  border-color: transparent;
+  z-index: 2;
+}
+
+.navbar-inverse{
+  background-color: rgba(0,0,0,0.8);
+  border-color: #080808;
+  z-index: 2;
+}
+
+.img-100{
+  height: 100px;
+  width: 100px;
+}
+
+.img-40{
+  height: 40px;
+  width: 40px;
+}
+
+.img-150{
+  height: 150px;
+  width: 150px;
+}
+
+.img-60{
+  height: 60px;
+  width: 60px;
+}
+
+.hr {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  border: 0;
+  height: 1px;
+  text-align: center;
+  background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.5), rgba(0,0,0,0)); 
+  background-image:    -moz-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.5), rgba(0,0,0,0)); 
+  background-image:     -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.5), rgba(0,0,0,0)); 
+  background-image:      -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.5), rgba(0,0,0,0)); 
+}
+
+#flechita{
+  position: absolute;
+  right: 60px;
+  /*top: 600px;*/
+  width: 100px;
+  height: 100px;
+  color: #428bca;
+  font-size: 50px;
+}
+
+
+.tagbox{
+  background-color: rgb(220, 220, 220);
+  border-bottom-color: rgb(221, 221, 221);
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-image-outset: 0px;
+  border-image-repeat: stretch;
+  border-image-slice: 100%;
+  border-image-source: none;
+  border-image-width: 1;
+  border-left-color: rgb(51, 51, 51);
+  border-left-style: none;
+  border-left-width: 0px;
+  border-right-color: rgb(221, 221, 221);
+  border-right-style: solid;
+  border-right-width: 1px;
+  border-top-color: rgb(51, 51, 51);
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border-top-style: none;
+  border-top-width: 0px;
+  color: rgb(51, 51, 51);
+  cursor: default;
+  display: block;
+  float: left;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  height: 24px;
+  line-height: 24px;
+  list-style-image: none;
+  list-style-position: outside;
+  list-style-type: none;
+  margin-bottom: 4px;
+  margin-left: 0px;
+  margin-right: 4px;
+  margin-top: 0px;
+  outline-color: rgb(51, 51, 51);
+  outline-style: none;
+  outline-width: 0px;
+  padding-bottom: 0px;
+  padding-left: 5px;
+  padding-right: 13px;
+  padding-top: 0px;
+  position: relative;
+  text-align: left;
+  vertical-align: baseline;
+  white-space: nowrap;
+  width: auto;
+  zoom: 1;*/
+}
+
+.button-tag{
+  background: transparent;
+  color: #000000;
+  text-shadow: 0 1px 0 #ffffff;
+  opacity: 0.5;
+  border:0;
+  font-weight: bold;
+  padding: 0;
+}
+
+.button-tag:focus {outline:0;}
+
+.button-tag:hover{
+    opacity: 1;
+    border:0;
+}
+
+#register{
+  border: 1px solid #428bca;
+  padding:4px;
+  margin:10px;
+  border-radius:5px;
+  background-color: #428bca;
+  color: white;
+}
+
+#aregister{
+  color: white;
+  text-decoration: none;
+}
+
+#aregister:hover{
+  color: white;
+  text-decoration: none;
+  cursor:pointer;
+}
+
+#register:hover{
+  background-color: #145289;
+  color: white;
+  border: 1px solid #145289;
+}
+
+#buttonSchedule{
+  margin-left: 15px;
+}
+
+#buttonBooking{
+  margin-left: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#t-temas{
+  resize: none;
+}
+
+.chatpreview{
+  border-bottom-color: rgb(232, 232, 232);
+  border-bottom-style: solid;
+  border-bottom-width: 1.11111116409302px;
+  border-left-color: rgb(232, 232, 232);
+  border-left-style: solid;
+  border-left-width: 0px;
+  border-right-color: rgb(232, 232, 232);
+  border-right-style: solid;
+  border-right-width: 0px;
+  border-top-color: rgb(232, 232, 232);
+  border-top-style: solid;
+  border-top-width: 0px;
+  margin: 0px;
+  padding: 10px;
+  padding-left: 5px;
+  font-size: 13px;
+}
+
+.chatpreview:hover, .chatpreview:focus {
+  background-color: rgb(220,220,220);
+  color: #333333;
+}
+
+.chat-active{
+  background-color: #428bca;
+  color: white;
+}
+
+.chatlist{
+  margin-top: 10px;
+  max-height: 390px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#chatwindow{
+  padding: 20px;
+  border-bottom-color: rgb(232, 232, 232);
+  border-bottom-style: solid;
+  border-bottom-width: 1.2px;
+  border-left-color: rgb(232, 232, 232);
+  border-left-style: solid;
+  border-left-width: 1.2px;
+  border-right-color: rgb(232, 232, 232);
+  border-right-style: solid;
+  border-right-width: 1.2px;
+  border-top-color: rgb(232, 232, 232);
+  border-top-style: solid;
+  border-top-width: 1.2px;
+  height: 340px;
+  background-color: white;
+  font-size: 12px;
+  overflow-x: hidden;
+  overflow-y: visible;  
+}
+
+#chatinputrow{
+  margin-top: 15px;
+}
+
+#chatinput{
+  padding: 0px;
+}
+
+#chatbox{
+  height: 400px;
+}
+
+.a_chats{
+    color: inherit;
+    text-decoration: none;
+}
+
+.a_chats:hover, .a_chats:focus {
+    color: inherit;
+    text-decoration: none;
+}
+
+.img-35{
+	height: 35px;
+}
+
+.font-30{
+	font-size:30px;
+}
+
+.profile-img{
+	background-image: url('/static/profile.jpg');
+}
+
+.inline-block{
+  display: inline-block;
+}
+
+.hours-div{
+  margin-top: 10px;
+  margin-left: 6px;
+}
+
+.under-btn-title{ clear: both; min-height: 114px;}
+.row-with-input { min-height: 34px;}
+.with-button{ float: left; }
+.with-title{ padding: 3px; margin:20px 0px; float: right;}
+.with-input{ padding: 3px; margin:0px; float: right;}
+.small-input{ width: 42px; display: inline-block;}

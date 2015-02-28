@@ -1,0 +1,140 @@
+<div class="backgnd profile-img">
+	<div class="container">
+			<div class="row">
+				<br>
+				<div class="col-md-10 col-md-offset-1 bckg-w-80">
+					<div class="row">
+						<div class="col-md-3 col-md-offset-1">
+							<br>
+							{{#if model.profilePic}}
+								<img class="img-circle img-100" {{bind-attr src=model.profilePic}}>
+							{{else}}
+								<img class="img-circle img-100" src="/static/avatar.png">
+							{{/if}}
+							<h2>{{edit-field content=model.name isEditable=isEditable}}</h2>
+							<h3>{{edit-field content=model.lname isEditable=isEditable}}</h3>
+							<div class="row">
+								<div class="col-md-12">
+									<form role="form" method="post" action="upload_url" enctype="multipart/form-data">
+										<div class="form-group">
+											<input type="hidden" name="te_id" value="model.id">
+											<label for="t-profile_pic">Foto de perfil</label>
+											<input type="file" name="profile_pic" accept="image/*" id="t-profile_pic">
+											<p class="help-block">Te recomendamos una foto de 140x140 píxeles</p>
+										</div>
+										<button type="submit" class="btn btn-success">Actualizar foto</button>
+									</form>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6 col-md-offset-1">
+							<br>
+							<h2 class="with-button">Acerca de ti</h2>
+							<button class="btn btn-warning with-title" {{action 'toogleEditable' 'isEditable'}}>
+							{{#if isEditable}}
+								Editar Información de Perfil 
+							{{else}}
+								Guardar Cambios
+							{{/if}}
+							</button>
+							{{edit-textarea content=model.about isEditable=isEditable}}
+							<br>
+							<br>
+							<p class="row-with-input"><strong class="h3">Tarifa por hora:&nbsp;&nbsp;&nbsp;&nbsp;</strong>{{edit-field content=model.fee isEditable=isEditable class="small-input"}} USD </p>
+							<p class="help-block">Tu tarifa por hora en dólares. Recuerda que Teachme cobra una comisión en base a esta tarifa.</p>
+						</div>
+					</div>
+					<hr>
+					<div class="row">
+						<div class="col-md-3 col-md-offset-1">
+							<h3>Ciudad</h3>
+							<p>{{edit-field content=model.ciudad isEditable=isEditable}}</p>
+							<h3>País</h3>
+							<p>{{edit-field content=model.pais isEditable=isEditable}}</p>
+							<h3>Perfil de linkedin</h3>
+							<p>{{edit-field content=model.linkedin isEditable=isEditable link=true}}</p>
+						</div>
+						<div class="col-md-7 col-md-offset-1">
+							<form role="form" method="post" action="/editabout">
+								<h3 g="display: inline-block">Áreas del conocimiento&nbsp;&nbsp;&nbsp;&nbsp;</h3>
+								<input type="hidden" name="fn" value="editAreas">
+							{{#each area in model.areas}}
+								<p>{{input type="checkbox" name=area.name checked=area.checked}}
+								{{area.name}}</p>
+							{{/each}}
+							</form>
+						</div>
+					</div>
+					<hr>
+					<p class="bg-default text-center" style="margin:0px -15px 15px -15px"></p>
+					<div class="row">
+						<div class="col-md-3 col-md-offset-1">
+							<div class="form-group">
+								<form method="post" action="/addtags" role="form">
+									<h3 for="tags">Conocimientos y habilidades:</h3>
+									<input type="text" name="new_tags" class="form-control" id="t-tags" placeholder="Ingrese temas que domina" >
+									<p class="help-block">Agregar temas que dominas para visualizar mejor tu conocimiento</p>
+									<button class="btn btn-success" type="submit">Agregar</button>
+								</form>
+							</div>
+						</div>
+						<div class="col-md-7 col-md-offset-1">
+							<br>
+							<br>
+							<div class="tagbox"><button type="submit" class="button-tag">×&nbsp;&nbsp;&nbsp;</button>{{model.tags}}</div>{{!Create helper for parsing tags}}
+						</div>
+					</div>
+					<hr>
+					<br>
+					<form role="form" method="post" action="/calendar/teacher/add">
+						<div class="row">
+							<div class="col-md-5 col-md-offset-1">
+								<h3>Agenda libre</h3>
+								<div id="calendarioIn">
+									
+								</div>
+							</div>
+							<div class="col-md-5 col-md-offset-1">
+								<h3>Horas disponibles</h3>
+								<div id="horasIn" class="horas">
+								<h3 id="fechaString hours-div"></h3>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="0" value="00:00" id="0"><label for="0"> 0:00 AM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="1" value="01:00" id="1"><label for="1"> 1:00 AM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="2" value="02:00" id="2"><label for="2"> 2:00 AM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="3" value="03:00" id="3"><label for="3"> 3:00 AM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="4" value="04:00" id="4"><label for="4"> 4:00 AM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="5" value="05:00" id="5"><label for="5"> 5:00 AM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="6" value="06:00" id="6"><label for="6"> 6:00 AM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="7" value="07:00" id="7"><label for="7"> 7:00 AM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="8" value="08:00" id="8"><label for="8"> 8:00 AM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="9" value="09:00" id="9"><label for="9"> 9:00 AM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="10" value="10:00" id="10"><label for="10"> 10:00 AM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="11" value="11:00" id="11"><label for="11"> 11:00 AM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="12" value="12:00" id="12"><label for="12"> 12:00 PM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="13" value="13:00" id="13"><label for="13"> 1:00 PM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="14" value="14:00" id="14"><label for="14"> 2:00 PM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="15" value="15:00" id="15"><label for="15"> 3:00 PM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="16" value="16:00" id="16"><label for="16"> 4:00 PM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="17" value="17:00" id="17"><label for="17"> 5:00 PM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="18" value="18:00" id="18"><label for="18"> 6:00 PM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="19" value="19:00" id="19"><label for="19"> 7:00 PM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="20" value="20:00" id="20"><label for="20"> 8:00 PM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="21" value="21:00" id="21"><label for="21"> 9:00 PM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="22" value="22:00" id="22"><label for="22"> 10:00 PM</label></div>
+										<div class="checkbox"><input type="checkbox" class="green-checkbox" name="23" value="23:00" id="23"><label for="23"> 11:00 PM</label></div> 
+								</div>
+							</div>
+						</div>
+						<br>
+						<button class="btn btn-success center-block" type="submit">Estoy disponible</button>
+						<br>
+					</form>
+
+				</div>
+			</div>
+			<br>
+			{{!Bloque reviews}}
+
+	</div>
+</div>
+{{outlet}}

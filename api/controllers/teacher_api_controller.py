@@ -1,4 +1,6 @@
 import endpoints
+from google.appengine.ext import ndb
+
 from protorpc import message_types
 
 from api import teachme_api
@@ -27,7 +29,7 @@ class TeacherEndpoint(BaseApiController):
                       path='{id}', http_method='GET',
                       name='get_one')
     def get_teacher(self, request):
-        teacher = Teacher.get_by_id(request.id)
+        teacher = Teacher.get_by_id(request.id, parent=ndb.Key('user', 5629499534213120))
         if not teacher:
             raise endpoints.NotFoundException(
               "The teacher ID: " + str(request.id) + " doesn't exist")
