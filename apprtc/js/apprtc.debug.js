@@ -593,7 +593,7 @@ Call.prototype.hangup = function(async) {
   }
 };
 Call.prototype.getLeaveUrl_ = function() {
-  return this.roomServer_ + "/leave/" + this.params_.roomId + "/" + this.params_.clientId;
+  return this.roomServer_ + "/session/leave/" + this.params_.roomId + "/" + this.params_.clientId;
 };
 Call.prototype.onRemoteHangup = function() {
   this.startTime = null;
@@ -761,7 +761,7 @@ Call.prototype.joinRoom_ = function() {
     if (!this.params_.roomId) {
       reject(Error("Missing room id."));
     }
-    var path = this.roomServer_ + "/join/" + this.params_.roomId + window.location.search;
+    var path = this.roomServer_ + "/session/join/" + this.params_.roomId + window.location.search;
     sendAsyncUrlRequest("POST", path).then(function(response) {
       var responseObj = parseJSON(response);
       if (!responseObj) {
@@ -787,7 +787,7 @@ Call.prototype.onRecvSignalingChannelMessage_ = function(msg) {
 Call.prototype.sendSignalingMessage_ = function(message) {
   var msgString = JSON.stringify(message);
   if (this.params_.isInitiator) {
-    var path = this.roomServer_ + "/message/" + this.params_.roomId + "/" + this.params_.clientId + window.location.search;
+    var path = this.roomServer_ + "/session/message/" + this.params_.roomId + "/" + this.params_.clientId + window.location.search;
     var xhr = new XMLHttpRequest;
     xhr.open("POST", path, true);
     xhr.send(msgString);
@@ -1307,7 +1307,7 @@ RoomSelection.prototype.buildRecentRoomList_ = function(recentRooms) {
     var href = document.createElement("a");
     var linkText = document.createTextNode(recentRooms[i]);
     href.appendChild(linkText);
-    href.href = location.origin + "/r/" + encodeURIComponent(recentRooms[i]);
+    href.href = location.origin + "/session/r/" + encodeURIComponent(recentRooms[i]);
     li.appendChild(href);
     this.roomRecentList_.appendChild(li);
     href.addEventListener("click", this.makeRecentlyUsedClickHandler_(recentRooms[i]).bind(this), false);
