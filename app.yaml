@@ -13,32 +13,33 @@ handlers:
   static_files: favicon.ico
   upload: favicon\.ico
 
-- url: /html
-  static_dir: wrtccrap/html
-  secure: always
+- url: /(.*\.html)
+  static_files: html/\1
+  upload: html/(.*\.html)
 
 - url: /images
-  static_dir: wrtccrap/images
-  secure: always
+  static_dir: apprtc/images
 
 - url: /js
-  static_dir: wrtccrap/js
+  static_dir: apprtc/js
+
+- url: /css
+  static_dir: apprtc/css
+
+- url: /compute/.*
+  script: apprtc.apprtc.app
+  login: admin
+
+- url: /probe.*
+  script: apprtc.probers.app
   secure: always
 
-- url: /session/css
-  static_dir: wrtccrap/css
+- url: /session.*
+  script: apprtc.apprtc.app
   secure: always
 
 - url: /admin.*
   script: admin.app
-  secure: always
-
-- url: /session.*
-  script: wrtc.app
-  secure: always
-
-- url: /_ah/channel.*
-  script: wrtc.app
   secure: always
 
 - url: /_ah/spi/.*
@@ -62,8 +63,10 @@ libraries:
   version: latest
 - name: ssl
   version: latest
+- name: pycrypto
+  version: latest
 - name: endpoints
   version: 1.0
 
-
-
+env_variables:
+  BYPASS_JOIN_CONFIRMATION: false
