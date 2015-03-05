@@ -23,6 +23,9 @@ import analytics
 import analytics_page
 import compute_page
 import constants
+# teachme
+from helpers import IceServersHelper
+# /teachme
 
 jinja_environment = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
@@ -42,7 +45,10 @@ def get_hd_default(user_agent):
 
 # iceServers will be filled in by the TURN HTTP request.
 def make_pc_config(ice_transports):
-  config = { 'iceServers': [] };
+  # teachme
+  iceServers = IceServersHelper.make_ice_servers()
+  config = {'iceServers': iceServers}
+  # /teachme
   if ice_transports:
     config['iceTransports'] = ice_transports
   return config
@@ -372,10 +378,10 @@ def add_client_to_room(request, room_id, client_id, is_loopback):
       logging.info('Added client %s in room %s, retries = %d' \
           %(client_id, room_id, retries))
 
-      if room.get_occupancy() == 2:
-        analytics.report_event(analytics.EventType.ROOM_SIZE_2,
-                               room_id,
-                               host=request.host)
+      # if room.get_occupancy() == 2:
+        # analytics.report_event(analytics.EventType.ROOM_SIZE_2,
+        #                        room_id,
+        #                        host=request.host)
       success = True
       break
     else:
