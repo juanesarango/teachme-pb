@@ -6,8 +6,7 @@ import teachme_db
 import logging
 import main
 import fns
-from lib.elibom import Client
-from lib.twilio.rest import TwilioRestClient
+from twilio.rest import TwilioRestClient
 
 
 def parse_24_12(hora, minuto):
@@ -145,7 +144,6 @@ def notify_sms(user, user2, method, who, date):
                1: [u'Recuerda tu cita con {user} en Teachme. {date}',
                    u'Recuerda tu cita con {user} en Teachme. {date}']}
 
-    elibom = Client.ElibomClient('info@teachmeapp.com', 'Xw1EqiL4q0')
     twilio = TwilioRestClient('AC72f22161a9c99728f48fe1584fe9f59b', '6b7c664f6d0a5d9191bfb2d7d7e47f05')
 
     if user.movil:
