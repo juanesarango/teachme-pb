@@ -1,3 +1,5 @@
+var whiteboardOn = $('#whiteboard-on');
+whiteboardOn.addEventListener('click', onTablero);
 
 function gotReceiveChannel(event){
   trace('Receive Channel Callback');
@@ -31,7 +33,7 @@ function sendData(d){
 function handleMessage(event){
   trace('receive message: ' + event.data);
   var rec = JSON.parse(event.data);
-  console.log('el mensaje recibido: ' + event.data);
+  console.log('The received message is: ' + event.data);
 
   switch (rec.fn){
     case 'onTablero':
@@ -72,5 +74,56 @@ function handleMessage(event){
     case 'redo':
       cRedo();
       break;
+  }
+}
+
+function onTablero(s){
+  tablero = true
+  miniLocalVideo = document.getElementById('miniLocalVideo');
+  miniRemoteVideo = document.getElementById('miniRemoteVideo');
+  whiteboard = document.getElementById('whiteboard');
+  appController.videosDiv_.style.display = "none";
+  reattachMediaStream(miniRemoteVideo, remoteVideo);
+  reattachMediaStream(miniLocalVideo, appController.miniVideo_);
+  //attachMediaStream(miniLocalVideo, localStream);
+  remoteVideo.src = '';
+  appController.miniVideo_.src = '';
+  whiteboard.style.display = "block";
+  miniLocalVideo.style.opacity = '1';
+  miniRemoteVideo.style.opacity = '1';
+  //remoteVideo.style.opacity = '0'
+  //miniVideoRemote.style.opacity = '1';
+  // drawConfi();
+  // displayButtons(videoChat);
+  // if (chat==true){
+  //   hideChat();
+  //   showChat();
+  // }
+  // if (!s){
+  //   var sender = '{"fn":"onTablero", "onTablero":true}';
+  //   sendData(sender);
+  // }
+}
+
+function offTablero(s){
+  tablero = false;
+  miniLocalVideo = document.getElementById('miniLocalVideo');
+  miniRemoteVideo = document.getElementById('miniRemoteVideo');
+  whiteboard = document.getElementById('whiteboard');
+  whiteboard.style.display = "none";
+  reattachMediaStream(remoteVideo, miniRemoteVideo);
+  reattachMediaStream(miniVideo, miniLocalVideo);
+  miniRemoteVideo.src = '';
+  miniLocalVideo.src = '';
+  containerDiv.style.display = "block";
+  window.onresize();
+  displayButtons(videoChat);
+  if (chat==true){
+    hideChat();
+    showChat();
+  }
+  if (!s){
+    var sender = '{"fn": "offTablero", "offTablero":true}';
+    sendData(sender);
   }
 }
