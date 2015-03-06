@@ -398,3 +398,281 @@ svg:hover {
 
 /*////// icons CSS end /////////////////////////*/
 
+*{
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+a:link { color: #FFFFFF; }
+a:visited {color: #FFFFFF; }
+html, body {
+  background-color: #000000;
+  height: 100%;
+}
+body {
+  margin: 0;
+  padding: 0;
+}
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 28px;
+  background-color: #3F3F3F;
+  color: #FFFFFF;
+  font-size: 13px; font-weight: bold;
+  line-height: 28px;
+  text-align: center;
+}
+#container {
+  background-color: #000000;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  margin: 0px auto;
+  -webkit-perspective: 1000;
+}
+
+#chatbox{
+  position: fixed;
+  left: 50%;
+  bottom: 34px;
+  z-index: 100;
+  display: none;
+  margin-left: -161px;
+  margin-right: auto; 
+}
+
+#logchat{
+  height: 100px; 
+  background-color:#FFFFFF;
+  overflow-y: auto;
+  padding: 14 px;
+  border-radius: 8px;
+}
+
+.logsend{
+  text-align:right;
+  color: blue;
+  font-size: 1em;
+}
+
+.logreceive{
+  text-align:right;
+  color: red;
+  font-size: 1em;
+}
+
+#inputchat{
+  padding-top: 14px;
+  padding-left: 10px;
+  padding-bottom: 14px;
+}
+
+#chat{
+  height: 24px;
+  overflow-y: hidden;
+  font-size: 0.8em;
+}
+
+#btnEnviar{
+  padding: 1px 8px;
+}
+
+#card {
+  -webkit-transition-duration: 2s;
+  -webkit-transform-style: preserve-3d;
+}
+#local {
+  position: absolute;
+  width: 100%;
+  transform: scale(-1, 1);
+  -webkit-transform: scale(-1, 1);
+  -webkit-backface-visibility: hidden;
+}
+#remote {
+  position: absolute;
+  width: 100%;
+  -webkit-transform: rotateY(180deg);
+  -webkit-backface-visibility: hidden;
+}
+#mini {
+  position: absolute;
+  height: 20%;
+  width: 20%;
+  bottom: 32px;
+  right: 4px;
+  opacity: 1.0;
+  transform: scale(-1, 1);
+  -webkit-transform: scale(-1, 1);
+}
+#miniRemote{
+  position: absolute;
+  height: 20%;
+  width: 20%;
+  bottom: 32px;
+  left: 4px;
+  opacity: 1.0;
+}
+#localVideo {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  -webkit-transition-property: opacity;
+  -webkit-transition-duration: 2s;
+}
+#remoteVideo {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  -webkit-transition-property: opacity;
+  -webkit-transition-duration: 2s;
+}
+#miniVideo {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  -webkit-transition-property: opacity;
+  -webkit-transition-duration: 2s;
+}
+
+#miniVideoRemote{
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  -webkit-transition-property: opacity;
+  -webkit-transition-duration: 2s;
+}
+
+#hangup {
+  padding: 1px 12px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.wrtcbtn{
+  padding: 1px 12px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.wrtcbtn{
+  padding: 1px 12px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.wrtcbtn{
+  padding: 1px 12px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+#tablero{
+  padding: 1px 12px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+#chatbtn{
+  padding: 1px 12px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+#infoDiv {
+  position: absolute;
+  float: right;
+  background-color: grey;
+  margin: 2px;
+  display: none;
+}
+
+#canvas{
+  cursor: pointer;
+}
+
+#drawingapp{
+  display: none;
+}
+
+#toolbar{
+  width: 100%;
+  height: 50px;
+  background-color: #428bca;
+  color: white;
+    }
+
+.radcontrol{
+  width: 30px;
+  height: 30px;
+  background-color: #4f4f4f;
+  display: inline-block;
+  text-align: center;
+  padding: 5px;
+}
+
+#rad{
+  float: left;
+  margin-top: 0px;
+  margin-left: 20px;
+}
+
+#colors{
+  float: right;
+} 
+
+.swatch{
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  box-shadow: inset 0px 1px 0px rgba(255,255,255,0.5), 0px 2px 2px rgba(0,0,0,0.5);
+  display: inline-block;
+  margin-left: 10px;
+  margin-top: 8px;
+}
+
+.swatch.active{
+  border: 2px solid white;
+  box-shadow: inset 0px 1px 2px rgba(0,0,0,0.5);
+}
+
+#miniLocalVideo {
+  border: 1px solid gray;
+  bottom: 20px;
+  left: 20px;
+  /* video div is flipped horizontally when active*/
+  max-height: 17%;
+  max-width: 17%;
+  opacity: 0;
+  position: absolute;
+  transition: opacity 1s;
+}
+
+#miniRemoteVideo {
+  border: 1px solid gray;
+  bottom: 20px;
+  left: 100px;
+  /* video div is flipped horizontally when active*/
+  max-height: 17%;
+  max-width: 17%;
+  opacity: 0;
+  position: absolute;
+  transition: opacity 1s;
+}
+
+.boardicon{
+  border: 1px solid #428bca;
+  padding:4px;
+  border-radius:10px;
+  background-color: #428bca;
+  color: white;
+  text-align: center;
+}
+
+
