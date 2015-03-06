@@ -1,9 +1,26 @@
+"use strict";
 var RTCPeerConnection = null;
 var getUserMedia = null;
 var attachMediaStream = null;
 var reattachMediaStream = null;
 var webrtcDetectedBrowser = null;
 var webrtcDetectedVersion = null;
+
+var chat = false;
+var screenSharing = false;
+var videoChat = false;
+var remoteScreenSharing = false; 
+var tablero = false;
+var channel;
+var localScreenStream;
+var remoteScreenStream;
+var sendChannel;
+var receiveChannel;
+var drawLocalVideo;
+var drawRemoteVideo;
+var drawingApp;
+var chatbox;
+
 function trace(text) {
   if (text[text.length - 1] === "\n") {
     text = text.substring(0, text.length - 1);
@@ -144,7 +161,7 @@ function requestUserMedia(constraints) {
     }
   });
 }
-;var remoteVideo = $("#remote-video");
+var remoteVideo = $("#remote-video");
 var UI_CONSTANTS = {confirmJoinButton:"#confirm-join-button", confirmJoinDiv:"#confirm-join-div", confirmJoinRoomSpan:"#confirm-join-room-span", fullscreenSvg:"#fullscreen", hangupSvg:"#hangup", icons:"#icons", infoDiv:"#info-div", localVideo:"#local-video", miniVideo:"#mini-video", muteAudioSvg:"#mute-audio", muteVideoSvg:"#mute-video", newRoomButton:"#new-room-button", newRoomLink:"#new-room-link", remoteVideo:"#remote-video", rejoinButton:"#rejoin-button", rejoinDiv:"#rejoin-div", rejoinLink:"#rejoin-link", 
 roomLinkHref:"#room-link-href", roomSelectionDiv:"#room-selection", roomSelectionInput:"#room-id-input", roomSelectionInputLabel:"#room-id-input-label", roomSelectionJoinButton:"#join-button", roomSelectionRandomButton:"#random-button", roomSelectionRecentList:"#recent-rooms-list", sharingDiv:"#sharing-div", statusDiv:"#status-div", videosDiv:"#videos"};
 var AppController = function(loadingParams) {
@@ -1047,6 +1064,24 @@ var PeerConnectionClient = function(params, startTime) {
   this.pc_.onremovestream = trace.bind(null, "Remote stream removed.");
   this.pc_.onsignalingstatechange = this.onSignalingStateChanged_.bind(this);
   this.pc_.oniceconnectionstatechange = this.onIceConnectionStateChanged_.bind(this);
+   // Teachme
+    if(this.params_.isInitiator){
+      try{
+        //crear el canal de datos
+        debugger;
+        sendChannel = this.pc_.createDataChannel("sendDataChannel", {reliable: true});
+        trace('Created send data channel');
+      }catch(e){
+        alert('Error al intentar crear el canal');
+        trace('createDataChannel failed with exception: ' + e.message);
+      }
+      sendChannel.onopen = handleSendChannelStateChange;
+      sendChannel.onmessage = handleMessage;
+      sendChannel.onclose = handleSendChannelStateChange;
+    } else { //joiner
+      this.pc_.ondatachannel = gotReceiveChannel;
+    }
+    // /teachme
   this.hasRemoteSdp_ = false;
   this.messageQueue_ = [];
   this.isInitiator_ = false;
