@@ -669,3 +669,15 @@ blockquote{
     color: inherit;
     text-decoration: none;
 }
+
+@-webkit-keyframes redPulse{
+  from{color:#bc330d;}
+  50%{color:#e33100;}
+  to{color:#bc330d;}
+}
+
+.live-button{
+  -webkit-animation-name:redPulse;
+  -webkit-animation-duration:1s;
+  -webkit-animation-iteration-count: infinite;
+}
