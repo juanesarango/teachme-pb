@@ -25,6 +25,12 @@
 {% if not chromeapp %}
   <link rel="canonical" href="{{ room_link }}">
 {% endif %}
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
+  <script type="text/javascript" src="/static/js/bootstrap.js"></script>
+  <link rel="stylesheet" type="text/css" href="/css/flaticon.css">
   <link rel="stylesheet" href="/css/main.css">
 
 </head>
@@ -38,6 +44,61 @@
     <video id="mini-video" autoplay muted></video>
     <video id="remote-video" autoplay></video>
     <video id="local-video" autoplay muted></video>
+  </div>
+
+  <div id="whiteboard" class="hidden">
+    <div id="toolbar">
+      <div id="rad">
+        <button type="button" class="btn boardicon" id="undo" title="Deshacer cambio">
+            <span class="flaticon-reply" style="font-size:24px;"></span>
+        </button>
+        <button type="button" class="btn boardicon" id="redo" title="Rehacer cambio">
+            <span class="flaticon-arrow66" style="font-size:22px;"></span>
+        </button>
+        <a download="misNotas.png" class="btn boardicon" id="save" title="Guardar Imagen">
+            <span class="flaticon-floppy12" style="font-size:22px;"></span></a>
+        </button>
+        <button type="button" class="btn boardicon" id="clean" title="Limpiar el tablero">
+            <span class="flaticon-bin2" style="font-size:26px;"></span>
+        </button>
+        <div class="btn-group">
+          <button type="button" class="btn dropdown-toggle boardicon" data-toggle="dropdown" id="eraser" title="Definir tamaño del borrador">
+            <span class="flaticon-eraser8" style="font-size:24px;" id="erasericon"></span> <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu" style="min-width:80px;">
+            <li><a id="eraser1"><span class="flaticon-eraser8" style="font-size:12px;"></span></a></li>
+            <li><a id="eraser2"><span class="flaticon-eraser8" style="font-size:18px;"></span></a></li>
+            <li><a id="eraser3"><span class="flaticon-eraser8" style="font-size:24px;"></span></a></li>
+          </ul>
+        </div>
+         <div class="btn-group">
+          <button type="button" class="btn dropdown-toggle boardicon" data-toggle="dropdown" id="pencil" title="Definir grosor del trazo">
+            <span class="flaticon-gross" style="font-size:24px;" id ="pencilicon"></span> <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu" style="min-width:80px;">
+            <li><a id="pencil1"><span class="flaticon-gross" style="font-size:12px;"></span></a></li>
+            <li><a id="pencil2"><span class="flaticon-gross" style="font-size:18px;"></span></a></li>
+            <li><a id="pencil3"><span class="flaticon-gross" style="font-size:24px;"></span></a></li>
+          </ul>
+        </div>
+      </div>
+      <div id="colors">
+        <div class="swatch active" style="background-color: white"></div>
+        <div class="swatch" style="background-color: grey"></div>
+        <div class="swatch" style="background-color: black"></div>
+        <div class="swatch" style="background-color: red"></div>
+        <div class="swatch" style="background-color: orange"></div>
+        <div class="swatch" style="background-color: yellow"></div>
+        <div class="swatch" style="background-color: green"></div>
+        <div class="swatch" style="background-color: blue"></div>
+        <div class="swatch" style="background-color: indigo"></div>
+        <div class="swatch" style="background-color: violet"></div>
+      </div>
+    </div>
+
+    <canvas id="canvas">Your web browser doesn't support canvas :(</canvas>
+    <video id="miniRemoteVideo" autoplay></video>
+    <video id="miniLocalVideo" autoplay muted></video>
   </div>
 
   <div id="room-selection" class="hidden">
@@ -75,6 +136,23 @@
 
   <div id="icons" class="hidden">
 
+    <svg id="whiteboard-on" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewbox="-10 -10 68 68">
+       <circle cx="24" cy="24" r="34">
+        <title>White Board</title>
+      </circle>
+    <path class="on" transform="scale(0.6), translate(17,16)" d="M95.035,0
+      c-2.761,0-5,2.239-5,5v5h-85c-2.761,0-5,2.239-5,5v180c0,2.761,2.239,5,5,5h131.502l-45.873,82.572
+      c-3.256,5.833,5.509,10.703,8.742,4.857l45.629-82.133l45.629,82.133c3.233,5.846,11.998,0.976,8.742-4.857L153.533,200h131.502
+      c2.761,0,5-2.239,5-5V15c0-2.761-2.239-5-5-5h-85V5c0-2.761-2.239-5-5-5L95.035,0L95.035,0z M10.035,20h270v170h-270V20z M25.035,30
+      c-2.761,0-5,2.239-5,5v140c0,2.761,2.239,5,5,5h240c2.761,0,5-2.239,5-5V35c0-2.761-2.239-5-5-5H25.035z M30.035,40h230v130h-230V40
+      z"/>
+    <path class="off" transform="scale(0.6), translate(17,18)" d="M95.035,0
+      c-2.761,0-5,2.239-5,5v5h-85c-2.761,0-5,2.239-5,5v180c0,2.761,2.239,5,5,5h131.502l-45.873,82.572
+      c-3.256,5.833,5.509,10.703,8.742,4.857l45.629-82.133l45.629,82.133c3.233,5.846,11.998,0.976,8.742-4.857L153.533,200h131.502
+      c2.761,0,5-2.239,5-5V15c0-2.761-2.239-5-5-5h-85V5c0-2.761-2.239-5-5-5L95.035,0L95.035,0z M10.035,20h270v170h-270V20z M25.035,30
+      c-2.761,0-5,2.239-5,5v140c0,2.761,2.239,5,5,5h240c2.761,0,5-2.239,5-5V35c0-2.761-2.239-5-5-5H25.035z M30.035,40h230v130h-230V40
+      z">
+    </svg>
     <svg id="mute-audio" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewbox="-10 -10 68 68">
     <title>title</title>
       <circle cx="24" cy="24" r="34">
@@ -114,7 +192,6 @@
 {% endif %}
 
   <script src="/js/apprtc.debug.js"></script>
-  <script src="/js/teachme-rtc.js"></script>
 
 {% if chromeapp %}
   <script src="/js/appwindow.js"></script>
@@ -165,17 +242,15 @@
     }
 
     initialize();
+    $(function() {
+      $( "#miniLocalVideo" ).draggable();
+    });
+    $(function() {
+      $( "#miniRemoteVideo" ).draggable();
+    });
   </script>
-
-  <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-48530561-2', 'auto');
-    ga('send', 'pageview');
-  </script>
+  <script src="/js/teachme-rtc.js"></script>
+  <script type="text/javascript" src="/js/whiteboard.js"></script>
 {% endif %}
 </body>
 </html>

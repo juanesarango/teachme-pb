@@ -11,16 +11,16 @@
 [class^="flaticon-"]:before, [class*=" flaticon-"]:before,
 [class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
 	font-family: Flaticon;
+/*        font-size: 20px;
 font-style: normal;
-margin-left: 10px;
-margin-right: 10px;
+margin-left: 20px;*/
 }.flaticon-arrow66:before {
 	content: "\e000";
 }
-.flaticon-back1:before {
+.flaticon-bin2:before {
 	content: "\e001";
 }
-.flaticon-bin2:before {
+.flaticon-blank3:before {
 	content: "\e002";
 }
 .flaticon-eraser8:before {
@@ -32,6 +32,15 @@ margin-right: 10px;
 .flaticon-gross:before {
 	content: "\e005";
 }
-.flaticon-reply:before {
+.flaticon-image33:before {
 	content: "\e006";
+}
+.flaticon-back1:before {
+	content: "\e007";
+}
+.flaticon-textile:before {
+	content: "\e008";
+}
+.flaticon-reply:before {
+	content: "\e009";
 }

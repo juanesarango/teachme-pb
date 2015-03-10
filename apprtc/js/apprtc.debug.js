@@ -7,10 +7,6 @@ var webrtcDetectedBrowser = null;
 var webrtcDetectedVersion = null;
 
 var chat = false;
-var screenSharing = false;
-var videoChat = false;
-var remoteScreenSharing = false; 
-var tablero = false;
 var channel;
 var localScreenStream;
 var remoteScreenStream;
@@ -353,6 +349,7 @@ AppController.prototype.transitionToActive_ = function() {
   this.displayStatus_("");
 };
 AppController.prototype.transitionToWaiting_ = function() {
+  offTablero(true);
   this.remoteVideo_.oncanplay = undefined;
   this.hide_(this.hangupSvg_);
   this.deactivate_(this.videosDiv_);
@@ -1068,7 +1065,6 @@ var PeerConnectionClient = function(params, startTime) {
     if(this.params_.isInitiator){
       try{
         //crear el canal de datos
-        debugger;
         sendChannel = this.pc_.createDataChannel("sendDataChannel", {reliable: true});
         trace('Created send data channel');
       }catch(e){

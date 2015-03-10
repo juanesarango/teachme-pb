@@ -1,6 +1,12 @@
 var whiteboardOn = $('#whiteboard-on');
-whiteboardOn.addEventListener('click', onTablero);
-
+whiteboardOn.addEventListener('click', toggleWhiteboard);
+var miniLocalVideo = $('#miniLocalVideo');
+var miniRemoteVideo = $('#miniRemoteVideo');
+var whiteboard = $('#whiteboard');
+var screenSharing = false;
+var videoChat = false;
+var remoteScreenSharing = false; 
+var tablero = false;
 function gotReceiveChannel(event){
   trace('Receive Channel Callback');
   receiveChannel = event.channel;
@@ -77,53 +83,60 @@ function handleMessage(event){
   }
 }
 
+function toggleWhiteboard(){
+  if (!tablero){
+    onTablero(false);
+  }else {
+    offTablero(false);
+  }
+}
+
 function onTablero(s){
   tablero = true
-  miniLocalVideo = document.getElementById('miniLocalVideo');
-  miniRemoteVideo = document.getElementById('miniRemoteVideo');
-  whiteboard = document.getElementById('whiteboard');
-  appController.videosDiv_.style.display = "none";
+  appController.hide_(appController.videosDiv_);
   reattachMediaStream(miniRemoteVideo, remoteVideo);
   reattachMediaStream(miniLocalVideo, appController.miniVideo_);
-  //attachMediaStream(miniLocalVideo, localStream);
+  appController.deactivate_(remoteVideo);
+  appController.deactivate_(appController.miniVideo_);
   remoteVideo.src = '';
   appController.miniVideo_.src = '';
-  whiteboard.style.display = "block";
-  miniLocalVideo.style.opacity = '1';
-  miniRemoteVideo.style.opacity = '1';
-  //remoteVideo.style.opacity = '0'
-  //miniVideoRemote.style.opacity = '1';
-  // drawConfi();
+  appController.show_(whiteboard);
+  appController.activate_(miniLocalVideo);
+  appController.activate_(miniRemoteVideo);
+  
+  drawConfi();
   // displayButtons(videoChat);
   // if (chat==true){
   //   hideChat();
   //   showChat();
   // }
-  // if (!s){
-  //   var sender = '{"fn":"onTablero", "onTablero":true}';
-  //   sendData(sender);
-  // }
+  if (!s){
+    var sender = '{"fn":"onTablero", "onTablero":true}';
+    sendData(sender);
+  }
 }
 
 function offTablero(s){
-  tablero = false;
-  miniLocalVideo = document.getElementById('miniLocalVideo');
-  miniRemoteVideo = document.getElementById('miniRemoteVideo');
-  whiteboard = document.getElementById('whiteboard');
-  whiteboard.style.display = "none";
-  reattachMediaStream(remoteVideo, miniRemoteVideo);
-  reattachMediaStream(miniVideo, miniLocalVideo);
-  miniRemoteVideo.src = '';
-  miniLocalVideo.src = '';
-  containerDiv.style.display = "block";
-  window.onresize();
-  displayButtons(videoChat);
-  if (chat==true){
-    hideChat();
-    showChat();
-  }
-  if (!s){
-    var sender = '{"fn": "offTablero", "offTablero":true}';
-    sendData(sender);
+  if (tablero){
+    tablero = false;
+    appController.hide_(whiteboard);
+    reattachMediaStream(remoteVideo, miniRemoteVideo);
+    reattachMediaStream(appController.miniVideo_, miniLocalVideo);
+    appController.deactivate_(miniLocalVideo);
+    appController.deactivate_(miniRemoteVideo);
+    miniRemoteVideo.src = '';
+    miniLocalVideo.src = '';
+    appController.show_(appController.videosDiv_);
+    appController.activate_(remoteVideo);
+    appController.activate_(appController.miniVideo_);
+    // displayButtons(videoChat);
+    // if (chat==true){
+    //   hideChat();
+    //   showChat();
+    // }
+    if (!s){
+      var sender = '{"fn": "offTablero", "offTablero":true}';
+      sendData(sender);
+    }
   }
 }
