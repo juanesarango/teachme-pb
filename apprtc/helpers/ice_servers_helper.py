@@ -22,11 +22,11 @@ class IceServersHelper():
         #     if "credential" in server:
         #         newIceServers[0]['password'] = server["credential"]
         #     if "username" in server:
-        #         newIceServers[0]['username'] = server["username"]
-        cls.create_room_xir("1234")
-        xirSysServers = cls.create_turn_servers("1234")
-        for i in xirSysServers:
-            token.ice_servers.append(i)
+        # #         newIceServers[0]['username'] = server["username"]
+        # cls.create_room_xir("1234")
+        # xirSysServers = cls.create_turn_servers("1234")
+        # for i in xirSysServers:
+        #     token.ice_servers.append(i)
 
         return token.ice_servers
 

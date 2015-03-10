@@ -1,8 +1,10 @@
 application: teachme-dev
-version: v1
+version: vp0
 runtime: python27
 api_version: 1
 threadsafe: true
+
+default_expiration: "0m"
 handlers:
 
 - url: /static
