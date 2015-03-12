@@ -7,7 +7,7 @@ handlers:
 
 - url: /static
   static_dir: templates/static
-  secure: always
+  secure: optional
 
 - url: /favicon\.ico
   static_files: favicon.ico
