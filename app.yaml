@@ -44,6 +44,9 @@ handlers:
 - url: /_ah/spi/.*
   script: services.APPLICATION
 
+- url: /live
+  script: main.app
+
 - url: /.*
   script: main.app
   secure: always
