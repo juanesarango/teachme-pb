@@ -9,7 +9,7 @@ handlers:
 
 - url: /static
   static_dir: templates/static
-  secure: always
+  secure: optional
 
 - url: /favicon\.ico
   static_files: favicon.ico
@@ -46,6 +46,9 @@ handlers:
 
 - url: /_ah/spi/.*
   script: services.APPLICATION
+
+- url: /live
+  script: main.app
 
 - url: /.*
   script: main.app

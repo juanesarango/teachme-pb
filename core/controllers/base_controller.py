@@ -10,6 +10,7 @@ import teachme_db
 from google.appengine.ext import ndb
 from webapp2_extras import i18n
 from webapp2_extras.i18n import gettext as _
+from core.helpers import TwitchHelper
 
 
 class BaseController(webapp2.RequestHandler):
@@ -56,6 +57,7 @@ class BaseController(webapp2.RequestHandler):
         params['suggestions'] = json.dumps(suggestions)
         params['shareUrl'] = self.request.url
         params['language'] = _('language')
+        params['live'] = self.live
         return jinja_fns.render_str(template, **params)
 
     def render(self, template, **kw):
@@ -83,9 +85,18 @@ class BaseController(webapp2.RequestHandler):
         self.response.headers.add_header("Set-Cookie", "usi=; Path=/")
         self.response.headers.add_header("Set-Cookie", "tei=; Path=/")
 
+    def check_live(self):
+        live = False
+        channels = ['juliankmazo', 'teachmeapp']
+        for channel in channels:
+            if TwitchHelper.is_channel_live(channel):
+                live = True
+        return live
+
     def initialize(self, *a, **kw):
         webapp2.RequestHandler.initialize(self, *a, **kw)
         ukey = self.read_secure_cookie("usi")
         tkey = self.read_secure_cookie("tei")
         self.user = ukey and ndb.Key(urlsafe=ukey).get()
         self.teacher = tkey and ndb.Key(urlsafe=tkey).get()
+        self.live = self.check_live()

@@ -54,4 +54,4 @@ main.pyc
 teachme_db.pyc
 main.pyc
 *.pyc
-lib/
+lib

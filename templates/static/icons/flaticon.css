@@ -26,24 +26,27 @@ margin-left: 20px;*/
 .flaticon-facebook29:before {
 	content: "\e003";
 }
-.flaticon-heart15:before {
+.flaticon-social5:before {
 	content: "\e004";
 }
-.flaticon-linkedin7:before {
+.flaticon-heart15:before {
 	content: "\e005";
 }
-.flaticon-online:before {
+.flaticon-linkedin7:before {
 	content: "\e006";
 }
-.flaticon-share11:before {
+.flaticon-programming9:before {
 	content: "\e007";
 }
-.flaticon-social105:before {
+.flaticon-share11:before {
 	content: "\e008";
 }
-.flaticon-social38:before {
+.flaticon-social105:before {
 	content: "\e009";
 }
-.flaticon-social5:before {
+.flaticon-online:before {
 	content: "\e00a";
+}
+.flaticon-social38:before {
+	content: "\e00b";
 }

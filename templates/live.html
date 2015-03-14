@@ -1,0 +1,54 @@
+{% extends "base_main.html" %}
+
+{% set title = "Teachme Live"%}
+
+{% block body %}
+<div class="cover">
+	<div class="container">
+		<div class="row" style="margin: 120px 0 0 0;">
+			<div class="col-lg-7 col-lg-offset-1 col-md-9">
+				<div class="embed-responsive embed-responsive-16by9" id="live-video">
+					<object type="application/x-shockwave-flash" height="390" width="640" id="live_embed_player_flash" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=juliankmazo" bgcolor="#000000">
+           <param name="allowFullScreen" value="true">
+           <param name="allowScriptAccess" value="always">
+           <param name="allowNetworking" value="all">
+           <param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf">
+           <param name="flashvars" value="hostname=www.twitch.tv&amp;channel=juliankmazo&amp;auto_play=true">
+         </object>
+				 <!--  <iframe class="embed-responsive-item" src="https://twitch.tv/juliankmazo/embed?auto_play=false" frameborder="0" scrolling="no" height="378" width="620" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> -->
+				</div>
+			</div>
+
+			<div class="col-lg-3 col-md-3 bckg-b-80">
+				<h3><a href="https://www.teachmeapp.com/teacher/ag1zfnRlYWNobWUtZGV2ciULEgR1c2VyGICAgID4woQKDAsSB3RlYWNoZXIYgICAgICumQoM">Julián Cárdenas Mazo</a><br><small><span class="flaticon-programming9"></span> Programando Teachme en vivo!</small></h3>
+				<p>Soy el cofundador de Teachme y diariamente estoy trabajando para mejorar nuestra plataforma para que puedas tener un acceso más fácil y rápido
+				a las personas que poseen el conocimiento que tu necesitas. En sintonía con la filosofía de teachme (Encuentra conocimiento, comparte el tuyo) estamos creando este nuevo espacio para que los expertos compartan sus conocimientos en vivo y para todos. Comprometido con esta filosofía, estaré transmitiendo en vivo algunos días de la semana la forma en que programamos los servidores de Teachme. Esperamos que esta nueva característica sea de tu agrado, y por favor, ayúdanos a mejorarla, envíanos tus comentarios por cualquiera de nuestras redes sociales :)</p>
+			</div>
+		</div>
+		<br>
+		<br>
+		<div class="row" style="margin: 120px 0 0 0;">
+			<div class="col-lg-7 col-lg-offset-1 col-md-9">
+				<div class="embed-responsive embed-responsive-16by9" id="live-video">
+					<object type="application/x-shockwave-flash" height="390" width="640" id="live_embed_player_flash" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=teachmeapp" bgcolor="#000000">
+           <param name="allowFullScreen" value="true">
+           <param name="allowScriptAccess" value="always">
+           <param name="allowNetworking" value="all">
+           <param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf">
+           <param name="flashvars" value="hostname=www.twitch.tv&amp;channel=teachmeapp&amp;auto_play=false">
+         </object>
+				 <!--  <iframe class="embed-responsive-item" src="https://twitch.tv/teachmeapp/embed" frameborder="0" scrolling="no" height="378" width="620" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> -->
+				</div>
+			</div>
+
+			<div class="col-lg-3 col-md-3 bckg-b-80">
+				<h3><a href="https://www.teachmeapp.com/teacher/ag1zfnRlYWNobWUtZGV2ciULEgR1c2VyGICAgID6so0KDAsSB3RlYWNoZXIYgICAgIDkkQoM">Johny Marquez</a><br><small><span class="glyphicon glyphicon-pencil"></span> Dibujando en photoshop en vivo!</small></h3>
+			</div>
+		</div>
+		<br>
+		<br>
+	</div>
+	</div>
+</div>
+
+{% endblock %}
