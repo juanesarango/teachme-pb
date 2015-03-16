@@ -58,6 +58,7 @@ class BaseController(webapp2.RequestHandler):
         params['shareUrl'] = self.request.url
         params['language'] = _('language')
         params['live'] = self.live
+        params['company'] = self.company
         return jinja_fns.render_str(template, **params)
 
     def render(self, template, **kw):
@@ -100,3 +101,4 @@ class BaseController(webapp2.RequestHandler):
         self.user = ukey and ndb.Key(urlsafe=ukey).get()
         self.teacher = tkey and ndb.Key(urlsafe=tkey).get()
         self.live = self.check_live()
+        self.company = 'sura'

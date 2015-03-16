@@ -58,6 +58,13 @@
 						<p class="help-block">{{error_pwcon}}</p>
 					</div>
 					<button type="submit" class="btn btn-success">{% trans %}Registrate{% endtrans %}</button>
+					<a class="pull-right" style="margin-top: 10px; text-decoration: none;" 
+						{% if redirect == '/' %}
+							href='/login' 
+						{% else %}
+							href='/login?redirect={{redirect}}'
+						{% endif %}
+					>{% trans %} Ya estoy registrado {% endtrans %}</a>
 					<input type="hidden" name="redirect" value={{redirect}}>
 					<input type="hidden" name="timezoneOffset" id="timezoneOffset">
 					<input type="hidden" name="gender" id="gender">

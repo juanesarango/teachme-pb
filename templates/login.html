@@ -37,12 +37,19 @@
 					</div>
 					<div class="checkbox">
 						<input name="remember" type="checkbox" value="yes">{% trans %}Recuérdame{% endtrans %}
-						<a href="/account/recover" class="pull-right">Olvidaste tu contraseña?</a>
+						<a href="/account/recover" class="pull-right" style="text-decoration: none;">Olvidaste tu contraseña?</a>
 					</div>	
 					<input type="hidden" name="fbID" id="fbID">
 					<br>
 					<button type="submit" class="btn btn-success">{% trans %}Ingresa{% endtrans %}</button>
 					<input type="hidden" name="redirect" value={{redirect}}>
+					<a class="pull-right" style="margin-top: 10px; text-decoration: none;" 
+						{% if redirect == '/' %}
+							href='/signup' 
+						{% else %}
+							href='/signup?redirect={{redirect}}'
+						{% endif %}
+					>{% trans %} Crear una cuenta nueva {% endtrans %}</a>
 					<br>
 					<br>
 				</form>
