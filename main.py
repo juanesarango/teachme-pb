@@ -828,6 +828,7 @@ app = webapp2.WSGIApplication([('/', MainPage),
                                ('/tasks/remindermailing15', reminder_mailing_15),
                                ('/sitemap.xml', sitemap),
                                ('/serve/([^/]+)?', servehandler),
+                               ('/sura', SuraController),
                                ('/sura/([\w-]+)?', SuraController),
                                ('/live', LiveController)
                                ], debug=True, config=jinja_fns.config)
