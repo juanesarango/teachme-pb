@@ -104,6 +104,8 @@ class areas(ndb.Model):
     subarea = ndb.StringProperty(repeated=True)
     url = ndb.StringProperty()
     namet = ndb.StringProperty()
+    company = ndb.KeyProperty()
+    category = ndb.StringProperty()
 
 
 class tags(ndb.Model):
