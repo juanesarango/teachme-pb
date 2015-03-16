@@ -1,0 +1,1 @@
+/Users/juanes/Developer/teachme/frontend/tmp/babel-tmp_dest_dir-P2ThPZB4.tmp/frontend/tests/unit/adapters/application-test.js

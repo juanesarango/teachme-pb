@@ -1,0 +1,1 @@
+/Users/juanes/Developer/teachme/frontend/app/models/teacher.js

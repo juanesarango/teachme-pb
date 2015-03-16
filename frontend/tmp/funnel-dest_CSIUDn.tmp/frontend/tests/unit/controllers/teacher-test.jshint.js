@@ -1,0 +1,1 @@
+/Users/juanes/Developer/teachme/frontend/tmp/jshinter-tmp_dest_dir-VUQuyzJI.tmp/unit/controllers/teacher-test.jshint.js

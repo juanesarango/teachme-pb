@@ -1,0 +1,1 @@
+/Users/juanes/Developer/teachme/frontend/tmp/caching-writer-dest-dir_JhrXkP.tmp/assets/frontend.js

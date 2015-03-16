@@ -1,0 +1,4 @@
+module('JSHint - serializers');
+test('serializers/taecher.js should pass jshint', function() { 
+  ok(true, 'serializers/taecher.js should pass jshint.'); 
+});

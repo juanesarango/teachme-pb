@@ -1,0 +1,10 @@
+define('frontend/tests/unit/controllers/teacher-test.jshint', function () {
+
+  'use strict';
+
+  module('JSHint - unit/controllers');
+  test('unit/controllers/teacher-test.js should pass jshint', function() { 
+    ok(true, 'unit/controllers/teacher-test.js should pass jshint.'); 
+  });
+
+});

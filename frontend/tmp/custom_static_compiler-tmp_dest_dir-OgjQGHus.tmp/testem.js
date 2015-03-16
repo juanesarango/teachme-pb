@@ -1,0 +1,1 @@
+/Users/juanes/Developer/teachme/frontend/node_modules/ember-cli/lib/broccoli/testem.js

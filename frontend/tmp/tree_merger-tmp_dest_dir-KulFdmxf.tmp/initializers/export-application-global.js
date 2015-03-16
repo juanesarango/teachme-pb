@@ -1,0 +1,1 @@
+/Users/juanes/Developer/teachme/frontend/tmp/tree_merger-tmp_dest_dir-nOkrQ5bq.tmp/initializers/export-application-global.js

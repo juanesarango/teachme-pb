@@ -1,0 +1,1 @@
+/Users/juanes/Developer/teachme/frontend/node_modules/ember-bootstrap/addon/mixins/type-class.js
