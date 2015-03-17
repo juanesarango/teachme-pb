@@ -22,6 +22,7 @@ import jinja_fns
 from core.helpers import MentorHelper
 from core.controllers import BaseController
 from core.controllers import SuraController
+from core.controllers import SuraProfileController
 
 from core.controllers import ForgotPasswordController
 from core.controllers import ResetPasswordController
@@ -832,5 +833,6 @@ app = webapp2.WSGIApplication([('/', MainPage),
                                ('/serve/([^/]+)?', servehandler),
                                ('/sura', SuraController),
                                ('/sura/([\w-]+)?', SuraController),
+                               ('/sura/profile/([\w-]+)?', SuraProfileController),
                                ('/live', LiveController)
                                ], debug=True, config=jinja_fns.config)

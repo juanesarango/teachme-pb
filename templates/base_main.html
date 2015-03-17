@@ -111,7 +111,7 @@
 						{% if not teacher %}
 							<li><a href="/comparte">{% trans %}Ensena{% endtrans %}</a></li>
 						{% endif %}
-						<li><a href="http://www.teachmeapp.com/live"><span class="glyphicon glyphicon-record {% if live %}live-button{% endif %}"></span> Live </a></li>
+						<li><a href="http://www.teachmeapp.com/live"><span class="glyphicon glyphicon-record {% if live %}live-button{% endif %}"></span>{% trans %} Live {% endtrans %}</a></li>
 					</ul>
 					{% if active_page != "main_page" %}
 						<form class="navbar-form navbar-left" role="search" action="/buscar/" method="get">
@@ -126,7 +126,15 @@
 							<li><a href="/teachouts">{% trans %}Sesiones{% endtrans %}</a></li>
 						{% endif %}
 						{% if user %}
-							{% if teacher %}
+							{% if company %}
+								<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">{{teacher.name}}<b class="caret"></b></a>
+									<ul class="dropdown-menu">
+										<li><a href="sura/profile/{{teacher.key.id()}}"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;{% trans %}Perfil{% endtrans %}</a></li>
+										<li><a href="/account"><span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;{% trans %}Cuenta{% endtrans %}</a></li>
+										<li><a href="/messages"><span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp;{% trans %}Mensajes{% endtrans %}</a></li>
+									</ul>
+								</li>
+							{% elif teacher %}
 								<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">{{teacher.name}}<b class="caret"></b></a>
 									<ul class="dropdown-menu">
 										<li><a href="/profile/teacher/{{teacher.key.id()}}"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;{% trans %}Perfil{% endtrans %}</a></li>
