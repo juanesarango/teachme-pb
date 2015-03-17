@@ -8,3 +8,4 @@ class Company(BaseModel):
     urldomain = ndb.StringProperty()
     areas = ndb.KeyProperty(repeated=True)
     logo = ndb.StringProperty()
+    email_domain = ndb.StringProperty()

@@ -4,4 +4,6 @@ from sura_controller import SuraController
 from auth_controller import ForgotPasswordController
 from auth_controller import ResetPasswordController
 
+from signup_controller import SignupController
+
 from live_controller import LiveController

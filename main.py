@@ -26,6 +26,8 @@ from core.controllers import SuraController
 from core.controllers import ForgotPasswordController
 from core.controllers import ResetPasswordController
 
+from core.controllers import SignupController
+
 from core.controllers import LiveController
 from random import shuffle
 
@@ -797,7 +799,7 @@ class messages(BaseController):
 
 app = webapp2.WSGIApplication([('/', MainPage),
                                ('/language', language),
-                               ('/signup', signup),
+                               ('/signup', SignupController),
                                ('/login', login),
                                ('/logout', logout),
                                ('/account/recover', ForgotPasswordController),
