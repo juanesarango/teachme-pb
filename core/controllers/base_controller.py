@@ -12,6 +12,8 @@ from webapp2_extras import i18n
 from webapp2_extras.i18n import gettext as _
 from core.helpers import TwitchHelper
 
+from core.models import Company
+
 
 class BaseController(webapp2.RequestHandler):
 
@@ -101,4 +103,4 @@ class BaseController(webapp2.RequestHandler):
         self.user = ukey and ndb.Key(urlsafe=ukey).get()
         self.teacher = tkey and ndb.Key(urlsafe=tkey).get()
         self.live = self.check_live()
-        self.company = 'sura'
+        self.company = Company.query().get()

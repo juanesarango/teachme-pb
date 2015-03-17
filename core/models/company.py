@@ -4,7 +4,8 @@ from google.appengine.ext import ndb
 
 class Company(BaseModel):
     name = ndb.StringProperty()
-    domain = ndb.StringProperty()
-    urldomain = ndb.StringProperty()
+    email_domain = ndb.StringProperty()
+    url_domain = ndb.StringProperty()
     areas = ndb.KeyProperty(repeated=True)
     logo = ndb.StringProperty()
+    admins = ndb.StringProperty(repeated=True)

@@ -1,0 +1,74 @@
+{% extends "base_main.html" %}
+{% set title = "Administrador Sura" %}
+{% block body %}
+
+<div class="backgnd" style="background-image: url('/static/signup.jpg')">
+	<br>
+	<br>
+	<div class="container bckg-w-80">
+		<div class="row">
+			<div class="col-md-12 col-md-offset-1">
+				<h2>Panel de Administrador <small>{{company.name}}</small></h2>
+			</div>
+		</div>
+		<br>
+		<br>
+    <div class="col-md-11 col-md-offset-1">
+    	<h4>Agregar Nueva Área</h4>
+      <div class="row">
+        <div class="col-md-10">
+	        <form role="form" method="post">
+	        	<div class="form-group col-xs-4 form-np">
+	        		<input class="form-control" name="area_name" placeholder="Nombre del área nueva" required>
+	        	</div>
+	          <div class="form-group col-xs-4 form-np">
+	            <select class="form-control" name="area_category" required>
+	              {% if categories %}
+		              {% for category in categories %}
+		                <option value="{{category.key.urlsafe()}}">{{category.name}}</option>
+		              {% endfor %}
+		            {% else %}
+		            	<option value="" disabled>No hay categorías</option>
+		            {% endif %}
+	            </select>
+	          </div>
+	          <button class="btn btn-primary col-xs-4" type="submit">Agregar Área</button>
+	        </form>
+        </div>
+      </div>
+    </div>
+    <br>
+    <br>
+    <div class="col-md-11 col-md-offset-1">
+      <h4>Áreas del Conocimiento</h4>
+      <div class="table-responsive">
+        <table class="table table-hover table-striped table-condensed size-12 table-bordered">
+          <thead class="table-teachme">
+            <tr>
+              <th>Categoría</th>
+              <th>Nombre Área</th>
+              <th>Cantidad de Usuarios</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for area in company_areas %}
+              <tr>
+                <td class="col-md-4">{{area.category.get().name}}</td>
+                <td class="col-md-4">{{area.name}}</td>
+                <td class="col-md-3">0</td>
+                <td class="col-md-1">
+	                <form role="form" method="post">
+	                  <input type="hidden" name="area_key" value="{{area.key.urlsafe()}}">
+	                  <button type="submit" class="btn pull-left btn-danger" style="padding: 2px 6px"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+	                </form>
+                </td>                                  
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

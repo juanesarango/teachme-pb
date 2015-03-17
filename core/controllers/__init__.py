@@ -2,6 +2,7 @@ from base_controller import BaseController
 
 from sura_controller import SuraController
 from sura_controller import SuraProfileController
+from sura_controller import SuraAdminController
 
 from auth_controller import ForgotPasswordController
 from auth_controller import ResetPasswordController

@@ -681,3 +681,14 @@ blockquote{
   -webkit-animation-duration:1s;
   -webkit-animation-iteration-count: infinite;
 }
+
+.company-logo{
+  min-width: 140px;
+  min-height: 140px;
+  height: auto;
+}
+
+.table-teachme{
+  background-color: #428bca;
+  color: white;
+}

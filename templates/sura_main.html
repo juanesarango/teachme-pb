@@ -18,86 +18,172 @@
 		<br>
 		<div class="container">
 			<div class="row">
-				<div class="col-md-8 col-md-offset-2 bckg-b-80">
+				<div class="col-md-1">
+					<br>
+					<a href='/sura'><img src="/static/sura/logoSura.jpg" class="img-circle company-logo"></a>
+				</div>
+				<div class="col-md-9 col-md-offset-1 bckg-b-80">
 					<div class="row">
-						<div class="col-md-12" style="padding:0px; line-height:3; font-size: 18px;">
+						<div class="col-md-12" style="padding:0px; line-height:2; font-size: 18px;">
 							<ul class="nav nav-pills nav-justified">
-							  <li role="presentation" class="active"><a href="#">Páginas Amarillas</a></li>
-							  <li role="presentation"><a href="#">Páginas Blancas</a></li>
+							  <li role="presentation" class="active"><a href="#cat0" data-toogle="pill">{{categories[0].name}}</a></li>
+							  <li role="presentation"><a href="#cat1" data-toogle="pill">{{categories[1].name}}</a></li>
 							</ul>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-md-12" style="padding:20px;">
-							<h1>
-							Páginas Amarillas	
-							</h1>
-							<h2 style="font-size: 16px; color: white;">{% trans %}Encuentra compañeros de la comunidad Sura que puedan ayudarte y colaborarte en el tema de <strong>{% endtrans %} 
-							{% if language == 'Español' %}
-								{{area.name}}
-							{% else %}
-								{{area.namet}}
-							{% endif %}	
-							.</strong></h2>
-						</div>
-					</div>
-					<br>
-					<div class="row">
-						<div class="col-md-4" style="padding:20px;">
-								<ul class="nav nav-pills nav-stacked">
-								{% for a in areas %}
-									<li style="font-size:16px;" {% if a.name==area.name %}class="active"{% endif %}>
-									{% if a.url %}
-										<a href="/sura/{{a.url}}">
-									{% else %}
-										<a href="/sura/{{a.key.id()}}">
-									{% endif %}
-									{% if language == 'Español' %}
-										{{a.name}}
-									{% else %}
-										{{a.namet}}
-									{% endif %}	
-									</a></li>
-								{% endfor %}
-								</ul>
-						
-						</div>
-						<div class="col-md-8">
-							<hr>
-							{% for t in mentors %}
+					<div class="tab-content">
+						<!-- Panel 1 -->
+						<div class="tab-pane fade in active" id="cat0">
 							<div class="row">
-								<div class="col-md-4">
-									<a href="/teacher/{{t.key.urlsafe()}}">
-										<img class="img-circle img-100" {% if t.profile_pic_r %}src="{{t.profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}>
-									</a>
-									<div class="row">
-										<div class="col-md-12">
-										<br>
-											<span class="starReviews-gray">
-												<span class="starReviews" style="width:{{t.rating*20}}%"></span>
-											</span>
-											<br>
-											<span class="glyphicon glyphicon-comment"></span>
-											<span> {{t.reviews}}</span>
-										</div>
-									</div>
+								<div class="col-md-12" style="padding:20px;">
+									<h1>
+									Páginas Blancas	
+									</h1>
+									<h2 style="font-size: 16px; color: white;">{% trans %}Encuentra compañeros de la comunidad Sura que puedan ayudarte y colaborarte en el tema de <strong>{% endtrans %} 
+									{% if language == 'Español' %}
+										{{area.name}}
+									{% else %}
+										{{area.namet}}
+									{% endif %}	
+									.</strong></h2>
+								</div>
+							</div>
+							<br>
+							<div class="row">
+								<div class="col-md-4" style="padding:20px;">
+										<ul class="nav nav-pills nav-stacked">
+										{% for a in company_areas %}
+											<li style="font-size:16px;" {% if a.name==area.name %}class="active"{% endif %}>
+											{% if a.url %}
+												<a href="/sura/{{a.url}}">
+											{% else %}
+												<a href="/sura/{{a.key.id()}}">
+											{% endif %}
+											{% if language == 'Español' %}
+												{{a.name}}
+											{% else %}
+												{{a.namet}}
+											{% endif %}	
+											</a></li>
+										{% endfor %}
+										</ul>					
 								</div>
 								<div class="col-md-8">
-									<a href="/teacher/{{t.key.urlsafe()}}"><h3>{{t.name}} {{t.lname}}</h3></a>
-									<p>{{t.about|truncate(170, True)}}</p>
-									<p class="pull-left">Ciudad: {{t.ciudad}}</p>
-									<p class="pull-right">{% if t.date_available|first_date %}<span class="glyphicon glyphicon-calendar"></span> {{t.date_available|first_date}}{% endif %}</p>
+									<hr>
+									{% for t in mentors %}
+									<div class="row">
+										<div class="col-md-4">
+											<a href="/teacher/{{t.key.urlsafe()}}">
+												<img class="img-circle img-100" {% if t.profile_pic_r %}src="{{t.profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}>
+											</a>
+											<div class="row">
+												<div class="col-md-12">
+												<br>
+													<span class="starReviews-gray">
+														<span class="starReviews" style="width:{{t.rating*20}}%"></span>
+													</span>
+													<br>
+													<span class="glyphicon glyphicon-comment"></span>
+													<span> {{t.reviews}}</span>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-8">
+											<a href="/teacher/{{t.key.urlsafe()}}"><h3>{{t.name}} {{t.lname}}</h3></a>
+											<p>{{t.about|truncate(170, True)}}</p>
+											<p class="pull-left">Ciudad: {{t.ciudad}}</p>
+											<p class="pull-right">{% if t.date_available|first_date %}<span class="glyphicon glyphicon-calendar"></span> {{t.date_available|first_date}}{% endif %}</p>
+										</div>
+									</div>
+									<hr>
+								{% else %}
+									<div class="row">
+										<div class="col-md-6 col-md-offset-3 bckg-b-80">
+											<h3><span class="glyphicon glyphicon-info-sign"></span> {% trans %}Lo sentimos. Estamos trabajando para traerte a los mejores mentores en esta área{% endtrans %}.</h3>
+										</div>
+									</div>
+								{% endfor %}
 								</div>
 							</div>
-							<hr>
-						{% else %}
-							<div class="row">
-								<div class="col-md-6 col-md-offset-3 bckg-b-80">
-									<h3><span class="glyphicon glyphicon-info-sign"></span> {% trans %}Lo sentimos. Estamos trabajando para traerte a los mejores mentores en esta área{% endtrans %}.</h3>
-								</div>
-							</div>
-						{% endfor %}
+						<br>
 						</div>
+						<!-- Fin Panel 1 -->
+						<!-- Panel 2 -->
+						<div class="tab-pane fade" id="cat1">
+							<div class="row">
+								<div class="col-md-12" style="padding:20px;">
+									<h1>
+									Páginas Amarillas	
+									</h1>
+									<h2 style="font-size: 16px; color: white;">{% trans %}Encuentra compañeros de la comunidad Sura que puedan ayudarte y colaborarte en el tema de <strong>{% endtrans %} 
+									{% if language == 'Español' %}
+										{{area.name}}
+									{% else %}
+										{{area.namet}}
+									{% endif %}	
+									.</strong></h2>
+								</div>
+							</div>
+							<br>
+							<div class="row">
+								<div class="col-md-4" style="padding:20px;">
+										<ul class="nav nav-pills nav-stacked">
+										{% for a in company_areas %}
+											<li style="font-size:16px;" {% if a.name==area.name %}class="active"{% endif %}>
+											{% if a.url %}
+												<a href="/sura/{{a.url}}">
+											{% else %}
+												<a href="/sura/{{a.key.id()}}">
+											{% endif %}
+											{% if language == 'Español' %}
+												{{a.name}}
+											{% else %}
+												{{a.namet}}
+											{% endif %}	
+											</a></li>
+										{% endfor %}
+										</ul>					
+								</div>
+								<div class="col-md-8">
+									<hr>
+									{% for t in mentors %}
+									<div class="row">
+										<div class="col-md-4">
+											<a href="/teacher/{{t.key.urlsafe()}}">
+												<img class="img-circle img-100" {% if t.profile_pic_r %}src="{{t.profile_pic_r}}"{% else %} src="/static/avatar.png"{% endif %}>
+											</a>
+											<div class="row">
+												<div class="col-md-12">
+												<br>
+													<span class="starReviews-gray">
+														<span class="starReviews" style="width:{{t.rating*20}}%"></span>
+													</span>
+													<br>
+													<span class="glyphicon glyphicon-comment"></span>
+													<span> {{t.reviews}}</span>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-8">
+											<a href="/teacher/{{t.key.urlsafe()}}"><h3>{{t.name}} {{t.lname}}</h3></a>
+											<p>{{t.about|truncate(170, True)}}</p>
+											<p class="pull-left">Ciudad: {{t.ciudad}}</p>
+											<p class="pull-right">{% if t.date_available|first_date %}<span class="glyphicon glyphicon-calendar"></span> {{t.date_available|first_date}}{% endif %}</p>
+										</div>
+									</div>
+									<hr>
+								{% else %}
+									<div class="row">
+										<div class="col-md-6 col-md-offset-3 bckg-b-80">
+											<h3><span class="glyphicon glyphicon-info-sign"></span> {% trans %}Lo sentimos. Estamos trabajando para traerte a los mejores mentores en esta área{% endtrans %}.</h3>
+										</div>
+									</div>
+								{% endfor %}
+								</div>
+							</div>
+						</div>
+						<br>
+						<!-- Fin panel 2 -->
 					</div>
 				</div>
 			</div>
