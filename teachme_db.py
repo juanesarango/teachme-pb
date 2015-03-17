@@ -52,6 +52,8 @@ class teacher(ndb.Model):
 
     movil = ndb.IntegerProperty()
 
+    company = ndb.KeyProperty()
+
 
 class user(ndb.Model):
     name = ndb.StringProperty(required=True)
@@ -74,6 +76,8 @@ class user(ndb.Model):
     date_reserved = ndb.DateTimeProperty(repeated=True)
 
     pagos = ndb.KeyProperty(repeated=True, kind="payments")
+
+    company = ndb.KeyProperty()
 
     @classmethod
     def register(cls, name, lname, mail, pw, tzo):
