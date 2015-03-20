@@ -2,6 +2,7 @@
 import datetime
 from google.appengine.ext import ndb
 from google.appengine.api import mail
+from con import settings
 import teachme_db
 import logging
 import main
@@ -144,7 +145,8 @@ def notify_sms(user, user2, method, who, date):
                1: [u'Recuerda tu cita con {user} en Teachme. {date}',
                    u'Recuerda tu cita con {user} en Teachme. {date}']}
 
-    twilio = TwilioRestClient('AC72f22161a9c99728f48fe1584fe9f59b', '6b7c664f6d0a5d9191bfb2d7d7e47f05')
+    twilio = TwilioRestClient(settings.TWILIO_ACCOUNT_SID,
+                              settings.TWILIO_ACCOUNT_SID)
 
     if user.movil:
         # try:
