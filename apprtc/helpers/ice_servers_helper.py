@@ -1,10 +1,12 @@
 from twilio.rest import TwilioRestClient
-import requests
+from google.appengine.api import urlfetch
+from con import settings
+import urllib
 import json
 
 # Your Account Sid and Auth Token from twilio.com/user/account
-account_sid = "AC72f22161a9c99728f48fe1584fe9f59b"
-auth_token = "6b7c664f6d0a5d9191bfb2d7d7e47f05"
+account_sid = settings.TWILIO_ACCOUNT_SID
+auth_token = settings.TWILIO_AUTH_TOKEN
 
 
 class IceServersHelper():
@@ -22,36 +24,36 @@ class IceServersHelper():
         #     if "credential" in server:
         #         newIceServers[0]['password'] = server["credential"]
         #     if "username" in server:
-        # #         newIceServers[0]['username'] = server["username"]
-        # cls.create_room_xir("1234")
-        # xirSysServers = cls.create_turn_servers("1234")
-        # for i in xirSysServers:
-        #     token.ice_servers.append(i)
+        #         newIceServers[0]['username'] = server["username"]
+        cls.create_room_xir("1234")
+        xirSysServers = cls.create_turn_servers("1234")
+        for i in xirSysServers:
+            token.ice_servers.append(i)
 
         return token.ice_servers
 
-#   Make room in xirsys
     @classmethod
     def create_room_xir(cls, room):
         tok = {'ident': 'teachme',
-               'secret': '82643c69-1891-41ec-aade-a24a484f9689',
+               'secret': settings.XIRSYS_AUTH_TOKEN,
                'domain': 'www.teachmeapp.com',
                'application': 'session',
-               'room': room, }
+               'room': 'default', }
+        data = urllib.urlencode(tok)
         url = 'https://api.xirsys.com/addRoom'
-        requests.post(url, data=tok)
-        return
+        response = urlfetch.fetch(url=url, payload=data, method=urlfetch.POST)
+        return response
 
-#   Turn as a service xirsys
     @classmethod
     def create_turn_servers(cls, room):
         tok = {'ident': 'teachme',
-               'secret': '82643c69-1891-41ec-aade-a24a484f9689',
+               'secret': settings.XIRSYS_AUTH_TOKEN,
                'domain': 'www.teachmeapp.com',
                'application': 'session',
-               'room': room,
+               'room': 'default',
                'secure': 1}
+        data = urllib.urlencode(tok)
         url = 'https://api.xirsys.com/getIceServers'
-        r = requests.post(url, data=tok)
-        serv = json.loads(r.content)
+        response = urlfetch.fetch(url=url, payload=data, method=urlfetch.POST)
+        serv = json.loads(response.content)
         return serv['d']['iceServers']
