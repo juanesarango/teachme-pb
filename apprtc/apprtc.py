@@ -25,6 +25,7 @@ import compute_page
 import constants
 # teachme
 from helpers import IceServersHelper
+from helpers import SessionSettingsHelper
 # /teachme
 
 jinja_environment = jinja2.Environment(
@@ -557,6 +558,10 @@ class RoomPage(webapp2.RequestHandler):
     params = get_room_parameters(self.request, room_id, None, None)
     # room_id/room_link will be included in the returned parameters
     # so the client will launch the requested room.
+    # Teachme 
+    response = SessionSettingsHelper.create_session_settings(room_id)
+    logging.info(response.content)
+    # / Teachme
     self.write_response('index_template.html', params)
 
 class ParamsPage(webapp2.RequestHandler):

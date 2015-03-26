@@ -5,6 +5,7 @@ from google.appengine.api import urlfetch
 import json
 from core.helpers import BaseHelper
 
+
 class FirebaseHelper(BaseHelper):
 
     NAME_EXTENSION = '.json'
