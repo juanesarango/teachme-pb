@@ -4,12 +4,14 @@ from google.appengine.api import urlfetch
 # from firebase_token_generator import FirebaseTokenGenerator
 import json
 from core.helpers import BaseHelper
+from con import settings
 
 
 class FirebaseHelper(BaseHelper):
 
     NAME_EXTENSION = '.json'
     URL_SEPERATOR = '/'
+    AUTH = settings.FIREBASE_TOKEN
 
     # def __init__(self, dsn, authentication=None):
     #     assert dsn.startswith('https://'), 'DSN must be a secure URL'
@@ -32,7 +34,19 @@ class FirebaseHelper(BaseHelper):
                            self.NAME_EXTENSION)
 
     @classmethod
-    def PUT(cls, url, name, data, auth):
+    def GET(cls, url, name):
+        """ 
+        Data from Firebase can be read by issuing an HTTP GET request to an endpoint:
+        curl https://samplechat.firebaseio-demo.com/users/jack/name.json
+        """
+        endpoint = cls._build_endpoint_url(url, name)
+        response = urlfetch.fetch(
+            url=endpoint,
+            method=urlfetch.GET)
+        return response
+
+    @classmethod
+    def PUT(cls, url, name, data):
         """ 
         Write or replace data to a defined path, like messages/users/user1/<data>
         """
@@ -45,7 +59,7 @@ class FirebaseHelper(BaseHelper):
         return response
 
     @classmethod
-    def POST(cls, url, name, data, auth):
+    def POST(cls, url, name, data):
         """ 
         Add to a list of data in Firebase. Every time you send a POST
         request Firebase generates a unique ID, like
@@ -60,7 +74,7 @@ class FirebaseHelper(BaseHelper):
         return response
 
     @classmethod
-    def PATCH(cls, url, name, data, auth):
+    def PATCH(cls, url, name, data):
         """ 
         Update some of the keys for a defined path without replacing all of the data.
         """
@@ -73,7 +87,7 @@ class FirebaseHelper(BaseHelper):
         return response
 
     @classmethod
-    def DELETE(cls, url, name, auth):
+    def DELETE(cls, url, name):
         """ 
         Remove data from the specified Firebase reference.
         """

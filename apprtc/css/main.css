@@ -355,6 +355,14 @@ svg:hover {
   fill: #ab47bc;
 }
 
+#whiteboardOn:hover circle {
+  fill: #03A9F4;
+}
+
+#chatToggle:hover circle {
+  fill: #4CAF50;
+}
+
 #mute-video {
   transition: 120ms;
 }
@@ -406,7 +414,7 @@ svg:hover {
 
 /*////// icons CSS end /////////////////////////*/
 
-*{
+canvas{
   box-sizing: border-box;
   -moz-box-sizing: border-box;
 
@@ -472,11 +480,6 @@ body {
   padding-bottom: 14px;
 }
 
-#chat{
-  height: 24px;
-  overflow-y: hidden;
-  font-size: 0.8em;
-}
 
 #btnEnviar{
   padding: 1px 8px;
@@ -639,4 +642,24 @@ body {
   text-align: center;
 }
 
+/*Chat*/
+
+#chat{
+  color: black;
+  background-color: white;
+  height: 100%
+}
+
+.chat-body{
+  height: 70%;
+}
+
+.chat-panel{
+  height: 100%;
+}
+
+#messagesDiv{
+  height: 100%;
+  overflow-y: scroll;
+}
 

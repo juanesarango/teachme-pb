@@ -25,13 +25,15 @@
 {% if not chromeapp %}
   <link rel="canonical" href="{{ room_link }}">
 {% endif %}
+  <script src="https://cdn.firebase.com/js/client/2.2.3/firebase.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css" />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
   <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
   <script type="text/javascript" src="/static/js/bootstrap.js"></script>
   <link rel="stylesheet" type="text/css" href="/css/flaticon.css">
   <link rel="stylesheet" href="/css/main.css">
+  
 
 </head>
 
@@ -101,6 +103,33 @@
     <video id="miniLocalVideo" autoplay muted></video>
   </div>
 
+  <div id="chat" class="col-md-2 pull-right">
+    <div class="col-xs-10 col-xs-offset-1" style="height:100%;">
+      <div class="row text-center">
+        <br>
+        Julian
+      </div>
+      <hr>
+      <!-- Visualization of messages -->
+      <div class="row chat-body">
+        <div class="panel panel-default chat-panel">
+          <div id="messagesDiv" class="panel-body">
+          </div>
+        </div>
+      </div>
+      <hr>
+      <!-- Text input -->
+      <div class="row">
+        <textarea id="messageInput" rows="3" class="form-control"></textarea>
+        <br>
+        <button id="sendMessage" type="button" onclick="sendMessage()" class="btn btn-primary pull-right">Send</button>
+        <br>
+        <br>
+        <br>
+      </div>
+    </div>
+  </div>
+
   <div id="room-selection" class="hidden">
     <h1>AppRTC</h1>
     <p id="instructions">Please enter a room name.</p>
@@ -135,23 +164,35 @@
   </footer>
 
   <div id="icons" class="hidden">
-
-    <svg id="whiteboard-on" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewbox="-10 -10 68 68">
-       <circle cx="24" cy="24" r="34">
-        <title>White Board</title>
+    <svg id="chatToggle" width="48" height="48" xmlns="http://www.w3.org/2000/svg"  viewbox="-10 -10 68 68">
+      <circle r="34" cy="24" cx="24">
+        <title>Chat Toggle</title>
       </circle>
-    <path class="on" transform="scale(0.6), translate(17,16)" d="M95.035,0
+      <path class="on" transform="scale(0.08500000089406967) " d="m530.5,148.633h-125.67401v162.155c0,23.61099 -19.211,42.82199 -42.82199,42.82199h-193.51399v54.297c0,13.50601 10.94902,24.461 24.461,24.461h190.118l79.44299,66.354c10.367,8.66 15.94202,5.09799 12.45401,-7.94901l-15.521,-58.01199c-0.03601,-0.13501 -0.10901,-0.258 -0.146,-0.39301h71.20001c13.50696,0 24.46198,-10.94907 24.46198,-24.461v-234.81898c-0.00598,-13.50601 -10.95398,-24.455 -24.461,-24.455z" fill="white" id="svg_20"/>
+
+      <path class="off" transform="scale(0.08500000089406967) " d="m530.5,148.633h-125.67401v162.155c0,23.61099 -19.211,42.82199 -42.82199,42.82199h-193.51399v54.297c0,13.50601 10.94902,24.461 24.461,24.461h190.118l79.44299,66.354c10.367,8.66 15.94202,5.09799 12.45401,-7.94901l-15.521,-58.01199c-0.03601,-0.13501 -0.10901,-0.258 -0.146,-0.39301h71.20001c13.50696,0 24.46198,-10.94907 24.46198,-24.461v-234.81898c-0.00598,-13.50601 -10.95398,-24.455 -24.461,-24.455z" fill="white" id="svg_21"/>
+
+      <path class="on" transform="scale(0.08500000089406967) " d="m24.461,335.24301h37.394c-0.037,0.13498 -0.11,0.258 -0.147,0.39297l-15.521,58.01202c-2.203,8.22498 -0.795,12.67999 3.134,12.67999c2.307,0 5.483,-1.52899 9.314,-4.73001l79.444,-66.354h30.41701h193.51498c13.50702,0 24.461,-10.94699 24.461,-24.461v-162.14999v-72.66299c0,-13.507 -10.948,-24.461 -24.461,-24.461h-337.54999c-13.506,0 -24.46093,10.949 -24.46093,24.461v234.81201c0,13.51398 10.94893,24.461 24.46093,24.461l0,0l0,0l0,0l0,0l0,0l0,0l0,0z" fill="white" id="svg_22"/>
+
+      <path class="off" transform="scale(0.08500000089406967) " d="m24.461,335.24301h37.394c-0.037,0.13498 -0.11,0.258 -0.147,0.39297l-15.521,58.01202c-2.203,8.22498 -0.795,12.67999 3.134,12.67999c2.307,0 5.483,-1.52899 9.314,-4.73001l79.444,-66.354h30.41701h193.51498c13.50702,0 24.461,-10.94699 24.461,-24.461v-162.14999v-72.66299c0,-13.507 -10.948,-24.461 -24.461,-24.461h-337.54999c-13.506,0 -24.46093,10.949 -24.46093,24.461v234.81201c0,13.51398 10.94893,24.461 24.46093,24.461l0,0l0,0l0,0l0,0l0,0l0,0l0,0z" fill="white" id="svg_23"/>
+
+    </svg>
+    <svg id="whiteboardOn" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewbox="-10 -10 68 68">
+       <circle cx="24" cy="24" r="34">
+        <title>WhiteBoard</title>
+      </circle>
+    <path class="on" transform="scale(0.15), translate(17,18)" d="M95.035,0
       c-2.761,0-5,2.239-5,5v5h-85c-2.761,0-5,2.239-5,5v180c0,2.761,2.239,5,5,5h131.502l-45.873,82.572
       c-3.256,5.833,5.509,10.703,8.742,4.857l45.629-82.133l45.629,82.133c3.233,5.846,11.998,0.976,8.742-4.857L153.533,200h131.502
       c2.761,0,5-2.239,5-5V15c0-2.761-2.239-5-5-5h-85V5c0-2.761-2.239-5-5-5L95.035,0L95.035,0z M10.035,20h270v170h-270V20z M25.035,30
       c-2.761,0-5,2.239-5,5v140c0,2.761,2.239,5,5,5h240c2.761,0,5-2.239,5-5V35c0-2.761-2.239-5-5-5H25.035z M30.035,40h230v130h-230V40
-      z"/>
-    <path class="off" transform="scale(0.6), translate(17,18)" d="M95.035,0
+      z" fill="white"/>
+    <path class="off" transform="scale(0.15), translate(17,18)" d="M95.035,0
       c-2.761,0-5,2.239-5,5v5h-85c-2.761,0-5,2.239-5,5v180c0,2.761,2.239,5,5,5h131.502l-45.873,82.572
       c-3.256,5.833,5.509,10.703,8.742,4.857l45.629-82.133l45.629,82.133c3.233,5.846,11.998,0.976,8.742-4.857L153.533,200h131.502
       c2.761,0,5-2.239,5-5V15c0-2.761-2.239-5-5-5h-85V5c0-2.761-2.239-5-5-5L95.035,0L95.035,0z M10.035,20h270v170h-270V20z M25.035,30
       c-2.761,0-5,2.239-5,5v140c0,2.761,2.239,5,5,5h240c2.761,0,5-2.239,5-5V35c0-2.761-2.239-5-5-5H25.035z M30.035,40h230v130h-230V40
-      z">
+      z" fill="white"/>
     </svg>
     <svg id="mute-audio" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewbox="-10 -10 68 68">
     <title>title</title>
@@ -242,14 +283,9 @@
     }
 
     initialize();
-    $(function() {
-      $( "#miniLocalVideo" ).draggable();
-    });
-    $(function() {
-      $( "#miniRemoteVideo" ).draggable();
-    });
   </script>
-  <script src="/js/teachme-rtc.js"></script>
+  <script type="text/javascript" src="/js/firebase-helper.js"></script>
+  <script type="text/javascript" src="/js/teachme-rtc.js"></script>
   <script type="text/javascript" src="/js/whiteboard.js"></script>
 {% endif %}
 </body>

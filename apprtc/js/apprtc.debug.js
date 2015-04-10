@@ -157,26 +157,26 @@ function requestUserMedia(constraints) {
     }
   });
 }
-var remoteVideo = $("#remote-video");
+var remoteVideo = qSelector("#remote-video");
 var UI_CONSTANTS = {confirmJoinButton:"#confirm-join-button", confirmJoinDiv:"#confirm-join-div", confirmJoinRoomSpan:"#confirm-join-room-span", fullscreenSvg:"#fullscreen", hangupSvg:"#hangup", icons:"#icons", infoDiv:"#info-div", localVideo:"#local-video", miniVideo:"#mini-video", muteAudioSvg:"#mute-audio", muteVideoSvg:"#mute-video", newRoomButton:"#new-room-button", newRoomLink:"#new-room-link", remoteVideo:"#remote-video", rejoinButton:"#rejoin-button", rejoinDiv:"#rejoin-div", rejoinLink:"#rejoin-link", 
 roomLinkHref:"#room-link-href", roomSelectionDiv:"#room-selection", roomSelectionInput:"#room-id-input", roomSelectionInputLabel:"#room-id-input-label", roomSelectionJoinButton:"#join-button", roomSelectionRandomButton:"#random-button", roomSelectionRecentList:"#recent-rooms-list", sharingDiv:"#sharing-div", statusDiv:"#status-div", videosDiv:"#videos"};
 var AppController = function(loadingParams) {
   trace("Initializing; server= " + loadingParams.roomServer + ".");
   trace("Initializing; room=" + loadingParams.roomId + ".");
-  this.hangupSvg_ = $(UI_CONSTANTS.hangupSvg);
-  this.icons_ = $(UI_CONSTANTS.icons);
-  this.localVideo_ = $(UI_CONSTANTS.localVideo);
-  this.miniVideo_ = $(UI_CONSTANTS.miniVideo);
-  this.sharingDiv_ = $(UI_CONSTANTS.sharingDiv);
-  this.statusDiv_ = $(UI_CONSTANTS.statusDiv);
-  this.remoteVideo_ = $(UI_CONSTANTS.remoteVideo);
-  this.videosDiv_ = $(UI_CONSTANTS.videosDiv);
-  this.roomLinkHref_ = $(UI_CONSTANTS.roomLinkHref);
-  this.rejoinDiv_ = $(UI_CONSTANTS.rejoinDiv);
-  this.rejoinLink_ = $(UI_CONSTANTS.rejoinLink);
-  this.newRoomLink_ = $(UI_CONSTANTS.newRoomLink);
-  this.rejoinButton_ = $(UI_CONSTANTS.rejoinButton);
-  this.newRoomButton_ = $(UI_CONSTANTS.newRoomButton);
+  this.hangupSvg_ = qSelector(UI_CONSTANTS.hangupSvg);
+  this.icons_ = qSelector(UI_CONSTANTS.icons);
+  this.localVideo_ = qSelector(UI_CONSTANTS.localVideo);
+  this.miniVideo_ = qSelector(UI_CONSTANTS.miniVideo);
+  this.sharingDiv_ = qSelector(UI_CONSTANTS.sharingDiv);
+  this.statusDiv_ = qSelector(UI_CONSTANTS.statusDiv);
+  this.remoteVideo_ = qSelector(UI_CONSTANTS.remoteVideo);
+  this.videosDiv_ = qSelector(UI_CONSTANTS.videosDiv);
+  this.roomLinkHref_ = qSelector(UI_CONSTANTS.roomLinkHref);
+  this.rejoinDiv_ = qSelector(UI_CONSTANTS.rejoinDiv);
+  this.rejoinLink_ = qSelector(UI_CONSTANTS.rejoinLink);
+  this.newRoomLink_ = qSelector(UI_CONSTANTS.newRoomLink);
+  this.rejoinButton_ = qSelector(UI_CONSTANTS.rejoinButton);
+  this.newRoomButton_ = qSelector(UI_CONSTANTS.newRoomButton);
   this.newRoomButton_.addEventListener("click", this.onNewRoomClick_.bind(this), false);
   this.rejoinButton_.addEventListener("click", this.onRejoinClick_.bind(this), false);
   this.muteAudioIconSet_ = new AppController.IconSet_(UI_CONSTANTS.muteAudioSvg);
@@ -201,18 +201,18 @@ var AppController = function(loadingParams) {
     if (this.loadingParams_.roomId) {
       this.createCall_();
       if (!RoomSelection.matchRandomRoomPattern(this.loadingParams_.roomId)) {
-        $(UI_CONSTANTS.confirmJoinRoomSpan).textContent = ' "' + this.loadingParams_.roomId + '"';
+        qSelector(UI_CONSTANTS.confirmJoinRoomSpan).textContent = ' "' + this.loadingParams_.roomId + '"';
       }
-      var confirmJoinDiv = $(UI_CONSTANTS.confirmJoinDiv);
+      var confirmJoinDiv = qSelector(UI_CONSTANTS.confirmJoinDiv);
       this.show_(confirmJoinDiv);
-      $(UI_CONSTANTS.confirmJoinButton).onclick = function() {
+      qSelector(UI_CONSTANTS.confirmJoinButton).onclick = function() {
         this.hide_(confirmJoinDiv);
         var recentlyUsedList = new RoomSelection.RecentlyUsedList;
         recentlyUsedList.pushRecentRoom(this.loadingParams_.roomId);
         this.finishCallSetup_(this.loadingParams_.roomId);
       }.bind(this);
       if (this.loadingParams_.bypassJoinConfirmation) {
-        $(UI_CONSTANTS.confirmJoinButton).onclick();
+        qSelector(UI_CONSTANTS.confirmJoinButton).onclick();
       }
     } else {
       this.showRoomSelection_();
@@ -223,7 +223,7 @@ var AppController = function(loadingParams) {
 };
 AppController.prototype.createCall_ = function() {
   this.call_ = new Call(this.loadingParams_);
-  this.infoBox_ = new InfoBox($(UI_CONSTANTS.infoDiv), this.remoteVideo_, this.call_, this.loadingParams_.versionInfo);
+  this.infoBox_ = new InfoBox(qSelector(UI_CONSTANTS.infoDiv), this.remoteVideo_, this.call_, this.loadingParams_.versionInfo);
   var roomErrors = this.loadingParams_.errorMessages;
   if (roomErrors && roomErrors.length > 0) {
     for (var i = 0;i < roomErrors.length;++i) {
@@ -243,7 +243,7 @@ AppController.prototype.createCall_ = function() {
   this.call_.oncallerstarted = this.displaySharingInfo_.bind(this);
 };
 AppController.prototype.showRoomSelection_ = function() {
-  var roomSelectionDiv = $(UI_CONSTANTS.roomSelectionDiv);
+  var roomSelectionDiv = qSelector(UI_CONSTANTS.roomSelectionDiv);
   this.roomSelection_ = new RoomSelection(roomSelectionDiv, UI_CONSTANTS);
   this.show_(roomSelectionDiv);
   this.roomSelection_.onRoomSelected = function(roomName) {
@@ -258,12 +258,12 @@ AppController.prototype.showRoomSelection_ = function() {
 };
 AppController.prototype.finishCallSetup_ = function(roomId) {
   this.call_.start(roomId);
-  document.onkeypress = this.onKeyPress_.bind(this);
+  // document.onkeypress = this.onKeyPress_.bind(this);
   window.onmousemove = this.showIcons_.bind(this);
-  $(UI_CONSTANTS.muteAudioSvg).onclick = this.toggleAudioMute_.bind(this);
-  $(UI_CONSTANTS.muteVideoSvg).onclick = this.toggleVideoMute_.bind(this);
-  $(UI_CONSTANTS.fullscreenSvg).onclick = this.toggleFullScreen_.bind(this);
-  $(UI_CONSTANTS.hangupSvg).onclick = this.hangup_.bind(this);
+  qSelector(UI_CONSTANTS.muteAudioSvg).onclick = this.toggleAudioMute_.bind(this);
+  qSelector(UI_CONSTANTS.muteVideoSvg).onclick = this.toggleVideoMute_.bind(this);
+  qSelector(UI_CONSTANTS.fullscreenSvg).onclick = this.toggleFullScreen_.bind(this);
+  qSelector(UI_CONSTANTS.hangupSvg).onclick = this.hangup_.bind(this);
   setUpFullScreen();
   if (!isChromeApp()) {
     window.onbeforeunload = function() {
@@ -389,11 +389,11 @@ AppController.prototype.onKeyPress_ = function(event) {
   switch(String.fromCharCode(event.charCode)) {
     case " ":
     ;
-    case "m":
-      if (this.call_) {
-        this.call_.toggleAudioMute();
-      }
-      return false;
+    // case "m":
+    //   if (this.call_) {
+    //     this.call_.toggleAudioMute();
+    //   }
+    //   return false;
     case "c":
       if (this.call_) {
         this.call_.toggleVideoMute();
@@ -1935,7 +1935,7 @@ Storage.prototype.setStorage = function(key, value, callback) {
     }
   }
 };
-function $(selector) {
+function qSelector(selector) {
   return document.querySelector(selector);
 }
 function queryStringToDictionary(queryString) {

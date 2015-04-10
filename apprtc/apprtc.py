@@ -560,7 +560,6 @@ class RoomPage(webapp2.RequestHandler):
     # so the client will launch the requested room.
     # Teachme 
     response = SessionSettingsHelper.create_session_settings(room_id)
-    logging.info(response.content)
     # / Teachme
     self.write_response('index_template.html', params)
 
