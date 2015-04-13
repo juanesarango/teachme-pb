@@ -26,6 +26,7 @@ import constants
 # teachme
 from helpers import IceServersHelper
 from helpers import SessionSettingsHelper
+from core.controllers import BaseController
 # /teachme
 
 jinja_environment = jinja2.Environment(
@@ -537,7 +538,7 @@ class MainPage(webapp2.RequestHandler):
     # so the client will show the landing page for room selection.
     self.write_response('index_template.html', params)
 
-class RoomPage(webapp2.RequestHandler):
+class RoomPage(BaseController):
   def write_response(self, target_page, params={}):
     template = jinja_environment.get_template(target_page)
     content = template.render(params)
@@ -546,6 +547,7 @@ class RoomPage(webapp2.RequestHandler):
   def get(self, room_id):
     """Renders index.html or full.html."""
     # Check if room is full.
+    self.is_logged()
     room = memcache.get(
         get_memcache_key_for_room(self.request.host_url, room_id))
     if room is not None:
@@ -561,6 +563,7 @@ class RoomPage(webapp2.RequestHandler):
     # Teachme 
     response = SessionSettingsHelper.create_session_settings(room_id)
     # / Teachme
+    params['User'] = self.user
     self.write_response('index_template.html', params)
 
 class ParamsPage(webapp2.RequestHandler):

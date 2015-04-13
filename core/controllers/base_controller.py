@@ -85,6 +85,10 @@ class BaseController(webapp2.RequestHandler):
         self.response.headers.add_header("Set-Cookie", "usi=; Path=/")
         self.response.headers.add_header("Set-Cookie", "tei=; Path=/")
 
+    def is_logged(self):
+        if not self.user:
+            self.redirect("/login", abort=True)
+
     def check_live(self):
         live = False
         channels = ['juliankmazo', 'teachmeapp']
