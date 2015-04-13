@@ -11,7 +11,7 @@ function createChat(idChat) {
 }
 
 function sendMessage() {
-	var name = 'Julian';
+	var name = SessionUser;
   var text = $('#messageInput').val();
   sessionChatRef.push({from: name, message: text});
   $('#messageInput').val('');
@@ -22,7 +22,12 @@ sessionChatRef.on('child_added', function(snapshot) {
 	displayChatMessage(message.from, message.message);
     });
 function displayChatMessage(name, message) {
-  var nameUl = $('<ul class="list-unstyled text-right"></ul>').append($('<li></li>').text(name)).append($('<li></li>').text(message))
+  if (name == SessionUser){
+    var nameUl = $('<ul class="list-unstyled text-right"></ul>').append($('<li class="text-success"></li>').text(name)).append($('<li class="small"></li>').text(message))
+  }else{
+    var nameUl = $('<ul class="list-unstyled"></ul>').append($('<li class="text-primary"></li>').text(name)).append($('<li class="small"></li>').text(message))
+  }
   $('#messagesDiv').append(nameUl);
   $('#messagesDiv')[0].scrollTop = $('#messagesDiv')[0].scrollHeight;
+  
 };
