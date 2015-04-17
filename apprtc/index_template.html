@@ -107,8 +107,8 @@
     <div class="col-xs-10 col-xs-offset-1" style="height:100%;">
       <div class="row">
         <br>
-        <span class="text-left">{{User.name}}</span>
-        <span class="text-right" id="chatUSer2Name"></span>
+        <div class="col-xs-6 text-left"><span class="glyphicon glyphicon-user" style="color: green"></span> {{User.name}}</div>
+        <div class="col-xs-6 text-right" id="chatUSer2Name"></div>
       </div>
       <hr>
       <!-- Visualization of messages -->
@@ -165,7 +165,7 @@
   </footer>
 
   <div id="icons" class="hidden">
-    <svg id="chatToggle" width="48" height="48" xmlns="http://www.w3.org/2000/svg"  viewbox="-10 -10 68 68">
+    <svg id="chatToggle" class="hidden" width="48" height="48" xmlns="http://www.w3.org/2000/svg"  viewbox="-10 -10 68 68">
       <circle r="34" cy="24" cx="24">
         <title>Chat Toggle</title>
       </circle>
@@ -178,7 +178,7 @@
       <path class="off" transform="scale(0.08500000089406967) " d="m24.461,335.24301h37.394c-0.037,0.13498 -0.11,0.258 -0.147,0.39297l-15.521,58.01202c-2.203,8.22498 -0.795,12.67999 3.134,12.67999c2.307,0 5.483,-1.52899 9.314,-4.73001l79.444,-66.354h30.41701h193.51498c13.50702,0 24.461,-10.94699 24.461,-24.461v-162.14999v-72.66299c0,-13.507 -10.948,-24.461 -24.461,-24.461h-337.54999c-13.506,0 -24.46093,10.949 -24.46093,24.461v234.81201c0,13.51398 10.94893,24.461 24.46093,24.461l0,0l0,0l0,0l0,0l0,0l0,0l0,0z" fill="white" id="svg_23"/>
 
     </svg>
-    <svg id="whiteboardOn" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewbox="-10 -10 68 68">
+    <svg id="whiteboardOn" class="hidden" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewbox="-10 -10 68 68">
        <circle cx="24" cy="24" r="34">
         <title>WhiteBoard</title>
       </circle>
@@ -282,7 +282,11 @@
       document.removeEventListener('webkitvisibilitychange', onVisibilityChange);
       initialize();
     }
-    var SessionUser = '{{ User.name | safe }}'
+    var SessionUser = {
+      name :'{{User.name}}',
+      lastName :'{{User.lname}}',
+      id :{{User.key.id()}}
+    }
     initialize();
   </script>
   <script type="text/javascript" src="/js/firebase-helper.js"></script>

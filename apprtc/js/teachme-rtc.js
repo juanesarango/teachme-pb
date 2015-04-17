@@ -1,7 +1,9 @@
-var whiteboardOn = document.getElementById('whiteboardOn')
-whiteboardOn.addEventListener('click', toggleWhiteboard);
-var chatToggle = document.getElementById('chatToggle')
-chatToggle.addEventListener('click', toggleChat);
+// var whiteboardOn = document.getElementById('whiteboardOn')
+// whiteboardOn.addEventListener('click', toggleWhiteboard);
+// var chatToggle = document.getElementById('chatToggle')
+// chatToggle.addEventListener('click', toggleChat);
+appController.chatToggleSvg_.addEventListener("click", toggleChat);
+appController.whiteBoardToggleSvg_.addEventListener("click", toggleWhiteboard);
 var miniLocalVideo = qSelector('#miniLocalVideo');
 var miniRemoteVideo = qSelector('#miniRemoteVideo');
 var whiteboard = qSelector('#whiteboard');
@@ -10,7 +12,7 @@ var screenSharing = false;
 var videoChat = false;
 var remoteScreenSharing = false; 
 var tablero = false;
-var chatStatus = false
+var chatStatus = false;
 function gotReceiveChannel(event){
   trace('Receive Channel Callback');
   receiveChannel = event.channel;

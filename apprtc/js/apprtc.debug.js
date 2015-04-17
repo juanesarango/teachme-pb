@@ -159,11 +159,15 @@ function requestUserMedia(constraints) {
 }
 var remoteVideo = qSelector("#remote-video");
 var UI_CONSTANTS = {confirmJoinButton:"#confirm-join-button", confirmJoinDiv:"#confirm-join-div", confirmJoinRoomSpan:"#confirm-join-room-span", fullscreenSvg:"#fullscreen", hangupSvg:"#hangup", icons:"#icons", infoDiv:"#info-div", localVideo:"#local-video", miniVideo:"#mini-video", muteAudioSvg:"#mute-audio", muteVideoSvg:"#mute-video", newRoomButton:"#new-room-button", newRoomLink:"#new-room-link", remoteVideo:"#remote-video", rejoinButton:"#rejoin-button", rejoinDiv:"#rejoin-div", rejoinLink:"#rejoin-link", 
-roomLinkHref:"#room-link-href", roomSelectionDiv:"#room-selection", roomSelectionInput:"#room-id-input", roomSelectionInputLabel:"#room-id-input-label", roomSelectionJoinButton:"#join-button", roomSelectionRandomButton:"#random-button", roomSelectionRecentList:"#recent-rooms-list", sharingDiv:"#sharing-div", statusDiv:"#status-div", videosDiv:"#videos"};
+roomLinkHref:"#room-link-href", roomSelectionDiv:"#room-selection", roomSelectionInput:"#room-id-input", roomSelectionInputLabel:"#room-id-input-label", roomSelectionJoinButton:"#join-button", roomSelectionRandomButton:"#random-button", roomSelectionRecentList:"#recent-rooms-list", sharingDiv:"#sharing-div", statusDiv:"#status-div", videosDiv:"#videos", chatToggleSvg:"#chatToggle", whiteBoardToggleSvg:"#whiteboardOn"};
 var AppController = function(loadingParams) {
   trace("Initializing; server= " + loadingParams.roomServer + ".");
   trace("Initializing; room=" + loadingParams.roomId + ".");
   this.hangupSvg_ = qSelector(UI_CONSTANTS.hangupSvg);
+  // Teachme
+  this.chatToggleSvg_ = qSelector(UI_CONSTANTS.chatToggleSvg);
+  this.whiteBoardToggleSvg_ = qSelector(UI_CONSTANTS.whiteBoardToggleSvg);
+  // Teachme
   this.icons_ = qSelector(UI_CONSTANTS.icons);
   this.localVideo_ = qSelector(UI_CONSTANTS.localVideo);
   this.miniVideo_ = qSelector(UI_CONSTANTS.miniVideo);
@@ -282,6 +286,7 @@ AppController.prototype.finishCallSetup_ = function(roomId) {
   }
 };
 AppController.prototype.hangup_ = function() {
+  offTablero();
   trace("Hanging up.");
   this.hide_(this.icons_);
   this.displayStatus_("Hanging up");
@@ -289,6 +294,7 @@ AppController.prototype.hangup_ = function() {
   this.call_.hangup(true);
 };
 AppController.prototype.onRemoteHangup_ = function() {
+  offTablero();
   this.displayStatus_("The remote side hung up.");
   this.transitionToWaiting_();
   this.call_.onRemoteHangup();
@@ -346,12 +352,20 @@ AppController.prototype.transitionToActive_ = function() {
   this.localVideo_.src = "";
   this.activate_(this.videosDiv_);
   this.show_(this.hangupSvg_);
+  // Teachme
+  this.show_(this.chatToggleSvg_);
+  this.show_(this.whiteBoardToggleSvg_);
+  // Teachme
   this.displayStatus_("");
 };
 AppController.prototype.transitionToWaiting_ = function() {
   offTablero(true);
   this.remoteVideo_.oncanplay = undefined;
   this.hide_(this.hangupSvg_);
+  // Teachme
+  this.hide_(this.chatToggleSvg_);
+  this.hide_(this.whiteBoardToggleSvg_);
+  // Teachme
   this.deactivate_(this.videosDiv_);
   if (!this.remoteVideoResetTimer_) {
     this.remoteVideoResetTimer_ = setTimeout(function() {
@@ -418,11 +432,11 @@ AppController.prototype.pushCallNavigation_ = function(roomId, roomLink) {
   }
 };
 AppController.prototype.displaySharingInfo_ = function(roomId, roomLink) {
-  this.roomLinkHref_.href = roomLink;
-  this.roomLinkHref_.text = roomLink;
-  this.roomLink_ = roomLink;
-  this.pushCallNavigation_(roomId, roomLink);
-  this.activate_(this.sharingDiv_);
+  // this.roomLinkHref_.href = roomLink;
+  // this.roomLinkHref_.text = roomLink;
+  // this.roomLink_ = roomLink;
+  // this.pushCallNavigation_(roomId, roomLink);
+  // this.activate_(this.sharingDiv_);
 };
 AppController.prototype.displayStatus_ = function(status) {
   if (status === "") {
@@ -712,7 +726,8 @@ Call.prototype.maybeGetTurnServers_ = function() {
     }.bind(this)).catch(function(error) {
       if (this.onstatusmessage) {
         var subject = encodeURIComponent("AppRTC demo TURN server not working");
-        this.onstatusmessage("No TURN server; unlikely that media will traverse networks. " + "If this persists please " + '<a href="mailto:discuss-webrtc@googlegroups.com?' + "subject=" + subject + '">' + "report it to discuss-webrtc@googlegroups.com</a>.");
+        // this.onstatusmessage("No TURN server; unlikely that media will traverse networks. " + "If this persists please " + '<a href="mailto:discuss-webrtc@googlegroups.com?' + "subject=" + subject + '">' + "report it to discuss-webrtc@googlegroups.com</a>.");
+        this.onstatusmessage("");
       }
       trace(error.message);
     }.bind(this));

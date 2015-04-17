@@ -9,20 +9,10 @@ class SessionSettingsHelper():
             if not cls.session_exist(session_id):
                 url = 'https://teachmeapp.firebaseio.com/session'
                 if user1 and user2:
-                    session_settings = {"userId1": user1.key.id(),
-                                        "userId2": user2.key.id(),
-                                        "userName1": user1.name,
-                                        "userName2": user2.name,
-                                        "userOnline1": "false",
-                                        "userOnline2": "false",
+                    session_settings = {"participants": [user1.key.id(), user2.key.id()],
                                         "whiteBoard": "false"}
                 else:
-                    session_settings = {"userId1": "None",
-                                        "userId2": "None",
-                                        "userName1": "Guest",
-                                        "userName2": "Guest",
-                                        "userOnline1": "false",
-                                        "userOnline2": "false",
+                    session_settings = {"participants": [],
                                         "whiteBoard": "false"}
                 result = FirebaseHelper.PUT(
                     url, session_id, session_settings)
