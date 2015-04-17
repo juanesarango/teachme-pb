@@ -63,7 +63,7 @@ sessionChatRef.on('child_added', function(snapshot) {
 
 /*Function to display messages */
 function displayChatMessage(name, message) {
-  if (name == SessionUser){
+  if (name == SessionUser.name){
     var nameUl = $('<ul class="list-unstyled text-right"></ul>').append($('<li class="text-success"></li>').text(name)).append($('<li class="small"></li>').text(message))
   }else{
     var nameUl = $('<ul class="list-unstyled"></ul>').append($('<li class="text-primary"></li>').text(name)).append($('<li class="small"></li>').text(message))
