@@ -104,23 +104,17 @@
   </div>
 
   <div id="chat" class="col-md-2 pull-right">
-    <div class="col-xs-10 col-xs-offset-1" style="height:100%;">
-      <div class="row">
-        <br>
-        <div class="col-xs-6 text-left"><span class="glyphicon glyphicon-user" style="color: green"></span> {{User.name}}</div>
-        <div class="col-xs-6 text-right" id="chatUSer2Name"></div>
-      </div>
-      <hr>
-      <!-- Visualization of messages -->
-      <div class="row chat-body">
-        <div class="panel panel-default chat-panel">
-          <div id="messagesDiv" class="panel-body">
-          </div>
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-xs-6 text-left"><span class="glyphicon glyphicon-user" style="color: green"></span> {{User.name}}</div>
+          <div class="col-xs-6 text-right" id="chatUSer2Name"></div>
         </div>
       </div>
-      <hr>
-      <!-- Text input -->
-      <div class="row">
+      <div id="messagesDiv" class="panel-body">
+        
+      </div>
+      <div class="panel-footer">
         <textarea id="messageInput" rows="3" class="form-control"></textarea>
         <br>
         <button id="sendMessage" type="button" onclick="sendMessage()" class="btn btn-primary pull-right">Send</button>

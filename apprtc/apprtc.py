@@ -524,7 +524,7 @@ class JoinPage(webapp2.RequestHandler):
     logging.info('User ' + client_id + ' joined room ' + room_id)
     logging.info('Room ' + room_id + ' has state ' + result['room_state'])
 
-class MainPage(webapp2.RequestHandler):
+class MainPage(BaseController):
   def write_response(self, target_page, params={}):
     template = jinja_environment.get_template(target_page)
     content = template.render(params)
@@ -536,6 +536,9 @@ class MainPage(webapp2.RequestHandler):
     params = get_room_parameters(self.request, None, None, None)
     # room_id/room_link will not be included in the returned parameters
     # so the client will show the landing page for room selection.
+    # Teachme
+    params['User'] = self.user
+    # /Teachme
     self.write_response('index_template.html', params)
 
 class RoomPage(BaseController):

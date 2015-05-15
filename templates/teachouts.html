@@ -62,7 +62,7 @@
 											</div>
 											<div class="col-md-4">
 												<div class="row">
-													<a href="/session/?r={{m_touts[t].key.id()}}" target="_blank"> 
+													<a href="/session/r/{{m_touts[t].key.id()}}" target="_blank"> 
 														<button class="btn btn-success" {% if m_disable[t] == True %} disabled="disabled"{% endif %}><span class="glyphicon glyphicon-facetime-video"></span> {% trans %}Únete ahora{% endtrans %}</button>
 													</a>
 												</div>
@@ -123,7 +123,7 @@
 														<button class="btn btn-success" disabled="disabled">{% trans %}Únete ahora{% endtrans %}</button>
 													</a>
 												{% else %}
-													<a href="/session/?r={{touts[t].key.id()}}" target="_blank"> 
+													<a href="/session/r/{{touts[t].key.id()}}" target="_blank"> 
 														<button class="btn btn-success"><span class="glyphicon glyphicon-facetime-video"></span> {% trans %}Únete ahora{% endtrans %}</button>
 													</a>
 												{% endif %}
