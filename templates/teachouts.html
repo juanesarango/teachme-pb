@@ -59,6 +59,10 @@
 										<div class="row">
 											<div class="col-md-8">
 												<h4><strong>{{learner[t].name}}</strong> {{learner[t].lname}}</h4>
+													<p>Tu sesión es de programación?<br> Prueba este editor externo</p>
+													<a href="https://kobra.io/#/e/{{m_touts[t].key.id()}}" target="_blank"> 
+														<button class="btn btn-success" {% if m_disable[t] == True %} disabled="disabled"{% endif %}><span class="glyphicon glyphicon-facetime-video"></span> {% trans %}Pruébalo ahora{% endtrans %}</button>
+													</a>
 											</div>
 											<div class="col-md-4">
 												<div class="row">
@@ -69,12 +73,6 @@
 												<div class="row">
 													<a target="_blank" href="/teachout/cancel/{{m_touts[t].key.urlsafe()}}">
 														<button class="btn btn-danger" disabled="disabled" style="margin-top:6px;">{% trans %}Cancelar{% endtrans %}</button>
-													</a>
-												</div>
-												<div class="row">
-													<p>Tu sesión es de programación? Prueba este editor externo</p>
-													<a href="https://kobra.io/#/e/{{m_touts[t].key.id()}}" target="_blank"> 
-														<button class="btn btn-success" {% if m_disable[t] == True %} disabled="disabled"{% endif %}><span class="glyphicon glyphicon-facetime-video"></span> {% trans %}Pruebalo ahora{% endtrans %}</button>
 													</a>
 												</div>
 											</div>
@@ -103,7 +101,7 @@
 									<div class="col-md-9">
 										<div class="row">
 											<div class="col-md-6">
-												<h4>{{touts[t].area}} - {touts[t].cost}}</h4>
+												<h4>{{touts[t].area}} - {{touts[t].cost}}</h4>
 											</div>
 											<div class="col-md-6">
 												<script type="text/javascript">
@@ -121,6 +119,17 @@
 										<div class="row">
 											<div class="col-md-8">
 												<h4><strong>{{mentor[t].name}}</strong> {{mentor[t].lname}}</h4>
+												{% if disable[t] == True %}
+													<p>Tu sesión es de programación?<br> Prueba este editor externo</p>
+													<a href="/teachouts" target="_blank"> 
+														<button class="btn btn-success" disabled="disabled">{% trans %}Únete ahora{% endtrans %}</button>
+													</a>
+												{% else %}
+													<p>Tu sesión es de programación?<br> Prueba este editor externo</p>
+													<a href="https://kobra.io/#/e/{{touts[t].key.id()}}" target="_blank"> 
+														<button class="btn btn-success"><span class="glyphicon glyphicon-facetime-video"></span> {% trans %}Pruébalo ahora{% endtrans %}</button>
+													</a>
+												{% endif %}
 											</div>
 											<div class="col-md-4">
 												<div class="row">
@@ -138,19 +147,6 @@
 													<a href="/teachout/cancel/{{touts[t].key.urlsafe()}}">
 														<button class="btn btn-danger" disabled="disabled" style="margin-top:6px;">{% trans %}Cancelar{% endtrans %}</button>
 													</a>
-												</div>
-												<div class="row">
-												{% if disable[t] == True %}
-													<p>Tu sesión es de programación? Prueba este editor externo</p>
-													<a href="/teachouts" target="_blank"> 
-														<button class="btn btn-success" disabled="disabled">{% trans %}Únete ahora{% endtrans %}</button>
-													</a>
-												{% else %}
-													<p>Tu sesión es de programación? Prueba este editor externo</p>
-													<a href="https://kobra.io/#/e/{{touts[t].key.id()}}" target="_blank"> 
-														<button class="btn btn-success"><span class="glyphicon glyphicon-facetime-video"></span> {% trans %}Prueba ahora{% endtrans %}</button>
-													</a>
-												{% endif %}
 												</div>
 											</div>
 										</div>

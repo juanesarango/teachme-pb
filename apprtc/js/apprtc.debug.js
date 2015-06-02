@@ -159,13 +159,14 @@ function requestUserMedia(constraints) {
 }
 var remoteVideo = qSelector("#remote-video");
 var UI_CONSTANTS = {confirmJoinButton:"#confirm-join-button", confirmJoinDiv:"#confirm-join-div", confirmJoinRoomSpan:"#confirm-join-room-span", fullscreenSvg:"#fullscreen", hangupSvg:"#hangup", icons:"#icons", infoDiv:"#info-div", localVideo:"#local-video", miniVideo:"#mini-video", muteAudioSvg:"#mute-audio", muteVideoSvg:"#mute-video", newRoomButton:"#new-room-button", newRoomLink:"#new-room-link", remoteVideo:"#remote-video", rejoinButton:"#rejoin-button", rejoinDiv:"#rejoin-div", rejoinLink:"#rejoin-link", 
-roomLinkHref:"#room-link-href", roomSelectionDiv:"#room-selection", roomSelectionInput:"#room-id-input", roomSelectionInputLabel:"#room-id-input-label", roomSelectionJoinButton:"#join-button", roomSelectionRandomButton:"#random-button", roomSelectionRecentList:"#recent-rooms-list", sharingDiv:"#sharing-div", statusDiv:"#status-div", videosDiv:"#videos", chatToggleSvg:"#chatToggle", whiteBoardToggleSvg:"#whiteboardOn"};
+roomLinkHref:"#room-link-href", roomSelectionDiv:"#room-selection", roomSelectionInput:"#room-id-input", roomSelectionInputLabel:"#room-id-input-label", roomSelectionJoinButton:"#join-button", roomSelectionRandomButton:"#random-button", roomSelectionRecentList:"#recent-rooms-list", sharingDiv:"#sharing-div", statusDiv:"#status-div", videosDiv:"#videos", chatToggleSvg:"#chatToggle", whiteBoardToggleSvg:"#whiteboardOn", screenSharingToggleSvg:"#screenSharingToggle"};
 var AppController = function(loadingParams) {
   trace("Initializing; server= " + loadingParams.roomServer + ".");
   trace("Initializing; room=" + loadingParams.roomId + ".");
   this.hangupSvg_ = qSelector(UI_CONSTANTS.hangupSvg);
   // Teachme
   this.chatToggleSvg_ = qSelector(UI_CONSTANTS.chatToggleSvg);
+  this.screenSharingToggleSvg_ = qSelector(UI_CONSTANTS.screenSharingToggleSvg);
   this.whiteBoardToggleSvg_ = qSelector(UI_CONSTANTS.whiteBoardToggleSvg);
   // Teachme
   this.icons_ = qSelector(UI_CONSTANTS.icons);
@@ -355,6 +356,7 @@ AppController.prototype.transitionToActive_ = function() {
   // Teachme
   this.show_(this.chatToggleSvg_);
   this.show_(this.whiteBoardToggleSvg_);
+  this.show_(this.screenSharingToggleSvg_);
   // Teachme
   this.displayStatus_("");
 };
@@ -365,6 +367,7 @@ AppController.prototype.transitionToWaiting_ = function() {
   // Teachme
   this.hide_(this.chatToggleSvg_);
   this.hide_(this.whiteBoardToggleSvg_);
+  this.hide_(this.screenSharingToggleSvg_);
   // Teachme
   this.deactivate_(this.videosDiv_);
   if (!this.remoteVideoResetTimer_) {

@@ -4,6 +4,7 @@
 // chatToggle.addEventListener('click', toggleChat);
 appController.chatToggleSvg_.addEventListener("click", toggleChat);
 appController.whiteBoardToggleSvg_.addEventListener("click", toggleWhiteboard);
+appController.screenSharingToggleSvg_.addEventListener("click", toggleScreenSharing);
 var miniLocalVideo = qSelector('#miniLocalVideo');
 var miniRemoteVideo = qSelector('#miniRemoteVideo');
 var whiteboard = qSelector('#whiteboard');
