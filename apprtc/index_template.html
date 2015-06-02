@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<!--
+ *  Copyright (c) 2014 The WebRTC project authors. All Rights Reserved.
+ *
+ *  Use of this source code is governed by a BSD-style license
+ *  that can be found in the LICENSE file in the root of the source
+ *  tree.
+-->
+<html>
+<head>
+
+  <meta charset="utf-8">
+  <meta name="description" content="WebRTC reference app">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+  <meta itemprop="description" content="Video chat using the reference WebRTC application">
+  <meta itemprop="name" content="AppRTC">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta id="theme-color" name="theme-color" content="#ffffff">
+
+  <base target="_blank">
+
+  <title>AppRTC</title>
+
+  <link rel="manifest" href="manifest.json">
+{% if not chromeapp %}
+  <link rel="canonical" href="{{ room_link }}">
+{% endif %}
+  <script src="https://cdn.firebase.com/js/client/2.2.3/firebase.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
+  <script type="text/javascript" src="/static/js/bootstrap.js"></script>
+  <link rel="stylesheet" type="text/css" href="/css/flaticon.css">
+  <link rel="stylesheet" href="/css/main.css">
+  
+
+</head>
+
+<body>
+  <!--
+   * Keep the HTML id attributes in sync with |UI_CONSTANTS| defined in
+   * appcontroller.js.
+  -->
+  <div id="videos">
+    <video id="mini-video" autoplay muted></video>
+    <video id="remote-video" autoplay></video>
+    <video id="local-video" autoplay muted></video>
+  </div>
+
+  <div id="whiteboard" class="hidden">
+    <div id="toolbar">
+      <div id="rad">
+        <button type="button" class="btn boardicon" id="undo" title="Deshacer cambio">
+            <span class="flaticon-reply" style="font-size:24px;"></span>
+        </button>
+        <button type="button" class="btn boardicon" id="redo" title="Rehacer cambio">
+            <span class="flaticon-arrow66" style="font-size:22px;"></span>
+        </button>
+        <a download="misNotas.png" class="btn boardicon" id="save" title="Guardar Imagen">
+            <span class="flaticon-floppy12" style="font-size:22px;"></span></a>
+        </button>
+        <button type="button" class="btn boardicon" id="clean" title="Limpiar el tablero">
+            <span class="flaticon-bin2" style="font-size:26px;"></span>
+        </button>
+        <div class="btn-group">
+          <button type="button" class="btn dropdown-toggle boardicon" data-toggle="dropdown" id="eraser" title="Definir tamaño del borrador">
+            <span class="flaticon-eraser8" style="font-size:24px;" id="erasericon"></span> <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu" style="min-width:80px;">
+            <li><a id="eraser1"><span class="flaticon-eraser8" style="font-size:12px;"></span></a></li>
+            <li><a id="eraser2"><span class="flaticon-eraser8" style="font-size:18px;"></span></a></li>
+            <li><a id="eraser3"><span class="flaticon-eraser8" style="font-size:24px;"></span></a></li>
+          </ul>
+        </div>
+         <div class="btn-group">
+          <button type="button" class="btn dropdown-toggle boardicon" data-toggle="dropdown" id="pencil" title="Definir grosor del trazo">
+            <span class="flaticon-gross" style="font-size:24px;" id ="pencilicon"></span> <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu" style="min-width:80px;">
+            <li><a id="pencil1"><span class="flaticon-gross" style="font-size:12px;"></span></a></li>
+            <li><a id="pencil2"><span class="flaticon-gross" style="font-size:18px;"></span></a></li>
+            <li><a id="pencil3"><span class="flaticon-gross" style="font-size:24px;"></span></a></li>
+          </ul>
+        </div>
+      </div>
+      <div id="colors">
+        <div class="swatch active" style="background-color: white"></div>
+        <div class="swatch" style="background-color: grey"></div>
+        <div class="swatch" style="background-color: black"></div>
+        <div class="swatch" style="background-color: red"></div>
+        <div class="swatch" style="background-color: orange"></div>
+        <div class="swatch" style="background-color: yellow"></div>
+        <div class="swatch" style="background-color: green"></div>
+        <div class="swatch" style="background-color: blue"></div>
+        <div class="swatch" style="background-color: indigo"></div>
+        <div class="swatch" style="background-color: violet"></div>
+      </div>
+    </div>
+
+    <canvas id="canvas">Your web browser doesn't support canvas :(</canvas>
+    <video id="miniRemoteVideo" autoplay></video>
+    <video id="miniLocalVideo" autoplay muted></video>
+  </div>
+
+  <div id="chat" class="col-md-2 pull-right">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-xs-6 text-left"><span class="glyphicon glyphicon-user" style="color: green"></span> {{User.name}}</div>
+          <div class="col-xs-6 text-right" id="chatUSer2Name"></div>
+        </div>
+      </div>
+      <div id="messagesDiv" class="panel-body">
+        
+      </div>
+      <div class="panel-footer">
+        <textarea id="messageInput" rows="3" class="form-control"></textarea>
+        <br>
+        <button id="sendMessage" type="button" onclick="sendMessage()" class="btn btn-primary pull-right">Send</button>
+        <br>
+        <br>
+        <br>
+      </div>
+    </div>
+  </div>
+
+  <div id="room-selection" class="hidden">
+    <h1>AppRTC</h1>
+    <p id="instructions">Please enter a room name.</p>
+    <div>
+      <div id="room-id-input-div">
+        <input type="text" id="room-id-input" autofocus/>
+        <label class="error-label hidden" for="room-id-input" id="room-id-input-label">Room name must be 5 or more characters and include only letters and numbers.</label>
+      </div>
+      <div id="room-id-input-buttons">
+        <button id="join-button">JOIN</button>
+        <button id="random-button">RANDOM</button>
+      </div>
+    </div>
+    <div id="recent-rooms">
+      <p>Recently used rooms:</p>
+      <ul id="recent-rooms-list"></ul>
+    </div>
+  </div>
+
+  <div id="confirm-join-div" class="hidden">
+    <div>Ready to join<span id="confirm-join-room-span"></span>?</div>
+    <button id="confirm-join-button">JOIN</button>
+  </div>
+
+  <footer>
+    <div id="sharing-div">
+      <div id="room-link">Waiting for someone to join this room: <a id="room-link-href" href="{{ room_link }}" target="_blank">{{ room_link }}</a></div>
+    </div>
+    <div id="info-div"></div>
+    <div id="status-div"></div>
+    <div id="rejoin-div" class="hidden"><span>You have left the call.</span> <button id="rejoin-button">REJOIN</button><button id="new-room-button">NEW ROOM</button></div>
+  </footer>
+
+  <div id="icons" class="hidden">
+    <svg id="chatToggle" class="hidden" width="48" height="48" xmlns="http://www.w3.org/2000/svg"  viewbox="-10 -10 68 68">
+      <circle r="34" cy="24" cx="24">
+        <title>Chat Toggle</title>
+      </circle>
+      <path class="on" transform="scale(0.08500000089406967) " d="m530.5,148.633h-125.67401v162.155c0,23.61099 -19.211,42.82199 -42.82199,42.82199h-193.51399v54.297c0,13.50601 10.94902,24.461 24.461,24.461h190.118l79.44299,66.354c10.367,8.66 15.94202,5.09799 12.45401,-7.94901l-15.521,-58.01199c-0.03601,-0.13501 -0.10901,-0.258 -0.146,-0.39301h71.20001c13.50696,0 24.46198,-10.94907 24.46198,-24.461v-234.81898c-0.00598,-13.50601 -10.95398,-24.455 -24.461,-24.455z" fill="white" id="svg_20"/>
+
+      <path class="off" transform="scale(0.08500000089406967) " d="m530.5,148.633h-125.67401v162.155c0,23.61099 -19.211,42.82199 -42.82199,42.82199h-193.51399v54.297c0,13.50601 10.94902,24.461 24.461,24.461h190.118l79.44299,66.354c10.367,8.66 15.94202,5.09799 12.45401,-7.94901l-15.521,-58.01199c-0.03601,-0.13501 -0.10901,-0.258 -0.146,-0.39301h71.20001c13.50696,0 24.46198,-10.94907 24.46198,-24.461v-234.81898c-0.00598,-13.50601 -10.95398,-24.455 -24.461,-24.455z" fill="white" id="svg_21"/>
+
+      <path class="on" transform="scale(0.08500000089406967) " d="m24.461,335.24301h37.394c-0.037,0.13498 -0.11,0.258 -0.147,0.39297l-15.521,58.01202c-2.203,8.22498 -0.795,12.67999 3.134,12.67999c2.307,0 5.483,-1.52899 9.314,-4.73001l79.444,-66.354h30.41701h193.51498c13.50702,0 24.461,-10.94699 24.461,-24.461v-162.14999v-72.66299c0,-13.507 -10.948,-24.461 -24.461,-24.461h-337.54999c-13.506,0 -24.46093,10.949 -24.46093,24.461v234.81201c0,13.51398 10.94893,24.461 24.46093,24.461l0,0l0,0l0,0l0,0l0,0l0,0l0,0z" fill="white" id="svg_22"/>
+
+      <path class="off" transform="scale(0.08500000089406967) " d="m24.461,335.24301h37.394c-0.037,0.13498 -0.11,0.258 -0.147,0.39297l-15.521,58.01202c-2.203,8.22498 -0.795,12.67999 3.134,12.67999c2.307,0 5.483,-1.52899 9.314,-4.73001l79.444,-66.354h30.41701h193.51498c13.50702,0 24.461,-10.94699 24.461,-24.461v-162.14999v-72.66299c0,-13.507 -10.948,-24.461 -24.461,-24.461h-337.54999c-13.506,0 -24.46093,10.949 -24.46093,24.461v234.81201c0,13.51398 10.94893,24.461 24.46093,24.461l0,0l0,0l0,0l0,0l0,0l0,0l0,0z" fill="white" id="svg_23"/>
+
+    </svg>
+    <svg id="whiteboardOn" class="hidden" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewbox="-10 -10 68 68">
+       <circle cx="24" cy="24" r="34">
+        <title>WhiteBoard</title>
+      </circle>
+    <path class="on" transform="scale(0.15), translate(17,18)" d="M95.035,0
+      c-2.761,0-5,2.239-5,5v5h-85c-2.761,0-5,2.239-5,5v180c0,2.761,2.239,5,5,5h131.502l-45.873,82.572
+      c-3.256,5.833,5.509,10.703,8.742,4.857l45.629-82.133l45.629,82.133c3.233,5.846,11.998,0.976,8.742-4.857L153.533,200h131.502
+      c2.761,0,5-2.239,5-5V15c0-2.761-2.239-5-5-5h-85V5c0-2.761-2.239-5-5-5L95.035,0L95.035,0z M10.035,20h270v170h-270V20z M25.035,30
+      c-2.761,0-5,2.239-5,5v140c0,2.761,2.239,5,5,5h240c2.761,0,5-2.239,5-5V35c0-2.761-2.239-5-5-5H25.035z M30.035,40h230v130h-230V40
+      z" fill="white"/>
+    <path class="off" transform="scale(0.15), translate(17,18)" d="M95.035,0
+      c-2.761,0-5,2.239-5,5v5h-85c-2.761,0-5,2.239-5,5v180c0,2.761,2.239,5,5,5h131.502l-45.873,82.572
+      c-3.256,5.833,5.509,10.703,8.742,4.857l45.629-82.133l45.629,82.133c3.233,5.846,11.998,0.976,8.742-4.857L153.533,200h131.502
+      c2.761,0,5-2.239,5-5V15c0-2.761-2.239-5-5-5h-85V5c0-2.761-2.239-5-5-5L95.035,0L95.035,0z M10.035,20h270v170h-270V20z M25.035,30
+      c-2.761,0-5,2.239-5,5v140c0,2.761,2.239,5,5,5h240c2.761,0,5-2.239,5-5V35c0-2.761-2.239-5-5-5H25.035z M30.035,40h230v130h-230V40
+      z" fill="white"/>
+    </svg>
+    <svg id="mute-audio" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewbox="-10 -10 68 68">
+    <title>title</title>
+      <circle cx="24" cy="24" r="34">
+        <title>Mute audio</title>
+      </circle>
+      <path class="on" transform="scale(0.6), translate(17,18)" d="M38 22h-3.4c0 1.49-.31 2.87-.87 4.1l2.46 2.46C37.33 26.61 38 24.38 38 22zm-8.03.33c0-.11.03-.22.03-.33V10c0-3.32-2.69-6-6-6s-6 2.68-6 6v.37l11.97 11.96zM8.55 6L6 8.55l12.02 12.02v1.44c0 3.31 2.67 6 5.98 6 .45 0 .88-.06 1.3-.15l3.32 3.32c-1.43.66-3 1.03-4.62 1.03-5.52 0-10.6-4.2-10.6-10.2H10c0 6.83 5.44 12.47 12 13.44V42h4v-6.56c1.81-.27 3.53-.9 5.08-1.81L39.45 42 42 39.46 8.55 6z" fill="white"/>
+      <path class="off" transform="scale(0.6), translate(17,18)"  d="M24 28c3.31 0 5.98-2.69 5.98-6L30 10c0-3.32-2.68-6-6-6-3.31 0-6 2.68-6 6v12c0 3.31 2.69 6 6 6zm10.6-6c0 6-5.07 10.2-10.6 10.2-5.52 0-10.6-4.2-10.6-10.2H10c0 6.83 5.44 12.47 12 13.44V42h4v-6.56c6.56-.97 12-6.61 12-13.44h-3.4z"  fill="white"/>
+    </svg>
+
+    <svg id="mute-video" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewbox="-10 -10 68 68">
+      <circle cx="24" cy="24" r="34">
+        <title>Mute video</title>
+      </circle>
+      <path class="on" transform="scale(0.6), translate(17,16)" d="M40 8H15.64l8 8H28v4.36l1.13 1.13L36 16v12.36l7.97 7.97L44 36V12c0-2.21-1.79-4-4-4zM4.55 2L2 4.55l4.01 4.01C4.81 9.24 4 10.52 4 12v24c0 2.21 1.79 4 4 4h29.45l4 4L44 41.46 4.55 2zM12 16h1.45L28 30.55V32H12V16z" fill="white"/>
+      <path class="off" transform="scale(0.6), translate(17,16)" d="M40 8H8c-2.21 0-4 1.79-4 4v24c0 2.21 1.79 4 4 4h32c2.21 0 4-1.79 4-4V12c0-2.21-1.79-4-4-4zm-4 24l-8-6.4V32H12V16h16v6.4l8-6.4v16z" fill="white"/>
+    </svg>
+
+    <svg id="fullscreen" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewbox="-10 -10 68 68">
+      <circle cx="24" cy="24" r="34">
+        <title>Enter fullscreen</title>
+      </circle>
+      <path class="on" transform="scale(0.8), translate(7,6)" d="M10 32h6v6h4V28H10v4zm6-16h-6v4h10V10h-4v6zm12 22h4v-6h6v-4H28v10zm4-22v-6h-4v10h10v-4h-6z" fill="white"/>
+      <path class="off" transform="scale(0.8), translate(7,6)"  d="M14 28h-4v10h10v-4h-6v-6zm-4-8h4v-6h6v-4H10v10zm24 14h-6v4h10V28h-4v6zm-6-24v4h6v6h4V10H28z" fill="white"/>
+    </svg>
+
+    <svg id="hangup" class="hidden" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewbox="-10 -10 68 68">
+      <circle cx="24" cy="24" r="34">
+        <title>Hangup</title>
+      </circle>
+      <path transform="scale(0.7), translate(11,10)" d="M24 18c-3.21 0-6.3.5-9.2 1.44v6.21c0 .79-.46 1.47-1.12 1.8-1.95.98-3.74 2.23-5.33 3.7-.36.35-.85.57-1.4.57-.55 0-1.05-.22-1.41-.59L.59 26.18c-.37-.37-.59-.87-.59-1.42 0-.55.22-1.05.59-1.42C6.68 17.55 14.93 14 24 14s17.32 3.55 23.41 9.34c.37.36.59.87.59 1.42 0 .55-.22 1.05-.59 1.41l-4.95 4.95c-.36.36-.86.59-1.41.59-.54 0-1.04-.22-1.4-.57-1.59-1.47-3.38-2.72-5.33-3.7-.66-.33-1.12-1.01-1.12-1.8v-6.21C30.3 18.5 27.21 18 24 18z" fill="white"/>
+    </svg>
+
+  </div>
+
+{% if not chromeapp %}
+  {{ include_loopback_js }}
+{% endif %}
+
+  <script src="/js/apprtc.debug.js"></script>
+
+{% if chromeapp %}
+  <script src="/js/appwindow.js"></script>
+{% endif %}
+
+{% if not chromeapp %}
+  <script type="text/javascript">
+    var loadingParams = {
+      errorMessages: {{ error_messages }},
+      isLoopback: {{ is_loopback }},
+{% if room_id %}
+      roomId: '{{ room_id }}',
+      roomLink: '{{ room_link }}',
+{% endif %}
+
+      mediaConstraints: {{ media_constraints | safe }},
+      offerConstraints: {{ offer_constraints | safe }},
+      peerConnectionConfig: {{ pc_config | safe }},
+      peerConnectionConstraints: {{ pc_constraints | safe }},
+      turnRequestUrl: '{{ turn_url }}',
+      turnTransports: '{{ turn_transports }}',
+      wssUrl: '{{ wss_url }}',
+      wssPostUrl: '{{ wss_post_url }}',
+      bypassJoinConfirmation: {{ bypass_join_confirmation }},
+      versionInfo: {{ version_info }}
+    };
+
+    var appController;
+
+    function initialize() {
+      // We don't want to continue if this is triggered from Chrome prerendering,
+      // since it will register the user to GAE without cleaning it up, causing
+      // the real navigation to get a "full room" error. Instead we'll initialize
+      // once the visibility state changes to non-prerender.
+      if (document.webkitVisibilityState === 'prerender') {
+        document.addEventListener('webkitvisibilitychange', onVisibilityChange);
+        return;
+      }
+      appController = new AppController(loadingParams);
+    }
+
+    function onVisibilityChange() {
+      if (document.webkitVisibilityState === 'prerender') {
+        return;
+      }
+      document.removeEventListener('webkitvisibilitychange', onVisibilityChange);
+      initialize();
+    }
+    var SessionUser = {
+      name :'{{User.name}}',
+      lastName :'{{User.lname}}',
+      id :{{User.key.id()}}
+    }
+    initialize();
+  </script>
+  <script type="text/javascript" src="/js/firebase-helper.js"></script>
+  <script type="text/javascript" src="/js/teachme-rtc.js"></script>
+  <script type="text/javascript" src="/js/whiteboard.js"></script>
+{% endif %}
+</body>
+</html>

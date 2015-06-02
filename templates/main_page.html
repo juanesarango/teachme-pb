@@ -130,7 +130,7 @@
 										<div class="col-md-12">
 										<br>
 											<span class="starReviews-gray">
-												<span class="starReviews" style="width:{{t.rating*20}}%"></span>
+												<span class="starReviews" style="width:{% if t.rating %}{{t.rating*20}}{% else %}0{% endif %}"></span>
 											</span>
 											<br>
 											<span class="glyphicon glyphicon-comment"></span>

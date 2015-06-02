@@ -2,11 +2,13 @@
 import datetime
 from google.appengine.ext import ndb
 from google.appengine.api import mail
+from con import settings
 import teachme_db
 import logging
 import main
 import fns
 from twilio.rest import TwilioRestClient
+from twilio import TwilioRestException
 
 
 def parse_24_12(hora, minuto):
@@ -144,7 +146,8 @@ def notify_sms(user, user2, method, who, date):
                1: [u'Recuerda tu cita con {user} en Teachme. {date}',
                    u'Recuerda tu cita con {user} en Teachme. {date}']}
 
-    twilio = TwilioRestClient('AC72f22161a9c99728f48fe1584fe9f59b', '6b7c664f6d0a5d9191bfb2d7d7e47f05')
+    client = TwilioRestClient(settings.TWILIO_ACCOUNT_SID,
+                              settings.TWILIO_AUTH_TOKEN)
 
     if user.movil:
         # try:
@@ -153,10 +156,10 @@ def notify_sms(user, user2, method, who, date):
         # except Client.ElibomClientException, e:
         #   logging.error(e)
         try:
-            message = twilio.messages.create(from_='+17248248188', to='+'+str(user.movil), body=msgUser[method][who].format(user=fns.normalise_unicode(user2.name+' '+user2.lname, False),
+            message = client.messages.create(from_='+17248248188', to='+'+str(user.movil), body=msgUser[method][who].format(user=fns.normalise_unicode(user2.name+' '+user2.lname, False),
                                              date=date.strftime('%I:%M %p, %d %b %Y')))
             logging.info('twilio %s, cel: %s' % (message.sid, user.movil))
-        except e:
+        except TwilioRestException as e:
             logging.error(e)
     return
 

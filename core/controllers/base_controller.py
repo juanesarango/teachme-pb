@@ -57,7 +57,8 @@ class BaseController(webapp2.RequestHandler):
         params['suggestions'] = json.dumps(suggestions)
         params['shareUrl'] = self.request.url
         params['language'] = _('language')
-        params['live'] = self.live
+        # params['live'] = self.live
+        params['live'] = False
         return jinja_fns.render_str(template, **params)
 
     def render(self, template, **kw):
@@ -85,6 +86,10 @@ class BaseController(webapp2.RequestHandler):
         self.response.headers.add_header("Set-Cookie", "usi=; Path=/")
         self.response.headers.add_header("Set-Cookie", "tei=; Path=/")
 
+    def is_logged(self):
+        if not self.user:
+            self.redirect("/login", abort=True)
+
     def check_live(self):
         live = False
         channels = ['juliankmazo', 'teachmeapp']
@@ -99,4 +104,4 @@ class BaseController(webapp2.RequestHandler):
         tkey = self.read_secure_cookie("tei")
         self.user = ukey and ndb.Key(urlsafe=ukey).get()
         self.teacher = tkey and ndb.Key(urlsafe=tkey).get()
-        self.live = self.check_live()
+        # self.live = self.check_live()

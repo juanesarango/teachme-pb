@@ -3,3 +3,4 @@ from mentor_helper import MentorHelper
 from auth_helper import ForgotPasswordHelper
 from auth_helper import ResetPasswordHelper
 from twitch_helper import TwitchHelper
+from teachme_firebase_helper import FirebaseHelper
