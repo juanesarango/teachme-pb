@@ -22,6 +22,9 @@ class UserEndpoint(BaseApiController):
     #                   name='get_all')
     # def get_users(self, request):
 
+    # Todo
+    # Update user
+
     @endpoints.method(UserRequestMessage,
                       UserListResponseMessage,
                       path='/users',
@@ -31,6 +34,13 @@ class UserEndpoint(BaseApiController):
         if not (request.name and request.email and request.passwordString):
             raise endpoints.BadRequestException(
                 'name, email and password are mandatory')
+        user_exist = User.get_by_email(request.email)
+        if user_exist:
+            raise endpoints.BadRequestException(
+                'User already exist')
+        if not UserApiHelper().valid_register(request):
+            raise endpoints.BadRequestException(
+                "Incorrect email, or passwords doesn't match")
         new_user = User.signup(request)
         return UserListResponseMessage(
             users=[UserApiHelper().to_message(new_user)])

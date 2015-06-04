@@ -15,7 +15,7 @@ class TokenEndPoint(BaseApiController):
 
     @endpoints.method(TokenRequestMessage,
                       TokenResponseMessage,
-                      path='token',
+                      path='/token',
                       http_method='POST',
                       name='create')
     def create_token(self, request):
