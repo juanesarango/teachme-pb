@@ -29,8 +29,8 @@ class User(BaseModel):
     transactions = ndb.IntegerProperty(repeated=True)
 
     @classmethod
-    def signUp(cls, name, email, passwordString, timeZoneOffset):
-        passwordHash = cls.makePasswordHash(email, passwordString)
+    def signup(cls, name, email, passwordString, timeZoneOffset):
+        passwordHash = cls.make_password_hash(email, passwordString)
         return User(name=name,
                     email=email,
                     passwordHash=passwordHash,
@@ -38,33 +38,33 @@ class User(BaseModel):
 
     @classmethod
     def login(cls, email, passwordString):
-        user = cls.getByEmail(email)
-        if user and cls.validatePassword(email,
-                                         passwordString,
-                                         user.passwordHash):
+        user = cls.get_by_email(email)
+        if user and cls.validate_password(email,
+                                          passwordString,
+                                          user.passwordHash):
             return user
         else:
             return None
 
     @classmethod
-    def getByEmail(cls, email=None):
+    def get_by_email(cls, email=None):
         if email:
             return cls.query(cls.email == email).get()
         else:
             return None
 
     @classmethod
-    def makeSalt(cls, length=7):
+    def make_salt(cls, length=7):
         return ''.join(random.choice(letters) for x in xrange(length))
 
     @classmethod
-    def makePasswordHash(cls, name, passwordString, salt=None):
+    def make_password_hash(cls, name, passwordString, salt=None):
         if not salt:
-            salt = cls.makeSalt()
+            salt = cls.make_salt()
         hashString = hashlib.sha256(name + passwordString + salt).hexdigest()
         return '%s,%s' % (salt, hashString)
 
     @classmethod
-    def validatePassword(cls, name, password, passwordHash):
+    def validate_password(cls, name, password, passwordHash):
         salt = passwordHash.split(',')[0]
-        return passwordHash == cls.makePasswordHash(name, password, salt)
+        return passwordHash == cls.make_password_hash(name, password, salt)

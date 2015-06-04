@@ -3,5 +3,7 @@ from google.appengine.ext import ndb
 
 
 class Token(BaseModel):
-    user = ndb.IntegerProperty()
+    acces_token = ndb.ComputedProperty(lambda self: self.key.urlsafe())
+    token_type = ndb.StringProperty(default='bearer')
+    user = ndb.KeyProperty(required=True)
     role = ndb.StringProperty()

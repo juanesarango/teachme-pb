@@ -1,7 +1,7 @@
 import endpoints
-from api.controllers import TeacherEndpoint
+from api.controllers import TokenEndPoint
 
 
 APPLICATION = endpoints.api_server([
-    TeacherEndpoint
+    TokenEndPoint
     ])
