@@ -1,4 +1,5 @@
 import endpoints
+from protorpc import message_types
 
 from api import teachme_api
 from api.controllers import BaseApiController
@@ -13,7 +14,7 @@ from api.helpers import TokenApiHelper
 class TokenEndPoint(BaseApiController):
 
     @endpoints.method(TokenRequestMessage,
-                      TokenRequestMessage,
+                      TokenResponseMessage,
                       path='token',
                       http_method='POST',
                       name='create')
@@ -21,8 +22,8 @@ class TokenEndPoint(BaseApiController):
         if not (request.username and request.password):
             raise endpoints.BadRequestException(
                 "The client doesn't provide the username and password")
-        token = TokenApiHelper.grant_token(request)
+        token = TokenApiHelper().grant_token(request)
         if not token:
-            raise endpoints.InternalServerErrorException(
-                'Sorry, there was an error :(')
-        return TokenResponseMessage(TokenApiHelper.to_message(token))
+            raise endpoints.BadRequestException(
+                'email and password incorrect')
+        return TokenApiHelper().to_message(token)

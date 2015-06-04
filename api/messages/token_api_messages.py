@@ -7,5 +7,8 @@ class TokenResponseMessage(messages.Message):
     token_type = messages.StringField(2)
 
 
-class TokenRequestMessage(message_types.VoidMessage):
-    pass
+class TokenRequestMessage(messages.Message):
+    grant_type = messages.StringField(1)
+    username = messages.StringField(2)
+    password = messages.StringField(3)
+

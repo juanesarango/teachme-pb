@@ -5,7 +5,7 @@ import datetime
 import time
 import unicodedata
 
-from webapp2_extras.i18n import gettext as _
+# from webapp2_extras.i18n import gettext as _
 
 
 def valid_name(name):
@@ -132,15 +132,15 @@ def normalise_unicode(word, lower=True):
 
 
 def alert(number):
-    alertas = {1: ['alert-success', _(u'Se ha verificado tu cuenta exitosamente. Ahora a aprender!')],
-               2: ['alert-success', _(u'Tu información ha sido actualizada exitósamente.')],
-               3: ['alert-danger', _(u'Tu contraseña es inválida.')],
-               4: ['alert-warning', _(u'No realizaste ningun cambio.')],
-               5: ['alert-success', _(u'Tu pago ha sido procesado correctamente. Has agendado con éxito la sesión de clase.')],
-               6: ['alert-success', _(u'Has agendado con éxito la sesión de clase.')],
-               7: ['alert-danger', _(u'Lo sentimos. El pago ha sido rechazado. Corrige los datos de pago, o comúnicate con tu entidad financiera.')],
-               8: ['alert-danger', _(u'Lo sentimos, el mentor ya no cuenta con disponibilidad en esa hora. Intenta elegir una hora nueva.')],
-               9: ['alert-danger', _(u'Lo sentimos, la reserva no se pudo completar de manera exitosa. Inténtalo nuevamente.')]
+    alertas = {1: ['alert-success', (u'Se ha verificado tu cuenta exitosamente. Ahora a aprender!')],
+               2: ['alert-success', (u'Tu información ha sido actualizada exitósamente.')],
+               3: ['alert-danger', (u'Tu contraseña es inválida.')],
+               4: ['alert-warning', (u'No realizaste ningun cambio.')],
+               5: ['alert-success', (u'Tu pago ha sido procesado correctamente. Has agendado con éxito la sesión de clase.')],
+               6: ['alert-success', (u'Has agendado con éxito la sesión de clase.')],
+               7: ['alert-danger', (u'Lo sentimos. El pago ha sido rechazado. Corrige los datos de pago, o comúnicate con tu entidad financiera.')],
+               8: ['alert-danger', (u'Lo sentimos, el mentor ya no cuenta con disponibilidad en esa hora. Intenta elegir una hora nueva.')],
+               9: ['alert-danger', (u'Lo sentimos, la reserva no se pudo completar de manera exitosa. Inténtalo nuevamente.')]
                }
     return alertas[number]
 

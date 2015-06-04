@@ -1,3 +1,4 @@
 from base_api_controller import BaseApiController
 from teacher_api_controller import TeacherEndpoint
 from token_api_controller import TokenEndPoint
+from user_api_controller import UserEndpoint

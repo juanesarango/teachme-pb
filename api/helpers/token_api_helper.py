@@ -13,7 +13,7 @@ class TokenApiHelper(BaseApiHelper):
 
     def to_message(self, entity):
         return TokenResponseMessage(
-            acces_token=entity.acces_token,
+            acces_token=entity.key.urlsafe(),
             token_type=entity.token_type)
 
     def grant_token(self, request):
@@ -28,14 +28,14 @@ class TokenApiHelper(BaseApiHelper):
             return new_token
 
     def user_has_token(self, user):
-        user_token = Token.query(Token.user == user.key.id()).get()
-        if self.token_still_valid(user_token):
+        user_token = Token.query(Token.user == user.key).get()
+        if user_token and self.token_still_valid(user_token):
             return user_token
         else:
             return False
 
     def token_still_valid(self, token):
-        now = datetime.now()
+        now = datetime.datetime.now()
         token_expiration = token.created + datetime.timedelta(days=30)
         if token_expiration < now:
             token.key.delete()

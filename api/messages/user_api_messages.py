@@ -1,17 +1,19 @@
 from protorpc import messages
-from protorpc import messages_types
+from protorpc import message_types
 
 
 class UserRequestMessage(messages.Message):
     name = messages.StringField(1)
     lastName = messages.StringField(2)
     email = messages.StringField(3)
-    picture = messages.StringField(4)
-    mobilePhoneNumber = messages.StringField(5)
-    expert = messages.StringField(6)
-    verificated = messages.BooleanField(7)
-    sessions = messages.IntegerField(8, repeated=True)
-    transactions = messages.IntegerField(9, repeated=True)
+    passwordString = messages.StringField(4)
+    picture = messages.StringField(5)
+    mobilePhoneNumber = messages.StringField(6)
+    expert = messages.StringField(7)
+    verificated = messages.BooleanField(8)
+    sessions = messages.IntegerField(9, repeated=True)
+    transactions = messages.IntegerField(10, repeated=True)
+    timeZoneOffset = messages.IntegerField(11)
 
 
 class UserResponseMessage(messages.Message):

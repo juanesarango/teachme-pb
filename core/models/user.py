@@ -29,12 +29,15 @@ class User(BaseModel):
     transactions = ndb.IntegerProperty(repeated=True)
 
     @classmethod
-    def signup(cls, name, email, passwordString, timeZoneOffset):
-        passwordHash = cls.make_password_hash(email, passwordString)
-        return User(name=name,
-                    email=email,
-                    passwordHash=passwordHash,
-                    timeZoneOffset=timeZoneOffset)
+    def signup(cls, request):
+        passwordHashed = cls.make_password_hash(request.email,
+                                                request.passwordString)
+        new_user = User(name=request.name,
+                        email=request.email,
+                        passwordHash=passwordHashed,
+                        timeZoneOffset=request.timeZoneOffset)
+        new_user.put()
+        return new_user
 
     @classmethod
     def login(cls, email, passwordString):
